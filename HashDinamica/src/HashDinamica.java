@@ -6,12 +6,12 @@
 
 public class HashDinamica
 {
-    Diretorio diretorio;
-    Buckets buckets;
-    
-    public HashDinamica(String nomeDoArquivoDoDiretorio, String nomeDoArquivoDosBuckets, int numeroDeRegistrosPorBucket)
-    {
-        diretorio = new Diretorio(nomeDoArquivoDoDiretorio, (byte) 30);
-        buckets = new Buckets(nomeDoArquivoDosBuckets, numeroDeRegistrosPorBucket);
-    }
+	Diretorio diretorio;
+	Buckets buckets;
+	
+	public HashDinamica(String nomeDoArquivoDoDiretorio, String nomeDoArquivoDosBuckets, int numeroDeRegistrosPorBucket)
+	{
+		diretorio = new Diretorio(nomeDoArquivoDoDiretorio, (byte) 30);
+		buckets = new Buckets(nomeDoArquivoDosBuckets, numeroDeRegistrosPorBucket);
+	}
 }

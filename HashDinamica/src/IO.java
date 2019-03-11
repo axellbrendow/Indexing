@@ -7,20 +7,20 @@ import java.io.RandomAccessFile;
 
 public class IO
 {
-    public static RandomAccessFile openFile(String fileName, String mode)
-    {
-        RandomAccessFile file = null;
-        
-        try
-        {
-            file = new RandomAccessFile(fileName, mode);
-        }
-        
-        catch (FileNotFoundException fnfe)
-        {
-            fnfe.printStackTrace();
-        }
-        
-        return file;
-    }
+	public static RandomAccessFile openFile(String fileName, String mode)
+	{
+		RandomAccessFile file = null;
+		
+		try
+		{
+			file = new RandomAccessFile(fileName, mode);
+		}
+		
+		catch (FileNotFoundException fnfe)
+		{
+			fnfe.printStackTrace();
+		}
+		
+		return file;
+	}
 }
