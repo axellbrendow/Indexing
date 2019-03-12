@@ -2,6 +2,8 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 /**
+ * Classe para gerenciamento do diretório de uma hash dinâmica.
+ * 
  * @author Axell Brendow ( https://github.com/axell-brendow )
  */
 
@@ -10,7 +12,14 @@ public class Diretorio
 	RandomAccessFile arquivoDoDiretorio;
 	byte profundidadeGlobal;
 	
-	public Diretorio(String nomeDoArquivoDoDiretorio, byte profundidadeGlobal)
+	/**
+	 * Cria um objeto que gerencia o diretório de uma hash dinâmica.
+	 * 
+	 * @param nomeDoArquivoDoDiretorio Nome do arquivo previamente usado para o diretório.
+	 * Caso o arquivo não tenha sido criado ainda, ele será criado com este nome.
+	 */
+	
+	public Diretorio(String nomeDoArquivoDoDiretorio)
 	{
 		arquivoDoDiretorio = IO.openFile(nomeDoArquivoDoDiretorio, "rw");
 		this.profundidadeGlobal = lerProfundidadeGlobal();
@@ -18,7 +27,7 @@ public class Diretorio
 		if (this.profundidadeGlobal < 1)
 		{
 			this.profundidadeGlobal =
-				escreverProfundidadeGlobal(profundidadeGlobal);
+				escreverProfundidadeGlobal((byte) 1);
 		}
 	}
 	
@@ -41,14 +50,14 @@ public class Diretorio
 	 * @return {@code true} se nada falhar. Caso contrário, {@code false}.
 	 */
 	
-	public boolean close()
+	public boolean fechar()
 	{
-		boolean success = false;
+		boolean sucesso = false;
 		
 		try
 		{
 			arquivoDoDiretorio.close();
-			success = true;
+			sucesso = true;
 		}
 		
 		catch (IOException ioex)
@@ -56,14 +65,14 @@ public class Diretorio
 			ioex.printStackTrace();
 		}
 		
-		return success;
+		return sucesso;
 	}
 	
 	/**
 	 * Lê a profundidade global do cabeçalho do arquivo do diretório.
 	 * 
-	 * @return 0 se o arquivo dos buckets não estiver disponível. Caso
-	 * contrário, retorna o numero de registros por bucket.
+	 * @return 0 se o arquivo do diretório não estiver disponível. Caso
+	 * contrário, retorna a profundida global do arquivo.
 	 */
 	
 	private byte lerProfundidadeGlobal()
@@ -88,15 +97,14 @@ public class Diretorio
 	}
 	
 	/**
-	 * Escreve o numero de registros por bucket no cabeçalho do arquivo do
-	 * diretório.
+	 * Escreve a profundidade global no cabeçalho do arquivo do diretório. 
 	 * 
-	 * @param numeroDeRegistrosPorBucket Numero de registros por bucket a ser
-	 * colocado no cabeçalho do arquivo dos buckets.
+	 * @param profundidadeGlobal Profundidade global a ser colocada no
+	 * cabeçalho do arquivo do diretório.
 	 * 
-	 * @return 0 se o arquivo dos buckets não estiver disponível ou
-	 * se {@code numeroDeRegistrosPorBucket} &lt= 0. Caso contrário, retorna
-	 * {@code numeroDeRegistrosPorBucket}.
+	 * @return 0 se o arquivo do diretório não estiver disponível ou
+	 * se {@code profundidadeGlobal} &lt= 0. Caso contrário, retorna
+	 * {@code profundidadeGlobal}.
 	 */
 	
 	private byte escreverProfundidadeGlobal(byte profundidadeGlobal)

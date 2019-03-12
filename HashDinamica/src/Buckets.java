@@ -2,24 +2,26 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 /**
+ * Classe que gerencia os buckets de uma hash dinâmica.
+ * 
  * @author Axell Brendow ( https://github.com/axell-brendow )
  */
 
-public class Buckets
+public class Buckets<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 {
-	/**
-	* @author Axell Brendow ( https://github.com/axell-brendow )
-	*/
-
-   class Bucket
-   {
-
-   }
-	
 	RandomAccessFile arquivoDosBuckets;
 	int numeroDeRegistrosPorBucket;
 	
-	public Buckets(String nomeDoArquivoDosBuckets, int numeroDeRegistrosPorBucket)
+	/**
+	 * Cria um objeto que gerencia os buckets de uma hash dinâmica.
+	 * 
+	 * @param nomeDoArquivoDosBuckets Nome do arquivo previamente usado para os buckets.
+	 * Caso o arquivo não tenha sido criado ainda, ele será criado com este nome.
+	 * @param numeroDeRegistrosPorBucket Numero de registros por bucket caso o arquivo
+	 * não tenha sido criado ainda.
+	 */
+	
+	public Buckets(String nomeDoArquivoDosBuckets, int numeroDeRegistrosPorBucket, int quantidadeDeBytesParaAsChaves, int quantidadeDeBytesParaOsValores)
 	{
 		arquivoDosBuckets = IO.openFile(nomeDoArquivoDosBuckets, "rw");
 		this.numeroDeRegistrosPorBucket = lerNumeroDeRegistrosPorBucket();
@@ -50,14 +52,14 @@ public class Buckets
 	 * @return {@code true} se nada falhar. Caso contrário, {@code false}.
 	 */
 	
-	public boolean close()
+	public boolean fechar()
 	{
-		boolean success = false;
+		boolean sucesso = false;
 		
 		try
 		{
 			arquivoDosBuckets.close();
-			success = true;
+			sucesso = true;
 		}
 		
 		catch (IOException ioex)
@@ -65,7 +67,7 @@ public class Buckets
 			ioex.printStackTrace();
 		}
 		
-		return success;
+		return sucesso;
 	}
 	
 	/**
