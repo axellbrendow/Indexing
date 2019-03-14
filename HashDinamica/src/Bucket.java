@@ -1,6 +1,9 @@
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 
 /**
  * Classe que gerencia um bucket específico.
@@ -8,17 +11,55 @@ import java.io.ObjectOutputStream;
  * @author Axell Brendow ( https://github.com/axell-brendow )
  */
 
-public class Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
+public class Bucket implements Serializavel
 {
-	byte profundidadeLocal;
-	int numeroDeRegistrosPorBucket;
-	RegistroDeIndice<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>[] registrosDosIndices;
+	private byte profundidadeLocal;
+	private int numeroDeRegistrosPorBucket;
+	private short quantidadeMaximaDeBytesParaAChave;
+	private short quantidadeMaximaDeBytesParaODado;
+	//RegistroDeIndice<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>[] registrosDosIndices;
+	byte[] bucket;
 	
-	private Bucket(byte profundidadeLocal, int numeroDeRegistrosPorBucket, RegistroDeIndice<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>[] registrosDosIndices)
+	public Bucket(
+			byte profundidadeLocal,
+			int numeroDeRegistrosPorBucket,
+			short quantidadeMaximaDeBytesParaAChave,
+			short quantidadeMaximaDeBytesParaODado)
+			//RegistroDeIndice<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>[] registrosDosIndices)
 	{
 		this.profundidadeLocal = profundidadeLocal;
 		this.numeroDeRegistrosPorBucket = numeroDeRegistrosPorBucket;
-		this.registrosDosIndices = registrosDosIndices;
+		this.quantidadeMaximaDeBytesParaAChave = quantidadeMaximaDeBytesParaAChave;
+		this.quantidadeMaximaDeBytesParaODado = quantidadeMaximaDeBytesParaODado;
+		//this.registrosDosIndices = registrosDosIndices;
+	}
+	
+	/**
+	 * Calcula o tamanho que cada registro de indice gasta no bucket.
+	 * 
+	 * @return o tamanho que cada registro de indice gasta no bucket.
+	 */
+	
+	private int obterTamanhoDoRegistroDeUmIndice()
+	{
+		int tamanho = 0;
+		
+		if (numeroDeRegistrosPorBucket > 0 &&
+			quantidadeMaximaDeBytesParaAChave > 0 &&
+			quantidadeMaximaDeBytesParaODado > 0)
+		{
+			tamanho = Byte.BYTES + // tamanho da lapide
+					quantidadeMaximaDeBytesParaAChave + // tamanho da chave
+					quantidadeMaximaDeBytesParaODado; // tamanho do dado
+		}
+		
+		return tamanho;
+	}
+	
+	private int obterTamanhoDeUmBucket()
+	{
+		return Byte.BYTES + // tamanho da profundidade local
+				numeroDeRegistrosPorBucket * obterTamanhoDoRegistroDeUmIndice();
 	}
 	
 	@Override
@@ -45,11 +86,12 @@ public class Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
 	{
 		if (correnteDeEntrada != null)
 		{
-			byte[] bytes = correnteDeEntrada.read();
-			
 			try
 			{
-				correnteDeSaida.write(bytes);
+				profundidadeLocal = correnteDeEntrada.readByte();
+				
+				bucket = correnteDeEntrada.readNBytes(
+						numeroDeRegistrosPorBucket * obterTamanhoDoRegistroDeUmIndice());
 			}
 			
 			catch (IOException ioex)
@@ -62,8 +104,7 @@ public class Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
 	@Override
 	public byte[] obterBytes()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream(size)
 	}
 	
 	@Override

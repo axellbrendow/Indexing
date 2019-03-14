@@ -1,9 +1,10 @@
-/Buckets$Bucket.class
+/Bucket.class
 /Buckets.class
 /Diretorio.class
 /HashDinamica.class
 /IO.class
-/Bucket.class
-/todo_list.txt
 /RegistroDeIndice.class
 /Serializavel.class
+/todo_list.txt
+/RegistroDoIndice.class
+/BucketsManager.class

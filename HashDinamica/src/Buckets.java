@@ -7,10 +7,12 @@ import java.io.RandomAccessFile;
  * @author Axell Brendow ( https://github.com/axell-brendow )
  */
 
-public class Buckets<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
+public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends Serializavel>
 {
 	RandomAccessFile arquivoDosBuckets;
 	int numeroDeRegistrosPorBucket;
+	short quantidadeMaximaDeBytesParaAChave;
+	short quantidadeMaximaDeBytesParaODado;
 	
 	/**
 	 * Cria um objeto que gerencia os buckets de uma hash dinâmica.
@@ -21,15 +23,25 @@ public class Buckets<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 	 * não tenha sido criado ainda.
 	 */
 	
-	public Buckets(String nomeDoArquivoDosBuckets, int numeroDeRegistrosPorBucket, int quantidadeDeBytesParaAsChaves, int quantidadeDeBytesParaOsValores)
+	public Buckets(
+			String nomeDoArquivoDosBuckets,
+			int numeroDeRegistrosPorBucket,
+			short quantidadeMaximaDeBytesParaAChave,
+			short quantidadeMaximaDeBytesParaODado)
 	{
-		arquivoDosBuckets = IO.openFile(nomeDoArquivoDosBuckets, "rw");
-		this.numeroDeRegistrosPorBucket = lerNumeroDeRegistrosPorBucket();
-		
-		if (this.numeroDeRegistrosPorBucket < 1)
+		if (quantidadeMaximaDeBytesParaAChave > 0 &&
+			quantidadeMaximaDeBytesParaODado > 0)
 		{
-			this.numeroDeRegistrosPorBucket =
-				escreverNumeroDeRegistrosPorBucket(numeroDeRegistrosPorBucket);
+			arquivoDosBuckets = IO.openFile(nomeDoArquivoDosBuckets, "rw");
+			this.numeroDeRegistrosPorBucket = lerNumeroDeRegistrosPorBucket();
+			this.quantidadeMaximaDeBytesParaAChave = quantidadeMaximaDeBytesParaAChave;
+			this.quantidadeMaximaDeBytesParaODado = quantidadeMaximaDeBytesParaODado;
+			
+			if (this.numeroDeRegistrosPorBucket < 1)
+			{
+				this.numeroDeRegistrosPorBucket =
+					escreverNumeroDeRegistrosPorBucket(numeroDeRegistrosPorBucket);
+			}
 		}
 	}
 	
@@ -131,5 +143,22 @@ public class Buckets<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 		}
 		
 		return registrosPorBucket;
+	}
+	
+	public int inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado, long enderecoDoBucket)
+	{
+		int resultado = -1;
+		
+		if (chave != null && dado != null && enderecoDoBucket > -1 && arquivoDisponivel())
+		{
+			try
+			{
+				arquivoDosBuckets.seek(enderecoDoBucket);
+				
+				byte[] bucket = new byte[]
+			}
+		}
+		
+		return resultado;
 	}
 }
