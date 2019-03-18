@@ -9,6 +9,8 @@ import java.io.RandomAccessFile;
 
 public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends Serializavel>
 {
+	private static final byte PROFUNDIDADE_LOCAL_PADRAO = 1;
+	
 	RandomAccessFile arquivoDosBuckets;
 	int numeroDeRegistrosPorBucket;
 	short quantidadeMaximaDeBytesParaAChave;
@@ -155,7 +157,13 @@ public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extend
 			{
 				arquivoDosBuckets.seek(enderecoDoBucket);
 				
-				byte[] bucket = new byte[]
+				Bucket bucket = new Bucket(
+						PROFUNDIDADE_LOCAL_PADRAO,
+						numeroDeRegistrosPorBucket,
+						quantidadeMaximaDeBytesParaAChave,
+						quantidadeMaximaDeBytesParaODado);
+				
+				bucket.ler
 			}
 		}
 		

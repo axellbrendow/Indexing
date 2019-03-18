@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.io.RandomAccessFile;
 
 /**
  * Classe que gerencia um bucket específico.
@@ -63,7 +64,7 @@ public class Bucket implements Serializavel
 	}
 	
 	@Override
-	public void escreverObjeto(ObjectOutputStream correnteDeSaida)
+	public void escreverObjeto(RandomAccessFile correnteDeSaida)
 	{
 		if (correnteDeSaida != null)
 		{
@@ -82,7 +83,7 @@ public class Bucket implements Serializavel
 	}
 	
 	@Override
-	public void lerObjeto(ObjectInputStream correnteDeEntrada)
+	public void lerObjeto(RandomAccessFile correnteDeEntrada)
 	{
 		if (correnteDeEntrada != null)
 		{
@@ -90,8 +91,9 @@ public class Bucket implements Serializavel
 			{
 				profundidadeLocal = correnteDeEntrada.readByte();
 				
-				bucket = correnteDeEntrada.readNBytes(
-						numeroDeRegistrosPorBucket * obterTamanhoDoRegistroDeUmIndice());
+				bucket = new byte[obterTamanhoDeUmBucket()];
+				
+				correnteDeEntrada.readFully(bucket);
 			}
 			
 			catch (IOException ioex)

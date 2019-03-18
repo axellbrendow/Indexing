@@ -1,5 +1,4 @@
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.RandomAccessFile;
 
 public interface Serializavel
 {
@@ -10,7 +9,7 @@ public interface Serializavel
 	 * @param correnteDeSaida Corrente de saída dos bytes.
 	 */
 	
-	void escreverObjeto(ObjectOutputStream correnteDeSaida);
+	void escreverObjeto(RandomAccessFile correnteDeSaida);
 	
 	/**
 	 * Lê os bytes do objeto da {@code correnteDeEntrada}
@@ -19,7 +18,7 @@ public interface Serializavel
 	 * @param correnteDeEntrada Corrente de entrada dos bytes.
 	 */
 	
-	void lerObjeto(ObjectInputStream correnteDeEntrada);
+	void lerObjeto(RandomAccessFile correnteDeEntrada);
 	
 	/**
 	 * Gera um vetor com os bytes do objeto.
