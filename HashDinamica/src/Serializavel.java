@@ -29,7 +29,7 @@ public interface Serializavel
 	byte[] obterBytes();
 	
 	/**
-	 * Lê os bytes do objeto do vetor {@code bytes}.
+	 * Lê os bytes do objeto do vetor.
 	 * 
 	 * @param bytes Vetor com os bytes do objeto.
 	 */

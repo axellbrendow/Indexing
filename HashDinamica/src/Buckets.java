@@ -26,10 +26,10 @@ public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extend
 	 */
 	
 	public Buckets(
-			String nomeDoArquivoDosBuckets,
-			int numeroDeRegistrosPorBucket,
-			short quantidadeMaximaDeBytesParaAChave,
-			short quantidadeMaximaDeBytesParaODado)
+		String nomeDoArquivoDosBuckets,
+		int numeroDeRegistrosPorBucket,
+		short quantidadeMaximaDeBytesParaAChave,
+		short quantidadeMaximaDeBytesParaODado)
 	{
 		if (quantidadeMaximaDeBytesParaAChave > 0 &&
 			quantidadeMaximaDeBytesParaODado > 0)
@@ -147,6 +147,18 @@ public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extend
 		return registrosPorBucket;
 	}
 	
+	private int inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado, Bucket bucket)
+	{
+		int resultado = -1;
+		
+		if (chave != null && dado != null && bucket != null)
+		{
+			bucket.inserir()
+		}
+		
+		return resultado;
+	}
+	
 	public int inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado, long enderecoDoBucket)
 	{
 		int resultado = -1;
@@ -158,12 +170,18 @@ public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extend
 				arquivoDosBuckets.seek(enderecoDoBucket);
 				
 				Bucket bucket = new Bucket(
-						PROFUNDIDADE_LOCAL_PADRAO,
-						numeroDeRegistrosPorBucket,
-						quantidadeMaximaDeBytesParaAChave,
-						quantidadeMaximaDeBytesParaODado);
+					PROFUNDIDADE_LOCAL_PADRAO,
+					numeroDeRegistrosPorBucket,
+					quantidadeMaximaDeBytesParaAChave,
+					quantidadeMaximaDeBytesParaODado);
 				
-				bucket.ler
+				bucket.lerObjeto(arquivoDosBuckets);
+				bucket.inserir()
+			}
+			
+			catch (IOException ioex)
+			{
+				ioex.printStackTrace();
 			}
 		}
 		

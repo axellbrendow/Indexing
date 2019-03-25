@@ -12,19 +12,19 @@ public class HashDinamica<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS e
 	Buckets<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> buckets;
 	
 	public HashDinamica(
-			String nomeDoArquivoDoDiretorio,
-			String nomeDoArquivoDosBuckets,
-			int numeroDeRegistrosPorBucket,
-			short quantidadeMaximaDeBytesParaAChave,
-			short quantidadeMaximaDeBytesParaODado,
-			Function<TIPO_DAS_CHAVES, Integer> funcaoHash)
+		String nomeDoArquivoDoDiretorio,
+		String nomeDoArquivoDosBuckets,
+		int numeroDeRegistrosPorBucket,
+		short quantidadeMaximaDeBytesParaAChave,
+		short quantidadeMaximaDeBytesParaODado,
+		Function<TIPO_DAS_CHAVES, Integer> funcaoHash)
 	{
 		diretorio = new Diretorio<>(nomeDoArquivoDoDiretorio, funcaoHash);
 		buckets = new Buckets<>(
-				nomeDoArquivoDosBuckets,
-				numeroDeRegistrosPorBucket,
-				quantidadeMaximaDeBytesParaAChave,
-				quantidadeMaximaDeBytesParaODado);
+			nomeDoArquivoDosBuckets,
+			numeroDeRegistrosPorBucket,
+			quantidadeMaximaDeBytesParaAChave,
+			quantidadeMaximaDeBytesParaODado);
 	}
 	
 	public boolean inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)

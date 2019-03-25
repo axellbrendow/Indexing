@@ -50,7 +50,7 @@ public class Diretorio<TIPO_DAS_CHAVES extends Serializavel>
 	private final boolean arquivoDisponivel()
 	{
 		return arquivoDoDiretorio != null &&
-				arquivoDoDiretorio.getChannel().isOpen();
+			arquivoDoDiretorio.getChannel().isOpen();
 	}
 	
 	/**
@@ -191,8 +191,8 @@ public class Diretorio<TIPO_DAS_CHAVES extends Serializavel>
 			try
 			{
 				arquivoDoDiretorio.seek(
-						DESLOCAMENTO_DO_CABECALHO +
-						indiceDoBucket * TAMANHO_DOS_ENDERECOS);
+					DESLOCAMENTO_DO_CABECALHO +
+					indiceDoBucket * TAMANHO_DOS_ENDERECOS);
 				
 				endereco = arquivoDoDiretorio.readLong();
 			}
