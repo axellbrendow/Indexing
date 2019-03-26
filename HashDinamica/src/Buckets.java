@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.lang.reflect.Constructor;
 
 /**
  * Classe que gerencia os buckets de uma hash dinâmica.
@@ -15,6 +16,8 @@ public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extend
 	int numeroDeRegistrosPorBucket;
 	short quantidadeMaximaDeBytesParaAChave;
 	short quantidadeMaximaDeBytesParaODado;
+	Constructor<TIPO_DAS_CHAVES> construtorDaChave;
+	Constructor<TIPO_DOS_DADOS> construtorDoDado;
 	
 	/**
 	 * Cria um objeto que gerencia os buckets de uma hash dinâmica.
@@ -29,7 +32,9 @@ public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extend
 		String nomeDoArquivoDosBuckets,
 		int numeroDeRegistrosPorBucket,
 		short quantidadeMaximaDeBytesParaAChave,
-		short quantidadeMaximaDeBytesParaODado)
+		short quantidadeMaximaDeBytesParaODado,
+		Constructor<TIPO_DAS_CHAVES> construtorDaChave,
+		Constructor<TIPO_DOS_DADOS> construtorDoDado)
 	{
 		if (quantidadeMaximaDeBytesParaAChave > 0 &&
 			quantidadeMaximaDeBytesParaODado > 0)
@@ -38,6 +43,8 @@ public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extend
 			this.numeroDeRegistrosPorBucket = lerNumeroDeRegistrosPorBucket();
 			this.quantidadeMaximaDeBytesParaAChave = quantidadeMaximaDeBytesParaAChave;
 			this.quantidadeMaximaDeBytesParaODado = quantidadeMaximaDeBytesParaODado;
+			this.construtorDaChave = construtorDaChave;
+			this.construtorDoDado = construtorDoDado;
 			
 			if (this.numeroDeRegistrosPorBucket < 1)
 			{
@@ -169,11 +176,13 @@ public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extend
 			{
 				arquivoDosBuckets.seek(enderecoDoBucket);
 				
-				Bucket bucket = new Bucket(
+				Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> bucket = new Bucket<>(
 					PROFUNDIDADE_LOCAL_PADRAO,
 					numeroDeRegistrosPorBucket,
 					quantidadeMaximaDeBytesParaAChave,
-					quantidadeMaximaDeBytesParaODado);
+					quantidadeMaximaDeBytesParaODado,
+					construtorDaChave,
+					construtorDoDado);
 				
 				bucket.lerObjeto(arquivoDosBuckets);
 				bucket.inserir()

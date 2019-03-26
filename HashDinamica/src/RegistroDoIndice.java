@@ -4,6 +4,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 public class RegistroDoIndice<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends Serializavel> implements Serializavel
 {
@@ -12,24 +14,32 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DAD
 	private TIPO_DOS_DADOS dado;
 	private short quantidadeMaximaDeBytesParaAChave;
 	private short quantidadeMaximaDeBytesParaODado;
+	Constructor<TIPO_DAS_CHAVES> construtorDaChave;
+	Constructor<TIPO_DOS_DADOS> construtorDoDado;
 	
 	public RegistroDoIndice(
 		char lapide,
 		TIPO_DAS_CHAVES chave,
 		TIPO_DOS_DADOS dado,
 		short quantidadeMaximaDeBytesParaAChave,
-		short quantidadeMaximaDeBytesParaODado)
+		short quantidadeMaximaDeBytesParaODado,
+		Constructor<TIPO_DAS_CHAVES> construtorDaChave,
+		Constructor<TIPO_DOS_DADOS> construtorDoDado)
 	{
 		this.lapide = lapide;
 		this.chave = chave;
 		this.dado = dado;
 		this.quantidadeMaximaDeBytesParaAChave = quantidadeMaximaDeBytesParaAChave;
 		this.quantidadeMaximaDeBytesParaODado = quantidadeMaximaDeBytesParaODado;
+		this.construtorDaChave = construtorDaChave;
+		this.construtorDoDado = construtorDoDado;
 	}
 
-	public RegistroDoIndice()
+	public RegistroDoIndice(
+		Constructor<TIPO_DAS_CHAVES> construtorDaChave,
+		Constructor<TIPO_DOS_DADOS> construtorDoDado)
 	{
-		this('*', null, null, (short) 0, (short) 0);
+		this('*', null, null, (short) 0, (short) 0, construtorDaChave, construtorDoDado);
 	}
 	
 	/**
@@ -125,8 +135,34 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DAD
 			dataInputStream.read(byteArrayChave);
 			dataInputStream.read(byteArrayDado);
 			
-			chave.lerBytes(byteArrayChave);
-			dado.lerBytes(byteArrayDado);
+			try
+			{
+				chave = (TIPO_DAS_CHAVES) construtorDaChave.newInstance();
+				dado = (TIPO_DOS_DADOS) construtorDoDado.newInstance();
+				
+				chave.lerBytes(byteArrayChave);
+				dado.lerBytes(byteArrayDado);
+			}
+			
+			catch (InstantiationException e)
+			{
+				e.printStackTrace();
+			}
+			
+			catch (IllegalAccessException e)
+			{
+				e.printStackTrace();
+			}
+			
+			catch (IllegalArgumentException e)
+			{
+				e.printStackTrace();
+			}
+			
+			catch (InvocationTargetException e)
+			{
+				e.printStackTrace();
+			}
 			
 			byteArrayInputStream.close();
 			dataInputStream.close();

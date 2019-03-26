@@ -3,6 +3,7 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.RandomAccessFile;
+import java.lang.reflect.Constructor;
 
 /**
  * Classe que gerencia um bucket específico.
@@ -23,13 +24,15 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 		byte profundidadeLocal,
 		int numeroDeRegistrosPorBucket,
 		short quantidadeMaximaDeBytesParaAChave,
-		short quantidadeMaximaDeBytesParaODado)
+		short quantidadeMaximaDeBytesParaODado,
+		Constructor<TIPO_DAS_CHAVES> construtorDaChave,
+		Constructor<TIPO_DOS_DADOS> construtorDoDado)
 	{
 		this.profundidadeLocal = profundidadeLocal;
 		this.numeroDeRegistrosPorBucket = numeroDeRegistrosPorBucket;
 		this.quantidadeMaximaDeBytesParaAChave = quantidadeMaximaDeBytesParaAChave;
 		this.quantidadeMaximaDeBytesParaODado = quantidadeMaximaDeBytesParaODado;
-		this.registroDoIndice = new RegistroDoIndice<>();
+		this.registroDoIndice = new RegistroDoIndice<>(construtorDaChave, construtorDoDado);
 	}
 	
 	/**
@@ -41,10 +44,8 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 	private int obterTamanhoDeUmBucket()
 	{
 		return Byte.BYTES + // tamanho da profundidade local
-			numeroDeRegistrosPorBucket * obterTamanhoDoRegistroDeUmIndice();
+			numeroDeRegistrosPorBucket * registroDoIndice.obterTamanhoMaximoEmBytes();
 	}
-	
-	protected 
 	
 	@Override
 	public void escreverObjeto(RandomAccessFile correnteDeSaida)
@@ -76,7 +77,7 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 				
 				correnteDeEntrada.readFully(bucket);
 				
-				profundidadeLocal = new DataInputStream(new ByteArrayInputStream(bucket)).readByte();
+				profundidadeLocal = bucket[0];
 			}
 			
 			catch (IOException ioex)

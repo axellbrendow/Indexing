@@ -1,3 +1,4 @@
+import java.lang.reflect.Constructor;
 import java.util.function.Function;
 
 /**
@@ -17,6 +18,8 @@ public class HashDinamica<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS e
 		int numeroDeRegistrosPorBucket,
 		short quantidadeMaximaDeBytesParaAChave,
 		short quantidadeMaximaDeBytesParaODado,
+		Constructor<TIPO_DAS_CHAVES> construtorDaChave,
+		Constructor<TIPO_DOS_DADOS> construtorDoDado,
 		Function<TIPO_DAS_CHAVES, Integer> funcaoHash)
 	{
 		diretorio = new Diretorio<>(nomeDoArquivoDoDiretorio, funcaoHash);
@@ -24,7 +27,9 @@ public class HashDinamica<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS e
 			nomeDoArquivoDosBuckets,
 			numeroDeRegistrosPorBucket,
 			quantidadeMaximaDeBytesParaAChave,
-			quantidadeMaximaDeBytesParaODado);
+			quantidadeMaximaDeBytesParaODado,
+			construtorDaChave,
+			construtorDoDado);
 	}
 	
 	public boolean inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)
