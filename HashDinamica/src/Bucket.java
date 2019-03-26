@@ -15,8 +15,6 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 {
 	private byte profundidadeLocal;
 	private int numeroDeRegistrosPorBucket;
-	private short quantidadeMaximaDeBytesParaAChave;
-	private short quantidadeMaximaDeBytesParaODado;
 	RegistroDoIndice<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> registroDoIndice;
 	byte[] bucket;
 	
@@ -30,9 +28,15 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 	{
 		this.profundidadeLocal = profundidadeLocal;
 		this.numeroDeRegistrosPorBucket = numeroDeRegistrosPorBucket;
-		this.quantidadeMaximaDeBytesParaAChave = quantidadeMaximaDeBytesParaAChave;
-		this.quantidadeMaximaDeBytesParaODado = quantidadeMaximaDeBytesParaODado;
-		this.registroDoIndice = new RegistroDoIndice<>(construtorDaChave, construtorDoDado);
+		
+		this.registroDoIndice =
+			new RegistroDoIndice<>(
+				'*', null, null,
+				quantidadeMaximaDeBytesParaAChave,
+				quantidadeMaximaDeBytesParaODado,
+				construtorDaChave,
+				construtorDoDado
+			);
 	}
 	
 	/**

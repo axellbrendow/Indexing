@@ -23,6 +23,7 @@ public class HashDinamica<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS e
 		Function<TIPO_DAS_CHAVES, Integer> funcaoHash)
 	{
 		diretorio = new Diretorio<>(nomeDoArquivoDoDiretorio, funcaoHash);
+		
 		buckets = new Buckets<>(
 			nomeDoArquivoDosBuckets,
 			numeroDeRegistrosPorBucket,

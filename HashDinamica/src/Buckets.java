@@ -13,11 +13,8 @@ public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extend
 	private static final byte PROFUNDIDADE_LOCAL_PADRAO = 1;
 	
 	RandomAccessFile arquivoDosBuckets;
+	Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> bucket;
 	int numeroDeRegistrosPorBucket;
-	short quantidadeMaximaDeBytesParaAChave;
-	short quantidadeMaximaDeBytesParaODado;
-	Constructor<TIPO_DAS_CHAVES> construtorDaChave;
-	Constructor<TIPO_DOS_DADOS> construtorDoDado;
 	
 	/**
 	 * Cria um objeto que gerencia os buckets de uma hash dinâmica.
@@ -41,10 +38,14 @@ public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extend
 		{
 			arquivoDosBuckets = IO.openFile(nomeDoArquivoDosBuckets, "rw");
 			this.numeroDeRegistrosPorBucket = lerNumeroDeRegistrosPorBucket();
-			this.quantidadeMaximaDeBytesParaAChave = quantidadeMaximaDeBytesParaAChave;
-			this.quantidadeMaximaDeBytesParaODado = quantidadeMaximaDeBytesParaODado;
-			this.construtorDaChave = construtorDaChave;
-			this.construtorDoDado = construtorDoDado;
+			
+			this.bucket = new Bucket<>(
+				PROFUNDIDADE_LOCAL_PADRAO,
+				numeroDeRegistrosPorBucket,
+				quantidadeMaximaDeBytesParaAChave,
+				quantidadeMaximaDeBytesParaODado,
+				construtorDaChave,
+				construtorDoDado);
 			
 			if (this.numeroDeRegistrosPorBucket < 1)
 			{
@@ -175,14 +176,6 @@ public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extend
 			try
 			{
 				arquivoDosBuckets.seek(enderecoDoBucket);
-				
-				Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> bucket = new Bucket<>(
-					PROFUNDIDADE_LOCAL_PADRAO,
-					numeroDeRegistrosPorBucket,
-					quantidadeMaximaDeBytesParaAChave,
-					quantidadeMaximaDeBytesParaODado,
-					construtorDaChave,
-					construtorDoDado);
 				
 				bucket.lerObjeto(arquivoDosBuckets);
 				bucket.inserir()

@@ -34,13 +34,6 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DAD
 		this.construtorDaChave = construtorDaChave;
 		this.construtorDoDado = construtorDoDado;
 	}
-
-	public RegistroDoIndice(
-		Constructor<TIPO_DAS_CHAVES> construtorDaChave,
-		Constructor<TIPO_DOS_DADOS> construtorDoDado)
-	{
-		this('*', null, null, (short) 0, (short) 0, construtorDaChave, construtorDoDado);
-	}
 	
 	/**
 	 * Calcula o tamanho que cada registro de indice gasta no bucket.
