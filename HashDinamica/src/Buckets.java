@@ -23,6 +23,12 @@ public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extend
 	 * Caso o arquivo não tenha sido criado ainda, ele será criado com este nome.
 	 * @param numeroDeRegistrosPorBucket Numero de registros por bucket caso o arquivo
 	 * não tenha sido criado ainda.
+	 * @param quantidadeMaximaDeBytesParaAChave Tamanho máximo que a chave pode gastar.
+	 * @param quantidadeMaximaDeBytesParaODado Tamanho máximo que o dado pode gastar.
+	 * @param construtorDaChave Construtor da chave. É necessário que a chave tenha um
+	 * construtor sem parâmetros.
+	 * @param construtorDoDado Construtor do dado. É necessário que o dado tenha um
+	 * construtor sem parâmetros.
 	 */
 	
 	public Buckets(
@@ -155,30 +161,59 @@ public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extend
 		return registrosPorBucket;
 	}
 	
-	private int inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado, Bucket bucket)
+	/**
+	 * Tenta inserir a chave e o dado no bucket.
+	 * 
+	 * @param chave Chave a ser inserida.
+	 * @param dado Dado que corresponde à chave.
+	 * @param bucket Bucket para inserção.
+	 * 
+	 * @return {@code -1} se algum dos parâmetros forem {@code null};
+	 * {@code 0} se o bucket estiver cheio e {@code 1} se a inserção
+	 * for bem sucedida.
+	 */
+	
+	private int inserir(
+		TIPO_DAS_CHAVES chave,
+		TIPO_DOS_DADOS dado,
+		Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> bucket)
 	{
 		int resultado = -1;
 		
 		if (chave != null && dado != null && bucket != null)
 		{
-			bucket.inserir()
+			resultado = ( bucket.inserir(chave, dado) ? 1 : 0 );
 		}
 		
 		return resultado;
 	}
 	
+	/**
+	 * Tenta inserir a chave e o dado no bucket.
+	 * 
+	 * @param chave Chave a ser inserida.
+	 * @param dado Dado que corresponde à chave.
+	 * @param enderecoDoBucket Endereço do bucket no arquivo dos buckets.
+	 * 
+	 * @return {@code -1} se algum dos parâmetros forem {@code null}, ou
+	 * o endereço do bucket for <= -1 ou o arquivo dos buckets não estiver
+	 * disponível; {@code 0} se o bucket estiver cheio e {@code 1} se a
+	 * inserção for bem sucedida.
+	 */
+	
 	public int inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado, long enderecoDoBucket)
 	{
 		int resultado = -1;
 		
-		if (chave != null && dado != null && enderecoDoBucket > -1 && arquivoDisponivel())
+		if (enderecoDoBucket > -1 && arquivoDisponivel())
 		{
 			try
 			{
 				arquivoDosBuckets.seek(enderecoDoBucket);
 				
 				bucket.lerObjeto(arquivoDosBuckets);
-				bucket.inserir()
+				
+				resultado = inserir(chave, dado, bucket);
 			}
 			
 			catch (IOException ioex)

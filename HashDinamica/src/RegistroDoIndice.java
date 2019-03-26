@@ -9,9 +9,12 @@ import java.lang.reflect.InvocationTargetException;
 
 public class RegistroDoIndice<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends Serializavel> implements Serializavel
 {
-	private char lapide;
-	private TIPO_DAS_CHAVES chave;
-	private TIPO_DOS_DADOS dado;
+	public static final char REGISTRO_ATIVADO = ' ';
+	public static final char REGISTRO_DESATIVADO = '*';
+	
+	protected char lapide;
+	protected TIPO_DAS_CHAVES chave;
+	protected TIPO_DOS_DADOS dado;
 	private short quantidadeMaximaDeBytesParaAChave;
 	private short quantidadeMaximaDeBytesParaODado;
 	Constructor<TIPO_DAS_CHAVES> construtorDaChave;
@@ -113,13 +116,22 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DAD
 	}
 
 	@Override
-	public void lerBytes(byte[] bytes)
+	public void escreverObjeto(byte[] correnteDeSaida, int deslocamento)
+	{
+		byte[] bytes = obterBytes();
+		
+		System.arraycopy(bytes, 0, correnteDeSaida, deslocamento, bytes.length);
+	}
+
+	@Override
+	public void lerBytes(byte[] bytes, int deslocamento)
 	{
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
 		DataInputStream dataInputStream = new DataInputStream(byteArrayInputStream);
 		
 		try
 		{
+			dataInputStream.skipBytes(deslocamento);
 			lapide = dataInputStream.readChar();
 			
 			byte[] byteArrayChave = new byte[quantidadeMaximaDeBytesParaAChave];
@@ -165,5 +177,11 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DAD
 		{
 			ioex.printStackTrace();
 		}
+	}
+
+	@Override
+	public void lerBytes(byte[] bytes)
+	{
+		lerBytes(bytes, 0);
 	}
 }

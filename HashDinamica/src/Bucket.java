@@ -1,7 +1,5 @@
 import java.io.ByteArrayInputStream;
-import java.io.DataInputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.RandomAccessFile;
 import java.lang.reflect.Constructor;
 
@@ -13,6 +11,8 @@ import java.lang.reflect.Constructor;
 
 public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends Serializavel> implements Serializavel
 {
+	public static final int DESLOCAMENTO_CABECALHO = Byte.BYTES;
+	
 	private byte profundidadeLocal;
 	private int numeroDeRegistrosPorBucket;
 	RegistroDoIndice<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> registroDoIndice;
@@ -51,11 +51,39 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 			numeroDeRegistrosPorBucket * registroDoIndice.obterTamanhoMaximoEmBytes();
 	}
 	
-	protected int inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)
+	/**
+	 * Tenta inserir a chave e o dado no bucket.
+	 * 
+	 * @param chave Chave a ser inserida.
+	 * @param dado Dado que corresponde à chave.
+	 * 
+	 * @return {@code false} se não for possível (bucket cheio).
+	 * Caso contrário, retorna {@code true}.
+	 */
+	
+	protected boolean inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)
 	{
-		int success = 1;
+		boolean success = false;
+		int deslocamento = DESLOCAMENTO_CABECALHO;
+		int tamanhoDeUmRegistro = registroDoIndice.obterTamanhoMaximoEmBytes();
 		
-		
+		for (int i = 0; i < numeroDeRegistrosPorBucket; i++)
+		{
+			deslocamento += i * tamanhoDeUmRegistro;
+			
+			registroDoIndice.lerBytes(bucket, deslocamento);
+			
+			if (registroDoIndice.lapide == RegistroDoIndice.REGISTRO_DESATIVADO)
+			{
+				registroDoIndice.lapide = RegistroDoIndice.REGISTRO_ATIVADO;
+				registroDoIndice.chave = chave;
+				registroDoIndice.dado = dado;
+				
+				registroDoIndice.escreverObjeto(bucket, deslocamento);
+				
+				success = true;
+			}
+		}
 		
 		return success;
 	}
@@ -105,10 +133,38 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 	{
 		return bucket;
 	}
-	
+
+	@Override
+	public void escreverObjeto(byte[] correnteDeSaida, int deslocamento)
+	{
+		byte[] bytes = obterBytes();
+		
+		System.arraycopy(bytes, 0, correnteDeSaida, deslocamento, bytes.length);
+	}
+
+	@Override
+	public void lerBytes(byte[] bytes, int deslocamento)
+	{
+		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
+		
+		try
+		{
+			byteArrayInputStream.skip(deslocamento);
+			
+			byteArrayInputStream.read(bucket);
+			
+			byteArrayInputStream.close();
+		}
+		
+		catch (IOException ioex)
+		{
+			ioex.printStackTrace();
+		}
+	}
+
 	@Override
 	public void lerBytes(byte[] bytes)
 	{
-		this.bucket = bytes;
+		lerBytes(bytes, 0);
 	}
 }

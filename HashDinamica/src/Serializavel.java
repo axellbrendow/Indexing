@@ -29,6 +29,25 @@ public interface Serializavel
 	byte[] obterBytes();
 	
 	/**
+	 * Escreve os bytes do objeto na {@code correnteDeSaida}
+	 * a partir de um deslocamento.
+	 * 
+	 * @param correnteDeSaida Corrente de saída dos bytes.
+	 */
+	
+	void escreverObjeto(byte[] correnteDeSaida, int deslocamento);
+	
+	/**
+	 * Lê os bytes do objeto do vetor a partir de um
+	 * deslocamento.
+	 * 
+	 * @param bytes Vetor com os bytes do objeto.
+	 * @param offsetFromStart Deslocamento em relação ao início.
+	 */
+	
+	void lerBytes(byte[] bytes, int deslocamento);
+	
+	/**
 	 * Lê os bytes do objeto do vetor.
 	 * 
 	 * @param bytes Vetor com os bytes do objeto.

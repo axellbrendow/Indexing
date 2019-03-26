@@ -44,6 +44,13 @@ public class HashDinamica<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS e
 			if (enderecoDoBucket != -1)
 			{
 				int resultado = buckets.inserir(chave, dado, enderecoDoBucket);
+				
+				if (resultado == 0) // bucket cheio
+				{
+					// duplicar o tamanho do diretório
+					// reorganizar os elementos dos buckets
+					// inserir o elemento
+				}
 			}
 		}
 		
