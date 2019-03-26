@@ -7,16 +7,35 @@ import java.lang.reflect.Constructor;
  * Classe que gerencia um bucket específico.
  * 
  * @author Axell Brendow ( https://github.com/axell-brendow )
+ *
+ * @param <TIPO_DAS_CHAVES> Classe da chave.
+ * @param <TIPO_DOS_DADOS> Classe do dado.
  */
 
 public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends Serializavel> implements Serializavel
 {
+	private static final byte PROFUNDIDADE_LOCAL_PADRAO = 1;
+	// o cabeçalho do bucket é apenas a profundidade local até o momento
 	public static final int DESLOCAMENTO_CABECALHO = Byte.BYTES;
 	
 	private byte profundidadeLocal;
 	private int numeroDeRegistrosPorBucket;
 	RegistroDoIndice<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> registroDoIndice;
 	byte[] bucket;
+	
+	/**
+	 * Cria um objeto que gerencia um bucket da hash dinâmica.
+	 * 
+	 * @param profundidadeLocal Profundidade local inicial.
+	 * @param numeroDeRegistrosPorBucket Numero de registros por bucket caso o arquivo
+	 * não tenha sido criado ainda.
+	 * @param quantidadeMaximaDeBytesParaAChave Tamanho máximo que a chave pode gastar.
+	 * @param quantidadeMaximaDeBytesParaODado Tamanho máximo que o dado pode gastar.
+	 * @param construtorDaChave Construtor da chave. É necessário que a chave tenha um
+	 * construtor sem parâmetros.
+	 * @param construtorDoDado Construtor do dado. É necessário que o dado tenha um
+	 * construtor sem parâmetros.
+	 */
 	
 	public Bucket(
 		byte profundidadeLocal,
@@ -37,6 +56,38 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 				construtorDaChave,
 				construtorDoDado
 			);
+		
+		iniciarBucket();
+	}
+	
+	/**
+	 * Cria um objeto que gerencia um bucket da hash dinâmica. A profundidade local
+	 * inicial para o bucket será {@link #PROFUNDIDADE_LOCAL_PADRAO}.
+	 * 
+	 * @param numeroDeRegistrosPorBucket Numero de registros por bucket caso o arquivo
+	 * não tenha sido criado ainda.
+	 * @param quantidadeMaximaDeBytesParaAChave Tamanho máximo que a chave pode gastar.
+	 * @param quantidadeMaximaDeBytesParaODado Tamanho máximo que o dado pode gastar.
+	 * @param construtorDaChave Construtor da chave. É necessário que a chave tenha um
+	 * construtor sem parâmetros.
+	 * @param construtorDoDado Construtor do dado. É necessário que o dado tenha um
+	 * construtor sem parâmetros.
+	 */
+	
+	public Bucket(
+		int numeroDeRegistrosPorBucket,
+		short quantidadeMaximaDeBytesParaAChave,
+		short quantidadeMaximaDeBytesParaODado,
+		Constructor<TIPO_DAS_CHAVES> construtorDaChave,
+		Constructor<TIPO_DOS_DADOS> construtorDoDado)
+	{
+		this(
+			PROFUNDIDADE_LOCAL_PADRAO,
+			numeroDeRegistrosPorBucket,
+			quantidadeMaximaDeBytesParaAChave,
+			quantidadeMaximaDeBytesParaODado,
+			construtorDaChave,
+			construtorDoDado);
 	}
 	
 	/**
@@ -49,6 +100,31 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 	{
 		return Byte.BYTES + // tamanho da profundidade local
 			numeroDeRegistrosPorBucket * registroDoIndice.obterTamanhoMaximoEmBytes();
+	}
+	
+	/**
+	 * Aloca o espaço máximo que um bucket pode gastar em bytes e já inicia os
+	 * registros do bucket como desativados, além de colocar também a profundidade
+	 * local do bucket no primeiro byte.
+	 * 
+	 * <p>Ilustração da estrutura de um bucket:</p>
+	 * 
+	 * <b>[ profundidade local (byte), registros... ({@link RegistroDoIndice}) ]</b>
+	 */
+	
+	private void iniciarBucket()
+	{
+		bucket = new byte[obterTamanhoDeUmBucket()];
+		bucket[0] = profundidadeLocal;
+		
+		int tamanhoDeUmRegistro = registroDoIndice.obterTamanhoMaximoEmBytes();
+		int deslocamento = DESLOCAMENTO_CABECALHO;
+		
+		// desativa todos os registros no bucket
+		for (int i = 0; i < numeroDeRegistrosPorBucket; i++)
+		{
+			bucket[deslocamento + i * tamanhoDeUmRegistro] = RegistroDoIndice.REGISTRO_DESATIVADO;
+		}
 	}
 	
 	/**

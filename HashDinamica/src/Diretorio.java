@@ -6,6 +6,8 @@ import java.util.function.Function;
  * Classe para gerenciamento do diretório de uma hash dinâmica.
  * 
  * @author Axell Brendow ( https://github.com/axell-brendow )
+ *
+ * @param <TIPO_DAS_CHAVES> Classe da chave.
  */
 
 public class Diretorio<TIPO_DAS_CHAVES extends Serializavel>

@@ -1,5 +1,14 @@
 import java.io.RandomAccessFile;
 
+/**
+ * Interface para padronização da forma de serializar objetos.
+ * 
+ * @author Axell Brendow ( https://github.com/axell-brendow )
+ * 
+ * @see <a href="https://pt.wikipedia.org/wiki/Serializa%C3%A7%C3%A3o">
+ * Serialização – Wikipédia, a enciclopédia livre</a>
+ */
+
 public interface Serializavel
 {
 	/**

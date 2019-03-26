@@ -2,6 +2,8 @@ import java.io.FileNotFoundException;
 import java.io.RandomAccessFile;
 
 /**
+ * Classe para manuseamento de entrada e saída.
+ * 
  * @author Axell Brendow ( https://github.com/axell-brendow )
  */
 

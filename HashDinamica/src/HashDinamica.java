@@ -5,6 +5,9 @@ import java.util.function.Function;
  * Estrutura de hashing dinâmico para indexamento de registros.
  * 
  * @author Axell Brendow ( https://github.com/axell-brendow )
+ *
+ * @param <TIPO_DAS_CHAVES> Classe da chave.
+ * @param <TIPO_DOS_DADOS> Classe do dado.
  */
 
 public class HashDinamica<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends Serializavel>

@@ -7,6 +7,15 @@ import java.io.RandomAccessFile;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
+/**
+ * Classe utilitária para manusear os registros de indices em um bucket.
+ * 
+ * @author Axell Brendow ( https://github.com/axell-brendow )
+ *
+ * @param <TIPO_DAS_CHAVES> Classe da chave.
+ * @param <TIPO_DOS_DADOS> Classe do dado.
+ */
+
 public class RegistroDoIndice<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends Serializavel> implements Serializavel
 {
 	public static final char REGISTRO_ATIVADO = ' ';
@@ -19,6 +28,20 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DAD
 	private short quantidadeMaximaDeBytesParaODado;
 	Constructor<TIPO_DAS_CHAVES> construtorDaChave;
 	Constructor<TIPO_DOS_DADOS> construtorDoDado;
+	
+	/**
+	 * Cria um objeto que gerencia um registro de indice no bucket da hash dinâmica.
+	 * 
+	 * @param lapide Lapide do registro.
+	 * @param chave Chave do registro.
+	 * @param dado Dado que corresponde à chave.
+	 * @param quantidadeMaximaDeBytesParaAChave Tamanho máximo que a chave pode gastar.
+	 * @param quantidadeMaximaDeBytesParaODado Tamanho máximo que o dado pode gastar.
+	 * @param construtorDaChave Construtor da chave. É necessário que a chave tenha um
+	 * construtor sem parâmetros.
+	 * @param construtorDoDado Construtor do dado. É necessário que o dado tenha um
+	 * construtor sem parâmetros.
+	 */
 	
 	public RegistroDoIndice(
 		char lapide,

@@ -6,12 +6,13 @@ import java.lang.reflect.Constructor;
  * Classe que gerencia os buckets de uma hash dinâmica.
  * 
  * @author Axell Brendow ( https://github.com/axell-brendow )
+ *
+ * @param <TIPO_DAS_CHAVES> Classe da chave.
+ * @param <TIPO_DOS_DADOS> Classe do dado.
  */
 
 public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends Serializavel>
 {
-	private static final byte PROFUNDIDADE_LOCAL_PADRAO = 1;
-	
 	RandomAccessFile arquivoDosBuckets;
 	Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> bucket;
 	int numeroDeRegistrosPorBucket;
@@ -46,7 +47,6 @@ public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extend
 			this.numeroDeRegistrosPorBucket = lerNumeroDeRegistrosPorBucket();
 			
 			this.bucket = new Bucket<>(
-				PROFUNDIDADE_LOCAL_PADRAO,
 				numeroDeRegistrosPorBucket,
 				quantidadeMaximaDeBytesParaAChave,
 				quantidadeMaximaDeBytesParaODado,
