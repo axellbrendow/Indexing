@@ -12,8 +12,11 @@ import java.util.function.Function;
 
 public class Diretorio<TIPO_DAS_CHAVES extends Serializavel>
 {
-	private final int DESLOCAMENTO_DO_CABECALHO = Byte.BYTES; // bytes para a profundidade global
-	private final int TAMANHO_DOS_ENDERECOS = Long.BYTES; // bytes para cada endereço de bucket
+	// bytes para a profundidade global
+	private static final int DESLOCAMENTO_DO_CABECALHO = Byte.BYTES;
+	// bytes para cada endereço de bucket (para cada ponteiro)
+	private static final int TAMANHO_DOS_ENDERECOS = Long.BYTES;
+	private static final byte PROFUNDIDADE_GLOBAL_PADRAO = 1;
 	
 	private RandomAccessFile arquivoDoDiretorio;
 	private byte profundidadeGlobal;
@@ -37,9 +40,10 @@ public class Diretorio<TIPO_DAS_CHAVES extends Serializavel>
 		
 		if (this.profundidadeGlobal < 1)
 		{
-			this.profundidadeGlobal =
-				escreverProfundidadeGlobal((byte) 1);
+			this.profundidadeGlobal = PROFUNDIDADE_GLOBAL_PADRAO;
 		}
+		
+		iniciarDiretorio();
 	}
 	
 	/**
@@ -53,6 +57,30 @@ public class Diretorio<TIPO_DAS_CHAVES extends Serializavel>
 	{
 		return arquivoDoDiretorio != null &&
 			arquivoDoDiretorio.getChannel().isOpen();
+	}
+	
+	/**
+	 * Este método escreve a profundidade global do diretório no arquivo e,
+	 * em seguida, escreve o primeiro ponteiro para o primeiro bucket.
+	 */
+	
+	private void iniciarDiretorio()
+	{
+		if (arquivoDisponivel())
+		{
+			try
+			{
+				arquivoDoDiretorio.seek(0);
+				arquivoDoDiretorio.writeByte(profundidadeGlobal);
+				// o endereço do primeiro bucket no arquivo dos buckets é 0
+				arquivoDoDiretorio.writeLong(0);
+			}
+			
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	/**
@@ -108,40 +136,6 @@ public class Diretorio<TIPO_DAS_CHAVES extends Serializavel>
 	}
 	
 	/**
-	 * Escreve a profundidade global no cabeçalho do arquivo do diretório. 
-	 * 
-	 * @param profundidadeGlobal Profundidade global a ser colocada no
-	 * cabeçalho do arquivo do diretório.
-	 * 
-	 * @return 0 se o arquivo do diretório não estiver disponível ou
-	 * se {@code profundidadeGlobal} &lt= 0. Caso contrário, retorna
-	 * {@code profundidadeGlobal}.
-	 */
-	
-	private byte escreverProfundidadeGlobal(byte profundidadeGlobal)
-	{
-		byte profundidade = 0;
-		
-		if (arquivoDisponivel() && profundidadeGlobal > 0)
-		{
-			profundidade = profundidadeGlobal;
-			
-			try
-			{
-				arquivoDoDiretorio.seek(0);
-				arquivoDoDiretorio.writeByte(profundidadeGlobal);
-			}
-			
-			catch (IOException ioex)
-			{
-				ioex.printStackTrace();
-			}
-		}
-		
-		return profundidade;
-	}
-	
-	/**
 	 * Obtém o tamanho do diretório com base na sua profundidade global.
 	 * 
 	 * @return tamanho do diretório.
@@ -150,6 +144,38 @@ public class Diretorio<TIPO_DAS_CHAVES extends Serializavel>
 	private int obterTamanhoDoDiretorio()
 	{
 		return (int) Math.pow(profundidadeGlobal, 2);
+	}
+	
+	/**
+	 * Duplica o tamanho do diretório duplicando também os ponteiros.
+	 */
+	
+	protected void duplicar()
+	{
+		int tamanhoDoDiretorio = obterTamanhoDoDiretorio();
+		long[] ponteiros = new long[tamanhoDoDiretorio];
+		
+		try
+		{
+			arquivoDoDiretorio.seek(DESLOCAMENTO_DO_CABECALHO);
+			
+			for (int i = 0; i < tamanhoDoDiretorio; i++)
+			{
+				ponteiros[i] = arquivoDoDiretorio.readLong();
+			}
+			
+			for (int i = 0; i < tamanhoDoDiretorio; i++)
+			{
+				arquivoDoDiretorio.writeLong(ponteiros[i]);
+			}
+		}
+		
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		
+		profundidadeGlobal *= 2;
 	}
 	
 	/**

@@ -1,8 +1,6 @@
 import java.lang.reflect.Constructor;
 import java.util.function.Function;
 
-import com.sun.net.httpserver.Authenticator.Success;
-
 /**
  * Estrutura de hashing dinâmico para indexamento de registros.
  * 
