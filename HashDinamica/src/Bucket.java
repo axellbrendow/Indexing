@@ -51,6 +51,15 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 			numeroDeRegistrosPorBucket * registroDoIndice.obterTamanhoMaximoEmBytes();
 	}
 	
+	protected int inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)
+	{
+		int success = 1;
+		
+		
+		
+		return success;
+	}
+	
 	@Override
 	public void escreverObjeto(RandomAccessFile correnteDeSaida)
 	{
