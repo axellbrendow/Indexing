@@ -15,7 +15,7 @@ public class Diretorio<TIPO_DAS_CHAVES extends Serializavel>
 	// bytes para a profundidade global
 	private static final int DESLOCAMENTO_DO_CABECALHO = Byte.BYTES;
 	// bytes para cada endereço de bucket (para cada ponteiro)
-	private static final int TAMANHO_DOS_ENDERECOS = Long.BYTES;
+	private static final int TAMANHO_DOS_PONTEIROS = Long.BYTES;
 	private static final byte PROFUNDIDADE_GLOBAL_PADRAO = 1;
 	
 	private RandomAccessFile arquivoDoDiretorio;
@@ -118,21 +118,48 @@ public class Diretorio<TIPO_DAS_CHAVES extends Serializavel>
 	{
 		byte profundidade = 0;
 		
+		try
+		{
+			if (arquivoDisponivel() && arquivoDoDiretorio.length() >= DESLOCAMENTO_DO_CABECALHO)
+			{
+				arquivoDoDiretorio.seek(0);
+				profundidade = arquivoDoDiretorio.readByte();
+			}
+		}
+		
+		catch (IOException ioex)
+		{
+			ioex.printStackTrace();
+		}
+		
+		return profundidade;
+	}
+	
+	/**
+	 * Escreve a profundidade global informada no cabeçalho do arquivo do diretório.
+	 * 
+	 * @param profundidadeGlobal Profundidade global a ser escrita.
+	 * 
+	 * @return {@code profundidadeGlobal}.
+	 */
+	
+	private byte escreverProfundidadeGlobal(byte profundidadeGlobal)
+	{
 		if (arquivoDisponivel())
 		{
 			try
 			{
 				arquivoDoDiretorio.seek(0);
-				profundidade = arquivoDoDiretorio.readByte();
+				arquivoDoDiretorio.writeByte(profundidadeGlobal);
 			}
 			
-			catch (IOException ioex)
+			catch (IOException e)
 			{
-				ioex.printStackTrace();
+				e.printStackTrace();
 			}
 		}
 		
-		return profundidade;
+		return profundidadeGlobal;
 	}
 	
 	/**
@@ -152,30 +179,24 @@ public class Diretorio<TIPO_DAS_CHAVES extends Serializavel>
 	
 	protected void duplicar()
 	{
-		int tamanhoDoDiretorio = obterTamanhoDoDiretorio();
-		long[] ponteiros = new long[tamanhoDoDiretorio];
-		
-		try
+		if (arquivoDisponivel())
 		{
-			arquivoDoDiretorio.seek(DESLOCAMENTO_DO_CABECALHO);
+			int tamanhoDoDiretorio = obterTamanhoDoDiretorio();
+			byte[] ponteiros = new byte[tamanhoDoDiretorio * TAMANHO_DOS_PONTEIROS];
 			
-			for (int i = 0; i < tamanhoDoDiretorio; i++)
+			try
 			{
-				ponteiros[i] = arquivoDoDiretorio.readLong();
+				arquivoDoDiretorio.seek(0);
+				arquivoDoDiretorio.writeByte(++profundidadeGlobal);
+				arquivoDoDiretorio.read(ponteiros);
+				arquivoDoDiretorio.write(ponteiros);
 			}
 			
-			for (int i = 0; i < tamanhoDoDiretorio; i++)
+			catch (IOException e)
 			{
-				arquivoDoDiretorio.writeLong(ponteiros[i]);
+				e.printStackTrace();
 			}
 		}
-		
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-		
-		profundidadeGlobal *= 2;
 	}
 	
 	/**
@@ -201,26 +222,26 @@ public class Diretorio<TIPO_DAS_CHAVES extends Serializavel>
 	}
 	
 	/**
-	 * Obtem o ponteiro para o bucket no arquivo dos buckets.
+	 * Obtem um ponteiro para um bucket no arquivo dos buckets.
 	 * 
-	 * @param indiceDoBucket Indice do bucket no diretório.
+	 * @param indiceDoPonteiro Indice do ponteiro no diretório.
 	 * 
-	 * @return ponteiro para o bucket no arquivo dos buckets.
+	 * @return um ponteiro para um bucket no arquivo dos buckets.
 	 */
 	
-	private long obterEndereco(int indiceDoBucket)
+	private long obterEndereco(int indiceDoPonteiro)
 	{
 		long endereco = -1;
 		
-		if (indiceDoBucket > -1 &&
-			indiceDoBucket < obterTamanhoDoDiretorio() &&
+		if (indiceDoPonteiro > -1 &&
+			indiceDoPonteiro < obterTamanhoDoDiretorio() &&
 			arquivoDisponivel())
 		{
 			try
 			{
 				arquivoDoDiretorio.seek(
 					DESLOCAMENTO_DO_CABECALHO +
-					indiceDoBucket * TAMANHO_DOS_ENDERECOS);
+					indiceDoPonteiro * TAMANHO_DOS_PONTEIROS);
 				
 				endereco = arquivoDoDiretorio.readLong();
 			}

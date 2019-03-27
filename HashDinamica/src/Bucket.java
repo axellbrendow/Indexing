@@ -4,8 +4,6 @@ import java.io.RandomAccessFile;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.function.BiFunction;
-import java.util.function.DoubleFunction;
-import java.util.function.Function;
 
 /**
  * Classe que gerencia um bucket específico.
@@ -18,9 +16,11 @@ import java.util.function.Function;
 
 public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends Serializavel> implements Serializavel
 {
-	private static final byte PROFUNDIDADE_LOCAL_PADRAO = 1;
 	// o cabeçalho do bucket é apenas a profundidade local até o momento
 	public static final int DESLOCAMENTO_CABECALHO = Byte.BYTES;
+	
+	private static final byte PADRAO_PROFUNDIDADE_LOCAL = 1;
+	protected static final byte PADRAO_NUMERO_DE_REGISTROS_POR_BUCKET = 10;
 	
 	private byte profundidadeLocal;
 	private int numeroDeRegistrosPorBucket;
@@ -49,8 +49,11 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 		Constructor<TIPO_DAS_CHAVES> construtorDaChave,
 		Constructor<TIPO_DOS_DADOS> construtorDoDado)
 	{
-		this.profundidadeLocal = profundidadeLocal;
-		this.numeroDeRegistrosPorBucket = numeroDeRegistrosPorBucket;
+		this.profundidadeLocal =
+			( profundidadeLocal < 1 ? PADRAO_PROFUNDIDADE_LOCAL : profundidadeLocal );
+		this.numeroDeRegistrosPorBucket =
+			( numeroDeRegistrosPorBucket < 1 ?
+				PADRAO_NUMERO_DE_REGISTROS_POR_BUCKET : numeroDeRegistrosPorBucket );
 		
 		this.registroDoIndice =
 			new RegistroDoIndice<>(
@@ -86,7 +89,7 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 		Constructor<TIPO_DOS_DADOS> construtorDoDado)
 	{
 		this(
-			PROFUNDIDADE_LOCAL_PADRAO,
+			PADRAO_PROFUNDIDADE_LOCAL,
 			numeroDeRegistrosPorBucket,
 			quantidadeMaximaDeBytesParaAChave,
 			quantidadeMaximaDeBytesParaODado,
@@ -127,7 +130,9 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 		// desativa todos os registros no bucket
 		for (int i = 0; i < numeroDeRegistrosPorBucket; i++)
 		{
-			bucket[deslocamento + i * tamanhoDeUmRegistro] = RegistroDoIndice.REGISTRO_DESATIVADO;
+			deslocamento += i * tamanhoDeUmRegistro;
+			
+			bucket[deslocamento] = RegistroDoIndice.REGISTRO_DESATIVADO;
 		}
 	}
 	

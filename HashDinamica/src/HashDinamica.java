@@ -77,7 +77,7 @@ public class HashDinamica<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS e
 			
 			if (resultado == 0) // bucket cheio
 			{
-				// duplicar o tamanho do diretório
+				diretorio.duplicar();
 				// reorganizar os elementos dos buckets
 				// inserir o elemento
 				

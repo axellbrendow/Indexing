@@ -13,6 +13,9 @@ import java.lang.reflect.Constructor;
 
 public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends Serializavel>
 {
+	// o cabeçalho do arquivo dos buckets é a quantidade de registros por bucket (int)
+	private static final int DESLOCAMENTO_CABECALHO = Integer.BYTES;
+	
 	RandomAccessFile arquivoDosBuckets;
 	Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> bucket;
 	int numeroDeRegistrosPorBucket;
@@ -44,7 +47,20 @@ public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extend
 			quantidadeMaximaDeBytesParaODado > 0)
 		{
 			arquivoDosBuckets = IO.openFile(nomeDoArquivoDosBuckets, "rw");
-			this.numeroDeRegistrosPorBucket = lerNumeroDeRegistrosPorBucket();
+			this.numeroDeRegistrosPorBucket = lerNumeroDeRegistrosPorBucket(); // tenta recuperar do arquivo
+			
+			if (this.numeroDeRegistrosPorBucket < 1)
+			{
+				if (numeroDeRegistrosPorBucket < 1)
+				{
+					this.numeroDeRegistrosPorBucket = Bucket.PADRAO_NUMERO_DE_REGISTROS_POR_BUCKET;
+				}
+				
+				else
+				{
+					this.numeroDeRegistrosPorBucket = numeroDeRegistrosPorBucket;
+				}
+			}
 			
 			this.bucket = new Bucket<>(
 				numeroDeRegistrosPorBucket,
@@ -53,11 +69,7 @@ public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extend
 				construtorDaChave,
 				construtorDoDado);
 			
-			if (this.numeroDeRegistrosPorBucket < 1)
-			{
-				this.numeroDeRegistrosPorBucket =
-					escreverNumeroDeRegistrosPorBucket(numeroDeRegistrosPorBucket);
-			}
+			escreverNumeroDeRegistrosPorBucket(this.numeroDeRegistrosPorBucket);
 		}
 	}
 	
@@ -109,18 +121,18 @@ public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extend
 	{
 		int numeroDeRegistrosPorBucket = 0;
 		
-		if (arquivoDisponivel())
+		try
 		{
-			try
+			if (arquivoDisponivel() && arquivoDosBuckets.length() >= Integer.BYTES)
 			{
 				arquivoDosBuckets.seek(0);
 				numeroDeRegistrosPorBucket = arquivoDosBuckets.readInt();
 			}
-			
-			catch (IOException ioex)
-			{
-				ioex.printStackTrace();
-			}
+		}
+		
+		catch (IOException e)
+		{
+			e.printStackTrace();
 		}
 		
 		return numeroDeRegistrosPorBucket;
