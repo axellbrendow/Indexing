@@ -46,6 +46,11 @@ public class Diretorio<TIPO_DAS_CHAVES extends Serializavel>
 		iniciarDiretorio();
 	}
 	
+	public byte obterProfundidadeGlobal()
+	{
+		return profundidadeGlobal;
+	}
+	
 	/**
 	 * Checa se o arquivo do diretório está disponível para uso.
 	 * 
@@ -253,6 +258,19 @@ public class Diretorio<TIPO_DAS_CHAVES extends Serializavel>
 		}
 		
 		return endereco;
+	}
+	
+	/**
+	 * Acha o indice do ponteiro para o bucket onde a chave deve ficar.
+	 * 
+	 * @param chave Chave de referência.
+	 * 
+	 * @return o indice do ponteiro para o bucket onde a chave deve ficar.
+	 */
+	
+	public int obterIndiceDoPonteiroParaOBucket(TIPO_DAS_CHAVES chave)
+	{
+		return hash(chave);
 	}
 	
 	/**

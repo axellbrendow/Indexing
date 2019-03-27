@@ -180,14 +180,15 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 	 * @param chave Chave a ser inserida.
 	 * @param dado Dado que corresponde à chave.
 	 * 
-	 * @return {@code 0} se o bucket estiver cheio;
-	 * {@code -1} se o par (chave, dado) já existe;
-	 * {@code 1} se tudo correr bem.
+	 * @return a profundidade local do bucket se
+	 * ele estiver cheio;
+	 * {@code -1} se tudo correr bem;
+	 * {@code -2} se o par (chave, dado) já existe.
 	 */
 	
 	protected int inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)
 	{
-		return percorrerRegistros(
+		int resultado = percorrerRegistros(
 			(registro, deslocamento) ->
 			{
 				int status = 0; // indica que o processo deve continuar
@@ -199,19 +200,21 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 					registro.dado = dado;
 					
 					registro.escreverObjeto(bucket, deslocamento);
-					status = 1; // término com êxito, registro inserido
+					status = -1; // término com êxito, registro inserido
 				}
 				
 				if (registro.lapide == RegistroDoIndice.REGISTRO_ATIVADO &&
 					registro.chave.equals(chave) &&
 					registro.dado.equals(dado))
 				{
-					status = -1; // término com problema, registro já existe
+					status = -2; // término com problema, registro já existe
 				}
 				
 				return status;
 			}
 		);
+		
+		return ( resultado == 0 ? profundidadeLocal : resultado );
 	}
 	
 	/**

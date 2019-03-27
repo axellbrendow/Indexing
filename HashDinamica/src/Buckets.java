@@ -180,10 +180,11 @@ public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extend
 	 * @param dado Dado que corresponde à chave.
 	 * @param bucket Bucket para inserção.
 	 * 
-	 * @return {@code -2} se algum dos parâmetros forem {@code null};
-	 * {@code 0} se o bucket estiver cheio;
-	 * {@code -1} se o par (chave, dado) já existe;
-	 * {@code 1} se tudo correr bem.
+	 * @return a profundidade local do bucket se
+	 * ele estiver cheio;
+	 * {@code -1} se tudo correr bem;
+	 * {@code -2} se o par (chave, dado) já existe;
+	 * {@code -3} se algum dos parâmetros forem {@code null}.
 	 */
 	
 	private int inserir(
@@ -191,7 +192,7 @@ public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extend
 		TIPO_DOS_DADOS dado,
 		Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> bucket)
 	{
-		int resultado = -2;
+		int resultado = -3;
 		
 		if (chave != null && dado != null && bucket != null)
 		{
@@ -208,17 +209,18 @@ public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extend
 	 * @param dado Dado que corresponde à chave.
 	 * @param enderecoDoBucket Endereço do bucket no arquivo dos buckets.
 	 * 
-	 * @return {@code -3} se o endereço do bucket for <= -1 ou se
-	 * o arquivo dos buckets não estiver disponível;
-	 * {@code -2} se algum dos parâmetros forem {@code null};
-	 * {@code 0} se o bucket estiver cheio;
-	 * {@code -1} se o par (chave, dado) já existe;
-	 * {@code 1} se tudo correr bem.
+	 * @return a profundidade local do bucket se
+	 * ele estiver cheio;
+	 * {@code -1} se tudo correr bem;
+	 * {@code -2} se o par (chave, dado) já existe;
+	 * {@code -3} se algum dos parâmetros forem {@code null}.
+	 * {@code -4} se o endereço do bucket for <= -1 ou se o
+	 * arquivo dos buckets não estiver disponível.
 	 */
 	
 	public int inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado, long enderecoDoBucket)
 	{
-		int resultado = -3;
+		int resultado = -4;
 		
 		if (enderecoDoBucket > -1 && arquivoDisponivel())
 		{
