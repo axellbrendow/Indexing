@@ -2,6 +2,10 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+import java.util.function.BiFunction;
+import java.util.function.DoubleFunction;
+import java.util.function.Function;
 
 /**
  * Classe que gerencia um bucket específico.
@@ -128,40 +132,109 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 	}
 	
 	/**
+	 * Percorre todos os registros do bucket aplicando um método
+	 * em cada um deles. Esse método deve retornar um valor inteiro
+	 * que indica se o procedimento deve parar ou não. O retorno
+	 * 0 indica que o processo deve continuar, qualquer retorno
+	 * diferente termina o processo. O segundo parâmetro que o método
+	 * recebe é o deslocamento em relação ao início do arranjo
+	 * {@code bucket} em que o registro está.
+	 * 
+	 * @param metodo Método a ser aplicado em cada registro.
+	 * 
+	 * @return {@code true} se o método retornar {@code true} uma
+	 * vez. Caso contrário, {@code false}.
+	 */
+	
+	public int percorrerRegistros(
+		BiFunction<RegistroDoIndice<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>, Integer, Integer> metodo)
+	{
+		int condicao = 0;
+		
+		if (metodo != null)
+		{
+			int deslocamento = DESLOCAMENTO_CABECALHO;
+			int tamanhoDeUmRegistro = registroDoIndice.obterTamanhoMaximoEmBytes();
+			
+			for (int i = 0; condicao == 0 && i < numeroDeRegistrosPorBucket; i++)
+			{
+				deslocamento += i * tamanhoDeUmRegistro;
+				
+				registroDoIndice.lerBytes(bucket, deslocamento);
+				
+				condicao = metodo.apply(registroDoIndice, deslocamento);
+			}
+		}
+		
+		return condicao;
+	}
+	
+	/**
 	 * Tenta inserir a chave e o dado no bucket.
 	 * 
 	 * @param chave Chave a ser inserida.
 	 * @param dado Dado que corresponde à chave.
 	 * 
-	 * @return {@code false} se não for possível (bucket cheio).
-	 * Caso contrário, retorna {@code true}.
+	 * @return {@code 0} se o bucket estiver cheio;
+	 * {@code -1} se o par (chave, dado) já existe;
+	 * {@code 1} se tudo correr bem.
 	 */
 	
-	protected boolean inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)
+	protected int inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)
 	{
-		boolean success = false;
-		int deslocamento = DESLOCAMENTO_CABECALHO;
-		int tamanhoDeUmRegistro = registroDoIndice.obterTamanhoMaximoEmBytes();
-		
-		for (int i = 0; i < numeroDeRegistrosPorBucket; i++)
-		{
-			deslocamento += i * tamanhoDeUmRegistro;
-			
-			registroDoIndice.lerBytes(bucket, deslocamento);
-			
-			if (registroDoIndice.lapide == RegistroDoIndice.REGISTRO_DESATIVADO)
+		return percorrerRegistros(
+			(registro, deslocamento) ->
 			{
-				registroDoIndice.lapide = RegistroDoIndice.REGISTRO_ATIVADO;
-				registroDoIndice.chave = chave;
-				registroDoIndice.dado = dado;
+				int status = 0; // indica que o processo deve continuar
 				
-				registroDoIndice.escreverObjeto(bucket, deslocamento);
+				if (registro.lapide == RegistroDoIndice.REGISTRO_DESATIVADO)
+				{
+					registro.lapide = RegistroDoIndice.REGISTRO_ATIVADO;
+					registro.chave = chave;
+					registro.dado = dado;
+					
+					registro.escreverObjeto(bucket, deslocamento);
+					status = 1; // término com êxito, registro inserido
+				}
 				
-				success = true;
+				if (registro.lapide == RegistroDoIndice.REGISTRO_ATIVADO &&
+					registro.chave.equals(chave) &&
+					registro.dado.equals(dado))
+				{
+					status = -1; // término com problema, registro já existe
+				}
+				
+				return status;
 			}
-		}
+		);
+	}
+	
+	/**
+	 * Procura todos os registros com uma chave específica e gera
+	 * uma lista com os dados correspondentes a essas chaves.
+	 * 
+	 * @param chave Chave a ser procurada.
+	 * 
+	 * @return Uma lista com os dados correspondentes às chaves.
+	 */
+	
+	public ArrayList<TIPO_DOS_DADOS> listarDadosComAChave(TIPO_DAS_CHAVES chave)
+	{
+		ArrayList<TIPO_DOS_DADOS> lista = new ArrayList<>();
 		
-		return success;
+		percorrerRegistros(
+			(registro, deslocamento) ->
+			{
+				if (registro.chave.equals(chave))
+				{
+					lista.add(registro.dado);
+				}
+				
+				return 0; // continuar processo
+			}
+		);
+		
+		return lista;
 	}
 	
 	@Override
