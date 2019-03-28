@@ -84,6 +84,8 @@ public class HashDinamica<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS e
 				if (resultado == diretorio.obterProfundidadeGlobal())
 				{
 					diretorio.duplicar();
+					// criar alguma forma na classe Buckets ou na Bucket para gerenciar a
+					// profundidade local
 					//buckets.bucket.atribuirProfundidadeLocal(novaProfundidadeLocal);
 					buckets.criarBucket(novaProfundidadeLocal);
 				}
