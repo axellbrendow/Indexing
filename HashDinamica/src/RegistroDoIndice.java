@@ -24,10 +24,10 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DAD
 	protected char lapide;
 	protected TIPO_DAS_CHAVES chave;
 	protected TIPO_DOS_DADOS dado;
-	private short quantidadeMaximaDeBytesParaAChave;
-	private short quantidadeMaximaDeBytesParaODado;
-	Constructor<TIPO_DAS_CHAVES> construtorDaChave;
-	Constructor<TIPO_DOS_DADOS> construtorDoDado;
+	protected short quantidadeMaximaDeBytesParaAChave;
+	protected short quantidadeMaximaDeBytesParaODado;
+	protected Constructor<TIPO_DAS_CHAVES> construtorDaChave;
+	protected Constructor<TIPO_DOS_DADOS> construtorDoDado;
 	
 	/**
 	 * Cria um objeto que gerencia um registro de indice no bucket da hash dinâmica.

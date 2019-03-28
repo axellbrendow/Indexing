@@ -174,6 +174,34 @@ public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extend
 	}
 	
 	/**
+	 * Cria um novo bucket no arquivo dos buckets com a profundidade local
+	 * informada.
+	 * 
+	 * @param profundidadeLocal Profundidade local do novo bucket.
+	 */
+	
+	public void criarBucket(byte profundidadeLocal)
+	{
+		bucket = bucket.clone(profundidadeLocal);
+		
+		try
+		{
+			arquivoDosBuckets.seek(arquivoDosBuckets.length());
+			bucket.escreverObjeto(arquivoDosBuckets);
+		}
+		
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	public void aumentarProfundidadeLocalDoUltimoBucket()
+	{
+		
+	}
+	
+	/**
 	 * Tenta inserir a chave e o dado no bucket.
 	 * 
 	 * @param chave Chave a ser inserida.
@@ -187,12 +215,12 @@ public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extend
 	 * {@code -3} se algum dos parâmetros forem {@code null}.
 	 */
 	
-	private int inserir(
+	private byte inserir(
 		TIPO_DAS_CHAVES chave,
 		TIPO_DOS_DADOS dado,
 		Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> bucket)
 	{
-		int resultado = -3;
+		byte resultado = -3;
 		
 		if (chave != null && dado != null && bucket != null)
 		{
@@ -218,9 +246,9 @@ public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extend
 	 * arquivo dos buckets não estiver disponível.
 	 */
 	
-	public int inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado, long enderecoDoBucket)
+	public byte inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado, long enderecoDoBucket)
 	{
-		int resultado = -4;
+		byte resultado = -4;
 		
 		if (enderecoDoBucket > -1 && arquivoDisponivel())
 		{
@@ -231,6 +259,12 @@ public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extend
 				bucket.lerObjeto(arquivoDosBuckets);
 				
 				resultado = inserir(chave, dado, bucket);
+				
+				if (resultado == -1) // inserido com sucesso
+				{
+					arquivoDosBuckets.seek(enderecoDoBucket);
+					bucket.escreverObjeto(arquivoDosBuckets);
+				}
 			}
 			
 			catch (IOException ioex)

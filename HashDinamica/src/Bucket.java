@@ -98,6 +98,25 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 	}
 	
 	/**
+	 * Define a profundidade local do bucket.
+	 * 
+	 * @param profundidadeLocal Profundidade local do bucket.
+	 * 
+	 * @return {@code profundidadeLocal}.
+	 */
+	
+	public byte atribuirProfundidadeLocal(byte profundidadeLocal)
+	{
+		if (profundidadeLocal > 0)
+		{
+			this.profundidadeLocal = profundidadeLocal;
+			bucket[0] = profundidadeLocal;
+		}
+		
+		return profundidadeLocal;
+	}
+	
+	/**
 	 * Calcula o tamanho em bytes que um bucket gasta.
 	 * 
 	 * @return o tamanho em bytes que um bucket gasta.
@@ -105,7 +124,7 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 	
 	private int obterTamanhoDeUmBucket()
 	{
-		return Byte.BYTES + // tamanho da profundidade local
+		return DESLOCAMENTO_CABECALHO + // tamanho, em bytes, do cabeçalho (metadados)
 			numeroDeRegistrosPorBucket * registroDoIndice.obterTamanhoMaximoEmBytes();
 	}
 	
@@ -186,9 +205,9 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 	 * {@code -2} se o par (chave, dado) já existe.
 	 */
 	
-	protected int inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)
+	protected byte inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)
 	{
-		int resultado = percorrerRegistros(
+		byte resultado = (byte) percorrerRegistros(
 			(registro, deslocamento) ->
 			{
 				int status = 0; // indica que o processo deve continuar
@@ -283,6 +302,24 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 				ioex.printStackTrace();
 			}
 		}
+	}
+	
+	public Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> clone(byte profundidadeLocal)
+	{
+		return new Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>(
+			profundidadeLocal,
+			numeroDeRegistrosPorBucket,
+			registroDoIndice.quantidadeMaximaDeBytesParaAChave,
+			registroDoIndice.quantidadeMaximaDeBytesParaODado,
+			registroDoIndice.construtorDaChave,
+			registroDoIndice.construtorDoDado
+		);
+	}
+	
+	@Override
+	public Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> clone()
+	{
+		return clone(profundidadeLocal);
 	}
 	
 	@Override

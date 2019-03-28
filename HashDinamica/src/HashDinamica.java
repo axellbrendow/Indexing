@@ -74,18 +74,21 @@ public class HashDinamica<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS e
 		
 		if (enderecoDoBucket != -1)
 		{
-			int resultado = buckets.inserir(chave, dado, enderecoDoBucket);
+			byte resultado = buckets.inserir(chave, dado, enderecoDoBucket);
 			
 			if (resultado > 0) // bucket cheio, resultado será igual à profundidade local do bucket
 			{
+				byte novaProfundidadeLocal = (byte) (resultado + 1);
+				
 				// profundidade local do bucket igual à profundidade global do diretório
 				if (resultado == diretorio.obterProfundidadeGlobal())
 				{
 					diretorio.duplicar();
+					//buckets.bucket.atribuirProfundidadeLocal(novaProfundidadeLocal);
+					buckets.criarBucket(novaProfundidadeLocal);
 				}
 				
-				
-				diretorio.reorganizar(indiceDoPonteiroParaOBucket);
+				//diretorio.reorganizar(indiceDoPonteiroParaOBucket);
 				// inserir o elemento
 				
 				sucesso = true;
