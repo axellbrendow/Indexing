@@ -187,9 +187,9 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 		// desativa todos os registros no bucket
 		for (int i = 0; i < numeroDeRegistrosPorBucket; i++)
 		{
-			deslocamento += i * tamanhoDeUmRegistro;
-			
 			bucket[deslocamento] = RegistroDoIndice.REGISTRO_DESATIVADO;
+			
+			deslocamento += tamanhoDeUmRegistro;
 		}
 	}
 	
@@ -229,11 +229,11 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 			
 			for (int i = 0; condicao == 0 && i < numeroDeRegistrosPorBucket; i++)
 			{
-				deslocamento += i * tamanhoDeUmRegistro;
-				
 				registroDoIndice.lerBytes(bucket, deslocamento);
 				
 				condicao = metodo.apply(registroDoIndice, deslocamento);
+				
+				deslocamento += tamanhoDeUmRegistro;
 			}
 		}
 		
