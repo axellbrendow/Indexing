@@ -1,4 +1,5 @@
 import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.lang.reflect.Constructor;
@@ -30,6 +31,47 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 	/**
 	 * Cria um objeto que gerencia um bucket da hash dinâmica.
 	 * 
+	 * @param bucket Arranjo de bytes do bucket.
+	 * @param profundidadeLocal Profundidade local inicial.
+	 * @param numeroDeRegistrosPorBucket Numero de registros por bucket caso o arquivo
+	 * não tenha sido criado ainda.
+	 * @param quantidadeMaximaDeBytesParaAChave Tamanho máximo que a chave pode gastar.
+	 * @param quantidadeMaximaDeBytesParaODado Tamanho máximo que o dado pode gastar.
+	 * @param construtorDaChave Construtor da chave. É necessário que a chave tenha um
+	 * construtor sem parâmetros.
+	 * @param construtorDoDado Construtor do dado. É necessário que o dado tenha um
+	 * construtor sem parâmetros.
+	 */
+	
+	private Bucket(
+		byte[] bucket,
+		byte profundidadeLocal,
+		int numeroDeRegistrosPorBucket,
+		short quantidadeMaximaDeBytesParaAChave,
+		short quantidadeMaximaDeBytesParaODado,
+		Constructor<TIPO_DAS_CHAVES> construtorDaChave,
+		Constructor<TIPO_DOS_DADOS> construtorDoDado)
+	{
+		this.bucket = bucket;
+		this.profundidadeLocal =
+			( profundidadeLocal < 1 ? PADRAO_PROFUNDIDADE_LOCAL : profundidadeLocal );
+		this.numeroDeRegistrosPorBucket =
+			( numeroDeRegistrosPorBucket < 1 ?
+				PADRAO_NUMERO_DE_REGISTROS_POR_BUCKET : numeroDeRegistrosPorBucket );
+		
+		this.registroDoIndice =
+			new RegistroDoIndice<>(
+				'*', null, null,
+				quantidadeMaximaDeBytesParaAChave,
+				quantidadeMaximaDeBytesParaODado,
+				construtorDaChave,
+				construtorDoDado
+			);
+	}
+	
+	/**
+	 * Cria um objeto que gerencia um bucket da hash dinâmica.
+	 * 
 	 * @param profundidadeLocal Profundidade local inicial.
 	 * @param numeroDeRegistrosPorBucket Numero de registros por bucket caso o arquivo
 	 * não tenha sido criado ainda.
@@ -49,20 +91,16 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 		Constructor<TIPO_DAS_CHAVES> construtorDaChave,
 		Constructor<TIPO_DOS_DADOS> construtorDoDado)
 	{
-		this.profundidadeLocal =
-			( profundidadeLocal < 1 ? PADRAO_PROFUNDIDADE_LOCAL : profundidadeLocal );
-		this.numeroDeRegistrosPorBucket =
-			( numeroDeRegistrosPorBucket < 1 ?
-				PADRAO_NUMERO_DE_REGISTROS_POR_BUCKET : numeroDeRegistrosPorBucket );
-		
-		this.registroDoIndice =
-			new RegistroDoIndice<>(
-				'*', null, null,
-				quantidadeMaximaDeBytesParaAChave,
-				quantidadeMaximaDeBytesParaODado,
-				construtorDaChave,
-				construtorDoDado
-			);
+		this
+		(
+			null,
+			profundidadeLocal,
+			numeroDeRegistrosPorBucket,
+			quantidadeMaximaDeBytesParaAChave,
+			quantidadeMaximaDeBytesParaODado,
+			construtorDaChave,
+			construtorDoDado
+		);
 		
 		iniciarBucket();
 	}
@@ -155,6 +193,15 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 		}
 	}
 	
+	protected RegistroDoIndice<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
+	obterRegistro(int indiceDoBucket)
+	{
+		registroDoIndice.lerBytes(bucket,
+			DESLOCAMENTO_CABECALHO + indiceDoBucket * registroDoIndice.obterTamanhoMaximoEmBytes());
+		
+		return registroDoIndice;
+	}
+	
 	/**
 	 * Percorre todos os registros do bucket aplicando um método
 	 * em cada um deles. Esse método deve retornar um valor inteiro
@@ -242,7 +289,7 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 	 * 
 	 * @param chave Chave a ser procurada.
 	 * 
-	 * @return Uma lista com os dados correspondentes às chaves.
+	 * @return lista com os dados correspondentes às chaves.
 	 */
 	
 	public ArrayList<TIPO_DOS_DADOS> listarDadosComAChave(TIPO_DAS_CHAVES chave)
@@ -304,7 +351,17 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 		}
 	}
 	
-	public Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> clone(byte profundidadeLocal)
+	/**
+	 * Cria uma nova instância de {@link Bucket} com a profundidade
+	 * local informada.
+	 * 
+	 * @param profundidadeLocal Profundidade local do novo bucket.
+	 * 
+	 * @return uma nova instância de {@link Bucket} com a profundidade
+	 * local informada.
+	 */
+	
+	public Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> criarBucket(byte profundidadeLocal)
 	{
 		return new Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>(
 			profundidadeLocal,
@@ -316,10 +373,31 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 		);
 	}
 	
+	/**
+	 * Cria uma nova instância de {@link Bucket} com a profundidade
+	 * local deste bucket.
+	 * 
+	 * @return uma nova instância de {@link Bucket} com a profundidade
+	 * local deste bucket.
+	 */
+	
+	public Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> criarBucket()
+	{
+		return criarBucket(profundidadeLocal);
+	}
+	
 	@Override
 	public Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> clone()
 	{
-		return clone(profundidadeLocal);
+		return new Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>(
+				bucket,
+				profundidadeLocal,
+				numeroDeRegistrosPorBucket,
+				registroDoIndice.quantidadeMaximaDeBytesParaAChave,
+				registroDoIndice.quantidadeMaximaDeBytesParaODado,
+				registroDoIndice.construtorDaChave,
+				registroDoIndice.construtorDoDado
+			);
 	}
 	
 	@Override

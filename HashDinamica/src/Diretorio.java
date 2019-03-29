@@ -266,12 +266,12 @@ public class Diretorio<TIPO_DAS_CHAVES extends Serializavel>
 	 * @param chave Chave de referência.
 	 * 
 	 * @return o indice do ponteiro para o bucket onde a chave deve ficar.
-	 */
+	 *//*
 	
 	public int obterIndiceDoPonteiroParaOBucket(TIPO_DAS_CHAVES chave)
 	{
 		return hash(chave);
-	}
+	}*/
 	
 	/**
 	 * Acha o ponteiro para o bucket onde a chave deve ficar.

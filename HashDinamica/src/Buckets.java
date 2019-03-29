@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
 
 /**
  * Classe que gerencia os buckets de uma hash dinâmica.
@@ -174,6 +175,37 @@ public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extend
 	}
 	
 	/**
+	 * Procura todos os registros com uma chave específica e gera
+	 * uma lista com os dados correspondentes a essas chaves.
+	 * 
+	 * @param enderecoDoBucket Endereço do bucket a ser percorrido.
+	 * 
+	 * @return lista com os dados correspondentes às chaves.
+	 */
+	
+	public ArrayList<TIPO_DOS_DADOS> listarDadosComAChave(
+		TIPO_DAS_CHAVES chave, long enderecoDoBucket)
+	{
+		ArrayList<TIPO_DOS_DADOS> dados = null;
+		
+		try
+		{
+			arquivoDosBuckets.seek(enderecoDoBucket);
+			
+			bucket.lerObjeto(arquivoDosBuckets);
+			
+			dados = bucket.listarDadosComAChave(chave);
+		}
+		
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		
+		return dados;
+	}
+	
+	/**
 	 * Cria um novo bucket no arquivo dos buckets com a profundidade local
 	 * informada.
 	 * 
@@ -182,7 +214,7 @@ public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extend
 	
 	public void criarBucket(byte profundidadeLocal)
 	{
-		bucket = bucket.clone(profundidadeLocal);
+		bucket = bucket.criarBucket(profundidadeLocal);
 		
 		try
 		{
@@ -196,9 +228,39 @@ public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extend
 		}
 	}
 	
-	public void aumentarProfundidadeLocalDoUltimoBucket()
+	/**
+	 * Reinicia um bucket excluindo todos os registros porém
+	 * mantendo a profundidade local.
+	 * 
+	 * @param enderecoDoBucket Endereço do bucket a ser reiniciado.
+	 * 
+	 * @return {@code null} se houver algum problema na leitura
+	 * do bucket no arquivo. Caso contrário, o objeto {@link Bucket}
+	 * que representa fielmente o bucket antes de ser reiniciado.
+	 */
+	
+	public Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> resetarBucket(long enderecoDoBucket)
 	{
+		Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> bucketExcluido = null;
 		
+		try
+		{
+			arquivoDosBuckets.seek(enderecoDoBucket);
+			bucket.lerObjeto(arquivoDosBuckets);
+			
+			bucketExcluido = bucket.clone();
+			bucket = bucket.criarBucket();
+			
+			arquivoDosBuckets.seek(enderecoDoBucket);
+			bucket.escreverObjeto(arquivoDosBuckets);
+		}
+		
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		
+		return bucketExcluido;
 	}
 	
 	/**
@@ -231,7 +293,9 @@ public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extend
 	}
 	
 	/**
-	 * Tenta inserir a chave e o dado no bucket.
+	 * Tenta inserir a chave e o dado no bucket. Caso o bucket esteja
+	 * cheio, este método aumenta automaticamente a profundidade local
+	 * dele em uma unidade.
 	 * 
 	 * @param chave Chave a ser inserida.
 	 * @param dado Dado que corresponde à chave.
@@ -262,6 +326,14 @@ public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extend
 				
 				if (resultado == -1) // inserido com sucesso
 				{
+					arquivoDosBuckets.seek(enderecoDoBucket);
+					bucket.escreverObjeto(arquivoDosBuckets);
+				}
+				
+				else if (resultado > 0) // bucket cheio
+				{
+					// aumenta a profundidade local
+					bucket.atribuirProfundidadeLocal( (byte) (resultado + 1) );
 					arquivoDosBuckets.seek(enderecoDoBucket);
 					bucket.escreverObjeto(arquivoDosBuckets);
 				}

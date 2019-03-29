@@ -1,4 +1,5 @@
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
 import java.util.function.Function;
 
 /**
@@ -56,6 +57,66 @@ public class HashDinamica<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS e
 	}
 	
 	/**
+	 * Procura todos os registros com uma chave específica e gera
+	 * uma lista com os dados correspondentes a essas chaves.
+	 * 
+	 * @param chave Chave a ser procurada.
+	 * 
+	 * @return lista com os dados correspondentes às chaves.
+	 */
+	
+	public ArrayList<TIPO_DOS_DADOS> listarDadosComAChave(TIPO_DAS_CHAVES chave)
+	{
+		return buckets.listarDadosComAChave(chave, diretorio.obterEndereçoDoBucket(chave));
+	}
+	
+	/**
+	 * Insere todos os registros ativados de um bucket na
+	 * hash dinâmica.
+	 * 
+	 * @param bucket Bucket com os registros a serem inseridos.
+	 */
+	
+	public void inserirElementosDe(Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> bucket)
+	{
+		for (int i = 0; i < buckets.numeroDeRegistrosPorBucket; i++)
+		{
+			RegistroDoIndice<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> registro =
+				bucket.obterRegistro(i);
+			
+			if (registro.lapide == RegistroDoIndice.REGISTRO_ATIVADO)
+			{
+				inserir(registro.chave, registro.dado);
+			}
+		}
+	}
+	
+	/**
+	 * Cuida do processo que precisa ser feito quando tenta-se
+	 * inserir um registro num bucket que está cheio.
+	 * 
+	 * @param enderecoDoBucket Endereço do bucket que está cheio.
+	 * @param resultado Resultado do método
+	 * {@link Buckets#inserir(Serializavel, Serializavel, long)}.
+	 */
+	
+	private void tratarBucketCheio(long enderecoDoBucket, byte resultado)
+	{
+		// profundidade local do bucket igual à profundidade global do diretório
+		if (resultado == diretorio.obterProfundidadeGlobal())
+		{
+			diretorio.duplicar();
+		}
+		
+		Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> bucketExcluido =
+			buckets.resetarBucket(enderecoDoBucket);
+		
+		buckets.criarBucket( (byte) (resultado + 1) );
+		
+		inserirElementosDe(bucketExcluido);
+	}
+	
+	/**
 	 * Tenta inserir a chave e o dado na hash dinâmica.
 	 * 
 	 * @param chave Chave a ser inserida.
@@ -69,29 +130,17 @@ public class HashDinamica<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS e
 	{
 		boolean sucesso = false;
 
-		int indiceDoPonteiroParaOBucket = diretorio.obterIndiceDoPonteiroParaOBucket(chave);
+		//int indiceDoPonteiroParaOBucket = diretorio.obterIndiceDoPonteiroParaOBucket(chave);
 		long enderecoDoBucket = diretorio.obterEndereçoDoBucket(chave);
 		
 		if (enderecoDoBucket != -1)
 		{
 			byte resultado = buckets.inserir(chave, dado, enderecoDoBucket);
 			
-			if (resultado > 0) // bucket cheio, resultado será igual à profundidade local do bucket
+			// bucket cheio, resultado será igual à profundidade local do bucket
+			if (resultado > 0)
 			{
-				byte novaProfundidadeLocal = (byte) (resultado + 1);
-				
-				// profundidade local do bucket igual à profundidade global do diretório
-				if (resultado == diretorio.obterProfundidadeGlobal())
-				{
-					diretorio.duplicar();
-					// criar alguma forma na classe Buckets ou na Bucket para gerenciar a
-					// profundidade local
-					//buckets.bucket.atribuirProfundidadeLocal(novaProfundidadeLocal);
-					buckets.criarBucket(novaProfundidadeLocal);
-				}
-				
-				//diretorio.reorganizar(indiceDoPonteiroParaOBucket);
-				// inserir o elemento
+				tratarBucketCheio(enderecoDoBucket, resultado);
 				
 				sucesso = true;
 			}
