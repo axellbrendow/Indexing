@@ -115,5 +115,11 @@ public class entity implements Serializavel
 		lerBytes(bytes, 0);
 	}
 	
-	
+	@Override
+	public String toString()
+	{
+		return
+			id + ", " +
+			nome + "\n";
+	}
 }

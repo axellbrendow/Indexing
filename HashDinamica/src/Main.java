@@ -1,7 +1,13 @@
+import java.io.File;
+import java.io.IOException;
 
 public class Main
 {
-
+	public static final String NOME_DO_ARQUIVO_DO_DIRETORIO = "diretorio.dir";
+	public static final String NOME_DO_ARQUIVO_DOS_BUCKETS = "buckets.db";
+	public static final File ARQUIVO_DO_DIRETORIO = new File(NOME_DO_ARQUIVO_DO_DIRETORIO);
+	public static final File ARQUIVO_DOS_BUCKETS = new File(NOME_DO_ARQUIVO_DOS_BUCKETS);
+	
 	public static void print(Object msg)
 	{
 		System.out.print(msg);
@@ -14,6 +20,9 @@ public class Main
 	
 	public static void main(String[] args)
 	{
+		ARQUIVO_DO_DIRETORIO.delete();
+		ARQUIVO_DOS_BUCKETS.delete();
+		
 		entity ent1 = new entity(1, "entity 1");
 		entity ent2 = new entity(2, "entity 2");
 		entity ent3 = new entity(3, "entity 3");
@@ -39,7 +48,7 @@ public class Main
 			hash.inserir(ent1, ent4);
 			hash.inserir(ent5, ent6);
 			
-			println(hash.listarDadosComAChave(ent1).toString());
+			hash.listarDadosComAChave(ent5).forEach( (it) -> { println(it); } );
 		}
 		
 		catch (NoSuchMethodException e)

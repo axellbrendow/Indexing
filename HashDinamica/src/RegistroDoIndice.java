@@ -82,6 +82,39 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DAD
 		return tamanho;
 	}
 	
+	/**
+	 * Preenche com zeros a saída de dados até que o espaço
+	 * usado seja igual ao tamanho máximo.
+	 * 
+	 * @param dataOutputStream Corrente de saída de dados.
+	 * @param tamanhoUsado Quantidade de bytes já escritos.
+	 * @param tamanhoMaximo Tamanho máximo desejado.
+	 */
+	
+	private void completarEspacoNaoUsado(
+		DataOutputStream dataOutputStream,
+		int tamanhoUsado,
+		int tamanhoMaximo)
+	{
+		int restante = tamanhoMaximo - tamanhoUsado;
+		
+		if (restante > 0)
+		{
+			for (int i = 0; i < restante; i++)
+			{
+				try
+				{
+					dataOutputStream.write(0);
+				}
+				
+				catch (IOException e)
+				{
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
 	@Override
 	public void escreverObjeto(RandomAccessFile correnteDeSaida)
 	{
@@ -122,9 +155,27 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DAD
 		
 		try
 		{
-			dataOutputStream.writeChar(lapide);
-			dataOutputStream.write(chave.obterBytes());
-			dataOutputStream.write(dado.obterBytes());
+			dataOutputStream.writeByte(lapide);
+			
+			byte[] byteArrayChave = chave.obterBytes();
+			
+			dataOutputStream.write(byteArrayChave);
+			
+			completarEspacoNaoUsado(
+				dataOutputStream,
+				byteArrayChave.length,
+				quantidadeMaximaDeBytesParaAChave
+			);
+			
+			byte[] byteArrayDado = dado.obterBytes();
+			
+			dataOutputStream.write(byteArrayDado);
+			
+			completarEspacoNaoUsado(
+				dataOutputStream,
+				byteArrayDado.length,
+				quantidadeMaximaDeBytesParaODado
+			);
 			
 			byteArrayOutputStream.close();
 			dataOutputStream.close();
@@ -155,7 +206,7 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DAD
 		try
 		{
 			dataInputStream.skipBytes(deslocamento);
-			lapide = dataInputStream.readChar();
+			lapide = (char) dataInputStream.readByte();
 			
 			byte[] byteArrayChave = new byte[quantidadeMaximaDeBytesParaAChave];
 			byte[] byteArrayDado = new byte[quantidadeMaximaDeBytesParaODado];

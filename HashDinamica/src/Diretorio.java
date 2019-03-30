@@ -16,7 +16,7 @@ public class Diretorio<TIPO_DAS_CHAVES extends Serializavel>
 	private static final int DESLOCAMENTO_DO_CABECALHO = Byte.BYTES;
 	// bytes para cada endereço de bucket (para cada ponteiro)
 	private static final int TAMANHO_DOS_PONTEIROS = Long.BYTES;
-	private static final byte PADRAO_PROFUNDIDADE_GLOBAL = 1;
+	private static final byte PADRAO_PROFUNDIDADE_GLOBAL = 0;
 	
 	private RandomAccessFile arquivoDoDiretorio;
 	private byte profundidadeGlobal;
@@ -78,7 +78,7 @@ public class Diretorio<TIPO_DAS_CHAVES extends Serializavel>
 				arquivoDoDiretorio.seek(0);
 				arquivoDoDiretorio.writeByte(profundidadeGlobal);
 				// o endereço do primeiro bucket no arquivo dos buckets é 0
-				arquivoDoDiretorio.writeLong(0);
+				arquivoDoDiretorio.writeLong(Buckets.DESLOCAMENTO_CABECALHO);
 			}
 			
 			catch (IOException e)
@@ -175,7 +175,8 @@ public class Diretorio<TIPO_DAS_CHAVES extends Serializavel>
 	
 	private int obterTamanhoDoDiretorio()
 	{
-		return (int) Math.pow(profundidadeGlobal, 2);
+		return
+		profundidadeGlobal != 0 ? (int) Math.pow(profundidadeGlobal, 2) : 1;
 	}
 	
 	/**

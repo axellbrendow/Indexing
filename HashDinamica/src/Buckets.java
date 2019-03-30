@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends Serializavel>
 {
 	// o cabeçalho do arquivo dos buckets é a quantidade de registros por bucket (int)
-	private static final int DESLOCAMENTO_CABECALHO = Integer.BYTES;
+	public static final int DESLOCAMENTO_CABECALHO = Integer.BYTES;
 	
 	RandomAccessFile arquivoDosBuckets;
 	Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> bucket;
@@ -62,6 +62,8 @@ public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extend
 					this.numeroDeRegistrosPorBucket = numeroDeRegistrosPorBucket;
 				}
 			}
+
+			escreverNumeroDeRegistrosPorBucket(this.numeroDeRegistrosPorBucket);
 			
 			this.bucket = new Bucket<>(
 				numeroDeRegistrosPorBucket,
@@ -70,7 +72,8 @@ public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extend
 				construtorDaChave,
 				construtorDoDado);
 			
-			escreverNumeroDeRegistrosPorBucket(this.numeroDeRegistrosPorBucket);
+			// cria o primeiro bucket no arquivo
+			criarBucket(Bucket.PADRAO_PROFUNDIDADE_LOCAL);
 		}
 	}
 	

@@ -1,5 +1,4 @@
 import java.io.ByteArrayInputStream;
-import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.lang.reflect.Constructor;
@@ -20,7 +19,7 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 	// o cabeçalho do bucket é apenas a profundidade local até o momento
 	public static final int DESLOCAMENTO_CABECALHO = Byte.BYTES;
 	
-	private static final byte PADRAO_PROFUNDIDADE_LOCAL = 1;
+	public static final byte PADRAO_PROFUNDIDADE_LOCAL = 0;
 	protected static final byte PADRAO_NUMERO_DE_REGISTROS_POR_BUCKET = 10;
 	
 	private byte profundidadeLocal;
@@ -259,6 +258,13 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 			{
 				int status = 0; // indica que o processo deve continuar
 				
+				if (registro.lapide == RegistroDoIndice.REGISTRO_ATIVADO &&
+					registro.chave.equals(chave) &&
+					registro.dado.equals(dado))
+				{
+					status = -2; // término com problema, registro já existe
+				}
+				
 				if (registro.lapide == RegistroDoIndice.REGISTRO_DESATIVADO)
 				{
 					registro.lapide = RegistroDoIndice.REGISTRO_ATIVADO;
@@ -267,13 +273,6 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 					
 					registro.escreverObjeto(bucket, deslocamento);
 					status = -1; // término com êxito, registro inserido
-				}
-				
-				if (registro.lapide == RegistroDoIndice.REGISTRO_ATIVADO &&
-					registro.chave.equals(chave) &&
-					registro.dado.equals(dado))
-				{
-					status = -2; // término com problema, registro já existe
 				}
 				
 				return status;
@@ -299,7 +298,7 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 		percorrerRegistros(
 			(registro, deslocamento) ->
 			{
-				if (registro.chave.equals(chave))
+				if (registro.chave.toString().equals(chave.toString()))
 				{
 					lista.add(registro.dado);
 				}
