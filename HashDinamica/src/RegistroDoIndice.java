@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 
 /**
  * Classe utilitária para manusear os registros de indices em um bucket.
@@ -100,17 +101,18 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DAD
 		
 		if (restante > 0)
 		{
-			for (int i = 0; i < restante; i++)
+			byte[] lixo = new byte[restante];
+			
+			Arrays.fill(lixo, (byte) 0);
+			
+			try
 			{
-				try
-				{
-					dataOutputStream.write(0);
-				}
-				
-				catch (IOException e)
-				{
-					e.printStackTrace();
-				}
+				dataOutputStream.write(lixo);
+			}
+			
+			catch (IOException e)
+			{
+				e.printStackTrace();
 			}
 		}
 	}

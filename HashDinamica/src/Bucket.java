@@ -22,8 +22,8 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 	public static final byte PADRAO_PROFUNDIDADE_LOCAL = 0;
 	protected static final byte PADRAO_NUMERO_DE_REGISTROS_POR_BUCKET = 10;
 	
-	private byte profundidadeLocal;
-	private int numeroDeRegistrosPorBucket;
+	protected byte profundidadeLocal;
+	protected int numeroDeRegistrosPorBucket;
 	RegistroDoIndice<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> registroDoIndice;
 	byte[] bucket;
 	
@@ -192,6 +192,15 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 		}
 	}
 	
+	/**
+	 * Imaginando que os registros do bucket estão num arranjo,
+	 * retorna o registro no indice informado.
+	 * 
+	 * @param indiceDoBucket Indice do registro a ser obtido.
+	 * 
+	 * @return o registro no indice informado.
+	 */
+	
 	protected RegistroDoIndice<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 	obterRegistro(int indiceDoBucket)
 	{
@@ -298,7 +307,8 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 		percorrerRegistros(
 			(registro, deslocamento) ->
 			{
-				if (registro.chave.toString().equals(chave.toString()))
+				if (registro.lapide == RegistroDoIndice.REGISTRO_ATIVADO &&
+					registro.chave.toString().equals(chave.toString()))
 				{
 					lista.add(registro.dado);
 				}

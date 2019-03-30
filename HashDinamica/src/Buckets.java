@@ -213,15 +213,20 @@ public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extend
 	 * informada.
 	 * 
 	 * @param profundidadeLocal Profundidade local do novo bucket.
+	 * 
+	 * @return a endereço do novo bucket no arquivo dos buckets.
 	 */
 	
-	public void criarBucket(byte profundidadeLocal)
+	public long criarBucket(byte profundidadeLocal)
 	{
+		long enderecoDoBucket = -1;
+		
 		bucket = bucket.criarBucket(profundidadeLocal);
 		
 		try
 		{
-			arquivoDosBuckets.seek(arquivoDosBuckets.length());
+			enderecoDoBucket = arquivoDosBuckets.length();
+			arquivoDosBuckets.seek(enderecoDoBucket);
 			bucket.escreverObjeto(arquivoDosBuckets);
 		}
 		
@@ -229,11 +234,13 @@ public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extend
 		{
 			e.printStackTrace();
 		}
+		
+		return enderecoDoBucket;
 	}
 	
 	/**
-	 * Reinicia um bucket excluindo todos os registros porém
-	 * mantendo a profundidade local.
+	 * Reinicia um bucket excluindo todos os seus registros e
+	 * aumenta a profundidade local em uma unidade.
 	 * 
 	 * @param enderecoDoBucket Endereço do bucket a ser reiniciado.
 	 * 
@@ -252,7 +259,7 @@ public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extend
 			bucket.lerObjeto(arquivoDosBuckets);
 			
 			bucketExcluido = bucket.clone();
-			bucket = bucket.criarBucket();
+			bucket = bucket.criarBucket((byte) (bucket.profundidadeLocal + 1));
 			
 			arquivoDosBuckets.seek(enderecoDoBucket);
 			bucket.escreverObjeto(arquivoDosBuckets);

@@ -98,9 +98,15 @@ public class HashDinamica<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS e
 	 * @param enderecoDoBucket Endereço do bucket que está cheio.
 	 * @param resultado Resultado do método
 	 * {@link Buckets#inserir(Serializavel, Serializavel, long)}.
+	 * @param chave Chave do registro não inserido.
+	 * @param dado Dado do registro não inserido.
 	 */
 	
-	private void tratarBucketCheio(long enderecoDoBucket, byte resultado)
+	private void tratarBucketCheio(
+		long enderecoDoBucket,
+		byte resultado,
+		TIPO_DAS_CHAVES chave,
+		TIPO_DOS_DADOS dado)
 	{
 		// profundidade local do bucket igual à profundidade global do diretório
 		if (resultado == diretorio.obterProfundidadeGlobal())
@@ -111,9 +117,18 @@ public class HashDinamica<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS e
 		Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> bucketExcluido =
 			buckets.resetarBucket(enderecoDoBucket);
 		
-		buckets.criarBucket( (byte) (resultado + 1) );
+		long enderecoDoNovoBucket =
+			buckets.criarBucket( (byte) (resultado + 1) );
+		
+		diretorio.atribuirPonteiroNoIndice
+		(
+			diretorio.obterIndiceDoUltimoPonteiroAlterado() + 1,
+			enderecoDoNovoBucket
+		);
 		
 		inserirElementosDe(bucketExcluido);
+		
+		inserir(chave, dado);
 	}
 	
 	/**
@@ -130,17 +145,21 @@ public class HashDinamica<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS e
 	{
 		boolean sucesso = false;
 
-		//int indiceDoPonteiroParaOBucket = diretorio.obterIndiceDoPonteiroParaOBucket(chave);
 		long enderecoDoBucket = diretorio.obterEndereçoDoBucket(chave);
 		
 		if (enderecoDoBucket != -1)
 		{
 			byte resultado = buckets.inserir(chave, dado, enderecoDoBucket);
 			
-			// bucket cheio, resultado será igual à profundidade local do bucket
-			if (resultado > 0)
+			if (resultado == -1) // inserção bem sucedida
 			{
-				tratarBucketCheio(enderecoDoBucket, resultado);
+				sucesso = true;
+			}
+			
+			// bucket cheio, resultado será igual à profundidade local do bucket
+			else if (resultado >= 0)
+			{
+				tratarBucketCheio(enderecoDoBucket, resultado, chave, dado);
 				
 				sucesso = true;
 			}

@@ -32,15 +32,16 @@ public class Main
 		
 		try
 		{
+			// olhar problema de chaves com hashs iguais num mesmo bucket
 			HashDinamica<entity, entity> hash = new HashDinamica<entity, entity>(
-				"diretorio.dir",
-				"buckets.db",
+				NOME_DO_ARQUIVO_DO_DIRETORIO,
+				NOME_DO_ARQUIVO_DOS_BUCKETS,
 				3,
 				(short) (Integer.BYTES + 300),
 				(short) (Integer.BYTES + 300),
 				entity.class.getConstructor(),
 				entity.class.getConstructor(),
-				(ent) -> { return (int) ( Math.random() * 73 * ent.id ); }
+				(ent) -> { return (int) ( Short.MAX_VALUE * ent.id ); }
 			);
 			
 			hash.inserir(ent1, ent2);

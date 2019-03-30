@@ -12,14 +12,17 @@ import java.util.function.Function;
 
 public class Diretorio<TIPO_DAS_CHAVES extends Serializavel>
 {
-	// bytes para a profundidade global
-	private static final int DESLOCAMENTO_DO_CABECALHO = Byte.BYTES;
+	// bytes para a profundidade global +
+	// bytes para o indice do ultimo ponteiro alterado
+	private static final int DESLOCAMENTO_DO_CABECALHO = Byte.BYTES + Integer.BYTES;
 	// bytes para cada endereço de bucket (para cada ponteiro)
 	private static final int TAMANHO_DOS_PONTEIROS = Long.BYTES;
 	private static final byte PADRAO_PROFUNDIDADE_GLOBAL = 0;
+	private static final byte PADRAO_INDICE_DO_ULTIMO_PONTEIRO_ALTERADO = 0;
 	
 	private RandomAccessFile arquivoDoDiretorio;
 	private byte profundidadeGlobal;
+	private int indiceDoUltimoPonteiroAlterado;
 	private Function<TIPO_DAS_CHAVES, Integer> funcaoHash;
 	
 	/**
@@ -35,8 +38,8 @@ public class Diretorio<TIPO_DAS_CHAVES extends Serializavel>
 	public Diretorio(String nomeDoArquivoDoDiretorio, Function<TIPO_DAS_CHAVES, Integer> funcaoHash)
 	{
 		arquivoDoDiretorio = IO.openFile(nomeDoArquivoDoDiretorio, "rw");
-		this.profundidadeGlobal = lerProfundidadeGlobal();
 		this.funcaoHash = funcaoHash;
+		lerCabecalho();
 		
 		if (this.profundidadeGlobal < 1)
 		{
@@ -49,6 +52,11 @@ public class Diretorio<TIPO_DAS_CHAVES extends Serializavel>
 	public byte obterProfundidadeGlobal()
 	{
 		return profundidadeGlobal;
+	}
+	
+	public int obterIndiceDoUltimoPonteiroAlterado()
+	{
+		return indiceDoUltimoPonteiroAlterado;
 	}
 	
 	/**
@@ -77,6 +85,7 @@ public class Diretorio<TIPO_DAS_CHAVES extends Serializavel>
 			{
 				arquivoDoDiretorio.seek(0);
 				arquivoDoDiretorio.writeByte(profundidadeGlobal);
+				arquivoDoDiretorio.writeInt(indiceDoUltimoPonteiroAlterado);
 				// o endereço do primeiro bucket no arquivo dos buckets é 0
 				arquivoDoDiretorio.writeLong(Buckets.DESLOCAMENTO_CABECALHO);
 			}
@@ -113,34 +122,6 @@ public class Diretorio<TIPO_DAS_CHAVES extends Serializavel>
 	}
 	
 	/**
-	 * Lê a profundidade global do cabeçalho do arquivo do diretório.
-	 * 
-	 * @return 0 se o arquivo do diretório não estiver disponível. Caso
-	 * contrário, retorna a profundida global do arquivo.
-	 */
-	
-	private byte lerProfundidadeGlobal()
-	{
-		byte profundidade = 0;
-		
-		try
-		{
-			if (arquivoDisponivel() && arquivoDoDiretorio.length() >= DESLOCAMENTO_DO_CABECALHO)
-			{
-				arquivoDoDiretorio.seek(0);
-				profundidade = arquivoDoDiretorio.readByte();
-			}
-		}
-		
-		catch (IOException ioex)
-		{
-			ioex.printStackTrace();
-		}
-		
-		return profundidade;
-	}
-	
-	/**
 	 * Escreve a profundidade global informada no cabeçalho do arquivo do diretório.
 	 * 
 	 * @param profundidadeGlobal Profundidade global a ser escrita.
@@ -168,6 +149,35 @@ public class Diretorio<TIPO_DAS_CHAVES extends Serializavel>
 	}
 	
 	/**
+	 * Lê os metadados/cabeçalho do diretório. A estrutura do cabeçalho
+	 * é a seguinte:
+	 * 
+	 * <p>[ profundidade global (byte), indice do último ponteiro alterado (int) ]</p>
+	 */
+	
+	private void lerCabecalho()
+	{
+		profundidadeGlobal = PADRAO_PROFUNDIDADE_GLOBAL;
+		indiceDoUltimoPonteiroAlterado =
+			PADRAO_INDICE_DO_ULTIMO_PONTEIRO_ALTERADO;
+		
+		try
+		{
+			if (arquivoDisponivel() && arquivoDoDiretorio.length() >= DESLOCAMENTO_DO_CABECALHO)
+			{
+				arquivoDoDiretorio.seek(0);
+				profundidadeGlobal = arquivoDoDiretorio.readByte();
+				indiceDoUltimoPonteiroAlterado = arquivoDoDiretorio.readInt();
+			}
+		}
+		
+		catch (IOException ioex)
+		{
+			ioex.printStackTrace();
+		}
+	}
+	
+	/**
 	 * Obtém o tamanho do diretório com base na sua profundidade global.
 	 * 
 	 * @return tamanho do diretório.
@@ -175,8 +185,80 @@ public class Diretorio<TIPO_DAS_CHAVES extends Serializavel>
 	
 	private int obterTamanhoDoDiretorio()
 	{
-		return
-		profundidadeGlobal != 0 ? (int) Math.pow(profundidadeGlobal, 2) : 1;
+		return (int) Math.pow(2, profundidadeGlobal);
+	}
+	
+	/**
+	 * Faz um <i>seek</i> no arquivo do diretório até chegar em cima
+	 * do ponteiro desejado.
+	 *  
+	 * @param indice Indice do ponteiro no diretório.
+	 * 
+	 * @return {@code true} se tudo der certo; {@code false} caso
+	 * contrário.
+	 */
+	
+	private boolean irParaOPonteiroNoIndice(int indice)
+	{
+		boolean sucesso = false;
+		
+		if (indice > -1 &&
+			indice < obterTamanhoDoDiretorio() &&
+			arquivoDisponivel())
+		{
+			try
+			{
+				arquivoDoDiretorio.seek(
+					DESLOCAMENTO_DO_CABECALHO +
+					indice * TAMANHO_DOS_PONTEIROS);
+				
+				sucesso = true;
+			}
+			
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		
+		return sucesso;
+	}
+	
+	/**
+	 * Muda o ponteiro no indice informado para um novo ponteiro.
+	 * 
+	 * @param indice Indice do ponteiro a ser alterado.
+	 * @param novoPonteiro Novo valor a ser colocado.
+	 * 
+	 * @return {@code true} se tudo der certo; {@code false} caso
+	 * contrário.
+	 */
+	
+	protected boolean atribuirPonteiroNoIndice(int indice, long novoPonteiro)
+	{
+		boolean sucesso = false;
+		
+		if (irParaOPonteiroNoIndice(indice))
+		{
+			try
+			{
+				arquivoDoDiretorio.writeLong(novoPonteiro);
+				
+				if (indice > indiceDoUltimoPonteiroAlterado)
+				{
+					indiceDoUltimoPonteiroAlterado = indice;
+				}
+				
+				sucesso = true;
+			}
+			
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		
+		return sucesso;
 	}
 	
 	/**
@@ -194,6 +276,8 @@ public class Diretorio<TIPO_DAS_CHAVES extends Serializavel>
 			{
 				arquivoDoDiretorio.seek(0);
 				arquivoDoDiretorio.writeByte(++profundidadeGlobal);
+				// pula o indice do último ponteiro alterado
+				arquivoDoDiretorio.skipBytes(Integer.BYTES);
 				arquivoDoDiretorio.read(ponteiros);
 				arquivoDoDiretorio.write(ponteiros);
 			}
@@ -211,8 +295,9 @@ public class Diretorio<TIPO_DAS_CHAVES extends Serializavel>
 	 * @param chave Chave de referência.
 	 * 
 	 * @return -1 se a {@code chave} ou a função hash recebida
-	 * no construtor deste objeto for {@code null}. Caso contrário,
-	 * retorna o código hash da {@code chave}.
+	 * no construtor deste objeto forem {@code null}. Caso contrário,
+	 * retorna o código hash da {@code chave}, que é equivalente
+	 * ao indice do ponteiro para o bucket onde a chave se encaixa.
 	 */
 	
 	private int hash(TIPO_DAS_CHAVES chave)
@@ -235,21 +320,15 @@ public class Diretorio<TIPO_DAS_CHAVES extends Serializavel>
 	 * @return um ponteiro para um bucket no arquivo dos buckets.
 	 */
 	
-	private long obterEndereco(int indiceDoPonteiro)
+	private long obterPonteiro(int indiceDoPonteiro)
 	{
-		long endereco = -1;
+		long ponteiro = -1;
 		
-		if (indiceDoPonteiro > -1 &&
-			indiceDoPonteiro < obterTamanhoDoDiretorio() &&
-			arquivoDisponivel())
+		if (irParaOPonteiroNoIndice(indiceDoPonteiro))
 		{
 			try
 			{
-				arquivoDoDiretorio.seek(
-					DESLOCAMENTO_DO_CABECALHO +
-					indiceDoPonteiro * TAMANHO_DOS_PONTEIROS);
-				
-				endereco = arquivoDoDiretorio.readLong();
+				ponteiro = arquivoDoDiretorio.readLong();
 			}
 			
 			catch (IOException ioex)
@@ -258,21 +337,8 @@ public class Diretorio<TIPO_DAS_CHAVES extends Serializavel>
 			}
 		}
 		
-		return endereco;
+		return ponteiro;
 	}
-	
-	/**
-	 * Acha o indice do ponteiro para o bucket onde a chave deve ficar.
-	 * 
-	 * @param chave Chave de referência.
-	 * 
-	 * @return o indice do ponteiro para o bucket onde a chave deve ficar.
-	 *//*
-	
-	public int obterIndiceDoPonteiroParaOBucket(TIPO_DAS_CHAVES chave)
-	{
-		return hash(chave);
-	}*/
 	
 	/**
 	 * Acha o ponteiro para o bucket onde a chave deve ficar.
@@ -284,15 +350,15 @@ public class Diretorio<TIPO_DAS_CHAVES extends Serializavel>
 	
 	public long obterEndereçoDoBucket(TIPO_DAS_CHAVES chave)
 	{
-		long endereco = -1;
+		long ponteiro = -1;
 
 		int codigoHash = hash(chave);
 		
 		if (codigoHash != -1)
 		{
-			endereco = obterEndereco(codigoHash); 
+			ponteiro = obterPonteiro(codigoHash); 
 		}
 		
-		return endereco;
+		return ponteiro;
 	}
 }
