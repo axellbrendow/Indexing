@@ -8,11 +8,11 @@ import java.io.IOException;
 
 public class IntSerializavel extends SerializavelAbstract
 {
-	int dado;
+	public int valor;
 	
-	public IntSerializavel(int dado)
+	public IntSerializavel(int valor)
 	{
-		this.dado = dado;
+		this.valor = valor;
 	}
 
 	public IntSerializavel()
@@ -34,7 +34,7 @@ public class IntSerializavel extends SerializavelAbstract
 		
 		try
 		{
-			dataOutputStream.writeInt(dado);
+			dataOutputStream.writeInt(valor);
 			dataOutputStream.close();
 		}
 		
@@ -54,7 +54,7 @@ public class IntSerializavel extends SerializavelAbstract
 		
 		try
 		{
-			dado = dataInputStream.readInt();
+			valor = dataInputStream.readInt();
 			dataInputStream.close();
 		}
 		
@@ -67,6 +67,6 @@ public class IntSerializavel extends SerializavelAbstract
 	@Override
 	public String toString()
 	{
-		return "" + dado;
+		return "" + valor;
 	}
 }

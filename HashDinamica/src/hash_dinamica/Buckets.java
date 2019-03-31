@@ -1,8 +1,12 @@
 package hash_dinamica;
+
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
+
+import hash_dinamica.serializaveis.SerializavelAbstract;
+import util.IO;
 
 /**
  * Classe que gerencia os buckets de uma hash dinâmica.
@@ -13,7 +17,7 @@ import java.util.ArrayList;
  * @param <TIPO_DOS_DADOS> Classe do dado.
  */
 
-public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends Serializavel>
+public class Buckets<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS extends SerializavelAbstract>
 {
 	// o cabeçalho do arquivo dos buckets é a quantidade de registros por bucket (int)
 	public static final int DESLOCAMENTO_CABECALHO = Integer.BYTES;
@@ -272,6 +276,137 @@ public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extend
 		}
 		
 		return bucketExcluido;
+	}
+	
+	/**
+	 * Tenta excluir a chave e o dado do bucket.
+	 * 
+	 * @param chave Chave a ser excluída.
+	 * @param dado Dado que corresponde à chave.
+	 * @param bucket Bucket para exclusão.
+	 * 
+	 * @return {@code true} se tudo der certo;
+	 * {@code false} caso contrário.
+	 */
+	
+	private boolean excluir(
+		TIPO_DAS_CHAVES chave,
+		TIPO_DOS_DADOS dado,
+		Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> bucket)
+	{
+		boolean resultado = false;
+		
+		if (chave != null && dado != null && bucket != null)
+		{
+			resultado = bucket.excluir(chave, dado);
+		}
+		
+		return resultado;
+	}
+	
+	/**
+	 * Tenta excluir a chave e o dado do bucket.
+	 * 
+	 * @param chave Chave a ser excluída.
+	 * @param dado Dado que corresponde à chave.
+	 * @param enderecoDoBucket Endereço do bucket no arquivo dos buckets.
+	 * 
+	 * @return {@code true} se tudo der certo;
+	 * {@code false} caso contrário.
+	 */
+	
+	public boolean excluir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado, long enderecoDoBucket)
+	{
+		boolean resultado = false;
+		
+		if (enderecoDoBucket > -1 && arquivoDisponivel())
+		{
+			try
+			{
+				arquivoDosBuckets.seek(enderecoDoBucket);
+				
+				bucket.lerObjeto(arquivoDosBuckets);
+				
+				resultado = excluir(chave, dado, bucket);
+				
+				if (resultado == true) // excluído com sucesso
+				{
+					arquivoDosBuckets.seek(enderecoDoBucket);
+					bucket.escreverObjeto(arquivoDosBuckets);
+				}
+			}
+			
+			catch (IOException ioex)
+			{
+				ioex.printStackTrace();
+			}
+		}
+		
+		return resultado;
+	}
+	
+	/**
+	 * Tenta excluir o primeiro registro com a chave informada do bucket.
+	 * 
+	 * @param chave Chave a ser excluída.
+	 * @param bucket Bucket para exclusão.
+	 * 
+	 * @return {@code true} se tudo der certo;
+	 * {@code false} caso contrário.
+	 */
+	
+	private boolean excluir(
+		TIPO_DAS_CHAVES chave,
+		Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> bucket)
+	{
+		boolean resultado = false;
+		
+		if (chave != null && bucket != null)
+		{
+			resultado = bucket.excluir(chave);
+		}
+		
+		return resultado;
+	}
+	
+	/**
+	 * Tenta excluir o primeiro registro com a chave informada.
+	 * 
+	 * @param chave Chave a ser excluída.
+	 * @param enderecoDoBucket Endereço do bucket no arquivo dos buckets.
+	 * 
+	 * @return {@code true} se tudo der certo;
+	 * {@code false} caso contrário.
+	 */
+	
+	public boolean excluir(TIPO_DAS_CHAVES chave, long enderecoDoBucket)
+	{
+		boolean resultado = false;
+		
+		if (enderecoDoBucket > -1 && arquivoDisponivel())
+		{
+			try
+			{
+				arquivoDosBuckets.seek(enderecoDoBucket);
+				
+				bucket.lerObjeto(arquivoDosBuckets);
+				
+				resultado = excluir(chave, bucket);
+				
+				if (resultado == true) // excluído com sucesso
+				{
+					arquivoDosBuckets.seek(enderecoDoBucket);
+					bucket.escreverObjeto(arquivoDosBuckets);
+				}
+			}
+			
+			catch (IOException ioex)
+			{
+				ioex.printStackTrace();
+			}
+		}
+		
+		return resultado;
 	}
 	
 	/**

@@ -1,10 +1,12 @@
 package hash_dinamica;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.function.BiFunction;
+
+import hash_dinamica.serializaveis.SerializavelAbstract;
 
 /**
  * Classe que gerencia um bucket específico.
@@ -15,7 +17,7 @@ import java.util.function.BiFunction;
  * @param <TIPO_DOS_DADOS> Classe do dado.
  */
 
-public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends Serializavel> implements Serializavel
+public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS extends SerializavelAbstract> extends SerializavelAbstract
 {
 	// o cabeçalho do bucket é apenas a profundidade local até o momento
 	public static final int DESLOCAMENTO_CABECALHO = Byte.BYTES;
@@ -165,6 +167,12 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 		return DESLOCAMENTO_CABECALHO + // tamanho, em bytes, do cabeçalho (metadados)
 			numeroDeRegistrosPorBucket * registroDoIndice.obterTamanhoMaximoEmBytes();
 	}
+
+	@Override
+	public int obterTamanhoMaximoEmBytes()
+	{
+		return obterTamanhoDeUmBucket();
+	}
 	
 	/**
 	 * Aloca o espaço máximo que um bucket pode gastar em bytes e já inicia os
@@ -203,7 +211,7 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 	 */
 	
 	protected RegistroDoIndice<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
-	obterRegistro(int indiceDoBucket)
+		obterRegistro(int indiceDoBucket)
 	{
 		registroDoIndice.lerBytes(bucket,
 			DESLOCAMENTO_CABECALHO + indiceDoBucket * registroDoIndice.obterTamanhoMaximoEmBytes());
@@ -250,6 +258,110 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 	}
 	
 	/**
+	 * Procura um registro no bucket com a chave e o dado informados.
+	 * 
+	 * @param chave Chave a ser procurada.
+	 * @param dado Dado que corresponde à chave.
+	 * 
+	 * @return {@code 0} se o registro não for encontrado;
+	 * o deslocamento em relação ao início do arranjo
+	 * {@code bucket} em que o registro está.
+	 */
+	
+	protected int pesquisar(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)
+	{
+		return
+		percorrerRegistros(
+			(registro, deslocamento) ->
+			{
+				int status = 0; // indica que o processo deve continuar
+				
+				if (registro.lapide == RegistroDoIndice.REGISTRO_ATIVADO &&
+					registro.chave.toString().equals(chave.toString()) &&
+					registro.dado.toString().equals(dado.toString()))
+				{
+					status = deslocamento; // término com êxito, registro já existe
+				}
+				
+				return status;
+			}
+		);
+	}
+	
+	/**
+	 * Procura um registro no bucket com a chave informada.
+	 * 
+	 * @param chave Chave a ser procurada.
+	 * 
+	 * @return {@code 0} se o registro não for encontrado;
+	 * o deslocamento em relação ao início do arranjo
+	 * {@code bucket} em que o registro está.
+	 */
+	
+	protected int pesquisar(TIPO_DAS_CHAVES chave)
+	{
+		return
+		percorrerRegistros(
+			(registro, deslocamento) ->
+			{
+				int status = 0; // indica que o processo deve continuar
+				
+				if (registro.lapide == RegistroDoIndice.REGISTRO_ATIVADO &&
+					registro.chave.toString().equals(chave.toString()))
+				{
+					status = deslocamento; // término com êxito, registro já existe
+				}
+				
+				return status;
+			}
+		);
+	}
+	
+	/**
+	 * Exclui o registro no bucket com a chave e o dado
+	 * informados.
+	 * 
+	 * @param chave Chave a ser procurada.
+	 * @param dado Dado que corresponde à chave.
+	 * 
+	 * @return {@code true} se tudo der certo;
+	 * {@code false} caso contrário.
+	 */
+	
+	protected boolean excluir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)
+	{
+		int enderecoDoRegistro = pesquisar(chave, dado);
+		
+		if (enderecoDoRegistro > 0)
+		{
+			bucket[enderecoDoRegistro] = '*';
+		}
+		
+		return enderecoDoRegistro > 0;
+	}
+	
+	/**
+	 * Tenta excluir o primeiro registro com a chave informada.
+	 * 
+	 * @param chave Chave a ser procurada.
+	 * 
+	 * @return {@code true} se tudo der certo;
+	 * {@code false} caso contrário.
+	 */
+	
+	protected boolean excluir(TIPO_DAS_CHAVES chave)
+	{
+		int enderecoDoRegistro = pesquisar(chave);
+		
+		if (enderecoDoRegistro > 0)
+		{
+			bucket[enderecoDoRegistro] = '*';
+		}
+		
+		return enderecoDoRegistro > 0;
+	}
+	
+	/**
 	 * Tenta inserir a chave e o dado no bucket.
 	 * 
 	 * @param chave Chave a ser inserida.
@@ -269,8 +381,8 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 				int status = 0; // indica que o processo deve continuar
 				
 				if (registro.lapide == RegistroDoIndice.REGISTRO_ATIVADO &&
-					registro.chave.equals(chave) &&
-					registro.dado.equals(dado))
+					registro.chave.toString().equals(chave.toString()) &&
+					registro.dado.toString().equals(dado.toString()))
 				{
 					status = -2; // término com problema, registro já existe
 				}
@@ -319,46 +431,6 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 		);
 		
 		return lista;
-	}
-	
-	@Override
-	public void escreverObjeto(RandomAccessFile correnteDeSaida)
-	{
-		if (correnteDeSaida != null)
-		{
-			byte[] bytes = obterBytes();
-			
-			try
-			{
-				correnteDeSaida.write(bytes);
-			}
-			
-			catch (IOException ioex)
-			{
-				ioex.printStackTrace();
-			}
-		}
-	}
-	
-	@Override
-	public void lerObjeto(RandomAccessFile correnteDeEntrada)
-	{
-		if (correnteDeEntrada != null)
-		{
-			try
-			{
-				bucket = new byte[obterTamanhoDeUmBucket()];
-				
-				correnteDeEntrada.readFully(bucket);
-				
-				profundidadeLocal = bucket[0];
-			}
-			
-			catch (IOException ioex)
-			{
-				ioex.printStackTrace();
-			}
-		}
 	}
 	
 	/**
@@ -417,22 +489,12 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 	}
 
 	@Override
-	public void escreverObjeto(byte[] correnteDeSaida, int deslocamento)
-	{
-		byte[] bytes = obterBytes();
-		
-		System.arraycopy(bytes, 0, correnteDeSaida, deslocamento, bytes.length);
-	}
-
-	@Override
-	public void lerBytes(byte[] bytes, int deslocamento)
+	public void lerBytes(byte[] bytes)
 	{
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
 		
 		try
 		{
-			byteArrayInputStream.skip(deslocamento);
-			
 			byteArrayInputStream.read(bucket);
 			
 			byteArrayInputStream.close();
@@ -442,11 +504,5 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 		{
 			ioex.printStackTrace();
 		}
-	}
-
-	@Override
-	public void lerBytes(byte[] bytes)
-	{
-		lerBytes(bytes, 0);
 	}
 }

@@ -1,8 +1,10 @@
 package hash_dinamica;
+
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.function.Function;
 
+import hash_dinamica.serializaveis.SerializavelAbstract;
 import util.*;
 
 /**
@@ -14,7 +16,7 @@ import util.*;
  * @param <TIPO_DOS_DADOS> Classe do dado.
  */
 
-public class HashDinamica<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends Serializavel>
+public class HashDinamica<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS extends SerializavelAbstract>
 {
 	Diretorio<TIPO_DAS_CHAVES> diretorio;
 	Buckets<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> buckets;
@@ -40,8 +42,8 @@ public class HashDinamica<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS e
 	 * @param construtorDoDado Construtor do dado. É necessário que o dado tenha um
 	 * construtor sem parâmetros.
 	 * @param funcaoHash Função de dispersão (hash) que será usada para as chaves. É
-	 * importante ressaltar que essa função só precisa gerar valores aleatórios, não
-	 * importando o tamanho dos valores.
+	 * importante ressaltar que essa função só precisa gerar valores dispersos, não
+	 * importando o tamanho deles. Não utilize geração de números aleatórios.
 	 */
 	
 	public HashDinamica(
@@ -125,7 +127,7 @@ public class HashDinamica<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS e
 		// se o numero de chamadas for 2, ou seja, se esta função tiver
 		// sido chamada pela própria classe duas vezes, há uma grande
 		// probabilidade de o processo recursivo ser infinito, portanto,
-		// não rodo a função mais.
+		// a função não roda mais.
 		if (numeroDeChamadas < 2)
 		{
 			// profundidade local do bucket igual à profundidade global do diretório
@@ -170,6 +172,53 @@ public class HashDinamica<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS e
 	}
 	
 	/**
+	 * Exclui o registro no bucket com a chave e o dado informados.
+	 * 
+	 * @param chave Chave a ser excluída.
+	 * @param dado Dado que corresponde à chave.
+	 * 
+	 * @return {@code true} se tudo der certo;
+	 * {@code false} caso contrário.
+	 */
+	
+	public boolean excluir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)
+	{
+		boolean sucesso = false;
+
+		long enderecoDoBucket = diretorio.obterEndereçoDoBucket(chave);
+		
+		if (enderecoDoBucket != -1)
+		{
+			sucesso = buckets.excluir(chave, dado, enderecoDoBucket);
+		}
+		
+		return sucesso;
+	}
+	
+	/**
+	 * Tenta excluir o primeiro registro com a chave informada.
+	 * 
+	 * @param chave Chave a ser excluída.
+	 * 
+	 * @return {@code true} se tudo der certo;
+	 * {@code false} caso contrário.
+	 */
+	
+	public boolean excluir(TIPO_DAS_CHAVES chave)
+	{
+		boolean sucesso = false;
+
+		long enderecoDoBucket = diretorio.obterEndereçoDoBucket(chave);
+		
+		if (enderecoDoBucket != -1)
+		{
+			sucesso = buckets.excluir(chave, enderecoDoBucket);
+		}
+		
+		return sucesso;
+	}
+	
+	/**
 	 * Tenta inserir a chave e o dado na hash dinâmica.
 	 * 
 	 * @param chave Chave a ser inserida.
@@ -199,7 +248,7 @@ public class HashDinamica<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS e
 			{
 				tratarBucketCheio(enderecoDoBucket, resultado, chave, dado);
 				
-				sucesso = true;
+				sucesso = numeroDeChamadas < 2;
 			}
 		}
 		

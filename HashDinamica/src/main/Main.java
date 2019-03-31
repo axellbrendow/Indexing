@@ -1,10 +1,8 @@
 package main;
 import java.io.File;
-import java.io.IOException;
-
 import entities.entity;
 import hash_dinamica.HashDinamica;
-import hash_dinamica.implementacoe.HashDinamicaIntLong;
+import util.IO;
 
 public class Main
 {
@@ -36,26 +34,22 @@ public class Main
 				(short) (Integer.BYTES + 300),
 				entity.class.getConstructor(),
 				entity.class.getConstructor(),
-				(ent) -> { return (int) ( ent.id ); }
+				(ent) -> { return ent.id; }
 			);
 			
 			hash.inserir(ent1, ent2);
 			hash.inserir(ent1, ent3);
 			hash.inserir(ent1, ent4);
+			hash.excluir(ent1, ent2);
 			hash.inserir(ent5, ent6);
 			hash.inserir(ent4, ent2);
 			hash.inserir(ent3, ent3);
 			hash.inserir(ent2, ent4);
 			
-			hash.listarDadosComAChave(ent5).forEach( (it) -> { println(it); } );
+			hash.listarDadosComAChave(ent1).forEach( (it) -> { IO.println(it); } );
 		}
 		
-		catch (NoSuchMethodException e)
-		{
-			e.printStackTrace();
-		}
-		
-		catch (SecurityException e)
+		catch (NoSuchMethodException | SecurityException e)
 		{
 			e.printStackTrace();
 		}

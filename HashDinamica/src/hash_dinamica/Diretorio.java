@@ -3,6 +3,9 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.function.Function;
 
+import hash_dinamica.serializaveis.SerializavelAbstract;
+import util.IO;
+
 /**
  * Classe para gerenciamento do diretório de uma hash dinâmica.
  * 
@@ -11,7 +14,7 @@ import java.util.function.Function;
  * @param <TIPO_DAS_CHAVES> Classe da chave.
  */
 
-public class Diretorio<TIPO_DAS_CHAVES extends Serializavel>
+public class Diretorio<TIPO_DAS_CHAVES extends SerializavelAbstract>
 {
 	// bytes para a profundidade global +
 	// bytes para o indice do ultimo ponteiro alterado
@@ -32,8 +35,8 @@ public class Diretorio<TIPO_DAS_CHAVES extends Serializavel>
 	 * @param nomeDoArquivoDoDiretorio Nome do arquivo previamente usado para o diretório.
 	 * Caso o arquivo não tenha sido criado ainda, ele será criado com este nome.
 	 * @param funcaoHash Função de dispersão (hash) que será usada para as chaves. É
-	 * importante ressaltar que essa função só precisa gerar valores aleatórios, não
-	 * importando o tamanho dos valores.
+	 * importante ressaltar que essa função só precisa gerar valores dispersos, não
+	 * importando o tamanho deles. Não utilize geração de números aleatórios.
 	 */
 	
 	public Diretorio(String nomeDoArquivoDoDiretorio, Function<TIPO_DAS_CHAVES, Integer> funcaoHash)
@@ -120,33 +123,6 @@ public class Diretorio<TIPO_DAS_CHAVES extends Serializavel>
 		}
 		
 		return sucesso;
-	}
-	
-	/**
-	 * Escreve a profundidade global informada no cabeçalho do arquivo do diretório.
-	 * 
-	 * @param profundidadeGlobal Profundidade global a ser escrita.
-	 * 
-	 * @return {@code profundidadeGlobal}.
-	 */
-	
-	private byte escreverProfundidadeGlobal(byte profundidadeGlobal)
-	{
-		if (arquivoDisponivel() && profundidadeGlobal > 0)
-		{
-			try
-			{
-				arquivoDoDiretorio.seek(0);
-				arquivoDoDiretorio.writeByte(profundidadeGlobal);
-			}
-			
-			catch (IOException e)
-			{
-				e.printStackTrace();
-			}
-		}
-		
-		return profundidadeGlobal;
 	}
 	
 	/**

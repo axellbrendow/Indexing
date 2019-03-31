@@ -12,9 +12,9 @@ public class entity extends SerializavelAbstract
 {
 	public static final int PADRAO_TAMANHO_MAXIMO_EM_BYTES_PARA_O_NOME = 200;
 	
-	int id;
-	String nome;
-	int tamanhoMaximoEmBytesDoNome;
+	public int id;
+	public String nome;
+	public int tamanhoMaximoEmBytesDoNome;
 	
 	public entity(int id, String nome, int tamanhoMaximoEmBytesDoNome)
 	{
@@ -26,6 +26,11 @@ public class entity extends SerializavelAbstract
 	public entity(String nome, int tamanhoMaximoEmBytesDoNome)
 	{
 		this(-1, nome, tamanhoMaximoEmBytesDoNome);
+	}
+	
+	public entity(int id, String nome)
+	{
+		this(id, nome, PADRAO_TAMANHO_MAXIMO_EM_BYTES_PARA_O_NOME);
 	}
 	
 	public entity(String nome)
@@ -90,6 +95,6 @@ public class entity extends SerializavelAbstract
 	@Override
 	public String toString()
 	{
-		return id + ", " + nome + "\n";
+		return id + ", " + nome;
 	}
 }

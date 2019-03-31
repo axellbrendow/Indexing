@@ -14,7 +14,7 @@ public abstract class SerializavelAbstract implements Serializavel
 	 * @param correnteDeSaida Corrente de saída dos bytes.
 	 */
 	
-	void escreverObjeto(RandomAccessFile correnteDeSaida)
+	public void escreverObjeto(RandomAccessFile correnteDeSaida)
 	{
 		try
 		{
@@ -73,7 +73,7 @@ public abstract class SerializavelAbstract implements Serializavel
 	 * @param deslocamento Deslocamento em relação ao início.
 	 */
 	
-	void lerBytes(byte[] bytes, int deslocamento)
+	public void lerBytes(byte[] bytes, int deslocamento)
 	{
 		if (bytes != null)
 		{
@@ -83,7 +83,7 @@ public abstract class SerializavelAbstract implements Serializavel
 			{
 				byte[] bytesAproveitaveis = new byte[restante];
 				
-				System.arraycopy(bytes, 0, bytesAproveitaveis, 0, restante);
+				System.arraycopy(bytes, deslocamento, bytesAproveitaveis, 0, restante);
 				
 				lerBytes(bytesAproveitaveis);
 			}

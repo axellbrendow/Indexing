@@ -8,11 +8,11 @@ import java.io.IOException;
 
 public class LongSerializavel extends SerializavelAbstract
 {
-	long dado;
+	public long valor;
 	
-	public LongSerializavel(long dado)
+	public LongSerializavel(long valor)
 	{
-		this.dado = dado;
+		this.valor = valor;
 	}
 
 	public LongSerializavel()
@@ -34,7 +34,7 @@ public class LongSerializavel extends SerializavelAbstract
 		
 		try
 		{
-			dataOutputStream.writeLong(dado);
+			dataOutputStream.writeLong(valor);
 			dataOutputStream.close();
 		}
 		
@@ -54,7 +54,7 @@ public class LongSerializavel extends SerializavelAbstract
 		
 		try
 		{
-			dado = dataInputStream.readLong();
+			valor = dataInputStream.readLong();
 			dataInputStream.close();
 		}
 		
@@ -67,6 +67,6 @@ public class LongSerializavel extends SerializavelAbstract
 	@Override
 	public String toString()
 	{
-		return "" + dado;
+		return "" + valor;
 	}
 }

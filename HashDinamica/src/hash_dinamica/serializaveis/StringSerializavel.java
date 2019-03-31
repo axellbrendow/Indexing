@@ -10,18 +10,18 @@ public class StringSerializavel extends SerializavelAbstract
 {
 	public static final int PADRAO_TAMANHO_MAXIMO_EM_BYTES = 300;
 	
-	public String dado;
+	public String valor;
 	public int tamanhoMaximoEmBytes;
 	
-	public StringSerializavel(String dado, int tamanhoMaximoEmBytes)
+	public StringSerializavel(String valor, int tamanhoMaximoEmBytes)
 	{
-		this.dado = dado;
+		this.valor = valor;
 		this.tamanhoMaximoEmBytes = tamanhoMaximoEmBytes;
 	}
 	
-	public StringSerializavel(String dado)
+	public StringSerializavel(String valor)
 	{
-		this(dado, PADRAO_TAMANHO_MAXIMO_EM_BYTES);
+		this(valor, PADRAO_TAMANHO_MAXIMO_EM_BYTES);
 	}
 	
 	public StringSerializavel()
@@ -43,7 +43,7 @@ public class StringSerializavel extends SerializavelAbstract
 		
 		try
 		{
-			dataOutputStream.writeUTF(dado);
+			dataOutputStream.writeUTF(valor);
 			dataOutputStream.writeInt(tamanhoMaximoEmBytes);
 			dataOutputStream.close();
 		}
@@ -64,7 +64,7 @@ public class StringSerializavel extends SerializavelAbstract
 		
 		try
 		{
-			dado = dataInputStream.readUTF();
+			valor = dataInputStream.readUTF();
 			tamanhoMaximoEmBytes = dataInputStream.readInt();
 			dataInputStream.close();
 		}
@@ -78,6 +78,6 @@ public class StringSerializavel extends SerializavelAbstract
 	@Override
 	public String toString()
 	{
-		return dado;
+		return valor;
 	}
 }

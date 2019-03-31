@@ -1,13 +1,15 @@
 package hash_dinamica;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
+
+import hash_dinamica.serializaveis.SerializavelAbstract;
 
 /**
  * Classe utilitária para manusear os registros de indices em um bucket.
@@ -18,7 +20,7 @@ import java.util.Arrays;
  * @param <TIPO_DOS_DADOS> Classe do dado.
  */
 
-public class RegistroDoIndice<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends Serializavel> implements Serializavel
+public class RegistroDoIndice<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS extends SerializavelAbstract> extends SerializavelAbstract
 {
 	public static final char REGISTRO_ATIVADO = ' ';
 	public static final char REGISTRO_DESATIVADO = '*';
@@ -117,38 +119,6 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DAD
 			}
 		}
 	}
-	
-	@Override
-	public void escreverObjeto(RandomAccessFile correnteDeSaida)
-	{
-		try
-		{
-			correnteDeSaida.write(obterBytes());
-		}
-		
-		catch (IOException ioex)
-		{
-			ioex.printStackTrace();
-		}
-	}
-
-	@Override
-	public void lerObjeto(RandomAccessFile correnteDeEntrada)
-	{
-		try
-		{
-			byte[] registro = new byte[obterTamanhoMaximoEmBytes()];
-			
-			correnteDeEntrada.read(registro);
-			
-			lerBytes(registro);
-		}
-		
-		catch (IOException ioex)
-		{
-			ioex.printStackTrace();
-		}
-	}
 
 	@Override
 	public byte[] obterBytes()
@@ -180,7 +150,6 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DAD
 				quantidadeMaximaDeBytesParaODado
 			);
 			
-			byteArrayOutputStream.close();
 			dataOutputStream.close();
 		}
 		
@@ -193,22 +162,13 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DAD
 	}
 
 	@Override
-	public void escreverObjeto(byte[] correnteDeSaida, int deslocamento)
-	{
-		byte[] bytes = obterBytes();
-		
-		System.arraycopy(bytes, 0, correnteDeSaida, deslocamento, bytes.length);
-	}
-
-	@Override
-	public void lerBytes(byte[] bytes, int deslocamento)
+	public void lerBytes(byte[] bytes)
 	{
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
 		DataInputStream dataInputStream = new DataInputStream(byteArrayInputStream);
 		
 		try
 		{
-			dataInputStream.skipBytes(deslocamento);
 			lapide = (char) dataInputStream.readByte();
 			
 			byte[] byteArrayChave = new byte[quantidadeMaximaDeBytesParaAChave];
@@ -221,30 +181,18 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DAD
 			{
 				chave = (TIPO_DAS_CHAVES) construtorDaChave.newInstance();
 				dado = (TIPO_DOS_DADOS) construtorDoDado.newInstance();
-				
-				chave.lerBytes(byteArrayChave);
-				dado.lerBytes(byteArrayDado);
 			}
 			
-			catch (InstantiationException e)
+			catch (InstantiationException
+				| IllegalAccessException
+				| IllegalArgumentException
+				| InvocationTargetException e)
 			{
 				e.printStackTrace();
 			}
 			
-			catch (IllegalAccessException e)
-			{
-				e.printStackTrace();
-			}
-			
-			catch (IllegalArgumentException e)
-			{
-				e.printStackTrace();
-			}
-			
-			catch (InvocationTargetException e)
-			{
-				e.printStackTrace();
-			}
+			chave.lerBytes(byteArrayChave);
+			dado.lerBytes(byteArrayDado);
 			
 			byteArrayInputStream.close();
 			dataInputStream.close();
@@ -254,11 +202,5 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DAD
 		{
 			ioex.printStackTrace();
 		}
-	}
-
-	@Override
-	public void lerBytes(byte[] bytes)
-	{
-		lerBytes(bytes, 0);
 	}
 }
