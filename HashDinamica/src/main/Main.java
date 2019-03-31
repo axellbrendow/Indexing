@@ -1,5 +1,10 @@
+package main;
 import java.io.File;
 import java.io.IOException;
+
+import entities.entity;
+import hash_dinamica.HashDinamica;
+import hash_dinamica.implementacoe.HashDinamicaIntLong;
 
 public class Main
 {
@@ -7,16 +12,6 @@ public class Main
 	public static final String NOME_DO_ARQUIVO_DOS_BUCKETS = "buckets.db";
 	public static final File ARQUIVO_DO_DIRETORIO = new File(NOME_DO_ARQUIVO_DO_DIRETORIO);
 	public static final File ARQUIVO_DOS_BUCKETS = new File(NOME_DO_ARQUIVO_DOS_BUCKETS);
-	
-	public static void print(Object msg)
-	{
-		System.out.print(msg);
-	}
-	
-	public static void println(Object msg)
-	{
-		print(msg + System.lineSeparator());
-	}
 	
 	public static void main(String[] args)
 	{
@@ -41,13 +36,16 @@ public class Main
 				(short) (Integer.BYTES + 300),
 				entity.class.getConstructor(),
 				entity.class.getConstructor(),
-				(ent) -> { return (int) ( Short.MAX_VALUE * ent.id ); }
+				(ent) -> { return (int) ( ent.id ); }
 			);
 			
 			hash.inserir(ent1, ent2);
 			hash.inserir(ent1, ent3);
 			hash.inserir(ent1, ent4);
 			hash.inserir(ent5, ent6);
+			hash.inserir(ent4, ent2);
+			hash.inserir(ent3, ent3);
+			hash.inserir(ent2, ent4);
 			
 			hash.listarDadosComAChave(ent5).forEach( (it) -> { println(it); } );
 		}

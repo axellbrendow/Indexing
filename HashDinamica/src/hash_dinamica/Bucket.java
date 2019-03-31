@@ -1,3 +1,4 @@
+package hash_dinamica;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;

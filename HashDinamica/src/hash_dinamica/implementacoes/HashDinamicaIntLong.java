@@ -1,20 +1,26 @@
+package hash_dinamica.implementacoes;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.function.Function;
+
+import hash_dinamica.*;
 
 /**
  * Estrutura de hashing dinâmico para indexamento de registros.
  * 
  * @author Axell Brendow ( https://github.com/axell-brendow )
- *
- * @param <TIPO_DAS_CHAVES> Classe da chave.
- * @param <TIPO_DOS_DADOS> Classe do dado.
  */
 
-public class HashDinamica<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends Serializavel>
+public class HashDinamicaIntLong extends HashDinamica<Serializavel, Serializavel>
 {
 	Diretorio<TIPO_DAS_CHAVES> diretorio;
 	Buckets<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> buckets;
+	 
+	// auxilia no controle de recursividade infinita
+	// da função tratarBucketCheio() juntamente com a
+	// função inserir()
+	private boolean chamadaInterna = false;
+	private int numeroDeChamadas = 0;
 	
 	/**
 	 * Cria um objeto que gerencia uma hash dinâmica.
@@ -35,7 +41,7 @@ public class HashDinamica<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS e
 	 * importando o tamanho dos valores.
 	 */
 	
-	public HashDinamica(
+	public HashDinamicaIntLong(
 		String nomeDoArquivoDoDiretorio,
 		String nomeDoArquivoDosBuckets,
 		int numeroDeRegistrosPorBucket,
@@ -108,27 +114,56 @@ public class HashDinamica<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS e
 		TIPO_DAS_CHAVES chave,
 		TIPO_DOS_DADOS dado)
 	{
-		// profundidade local do bucket igual à profundidade global do diretório
-		if (resultado == diretorio.obterProfundidadeGlobal())
+		// conta quantas vezes esta função foi chamada por uma função
+		// inserir() que tenha sido chamada por esta função.
+		// (desculpe-me pela recursividade, mas é isso mesmo)
+		numeroDeChamadas = ( chamadaInterna ? numeroDeChamadas + 1 : 0 );
+		
+		// se o numero de chamadas for 2, ou seja, se esta função tiver
+		// sido chamada pela própria classe duas vezes, há uma grande
+		// probabilidade de o processo recursivo ser infinito, portanto,
+		// não rodo a função mais.
+		if (numeroDeChamadas < 2)
 		{
-			diretorio.duplicar();
+			// profundidade local do bucket igual à profundidade global do diretório
+			if (resultado == diretorio.obterProfundidadeGlobal())
+			{
+				diretorio.duplicar();
+			}
+			
+			Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> bucketExcluido =
+				buckets.resetarBucket(enderecoDoBucket);
+			
+			long enderecoDoNovoBucket =
+				buckets.criarBucket( (byte) (resultado + 1) );
+			
+			diretorio.atribuirPonteiroNoIndice
+			(
+				diretorio.obterIndiceDoUltimoPonteiroAlterado() + 1,
+				enderecoDoNovoBucket
+			);
+			
+			chamadaInterna = true;
+			inserirElementosDe(bucketExcluido);
+			
+			inserir(chave, dado);
+			chamadaInterna = false;
 		}
 		
-		Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> bucketExcluido =
-			buckets.resetarBucket(enderecoDoBucket);
-		
-		long enderecoDoNovoBucket =
-			buckets.criarBucket( (byte) (resultado + 1) );
-		
-		diretorio.atribuirPonteiroNoIndice
-		(
-			diretorio.obterIndiceDoUltimoPonteiroAlterado() + 1,
-			enderecoDoNovoBucket
-		);
-		
-		inserirElementosDe(bucketExcluido);
-		
-		inserir(chave, dado);
+		else
+		{
+			Main.println(
+				"Inclusão ignorada. A chave que deseja-se inserir, juntamente\n" +
+				"com outras existentes, gera duplicação infinita do diretório.\n" +
+				"Experimente aumentar a quantidade de registros por bucket.\n\n" +
+				"Chave:\n" +
+				chave + "\n" +
+				"Dado:\n" +
+				dado
+			);
+			
+			numeroDeChamadas = 0;
+		}
 	}
 	
 	/**

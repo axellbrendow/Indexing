@@ -1,59 +1,47 @@
+package entities;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.RandomAccessFile;
 
-public class entity implements Serializavel
+import hash_dinamica.serializaveis.SerializavelAbstract;
+
+public class entity extends SerializavelAbstract
 {
+	public static final int PADRAO_TAMANHO_MAXIMO_EM_BYTES_PARA_O_NOME = 200;
+	
 	int id;
 	String nome;
+	int tamanhoMaximoEmBytesDoNome;
 	
-	public entity(int id, String nome)
+	public entity(int id, String nome, int tamanhoMaximoEmBytesDoNome)
 	{
 		this.id = id;
 		this.nome = nome;
+		this.tamanhoMaximoEmBytesDoNome = tamanhoMaximoEmBytesDoNome;
 	}
 
+	public entity(String nome, int tamanhoMaximoEmBytesDoNome)
+	{
+		this(-1, nome, tamanhoMaximoEmBytesDoNome);
+	}
+	
 	public entity(String nome)
 	{
-		this(-1, nome);
+		this(nome, PADRAO_TAMANHO_MAXIMO_EM_BYTES_PARA_O_NOME);
 	}
 	
 	public entity()
 	{
 		this("");
 	}
-	
-	@Override
-	public void escreverObjeto(RandomAccessFile correnteDeSaida)
-	{
-		try
-		{
-			correnteDeSaida.writeInt(id);
-			correnteDeSaida.writeUTF(nome);
-		}
-		
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-	}
 
 	@Override
-	public void lerObjeto(RandomAccessFile correnteDeEntrada)
+	public int obterTamanhoMaximoEmBytes()
 	{
-		try
-		{
-			id = correnteDeEntrada.readInt();
-			nome = correnteDeEntrada.readUTF();
-		}
-		
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
+		return Integer.BYTES + tamanhoMaximoEmBytesDoNome + Integer.BYTES;
 	}
 
 	@Override
@@ -66,8 +54,7 @@ public class entity implements Serializavel
 		{
 			dataOutputStream.writeInt(id);
 			dataOutputStream.writeUTF(nome);
-			
-			byteArrayOutputStream.close();
+			dataOutputStream.writeInt(tamanhoMaximoEmBytesDoNome);
 			dataOutputStream.close();
 		}
 		
@@ -80,26 +67,17 @@ public class entity implements Serializavel
 	}
 
 	@Override
-	public void escreverObjeto(byte[] correnteDeSaida, int deslocamento)
-	{
-		byte[] bytes = obterBytes();
-		
-		System.arraycopy(bytes, 0, correnteDeSaida, deslocamento, bytes.length);
-	}
-
-	@Override
-	public void lerBytes(byte[] bytes, int deslocamento)
+	public void lerBytes(byte[] bytes)
 	{
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
 		DataInputStream dataInputStream = new DataInputStream(byteArrayInputStream);
 		
 		try
 		{
-			dataInputStream.skip(deslocamento);
 			id = dataInputStream.readInt();
 			nome = dataInputStream.readUTF();
+			tamanhoMaximoEmBytesDoNome = dataInputStream.readInt();
 			
-			byteArrayInputStream.close();
 			dataInputStream.close();
 		}
 		
@@ -108,18 +86,10 @@ public class entity implements Serializavel
 			e.printStackTrace();
 		}
 	}
-
-	@Override
-	public void lerBytes(byte[] bytes)
-	{
-		lerBytes(bytes, 0);
-	}
 	
 	@Override
 	public String toString()
 	{
-		return
-			id + ", " +
-			nome + "\n";
+		return id + ", " + nome + "\n";
 	}
 }

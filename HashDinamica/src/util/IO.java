@@ -1,3 +1,4 @@
+package util;
 import java.io.FileNotFoundException;
 import java.io.RandomAccessFile;
 
@@ -9,6 +10,16 @@ import java.io.RandomAccessFile;
 
 public class IO
 {
+	public static void print(Object msg)
+	{
+		System.out.print(msg);
+	}
+	
+	public static void println(Object msg)
+	{
+		print(msg + System.lineSeparator());
+	}
+	
 	/**
 	 * Abre o arquivo {@code fileName} no modo de acesso {@code mode}
 	 * 
