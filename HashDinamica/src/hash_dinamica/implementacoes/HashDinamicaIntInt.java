@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import hash_dinamica.HashDinamica;
 import hash_dinamica.serializaveis.IntSerializavel;
-import hash_dinamica.serializaveis.LongSerializavel;
 
 /**
  * Estrutura de hashing dinâmico para indexamento de registros.
@@ -12,7 +11,7 @@ import hash_dinamica.serializaveis.LongSerializavel;
  * @author Axell Brendow ( https://github.com/axell-brendow )
  */
 
-public class HashDinamicaIntLong extends HashDinamica<IntSerializavel, LongSerializavel>
+public class HashDinamicaIntInt extends HashDinamica<IntSerializavel, IntSerializavel>
 {
 	public static final int PADRAO_NUMERO_DE_REGISTROS_POR_BUCKET = 21;
 	
@@ -32,7 +31,7 @@ public class HashDinamicaIntLong extends HashDinamica<IntSerializavel, LongSeria
 	 * @throws NoSuchMethodException 
 	 */
 	
-	public HashDinamicaIntLong(
+	public HashDinamicaIntInt(
 		String nomeDoArquivoDoDiretorio,
 		String nomeDoArquivoDosBuckets,
 		int numeroDeRegistrosPorBucket
@@ -43,9 +42,9 @@ public class HashDinamicaIntLong extends HashDinamica<IntSerializavel, LongSeria
 			nomeDoArquivoDosBuckets,
 			numeroDeRegistrosPorBucket,
 			(short) Integer.BYTES,
-			(short) Long.BYTES,
+			(short) Integer.BYTES,
 			IntSerializavel.class.getConstructor(),
-			LongSerializavel.class.getConstructor(),
+			IntSerializavel.class.getConstructor(),
 			(chave) -> { return chave.valor; }
 		);
 	}
@@ -61,7 +60,7 @@ public class HashDinamicaIntLong extends HashDinamica<IntSerializavel, LongSeria
 	 * @throws NoSuchMethodException 
 	 */
 	
-	public HashDinamicaIntLong(
+	public HashDinamicaIntInt(
 		String nomeDoArquivoDoDiretorio,
 		String nomeDoArquivoDosBuckets
 		/*Function<IntSerializavel, Integer> funcaoHash*/) throws NoSuchMethodException, SecurityException
@@ -78,19 +77,19 @@ public class HashDinamicaIntLong extends HashDinamica<IntSerializavel, LongSeria
 	 * 
 	 * @param chave Chave a ser procurada.
 	 * 
-	 * @return {@link java.lang.Long#MIN_VALUE} se o registro não
+	 * @return {@link java.lang.Integer#MIN_VALUE} se o registro não
 	 * for encontrado; o dado correspondente à chave caso contrário.
 	 */
 	
-	public long pesquisarDadoPelaChave(int chave)
+	public int pesquisarDadoPelaChave(int chave)
 	{
-		long dado = Long.MIN_VALUE;
+		int dado = Integer.MIN_VALUE;
 
-		LongSerializavel longSerializavel = pesquisarDadoPelaChave(new IntSerializavel(chave));
+		IntSerializavel intSerializavel = pesquisarDadoPelaChave(new IntSerializavel(chave));
 		
-		if (longSerializavel != null)
+		if (intSerializavel != null)
 		{
-			dado = longSerializavel.valor;
+			dado = intSerializavel.valor;
 		}
 		
 		return dado;
@@ -105,11 +104,11 @@ public class HashDinamicaIntLong extends HashDinamica<IntSerializavel, LongSeria
 	 * for encontrado; a chave correspondente ao dado caso contrário.
 	 */
 	
-	public int pesquisarChavePeloDado(long dado)
+	public int pesquisarChavePeloDado(int dado)
 	{
 		int chave = Integer.MIN_VALUE;
 
-		IntSerializavel intSerializavel = pesquisarChavePeloDado(new LongSerializavel(dado));
+		IntSerializavel intSerializavel = pesquisarChavePeloDado(new IntSerializavel(dado));
 		
 		if (intSerializavel != null)
 		{
@@ -129,9 +128,9 @@ public class HashDinamicaIntLong extends HashDinamica<IntSerializavel, LongSeria
 	 * {@code false} caso contrário.
 	 */
 	
-	public boolean excluir(int chave, long dado)
+	public boolean excluir(int chave, int dado)
 	{
-		return excluir(new IntSerializavel(chave), new LongSerializavel(dado));
+		return excluir(new IntSerializavel(chave), new IntSerializavel(dado));
 	}
 	
 	/**
@@ -157,12 +156,12 @@ public class HashDinamicaIntLong extends HashDinamica<IntSerializavel, LongSeria
 	 * @return lista com os dados correspondentes às chaves.
 	 */
 	
-	public long[] listarDadosComAChave(int chave)
+	public int[] listarDadosComAChave(int chave)
 	{
-		ArrayList<LongSerializavel> list = listarDadosComAChave(new IntSerializavel(chave));
+		ArrayList<IntSerializavel> list = listarDadosComAChave(new IntSerializavel(chave));
 		int listSize = list.size();
 		
-		long[] dados = new long[listSize];
+		int[] dados = new int[listSize];
 		
 		for (int i = 0; i < listSize; i++)
 		{
@@ -182,8 +181,8 @@ public class HashDinamicaIntLong extends HashDinamica<IntSerializavel, LongSeria
 	 * Caso contrário, {@code false}.
 	 */
 	
-	public boolean inserir(int chave, long dado)
+	public boolean inserir(int chave, int dado)
 	{
-		return inserir(new IntSerializavel(chave), new LongSerializavel(dado));
+		return inserir(new IntSerializavel(chave), new IntSerializavel(dado));
 	}
 }

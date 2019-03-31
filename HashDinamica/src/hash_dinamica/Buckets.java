@@ -279,6 +279,122 @@ public class Buckets<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADO
 	}
 	
 	/**
+	 * Procura um registro no bucket com a chave informada.
+	 * 
+	 * @param chave Chave a ser procurada.
+	 * @param bucket Bucket para procura.
+	 * 
+	 * @return {@code null} se o registro não for encontrado;
+	 * o dado correspondente à chave caso contrário.
+	 */
+	
+	protected TIPO_DOS_DADOS pesquisarDadoPelaChave(
+		TIPO_DAS_CHAVES chave,
+		Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> bucket)
+	{
+		TIPO_DOS_DADOS dado = null;
+		
+		if (bucket != null)
+		{
+			dado = bucket.pesquisarDadoPelaChave(chave);
+		}
+		
+		return dado;
+	}
+	
+	/**
+	 * Procura um registro no bucket com a chave informada.
+	 * 
+	 * @param chave Chave a ser procurada.
+	 * @param enderecoDoBucket Endereço do bucket no arquivo dos buckets.
+	 * 
+	 * @return {@code null} se o registro não for encontrado;
+	 * o dado correspondente à chave caso contrário.
+	 */
+	
+	public TIPO_DOS_DADOS pesquisarDadoPelaChave(TIPO_DAS_CHAVES chave, long enderecoDoBucket)
+	{
+		TIPO_DOS_DADOS dado = null;
+		
+		if (enderecoDoBucket > -1 && arquivoDisponivel())
+		{
+			try
+			{
+				arquivoDosBuckets.seek(enderecoDoBucket);
+				
+				bucket.lerObjeto(arquivoDosBuckets);
+				
+				dado = pesquisarDadoPelaChave(chave, bucket);
+			}
+			
+			catch (IOException ioex)
+			{
+				ioex.printStackTrace();
+			}
+		}
+		
+		return dado;
+	}
+	
+	/**
+	 * Procura um registro no bucket com o dado informado.
+	 * 
+	 * @param dado Dado que corresponde à chave.
+	 * @param bucket Bucket para procura.
+	 * 
+	 * @return {@code null} se o registro não for encontrado;
+	 * a chave correspondente ao dado caso contrário.
+	 */
+	
+	protected TIPO_DAS_CHAVES pesquisarChavePeloDado(
+		TIPO_DOS_DADOS dado,
+		Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> bucket)
+	{
+		TIPO_DAS_CHAVES chave = null;
+		
+		if (bucket != null)
+		{
+			chave = bucket.pesquisarChavePeloDado(dado);
+		}
+		
+		return chave;
+	}
+	
+	/**
+	 * Procura um registro no bucket com o dado informado.
+	 * 
+	 * @param dado Dado a ser procurado.
+	 * @param enderecoDoBucket Endereço do bucket no arquivo dos buckets.
+	 * 
+	 * @return {@code null} se o registro não for encontrado;
+	 * a chave correspondente ao dado caso contrário.
+	 */
+	
+	public TIPO_DAS_CHAVES pesquisarChavePeloDado(TIPO_DOS_DADOS dado, long enderecoDoBucket)
+	{
+		TIPO_DAS_CHAVES chave = null;
+		
+		if (enderecoDoBucket > -1 && arquivoDisponivel())
+		{
+			try
+			{
+				arquivoDosBuckets.seek(enderecoDoBucket);
+				
+				bucket.lerObjeto(arquivoDosBuckets);
+				
+				chave = pesquisarChavePeloDado(dado, bucket);
+			}
+			
+			catch (IOException ioex)
+			{
+				ioex.printStackTrace();
+			}
+		}
+		
+		return chave;
+	}
+	
+	/**
 	 * Tenta excluir a chave e o dado do bucket.
 	 * 
 	 * @param chave Chave a ser excluída.

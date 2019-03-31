@@ -268,7 +268,7 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 	 * {@code bucket} em que o registro está.
 	 */
 	
-	protected int pesquisar(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)
+	protected int pesquisarEnderecoDaChaveEDoDado(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)
 	{
 		return
 		percorrerRegistros(
@@ -298,7 +298,7 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 	 * {@code bucket} em que o registro está.
 	 */
 	
-	protected int pesquisar(TIPO_DAS_CHAVES chave)
+	protected int pesquisarEnderecoDaChave(TIPO_DAS_CHAVES chave)
 	{
 		return
 		percorrerRegistros(
@@ -318,6 +318,84 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 	}
 	
 	/**
+	 * Procura um registro no bucket com o dado informado.
+	 * 
+	 * @param dado Dado a ser procurado.
+	 * 
+	 * @return {@code 0} se o registro não for encontrado;
+	 * o deslocamento em relação ao início do arranjo
+	 * {@code bucket} em que o registro está.
+	 */
+	
+	protected int pesquisarEnderecoDoDado(TIPO_DOS_DADOS dado)
+	{
+		return
+		percorrerRegistros(
+			(registro, deslocamento) ->
+			{
+				int status = 0; // indica que o processo deve continuar
+				
+				if (registro.lapide == RegistroDoIndice.REGISTRO_ATIVADO &&
+					registro.dado.toString().equals(dado.toString()))
+				{
+					status = deslocamento; // término com êxito, registro já existe
+				}
+				
+				return status;
+			}
+		);
+	}
+	
+	/**
+	 * Procura um registro no bucket com a chave informada.
+	 * 
+	 * @param chave Chave a ser procurada.
+	 * @param dado Dado que corresponde à chave.
+	 * 
+	 * @return {@code null} se o registro não for encontrado;
+	 * o dado correspondente à chave caso contrário.
+	 */
+	
+	protected TIPO_DOS_DADOS pesquisarDadoPelaChave(TIPO_DAS_CHAVES chave)
+	{
+		TIPO_DOS_DADOS dado = null;
+		
+		int enderecoDoRegistro = pesquisarEnderecoDaChave(chave);
+		
+		if (enderecoDoRegistro > 0)
+		{
+			registroDoIndice.lerBytes(bucket, enderecoDoRegistro);
+			dado = registroDoIndice.dado;
+		}
+		
+		return dado;
+	}
+	
+	/**
+	 * Procura um registro no bucket com o dado informado.
+	 * 
+	 * @param dado Dado que corresponde à chave.
+	 * 
+	 * @return {@code null} se o registro não for encontrado;
+	 * a chave correspondente ao dado caso contrário.
+	 */
+	
+	protected TIPO_DAS_CHAVES pesquisarChavePeloDado(TIPO_DOS_DADOS dado)
+	{
+		TIPO_DAS_CHAVES chave = null;
+		
+		int enderecoDoRegistro = pesquisarEnderecoDoDado(dado);
+		
+		if (enderecoDoRegistro > 0)
+		{
+			registroDoIndice.lerBytes(bucket, enderecoDoRegistro);
+			chave = registroDoIndice.chave;
+		}
+		
+		return chave;
+	}
+	
+	/**
 	 * Exclui o registro no bucket com a chave e o dado
 	 * informados.
 	 * 
@@ -330,7 +408,7 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 	
 	protected boolean excluir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)
 	{
-		int enderecoDoRegistro = pesquisar(chave, dado);
+		int enderecoDoRegistro = pesquisarEnderecoDaChaveEDoDado(chave, dado);
 		
 		if (enderecoDoRegistro > 0)
 		{
@@ -351,7 +429,7 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 	
 	protected boolean excluir(TIPO_DAS_CHAVES chave)
 	{
-		int enderecoDoRegistro = pesquisar(chave);
+		int enderecoDoRegistro = pesquisarEnderecoDaChave(chave);
 		
 		if (enderecoDoRegistro > 0)
 		{

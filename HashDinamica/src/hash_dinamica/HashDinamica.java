@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.function.Function;
 
 import hash_dinamica.serializaveis.SerializavelAbstract;
-import util.*;
+import util.IO;
 
 /**
  * Estrutura de hashing dinâmico para indexamento de registros.
@@ -79,6 +79,99 @@ public class HashDinamica<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS
 	public ArrayList<TIPO_DOS_DADOS> listarDadosComAChave(TIPO_DAS_CHAVES chave)
 	{
 		return buckets.listarDadosComAChave(chave, diretorio.obterEndereçoDoBucket(chave));
+	}
+	
+	/**
+	 * Procura um registro na hash dinâmica com a chave informada.
+	 * 
+	 * @param chave Chave a ser procurada.
+	 * 
+	 * @return {@code null} se o registro não for encontrado;
+	 * o dado correspondente à chave caso contrário.
+	 */
+	
+	public TIPO_DOS_DADOS pesquisarDadoPelaChave(TIPO_DAS_CHAVES chave)
+	{
+		TIPO_DOS_DADOS dado = null;
+
+		long enderecoDoBucket = diretorio.obterEndereçoDoBucket(chave);
+		
+		if (enderecoDoBucket != -1)
+		{
+			dado = buckets.pesquisarDadoPelaChave(chave, enderecoDoBucket);
+		}
+		
+		return dado;
+	}
+	
+	/**
+	 * Procura um registro na hash dinâmica com o dado informado.
+	 * 
+	 * @param dado Dado a ser procurado.
+	 * 
+	 * @return {@code null} se o registro não for encontrado;
+	 * a chave correspondente ao dado caso contrário.
+	 */
+	
+	public TIPO_DAS_CHAVES pesquisarChavePeloDado(TIPO_DOS_DADOS dado)
+	{
+		TIPO_DAS_CHAVES chave = null;
+
+		long enderecoDoBucket = diretorio.obterEndereçoDoBucket(chave);
+		
+		if (enderecoDoBucket != -1)
+		{
+			chave = buckets.pesquisarChavePeloDado(dado, enderecoDoBucket);
+		}
+		
+		return chave;
+	}
+	
+	/**
+	 * Exclui o registro no bucket com a chave e o dado informados.
+	 * 
+	 * @param chave Chave a ser excluída.
+	 * @param dado Dado que corresponde à chave.
+	 * 
+	 * @return {@code true} se tudo der certo;
+	 * {@code false} caso contrário.
+	 */
+	
+	public boolean excluir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)
+	{
+		boolean sucesso = false;
+
+		long enderecoDoBucket = diretorio.obterEndereçoDoBucket(chave);
+		
+		if (enderecoDoBucket != -1)
+		{
+			sucesso = buckets.excluir(chave, dado, enderecoDoBucket);
+		}
+		
+		return sucesso;
+	}
+	
+	/**
+	 * Tenta excluir o primeiro registro com a chave informada.
+	 * 
+	 * @param chave Chave a ser excluída.
+	 * 
+	 * @return {@code true} se tudo der certo;
+	 * {@code false} caso contrário.
+	 */
+	
+	public boolean excluir(TIPO_DAS_CHAVES chave)
+	{
+		boolean sucesso = false;
+
+		long enderecoDoBucket = diretorio.obterEndereçoDoBucket(chave);
+		
+		if (enderecoDoBucket != -1)
+		{
+			sucesso = buckets.excluir(chave, enderecoDoBucket);
+		}
+		
+		return sucesso;
 	}
 	
 	/**
@@ -169,53 +262,6 @@ public class HashDinamica<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS
 			
 			numeroDeChamadas = 0;
 		}
-	}
-	
-	/**
-	 * Exclui o registro no bucket com a chave e o dado informados.
-	 * 
-	 * @param chave Chave a ser excluída.
-	 * @param dado Dado que corresponde à chave.
-	 * 
-	 * @return {@code true} se tudo der certo;
-	 * {@code false} caso contrário.
-	 */
-	
-	public boolean excluir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)
-	{
-		boolean sucesso = false;
-
-		long enderecoDoBucket = diretorio.obterEndereçoDoBucket(chave);
-		
-		if (enderecoDoBucket != -1)
-		{
-			sucesso = buckets.excluir(chave, dado, enderecoDoBucket);
-		}
-		
-		return sucesso;
-	}
-	
-	/**
-	 * Tenta excluir o primeiro registro com a chave informada.
-	 * 
-	 * @param chave Chave a ser excluída.
-	 * 
-	 * @return {@code true} se tudo der certo;
-	 * {@code false} caso contrário.
-	 */
-	
-	public boolean excluir(TIPO_DAS_CHAVES chave)
-	{
-		boolean sucesso = false;
-
-		long enderecoDoBucket = diretorio.obterEndereçoDoBucket(chave);
-		
-		if (enderecoDoBucket != -1)
-		{
-			sucesso = buckets.excluir(chave, enderecoDoBucket);
-		}
-		
-		return sucesso;
 	}
 	
 	/**
