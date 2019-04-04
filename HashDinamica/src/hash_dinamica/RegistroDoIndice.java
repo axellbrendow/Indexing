@@ -33,7 +33,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 
-import hash_dinamica.serializaveis.SerializavelAbstract;
+import serializaveis.SerializavelAbstract;
 
 /**
  * Classe utilitária para manusear os registros de indices em um bucket.

@@ -6,7 +6,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import hash_dinamica.serializaveis.SerializavelAbstract;
+import serializaveis.SerializavelAbstract;
 
 public class entity extends SerializavelAbstract
 {

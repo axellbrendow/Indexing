@@ -28,7 +28,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.function.Function;
 
-import hash_dinamica.serializaveis.SerializavelAbstract;
+import serializaveis.SerializavelAbstract;
 import util.IO;
 
 /**

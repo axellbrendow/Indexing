@@ -28,7 +28,7 @@ import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.function.Function;
 
-import hash_dinamica.serializaveis.SerializavelAbstract;
+import serializaveis.SerializavelAbstract;
 import util.IO;
 
 /**

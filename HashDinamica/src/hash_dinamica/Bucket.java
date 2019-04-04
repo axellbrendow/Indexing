@@ -30,7 +30,7 @@ import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.function.BiFunction;
 
-import hash_dinamica.serializaveis.SerializavelAbstract;
+import serializaveis.SerializavelAbstract;
 
 /**
  * Classe que gerencia um bucket específico.

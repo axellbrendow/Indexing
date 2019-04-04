@@ -27,7 +27,7 @@ package hash_dinamica.implementacoes;
 import java.util.ArrayList;
 
 import hash_dinamica.HashDinamica;
-import hash_dinamica.serializaveis.IntSerializavel;
+import serializaveis.IntSerializavel;
 
 /**
  * Estrutura de hashing dinâmico para indexamento de registros.

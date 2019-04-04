@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-package hash_dinamica.serializaveis;
+package serializaveis;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -30,33 +30,24 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class StringSerializavel extends SerializavelAbstract
+public class IntSerializavel extends SerializavelAbstract
 {
-	public static final int PADRAO_TAMANHO_MAXIMO_EM_BYTES = 300;
+	public int valor;
 	
-	public String valor;
-	public int tamanhoMaximoEmBytes;
-	
-	public StringSerializavel(String valor, int tamanhoMaximoEmBytes)
+	public IntSerializavel(int valor)
 	{
 		this.valor = valor;
-		this.tamanhoMaximoEmBytes = tamanhoMaximoEmBytes;
-	}
-	
-	public StringSerializavel(String valor)
-	{
-		this(valor, PADRAO_TAMANHO_MAXIMO_EM_BYTES);
-	}
-	
-	public StringSerializavel()
-	{
-		this("");
 	}
 
+	public IntSerializavel()
+	{
+		this(0);
+	}
+	
 	@Override
 	public int obterTamanhoMaximoEmBytes()
 	{
-		return tamanhoMaximoEmBytes + Integer.BYTES;
+		return Integer.BYTES;
 	}
 
 	@Override
@@ -67,8 +58,7 @@ public class StringSerializavel extends SerializavelAbstract
 		
 		try
 		{
-			dataOutputStream.writeUTF(valor);
-			dataOutputStream.writeInt(tamanhoMaximoEmBytes);
+			dataOutputStream.writeInt(valor);
 			dataOutputStream.close();
 		}
 		
@@ -88,8 +78,7 @@ public class StringSerializavel extends SerializavelAbstract
 		
 		try
 		{
-			valor = dataInputStream.readUTF();
-			tamanhoMaximoEmBytes = dataInputStream.readInt();
+			valor = dataInputStream.readInt();
 			dataInputStream.close();
 		}
 		
@@ -102,6 +91,6 @@ public class StringSerializavel extends SerializavelAbstract
 	@Override
 	public String toString()
 	{
-		return valor;
+		return "" + valor;
 	}
 }
