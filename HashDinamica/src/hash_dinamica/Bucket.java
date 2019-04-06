@@ -30,6 +30,7 @@ import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.function.BiFunction;
 
+import hash_dinamica.RegistroDoIndice;
 import serializaveis.SerializavelAbstract;
 
 /**
@@ -288,8 +289,8 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 	 * @param dado Dado que corresponde à chave.
 	 * 
 	 * @return {@code 0} se o registro não for encontrado;
-	 * o deslocamento em relação ao início do arranjo
-	 * {@code bucket} em que o registro está.
+	 * caso contrário, o deslocamento em relação ao início
+	 * do bucket em que o registro está.
 	 */
 	
 	protected int pesquisarEnderecoDaChaveEDoDado(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)
@@ -318,8 +319,8 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 	 * @param chave Chave a ser procurada.
 	 * 
 	 * @return {@code 0} se o registro não for encontrado;
-	 * o deslocamento em relação ao início do arranjo
-	 * {@code bucket} em que o registro está.
+	 * caso contrário, o deslocamento em relação ao início
+	 * do bucket em que o registro está.
 	 */
 	
 	protected int pesquisarEnderecoDaChave(TIPO_DAS_CHAVES chave)
@@ -347,8 +348,8 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 	 * @param dado Dado a ser procurado.
 	 * 
 	 * @return {@code 0} se o registro não for encontrado;
-	 * o deslocamento em relação ao início do arranjo
-	 * {@code bucket} em que o registro está.
+	 * caso contrário, o deslocamento em relação ao início
+	 * do bucket em que o registro está.
 	 */
 	
 	protected int pesquisarEnderecoDoDado(TIPO_DOS_DADOS dado)
