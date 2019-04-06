@@ -120,29 +120,6 @@ public class HashDinamicaIntInt extends HashDinamica<IntSerializavel, IntSeriali
 	}
 	
 	/**
-	 * Procura um registro na hash dinâmica com o dado informado.
-	 * 
-	 * @param dado Dado a ser procurado.
-	 * 
-	 * @return {@link java.lang.Integer#MIN_VALUE} se o registro não
-	 * for encontrado; a chave correspondente ao dado caso contrário.
-	 */
-	
-	public int pesquisarChavePeloDado(int dado)
-	{
-		int chave = Integer.MIN_VALUE;
-
-		IntSerializavel intSerializavel = pesquisarChavePeloDado(new IntSerializavel(dado));
-		
-		if (intSerializavel != null)
-		{
-			chave = intSerializavel.valor;
-		}
-		
-		return chave;
-	}
-	
-	/**
 	 * Exclui o registro no bucket com a chave e o dado informados.
 	 * 
 	 * @param chave Chave a ser excluída.

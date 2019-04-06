@@ -129,29 +129,6 @@ public class HashDinamica<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS
 	}
 	
 	/**
-	 * Procura um registro na hash dinâmica com o dado informado.
-	 * 
-	 * @param dado Dado a ser procurado.
-	 * 
-	 * @return {@code null} se o registro não for encontrado;
-	 * a chave correspondente ao dado caso contrário.
-	 */
-	
-	public TIPO_DAS_CHAVES pesquisarChavePeloDado(TIPO_DOS_DADOS dado)
-	{
-		TIPO_DAS_CHAVES chave = null;
-
-		long enderecoDoBucket = diretorio.obterEndereçoDoBucket(chave);
-		
-		if (enderecoDoBucket != -1)
-		{
-			chave = buckets.pesquisarChavePeloDado(dado, enderecoDoBucket);
-		}
-		
-		return chave;
-	}
-	
-	/**
 	 * Exclui o registro no bucket com a chave e o dado informados.
 	 * 
 	 * @param chave Chave a ser excluída.
