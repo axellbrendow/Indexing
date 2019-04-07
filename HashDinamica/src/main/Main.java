@@ -24,22 +24,27 @@ public class Main
 		{
 			hashDinamica = new HashDinamicaIntInt("intint.dir", "intint.db");
 		}
+		
 		catch (NoSuchMethodException | SecurityException e1)
 		{
 			e1.printStackTrace();
 		}
 		
-		hashDinamica.inserir(1, 2);
-		hashDinamica.inserir(1, 3);
-		hashDinamica.inserir(1, 4);
-		hashDinamica.excluir(1, 2);
-		hashDinamica.inserir(5, 6);
-		hashDinamica.inserir(4, 2);
-		hashDinamica.inserir(3, 3);
-		hashDinamica.inserir(2, 4);
-		
-		IO.println( Arrays.toString( hashDinamica.listarDadosComAChave(1) ) );
-		//hashDinamica.listarDadosComAChave(1).forEach( (it) -> { IO.println(it); } );
+		if (hashDinamica != null)
+		{
+			hashDinamica.inserir(1, 2);
+			hashDinamica.inserir(1, 3);
+			hashDinamica.inserir(1, 4);
+			hashDinamica.excluir(1, 2);
+			hashDinamica.inserir(5, 6);
+			hashDinamica.inserir(4, 2);
+			hashDinamica.inserir(3, 3);
+			hashDinamica.inserir(2, 4);
+			
+			IO.println( Arrays.toString( hashDinamica.listarDadosComAChave(1) ) );
+			
+			hashDinamica.fechar();
+		}
 	}
 
 }
