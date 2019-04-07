@@ -136,15 +136,18 @@ public class Diretorio<TIPO_DAS_CHAVES extends SerializavelAbstract>
 	{
 		boolean sucesso = false;
 		
-		try
+		if (arquivoDoDiretorio != null)
 		{
-			arquivoDoDiretorio.close();
-			sucesso = true;
-		}
-		
-		catch (IOException ioex)
-		{
-			ioex.printStackTrace();
+			try
+			{
+				arquivoDoDiretorio.close();
+				sucesso = true;
+			}
+			
+			catch (IOException ioex)
+			{
+				ioex.printStackTrace();
+			}
 		}
 		
 		return sucesso;

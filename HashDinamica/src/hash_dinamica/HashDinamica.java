@@ -301,4 +301,17 @@ public class HashDinamica<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS
 		
 		return sucesso;
 	}
+	
+	/**
+	 * Fecha todos os arquivos que este objeto estiver gerenciando.
+	 * 
+	 * @return {@code true} se tudo der certo. Caso contrário, {@code false}.
+	 */
+	
+	public boolean fechar()
+	{
+		return
+			diretorio	!= null && diretorio.fechar() &&
+			buckets		!= null && buckets	.fechar();
+	}
 }

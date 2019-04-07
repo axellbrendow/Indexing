@@ -129,15 +129,18 @@ public class Buckets<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADO
 	{
 		boolean sucesso = false;
 		
-		try
+		if (arquivoDosBuckets != null)
 		{
-			arquivoDosBuckets.close();
-			sucesso = true;
-		}
-		
-		catch (IOException ioex)
-		{
-			ioex.printStackTrace();
+			try
+			{
+				arquivoDosBuckets.close();
+				sucesso = true;
+			}
+			
+			catch (IOException ioex)
+			{
+				ioex.printStackTrace();
+			}
 		}
 		
 		return sucesso;
