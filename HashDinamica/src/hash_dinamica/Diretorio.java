@@ -359,7 +359,7 @@ public class Diretorio<TIPO_DAS_CHAVES extends SerializavelAbstract>
 
 		int codigoHash = hash(chave);
 		
-		if (codigoHash != -1)
+		if (codigoHash > -1)
 		{
 			ponteiro = obterPonteiro(codigoHash); 
 		}
