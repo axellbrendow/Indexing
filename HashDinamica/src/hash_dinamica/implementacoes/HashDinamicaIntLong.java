@@ -25,6 +25,7 @@ SOFTWARE.
 package hash_dinamica.implementacoes;
 
 import java.util.ArrayList;
+import java.util.function.Function;
 
 import hash_dinamica.HashDinamica;
 import serializaveis.IntSerializavel;
@@ -38,8 +39,6 @@ import serializaveis.LongSerializavel;
 
 public class HashDinamicaIntLong extends HashDinamica<IntSerializavel, LongSerializavel>
 {
-	public static final int PADRAO_NUMERO_DE_REGISTROS_POR_BUCKET = 21;
-	
 	/**
 	 * Cria um objeto que gerencia uma hash dinâmica.
 	 * 
@@ -59,8 +58,8 @@ public class HashDinamicaIntLong extends HashDinamica<IntSerializavel, LongSeria
 	public HashDinamicaIntLong(
 		String nomeDoArquivoDoDiretorio,
 		String nomeDoArquivoDosBuckets,
-		int numeroDeRegistrosPorBucket
-		/*Function<IntSerializavel, Integer> funcaoHash*/) throws NoSuchMethodException, SecurityException
+		int numeroDeRegistrosPorBucket,
+		Function<IntSerializavel, Integer> funcaoHash) throws NoSuchMethodException, SecurityException
 	{
 		super(
 			nomeDoArquivoDoDiretorio,
@@ -70,6 +69,32 @@ public class HashDinamicaIntLong extends HashDinamica<IntSerializavel, LongSeria
 			(short) Long.BYTES,
 			IntSerializavel.class.getConstructor(),
 			LongSerializavel.class.getConstructor(),
+			funcaoHash
+		);
+	}
+	
+	/**
+	 * Cria um objeto que gerencia uma hash dinâmica.
+	 * 
+	 * @param nomeDoArquivoDoDiretorio Nome do arquivo previamente usado para o diretório.
+	 * @param nomeDoArquivoDosBuckets Nome do arquivo previamente usado para os buckets.
+	 * Caso o arquivo não tenha sido criado ainda, ele será criado com este nome.
+	 * @param numeroDeRegistrosPorBucket Numero de registros por bucket caso o arquivo
+	 * não tenha sido criado ainda.
+	 * 
+	 * @throws SecurityException 
+	 * @throws NoSuchMethodException 
+	 */
+	
+	public HashDinamicaIntLong(
+		String nomeDoArquivoDoDiretorio,
+		String nomeDoArquivoDosBuckets,
+		int numeroDeRegistrosPorBucket) throws NoSuchMethodException, SecurityException
+	{
+		this(
+			nomeDoArquivoDoDiretorio,
+			nomeDoArquivoDosBuckets,
+			numeroDeRegistrosPorBucket,
 			(chave) -> { return chave.valor; }
 		);
 	}
@@ -87,8 +112,7 @@ public class HashDinamicaIntLong extends HashDinamica<IntSerializavel, LongSeria
 	
 	public HashDinamicaIntLong(
 		String nomeDoArquivoDoDiretorio,
-		String nomeDoArquivoDosBuckets
-		/*Function<IntSerializavel, Integer> funcaoHash*/) throws NoSuchMethodException, SecurityException
+		String nomeDoArquivoDosBuckets) throws NoSuchMethodException, SecurityException
 	{
 		this(
 			nomeDoArquivoDoDiretorio,
@@ -110,7 +134,8 @@ public class HashDinamicaIntLong extends HashDinamica<IntSerializavel, LongSeria
 	{
 		long dado = Long.MIN_VALUE;
 
-		LongSerializavel longSerializavel = pesquisarDadoPelaChave(new IntSerializavel(chave));
+		LongSerializavel longSerializavel =
+			pesquisarDadoPelaChave(new IntSerializavel(chave));
 		
 		if (longSerializavel != null)
 		{
@@ -160,7 +185,8 @@ public class HashDinamicaIntLong extends HashDinamica<IntSerializavel, LongSeria
 	
 	public long[] listarDadosComAChave(int chave)
 	{
-		ArrayList<LongSerializavel> list = listarDadosComAChave(new IntSerializavel(chave));
+		ArrayList<LongSerializavel> list =
+			listarDadosComAChave(new IntSerializavel(chave));
 		int listSize = list.size();
 		
 		long[] dados = new long[listSize];

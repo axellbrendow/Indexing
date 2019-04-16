@@ -25,6 +25,7 @@ SOFTWARE.
 package hash_dinamica.implementacoes;
 
 import java.util.ArrayList;
+import java.util.function.Function;
 
 import hash_dinamica.HashDinamica;
 import serializaveis.IntSerializavel;
@@ -38,7 +39,46 @@ import serializaveis.StringSerializavel;
 
 public class HashDinamicaStringInt extends HashDinamica<StringSerializavel, IntSerializavel>
 {
-	public static final int PADRAO_NUMERO_DE_REGISTROS_POR_BUCKET = 21;
+	protected short tamanhoMaximoEmBytesParaAsStrings;
+	
+	/**
+	 * Cria um objeto que gerencia uma hash dinâmica.
+	 * 
+	 * @param nomeDoArquivoDoDiretorio Nome do arquivo previamente usado para o diretório.
+	 * @param nomeDoArquivoDosBuckets Nome do arquivo previamente usado para os buckets.
+	 * Caso o arquivo não tenha sido criado ainda, ele será criado com este nome.
+	 * @param numeroDeRegistrosPorBucket Numero de registros por bucket caso o arquivo
+	 * não tenha sido criado ainda.
+	 * @param tamanhoMaximoEmBytesParaAsStrings Quantidade máxima em bytes que as strings
+	 * podem gastar.
+	 * @param funcaoHash Função de dispersão (hash) que será usada para as chaves. É
+	 * importante ressaltar que essa função só precisa gerar valores dispersos, não
+	 * importando o tamanho deles. Não utilize geração de números aleatórios.
+	 * 
+	 * @throws SecurityException 
+	 * @throws NoSuchMethodException 
+	 */
+	
+	public HashDinamicaStringInt(
+		String nomeDoArquivoDoDiretorio,
+		String nomeDoArquivoDosBuckets,
+		int numeroDeRegistrosPorBucket,
+		short tamanhoMaximoEmBytesParaAsStrings,
+		Function<StringSerializavel, Integer> funcaoHash) throws NoSuchMethodException, SecurityException
+	{
+		super(
+			nomeDoArquivoDoDiretorio,
+			nomeDoArquivoDosBuckets,
+			numeroDeRegistrosPorBucket,
+			tamanhoMaximoEmBytesParaAsStrings,
+			(short) Integer.BYTES,
+			StringSerializavel.class.getConstructor(),
+			IntSerializavel.class.getConstructor(),
+			funcaoHash
+		);
+		
+		this.tamanhoMaximoEmBytesParaAsStrings = tamanhoMaximoEmBytesParaAsStrings;
+	}
 	
 	/**
 	 * Cria um objeto que gerencia uma hash dinâmica.
@@ -59,17 +99,44 @@ public class HashDinamicaStringInt extends HashDinamica<StringSerializavel, IntS
 	public HashDinamicaStringInt(
 		String nomeDoArquivoDoDiretorio,
 		String nomeDoArquivoDosBuckets,
-		int numeroDeRegistrosPorBucket
-		/*Function<IntSerializavel, Integer> funcaoHash*/) throws NoSuchMethodException, SecurityException
+		int numeroDeRegistrosPorBucket,
+		Function<StringSerializavel, Integer> funcaoHash) throws NoSuchMethodException, SecurityException
 	{
-		super(
+		this(
 			nomeDoArquivoDoDiretorio,
 			nomeDoArquivoDosBuckets,
 			numeroDeRegistrosPorBucket,
 			(short) StringSerializavel.PADRAO_TAMANHO_MAXIMO_EM_BYTES,
-			(short) Integer.BYTES,
-			StringSerializavel.class.getConstructor(),
-			IntSerializavel.class.getConstructor(),
+			funcaoHash
+		);
+	}
+	
+	/**
+	 * Cria um objeto que gerencia uma hash dinâmica.
+	 * 
+	 * @param nomeDoArquivoDoDiretorio Nome do arquivo previamente usado para o diretório.
+	 * @param nomeDoArquivoDosBuckets Nome do arquivo previamente usado para os buckets.
+	 * Caso o arquivo não tenha sido criado ainda, ele será criado com este nome.
+	 * @param numeroDeRegistrosPorBucket Numero de registros por bucket caso o arquivo
+	 * não tenha sido criado ainda.
+	 * @param tamanhoMaximoEmBytesParaAsStrings Quantidade máxima em bytes que as strings
+	 * podem gastar.
+	 * 
+	 * @throws SecurityException 
+	 * @throws NoSuchMethodException 
+	 */
+	
+	public HashDinamicaStringInt(
+		String nomeDoArquivoDoDiretorio,
+		String nomeDoArquivoDosBuckets,
+		int numeroDeRegistrosPorBucket,
+		short tamanhoMaximoEmBytesParaAsStrings) throws NoSuchMethodException, SecurityException
+	{
+		this(
+			nomeDoArquivoDoDiretorio,
+			nomeDoArquivoDosBuckets,
+			numeroDeRegistrosPorBucket,
+			tamanhoMaximoEmBytesParaAsStrings,
 			(chave) ->
 			{
 				int strValue = -1;
@@ -104,6 +171,8 @@ public class HashDinamicaStringInt extends HashDinamica<StringSerializavel, IntS
 	 * @param nomeDoArquivoDoDiretorio Nome do arquivo previamente usado para o diretório.
 	 * @param nomeDoArquivoDosBuckets Nome do arquivo previamente usado para os buckets.
 	 * Caso o arquivo não tenha sido criado ainda, ele será criado com este nome.
+	 * @param numeroDeRegistrosPorBucket Numero de registros por bucket caso o arquivo
+	 * não tenha sido criado ainda.
 	 * 
 	 * @throws SecurityException 
 	 * @throws NoSuchMethodException 
@@ -111,14 +180,54 @@ public class HashDinamicaStringInt extends HashDinamica<StringSerializavel, IntS
 	
 	public HashDinamicaStringInt(
 		String nomeDoArquivoDoDiretorio,
-		String nomeDoArquivoDosBuckets
-		/*Function<IntSerializavel, Integer> funcaoHash*/) throws NoSuchMethodException, SecurityException
+		String nomeDoArquivoDosBuckets,
+		int numeroDeRegistrosPorBucket) throws NoSuchMethodException, SecurityException
+	{
+		this(
+			nomeDoArquivoDoDiretorio,
+			nomeDoArquivoDosBuckets,
+			numeroDeRegistrosPorBucket,
+			(short) StringSerializavel.PADRAO_TAMANHO_MAXIMO_EM_BYTES
+		);
+	}
+	
+	/**
+	 * Cria um objeto que gerencia uma hash dinâmica.
+	 * 
+	 * @param nomeDoArquivoDoDiretorio Nome do arquivo previamente usado para o diretório.
+	 * @param nomeDoArquivoDosBuckets Nome do arquivo previamente usado para os buckets.
+	 * Caso o arquivo não tenha sido criado ainda, ele será criado com este nome.
+	 * 
+	 * @throws SecurityException 
+	 * @throws NoSuchMethodException 
+	 */
+	
+	public HashDinamicaStringInt(
+		String nomeDoArquivoDoDiretorio,
+		String nomeDoArquivoDosBuckets) throws NoSuchMethodException, SecurityException
 	{
 		this(
 			nomeDoArquivoDoDiretorio,
 			nomeDoArquivoDosBuckets,
 			PADRAO_NUMERO_DE_REGISTROS_POR_BUCKET
 		);
+	}
+	
+	/**
+	 * Cria um objeto {@link serializaveis.StringSerializavel} com o valor
+	 * recebido e com o tamanho máximo em bytes que foi recebido no
+	 * construtor desta classe.
+	 * 
+	 * @param valor String a ser guardada no objeto.
+	 * 
+	 * @return um objeto {@link serializaveis.StringSerializavel} com o valor
+	 * recebido e com o tamanho máximo em bytes que foi recebido no
+	 * construtor desta classe.
+	 */
+	
+	public StringSerializavel criarStringSerializavel(String valor)
+	{
+		return new StringSerializavel(valor, tamanhoMaximoEmBytesParaAsStrings);
 	}
 	
 	/**
@@ -134,7 +243,8 @@ public class HashDinamicaStringInt extends HashDinamica<StringSerializavel, IntS
 	{
 		int dado = Integer.MIN_VALUE;
 
-		IntSerializavel intSerializavel = pesquisarDadoPelaChave(new StringSerializavel(chave));
+		IntSerializavel intSerializavel =
+			pesquisarDadoPelaChave( criarStringSerializavel(chave) );
 		
 		if (intSerializavel != null)
 		{
@@ -156,7 +266,7 @@ public class HashDinamicaStringInt extends HashDinamica<StringSerializavel, IntS
 	
 	public boolean excluir(String chave, int dado)
 	{
-		return excluir(new StringSerializavel(chave), new IntSerializavel(dado));
+		return excluir(criarStringSerializavel(chave), new IntSerializavel(dado));
 	}
 	
 	/**
@@ -170,7 +280,7 @@ public class HashDinamicaStringInt extends HashDinamica<StringSerializavel, IntS
 	
 	public boolean excluir(String chave)
 	{
-		return excluir(new StringSerializavel(chave));
+		return excluir( criarStringSerializavel(chave) );
 	}
 	
 	/**
@@ -184,7 +294,9 @@ public class HashDinamicaStringInt extends HashDinamica<StringSerializavel, IntS
 	
 	public int[] listarDadosComAChave(String chave)
 	{
-		ArrayList<IntSerializavel> list = listarDadosComAChave(new StringSerializavel(chave));
+		ArrayList<IntSerializavel> list =
+			listarDadosComAChave( criarStringSerializavel(chave) );
+		
 		int listSize = list.size();
 		
 		int[] dados = new int[listSize];
@@ -209,6 +321,6 @@ public class HashDinamicaStringInt extends HashDinamica<StringSerializavel, IntS
 	
 	public boolean inserir(String chave, int dado)
 	{
-		return inserir(new StringSerializavel(chave), new IntSerializavel(dado));
+		return inserir(criarStringSerializavel(chave), new IntSerializavel(dado));
 	}
 }

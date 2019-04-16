@@ -42,8 +42,10 @@ import util.IO;
 
 public class HashDinamica<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS extends SerializavelAbstract>
 {
-	Diretorio<TIPO_DAS_CHAVES> diretorio;
-	Buckets<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> buckets;
+	public static final int PADRAO_NUMERO_DE_REGISTROS_POR_BUCKET = 21;
+	
+	protected Diretorio<TIPO_DAS_CHAVES> diretorio;
+	protected Buckets<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> buckets;
 	
 	// auxilia no controle de recursividade infinita
 	// da função tratarBucketCheio() juntamente com a
@@ -89,6 +91,30 @@ public class HashDinamica<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS
 			quantidadeMaximaDeBytesParaODado,
 			construtorDaChave,
 			construtorDoDado);
+	}
+	
+	/**
+	 * Obtem a quantidade máxima de bytes que as chaves podem gastar de acordo
+	 * com o que foi recebido no construtor.
+	 * 
+	 * @return a quantidade máxima de bytes que as chaves podem gastar.
+	 */
+	
+	public short obterQuantidadeMaximaDeBytesParaAChave()
+	{
+		return (short) buckets.bucket.registroDoIndice.quantidadeMaximaDeBytesParaAChave;
+	}
+	
+	/**
+	 * Obtem a quantidade máxima de bytes que os dados podem gastar de acordo
+	 * com o que foi recebido no construtor.
+	 * 
+	 * @return a quantidade máxima de bytes que os dados podem gastar.
+	 */
+	
+	public short obterQuantidadeMaximaDeBytesParaODado()
+	{
+		return (short) buckets.bucket.registroDoIndice.quantidadeMaximaDeBytesParaODado;
 	}
 	
 	/**

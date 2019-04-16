@@ -95,6 +95,7 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO
 	 * @return o tamanho que cada registro de indice gasta no bucket.
 	 */
 	
+	@Override
 	public int obterTamanhoMaximoEmBytes()
 	{
 		int tamanho = 0;
@@ -102,7 +103,7 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO
 		if (quantidadeMaximaDeBytesParaAChave > 0 &&
 			quantidadeMaximaDeBytesParaODado > 0)
 		{
-			tamanho = Character.BYTES + // tamanho da lapide
+			tamanho = Byte.BYTES + // tamanho da lapide
 				quantidadeMaximaDeBytesParaAChave + // tamanho da chave
 				quantidadeMaximaDeBytesParaODado; // tamanho do dado
 		}
@@ -201,19 +202,8 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO
 			dataInputStream.read(byteArrayChave);
 			dataInputStream.read(byteArrayDado);
 			
-			try
-			{
-				chave = (TIPO_DAS_CHAVES) construtorDaChave.newInstance();
-				dado = (TIPO_DOS_DADOS) construtorDoDado.newInstance();
-			}
-			
-			catch (InstantiationException
-				| IllegalAccessException
-				| IllegalArgumentException
-				| InvocationTargetException e)
-			{
-				e.printStackTrace();
-			}
+			chave = (TIPO_DAS_CHAVES) construtorDaChave.newInstance();
+			dado = (TIPO_DOS_DADOS) construtorDoDado.newInstance();
 			
 			chave.lerBytes(byteArrayChave);
 			dado.lerBytes(byteArrayDado);
@@ -222,9 +212,13 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO
 			dataInputStream.close();
 		}
 		
-		catch (IOException ioex)
+		catch (InstantiationException |
+				IllegalAccessException |
+				IllegalArgumentException |
+				InvocationTargetException |
+				IOException e)
 		{
-			ioex.printStackTrace();
+			e.printStackTrace();
 		}
 	}
 }

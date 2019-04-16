@@ -52,7 +52,7 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 	
 	protected byte profundidadeLocal;
 	protected int numeroDeRegistrosPorBucket;
-	RegistroDoIndice<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> registroDoIndice;
+	protected RegistroDoIndice<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> registroDoIndice;
 	byte[] bucket;
 	
 	/**

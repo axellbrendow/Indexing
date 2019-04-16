@@ -46,9 +46,9 @@ public class Buckets<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADO
 	// o cabeçalho do arquivo dos buckets é a quantidade de registros por bucket (int)
 	public static final int DESLOCAMENTO_CABECALHO = Integer.BYTES;
 	
-	RandomAccessFile arquivoDosBuckets;
-	Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> bucket;
-	int numeroDeRegistrosPorBucket;
+	protected RandomAccessFile arquivoDosBuckets;
+	protected Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> bucket;
+	protected int numeroDeRegistrosPorBucket;
 	
 	/**
 	 * Cria um objeto que gerencia os buckets de uma hash dinâmica.
