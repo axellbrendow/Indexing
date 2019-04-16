@@ -3,7 +3,7 @@ package main;
 import java.io.File;
 import java.util.Arrays;
 
-import hash_dinamica.implementacoes.HashDinamicaIntInt;
+import hash_dinamica.implementacoes.HashDinamicaStringInt;
 import util.IO;
 
 public class Main
@@ -18,11 +18,14 @@ public class Main
 		ARQUIVO_DO_DIRETORIO.delete();
 		ARQUIVO_DOS_BUCKETS.delete();
 		
-		HashDinamicaIntInt hashDinamica = null;
+		HashDinamicaStringInt hashDinamica = null;
 		
 		try
 		{
-			hashDinamica = new HashDinamicaIntInt("intint.dir", "intint.db");
+			hashDinamica = new HashDinamicaStringInt(
+				NOME_DO_ARQUIVO_DO_DIRETORIO,
+				NOME_DO_ARQUIVO_DOS_BUCKETS
+			);
 		}
 		
 		catch (NoSuchMethodException | SecurityException e1)
@@ -32,16 +35,16 @@ public class Main
 		
 		if (hashDinamica != null)
 		{
-			hashDinamica.inserir(1, 2);
-			hashDinamica.inserir(1, 3);
-			hashDinamica.inserir(1, 4);
-			hashDinamica.excluir(1, 2);
-			hashDinamica.inserir(5, 6);
-			hashDinamica.inserir(4, 2);
-			hashDinamica.inserir(3, 3);
-			hashDinamica.inserir(2, 4);
+			hashDinamica.inserir("Axell", 2);
+			hashDinamica.inserir("Axell", 3);
+			hashDinamica.inserir("Axell", 4);
+			hashDinamica.inserir("Maycon", 6);
+			hashDinamica.inserir("Maycon", 2);
+			hashDinamica.excluir("Maycon", 2);
+			hashDinamica.inserir("Melo", 3);
+			hashDinamica.inserir("Felipe", 4);
 			
-			IO.println( Arrays.toString( hashDinamica.listarDadosComAChave(1) ) );
+			IO.println( Arrays.toString( hashDinamica.listarDadosComAChave("Maycon") ) );
 			
 			hashDinamica.fechar();
 		}

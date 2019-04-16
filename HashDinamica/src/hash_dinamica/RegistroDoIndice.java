@@ -202,8 +202,8 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO
 			dataInputStream.read(byteArrayChave);
 			dataInputStream.read(byteArrayDado);
 			
-			chave = (TIPO_DAS_CHAVES) construtorDaChave.newInstance();
-			dado = (TIPO_DOS_DADOS) construtorDoDado.newInstance();
+			chave = construtorDaChave.newInstance();
+			dado = construtorDoDado.newInstance();
 			
 			chave.lerBytes(byteArrayChave);
 			dado.lerBytes(byteArrayDado);
