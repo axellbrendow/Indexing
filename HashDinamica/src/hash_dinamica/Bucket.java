@@ -483,13 +483,6 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 			{
 				int status = 0; // indica que o processo deve continuar
 				
-				if (registro.lapide == RegistroDoIndice.REGISTRO_ATIVADO &&
-					registro.chave.toString().equals(chave.toString()) &&
-					registro.dado.toString().equals(dado.toString()))
-				{
-					status = -2; // término com problema, registro já existe
-				}
-				
 				if (registro.lapide == RegistroDoIndice.REGISTRO_DESATIVADO)
 				{
 					registro.lapide = RegistroDoIndice.REGISTRO_ATIVADO;
@@ -498,6 +491,13 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 					
 					registro.escreverObjeto(bucket, deslocamento);
 					status = -1; // término com êxito, registro inserido
+				}
+				
+				else if (registro.lapide == RegistroDoIndice.REGISTRO_ATIVADO &&
+					registro.chave.toString().equals(chave.toString()) &&
+					registro.dado.toString().equals(dado.toString()))
+				{
+					status = -2; // término com problema, registro já existe
 				}
 				
 				return status;

@@ -80,6 +80,7 @@ public abstract class SerializavelAbstract implements Serializavel
 	 * a partir de um deslocamento.
 	 * 
 	 * @param correnteDeSaida Corrente de saída dos bytes.
+	 * @param deslocamento Deslocamento em relação ao início.
 	 */
 	
 	public void escreverObjeto(byte[] correnteDeSaida, int deslocamento)
