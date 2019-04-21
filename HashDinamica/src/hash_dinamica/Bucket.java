@@ -478,31 +478,30 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 	
 	protected byte inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)
 	{
-		byte resultado = (byte) percorrerRegistros(
-			(registro, deslocamento) ->
-			{
-				int status = 0; // indica que o processo deve continuar
-				
-				if (registro.lapide == RegistroDoIndice.REGISTRO_DESATIVADO)
+		byte resultado = -2;
+		
+		// checa se o par (chave, dado) ainda não existe no bucket
+		if (pesquisarEnderecoDaChaveEDoDado(chave, dado) == 0)
+		{
+			resultado = (byte) percorrerRegistros(
+				(registro, deslocamento) ->
 				{
-					registro.lapide = RegistroDoIndice.REGISTRO_ATIVADO;
-					registro.chave = chave;
-					registro.dado = dado;
+					int status = 0; // indica que o processo deve continuar
 					
-					registro.escreverObjeto(bucket, deslocamento);
-					status = -1; // término com êxito, registro inserido
+					if (registro.lapide == RegistroDoIndice.REGISTRO_DESATIVADO)
+					{
+						registro.lapide = RegistroDoIndice.REGISTRO_ATIVADO;
+						registro.chave = chave;
+						registro.dado = dado;
+						
+						registro.escreverObjeto(bucket, deslocamento);
+						status = -1; // término com êxito, registro inserido
+					}
+					
+					return status;
 				}
-				
-				else if (registro.lapide == RegistroDoIndice.REGISTRO_ATIVADO &&
-					registro.chave.toString().equals(chave.toString()) &&
-					registro.dado.toString().equals(dado.toString()))
-				{
-					status = -2; // término com problema, registro já existe
-				}
-				
-				return status;
-			}
-		);
+			);
+		}
 		
 		return ( resultado == 0 ? profundidadeLocal : resultado );
 	}
