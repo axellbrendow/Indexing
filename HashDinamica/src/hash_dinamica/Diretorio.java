@@ -26,6 +26,7 @@ package hash_dinamica;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import serializaveis.SerializavelAbstract;
@@ -41,17 +42,14 @@ import util.IO;
 
 public class Diretorio<TIPO_DAS_CHAVES extends SerializavelAbstract>
 {
-	// bytes para a profundidade global +
-	// bytes para o indice do ultimo ponteiro alterado
-	private static final int DESLOCAMENTO_DO_CABECALHO = Byte.BYTES + Integer.BYTES;
+	// bytes para a profundidade global
+	private static final int DESLOCAMENTO_CABECALHO = Byte.BYTES;
 	// bytes para cada endereço de bucket (para cada ponteiro)
 	private static final int TAMANHO_DOS_PONTEIROS = Long.BYTES;
 	private static final byte PADRAO_PROFUNDIDADE_GLOBAL = 0;
-	private static final byte PADRAO_INDICE_DO_ULTIMO_PONTEIRO_ALTERADO = 0;
 	
 	private RandomAccessFile arquivoDoDiretorio;
 	private byte profundidadeGlobal;
-	private int indiceDoUltimoPonteiroAlterado;
 	private Function<TIPO_DAS_CHAVES, Integer> funcaoHash;
 	
 	/**
@@ -83,11 +81,6 @@ public class Diretorio<TIPO_DAS_CHAVES extends SerializavelAbstract>
 		return profundidadeGlobal;
 	}
 	
-	public int obterIndiceDoUltimoPonteiroAlterado()
-	{
-		return indiceDoUltimoPonteiroAlterado;
-	}
-	
 	/**
 	 * Checa se o arquivo do diretório está disponível para uso.
 	 * 
@@ -114,8 +107,8 @@ public class Diretorio<TIPO_DAS_CHAVES extends SerializavelAbstract>
 			{
 				arquivoDoDiretorio.seek(0);
 				arquivoDoDiretorio.writeByte(profundidadeGlobal);
-				arquivoDoDiretorio.writeInt(indiceDoUltimoPonteiroAlterado);
-				// o endereço do primeiro bucket no arquivo dos buckets é 0
+				// o endereço do primeiro bucket no arquivo dos buckets é o
+				// tamanho do cabeçalho do arquivo dos buckets
 				arquivoDoDiretorio.writeLong(Buckets.DESLOCAMENTO_CABECALHO);
 			}
 			
@@ -157,22 +150,19 @@ public class Diretorio<TIPO_DAS_CHAVES extends SerializavelAbstract>
 	 * Lê os metadados/cabeçalho do diretório. A estrutura do cabeçalho
 	 * é a seguinte:
 	 * 
-	 * <p>[ profundidade global (byte), indice do último ponteiro alterado (int) ]</p>
+	 * <p>[ profundidade global (byte) ]</p>
 	 */
 	
 	private void lerCabecalho()
 	{
 		profundidadeGlobal = PADRAO_PROFUNDIDADE_GLOBAL;
-		indiceDoUltimoPonteiroAlterado =
-			PADRAO_INDICE_DO_ULTIMO_PONTEIRO_ALTERADO;
 		
 		try
 		{
-			if (arquivoDisponivel() && arquivoDoDiretorio.length() >= DESLOCAMENTO_DO_CABECALHO)
+			if (arquivoDisponivel() && arquivoDoDiretorio.length() >= DESLOCAMENTO_CABECALHO)
 			{
 				arquivoDoDiretorio.seek(0);
 				profundidadeGlobal = arquivoDoDiretorio.readByte();
-				indiceDoUltimoPonteiroAlterado = arquivoDoDiretorio.readInt();
 			}
 		}
 		
@@ -188,7 +178,7 @@ public class Diretorio<TIPO_DAS_CHAVES extends SerializavelAbstract>
 	 * @return tamanho do diretório.
 	 */
 	
-	private int obterTamanhoDoDiretorio()
+	protected int obterTamanhoDoDiretorio()
 	{
 		return (int) Math.pow(2, profundidadeGlobal);
 	}
@@ -214,7 +204,7 @@ public class Diretorio<TIPO_DAS_CHAVES extends SerializavelAbstract>
 			try
 			{
 				arquivoDoDiretorio.seek(
-					DESLOCAMENTO_DO_CABECALHO +
+					DESLOCAMENTO_CABECALHO +
 					indice * TAMANHO_DOS_PONTEIROS);
 				
 				sucesso = true;
@@ -249,11 +239,6 @@ public class Diretorio<TIPO_DAS_CHAVES extends SerializavelAbstract>
 			{
 				arquivoDoDiretorio.writeLong(novoPonteiro);
 				
-				if (indice > indiceDoUltimoPonteiroAlterado)
-				{
-					indiceDoUltimoPonteiroAlterado = indice;
-				}
-				
 				sucesso = true;
 			}
 			
@@ -281,8 +266,6 @@ public class Diretorio<TIPO_DAS_CHAVES extends SerializavelAbstract>
 			{
 				arquivoDoDiretorio.seek(0);
 				arquivoDoDiretorio.writeByte(++profundidadeGlobal);
-				// pula o indice do último ponteiro alterado
-				arquivoDoDiretorio.skipBytes(Integer.BYTES);
 				arquivoDoDiretorio.read(ponteiros);
 				arquivoDoDiretorio.write(ponteiros);
 			}
@@ -318,6 +301,20 @@ public class Diretorio<TIPO_DAS_CHAVES extends SerializavelAbstract>
 	}
 	
 	/**
+	 * Calcula o índice do ponteiro para o bucket da chave.
+	 * 
+	 * @param chave Chave de referência.
+	 * 
+	 * @return -1 caso ocorra algum problema. Caso contrário,
+	 * retorna o índice do ponteiro para o bucket da chave.
+	 */
+	
+	protected int obterIndiceDoPonteiroDaChave(TIPO_DAS_CHAVES chave)
+	{
+		return hash(chave);
+	}
+	
+	/**
 	 * Obtem um ponteiro para um bucket no arquivo dos buckets.
 	 * 
 	 * @param indiceDoPonteiro Indice do ponteiro no diretório.
@@ -325,7 +322,7 @@ public class Diretorio<TIPO_DAS_CHAVES extends SerializavelAbstract>
 	 * @return um ponteiro para um bucket no arquivo dos buckets.
 	 */
 	
-	private long obterPonteiro(int indiceDoPonteiro)
+	protected long obterPonteiro(int indiceDoPonteiro)
 	{
 		long ponteiro = -1;
 		
@@ -365,5 +362,125 @@ public class Diretorio<TIPO_DAS_CHAVES extends SerializavelAbstract>
 		}
 		
 		return ponteiro;
+	}
+	
+	/**
+	 * Percorre todos os ponteiros do diretório aplicando um método
+	 * em cada um deles. Esse método deve retornar um valor inteiro
+	 * que indica se o procedimento deve parar ou não. O retorno
+	 * -1 indica que o processo deve continuar, qualquer retorno
+	 * diferente termina o processo. O primeiro parâmetro que o
+	 * método recebe é o ponteiro em questão. O segundo parâmetro
+	 * que o método recebe é o índice do ponteiro no diretório.
+	 * 
+	 * @param metodo Método a ser aplicado em cada ponteiro.
+	 * 
+	 * @return -1 se o {@code metodo} sempre retornar 0. Caso contrário,
+	 * retorna o que o {@code metodo} retornar.
+	 */
+	
+	public int percorrerPonteiros(
+		BiFunction<Long, Integer, Integer> metodo)
+	{
+		int condicao = -1;
+		
+		if (metodo != null && arquivoDisponivel())
+		{
+			long deslocamento = DESLOCAMENTO_CABECALHO;
+			
+			try
+			{
+				long tamanhoDoArquivoDoDiretorio = arquivoDoDiretorio.length();
+				long ponteiro;
+				arquivoDoDiretorio.seek(deslocamento);
+				
+				for (int i = 0;
+					condicao == -1 && deslocamento < tamanhoDoArquivoDoDiretorio;
+					i++)
+				{
+					ponteiro = arquivoDoDiretorio.readLong();
+					
+					condicao = metodo.apply(ponteiro, i);
+					
+					deslocamento += TAMANHO_DOS_PONTEIROS;
+				}
+			}
+			
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		
+		return condicao;
+	}
+	
+	/**
+	 * Encontra o índice do primeiro ponteiro no diretório
+	 * que for igual ao valor informado.
+	 * 
+	 * @param ponteiro Valor do ponteiro.
+	 * 
+	 * @return -1 se o ponteiro não for encontrado. Caso
+	 * contrário, o índice do ponteiro.
+	 */
+	
+	public int pesquisarPeloPonteiro(long ponteiro)
+	{
+		return
+		percorrerPonteiros
+		(
+			(pointer, index) ->
+			{
+				int status = -1;
+				
+				if (pointer == ponteiro)
+				{
+					status = index;
+				}
+				
+				return status;
+			}
+		);
+	}
+	
+	public String toString(String delimitadorEntreOsPonteiros)
+	{
+		String str = "Arquivo do diretório não disponível.";
+		
+		if (arquivoDisponivel())
+		{
+			str = "";
+			
+			try
+			{
+				long tamanhoDoArquivoDoDiretorio = arquivoDoDiretorio.length();
+				long deslocamento = DESLOCAMENTO_CABECALHO;
+				long ponteiro;
+				
+				arquivoDoDiretorio.seek(deslocamento);
+				
+				for (int i = 0; deslocamento < tamanhoDoArquivoDoDiretorio; i++)
+				{
+					ponteiro = arquivoDoDiretorio.readLong();
+					
+					str += "{ " + i + "\t, " + ponteiro + "\t}" + delimitadorEntreOsPonteiros;
+					
+					deslocamento += TAMANHO_DOS_PONTEIROS;
+				}
+			}
+			
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		
+		return str;
+	}
+	
+	public String toString()
+	{
+		return toString("\n");
 	}
 }

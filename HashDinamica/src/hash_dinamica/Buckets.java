@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
+import java.util.function.BiFunction;
 
 import serializaveis.SerializavelAbstract;
 import util.IO;
@@ -43,12 +44,16 @@ import util.IO;
 
 public class Buckets<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS extends SerializavelAbstract>
 {
-	// o cabeçalho do arquivo dos buckets é a quantidade de registros por bucket (int)
+	/**
+	 * O cabeçalho do arquivo dos buckets é a quantidade de registros por bucket (int).
+	 */
 	public static final int DESLOCAMENTO_CABECALHO = Integer.BYTES;
 	
 	protected RandomAccessFile arquivoDosBuckets;
 	protected Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> bucket;
 	protected int numeroDeRegistrosPorBucket;
+	
+	private String toStr;
 	
 	/**
 	 * Cria um objeto que gerencia os buckets de uma hash dinâmica.
@@ -271,8 +276,7 @@ public class Buckets<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADO
 	}
 	
 	/**
-	 * Reinicia um bucket excluindo todos os seus registros e
-	 * aumenta a profundidade local em uma unidade.
+	 * Reinicia um bucket excluindo todos os seus registros.
 	 * 
 	 * @param enderecoDoBucket Endereço do bucket a ser reiniciado.
 	 * 
@@ -291,7 +295,7 @@ public class Buckets<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADO
 			bucket.lerObjeto(arquivoDosBuckets);
 			
 			bucketExcluido = bucket.clone();
-			bucket = bucket.criarBucket((byte) (bucket.profundidadeLocal + 1));
+			bucket = bucket.criarBucket(bucket.profundidadeLocal);
 			
 			arquivoDosBuckets.seek(enderecoDoBucket);
 			bucket.escreverObjeto(arquivoDosBuckets);
@@ -619,7 +623,7 @@ public class Buckets<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADO
 					bucket.escreverObjeto(arquivoDosBuckets);
 				}
 				
-				else if (resultado > 0) // bucket cheio
+				else if (resultado > -1) // bucket cheio
 				{
 					// aumenta a profundidade local
 					bucket.atribuirProfundidadeLocal( (byte) (resultado + 1) );
@@ -635,5 +639,84 @@ public class Buckets<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADO
 		}
 		
 		return resultado;
+	}
+	
+	/**
+	 * Percorre todos os buckets da hash aplicando um método
+	 * em cada um deles. Esse método deve retornar um valor inteiro
+	 * que indica se o procedimento deve parar ou não. O retorno
+	 * 0 indica que o processo deve continuar, qualquer retorno
+	 * diferente termina o processo. O primeiro parâmetro que o
+	 * método recebe é o bucket em questão. O segundo parâmetro
+	 * é o deslocamento em relação ao início do arquivo dos
+	 * buckets em que o bucket está.
+	 * 
+	 * @param metodo Método a ser aplicado em cada bucket.
+	 * 
+	 * @return 0 se o {@code metodo} sempre retornar 0. Caso contrário,
+	 * retorna o que o {@code metodo} retornar.
+	 */
+	
+	public int percorrerBuckets(
+		BiFunction<Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>, Long, Integer> metodo)
+	{
+		int condicao = 0;
+		
+		if (metodo != null && arquivoDisponivel())
+		{
+			long deslocamento = DESLOCAMENTO_CABECALHO;
+			int tamanhoDeUmBucket = bucket.obterTamanhoMaximoEmBytes();
+			
+			try
+			{
+				long tamanhoDoArquivoDosBuckets = arquivoDosBuckets.length();
+				arquivoDosBuckets.seek(deslocamento);
+				
+				while (condicao == 0 && deslocamento < tamanhoDoArquivoDosBuckets)
+				{
+					bucket.lerObjeto(arquivoDosBuckets);
+					
+					condicao = metodo.apply(bucket, deslocamento);
+					
+					deslocamento += tamanhoDeUmBucket;
+				}
+			}
+			
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		
+		return condicao;
+	}
+	
+	public String toString(String delimitadorEntreRegistros, String delimitadorEntreOsCamposDoRegistro, boolean mostrarApenasAsChaves)
+	{
+		toStr = "";
+		
+		percorrerBuckets(
+			(bucket, deslocamento) ->
+			{
+				int status = 0; // indica que o processo deve continuar
+				
+				toStr += "Endereço: " + deslocamento + "\t" +
+					"P. Local: " + bucket.profundidadeLocal + "\t" +
+					bucket.toString(
+					delimitadorEntreRegistros,
+					delimitadorEntreOsCamposDoRegistro, 
+					mostrarApenasAsChaves) + "\n";
+				
+				return status;
+			}
+		);
+		
+		return toStr;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return toString(", ", ", ", false);
 	}
 }

@@ -221,4 +221,23 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO
 			e.printStackTrace();
 		}
 	}
+	
+	public String toString(String delimitadorEntreOsCamposDoRegistro, boolean mostrarApenasAChave)
+	{
+		return mostrarApenasAChave ?
+			(
+    			chave.toString()
+			) :
+			(
+    			"'" + lapide + "'" + delimitadorEntreOsCamposDoRegistro +
+    			chave + delimitadorEntreOsCamposDoRegistro +
+    			dado
+			);
+	}
+	
+	@Override
+	public String toString()
+	{
+		return toString(", ", false);
+	}
 }

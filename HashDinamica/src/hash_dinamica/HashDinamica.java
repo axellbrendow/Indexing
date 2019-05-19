@@ -225,7 +225,6 @@ public class HashDinamica<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS
 	/**
 	 * Cuida do processo que precisa ser feito quando tenta-se
 	 * inserir um registro num bucket que está cheio.
-	 * 
 	 * @param enderecoDoBucket Endereço do bucket que está cheio.
 	 * @param resultado Resultado do método
 	 * {@link Buckets#inserir(Serializavel, Serializavel, long)}.
@@ -244,8 +243,10 @@ public class HashDinamica<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS
 		// (desculpe-me pela recursividade, mas é isso mesmo)
 		numeroDeChamadas = ( chamadaInterna ? numeroDeChamadas + 1 : 0 );
 		
+		// esta função não chama a si própria diretamente, mas pode ser
+		// chamada pela função inserir()
 		// se o numero de chamadas for 2, ou seja, se esta função tiver
-		// sido chamada pela própria classe duas vezes, há uma grande
+		// sido chamada por "ela mesma" duas vezes, há uma grande
 		// probabilidade de o processo recursivo ser infinito, portanto,
 		// a função não roda mais.
 		if (numeroDeChamadas < 2)
@@ -261,12 +262,21 @@ public class HashDinamica<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS
 			
 			long enderecoDoNovoBucket =
 				buckets.criarBucket( (byte) (resultado + 1) );
+
+			// é importante notar que a antiga profundidade local do bucket
+			// é (resultado), e não 2 ^ (resultado), portanto, o nome dessa
+			// variável não está correto, mas não encontrei outro melhor.
+			int antigaProfundidadeLocal = (int) Math.pow(2, resultado);
+			int tamanhoDoDiretorio = diretorio.obterTamanhoDoDiretorio();
+			int indiceDoPonteiroParaOBucket =
+				diretorio.pesquisarPeloPonteiro(enderecoDoBucket);
 			
-			diretorio.atribuirPonteiroNoIndice
-			(
-				diretorio.obterIndiceDoUltimoPonteiroAlterado() + 1,
-				enderecoDoNovoBucket
-			);
+			// atualiza alguns ponteiros no diretório para o novo bucket
+			for (int i = indiceDoPonteiroParaOBucket + antigaProfundidadeLocal;
+					i < tamanhoDoDiretorio; i += antigaProfundidadeLocal)
+			{
+				diretorio.atribuirPonteiroNoIndice(i, enderecoDoNovoBucket);
+			}
 			
 			chamadaInterna = true;
 			inserirElementosDe(bucketExcluido);
@@ -284,7 +294,7 @@ public class HashDinamica<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS
 				"Chave:\n" +
 				chave + "\n" +
 				"Dado:\n" +
-				dado
+				dado + "\n"
 			);
 			
 			numeroDeChamadas = 0;
@@ -316,7 +326,18 @@ public class HashDinamica<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS
 				sucesso = true;
 			}
 			
-			// bucket cheio, resultado será igual à profundidade local do bucket
+			else if (resultado == -2) // O par (chave, dado já existe)
+			{
+				IO.println(
+					"Inclusão ignorada. O par (chave, dado) abaixo já existe na hash.\n\n" +
+					"Chave:\n" +
+					chave + "\n" +
+					"Dado:\n" +
+					dado + "\n\n"
+				);
+			}
+			
+			// bucket cheio, "resultado" será igual à profundidade local do bucket
 			else if (resultado >= 0)
 			{
 				tratarBucketCheio(enderecoDoBucket, resultado, chave, dado);
@@ -339,5 +360,93 @@ public class HashDinamica<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS
 		return
 			diretorio	!= null && diretorio.fechar() &&
 			buckets		!= null && buckets	.fechar();
+	}
+	
+	/**
+	 * Cria uma representação visual da hash dinâmica mostrando
+	 * o diretório e os buckets dela.
+	 * 
+	 * @param delimitadorEntreOsPonteirosDoDiretorio Esta será a
+	 * string que irá separar cada ponteiro do diretório.
+	 * @param delimitadorEntreRegistros Esta será a string que irá
+	 * separar cada registro dos buckets.
+	 * @param delimitadorEntreOsCamposDoRegistro Esta será a string
+	 * que irá separar cada campo registro. (lápide, chave, dado).
+	 * @param mostrarApenasAsChavesDosRegistros Se {@code true},
+	 * mostra apenas as chaves dos registros do bucket ignorando
+	 * os valores ligados às chaves e as lápides.
+	 * @param mostrarDiretorio Se {@code true}, mostra o diretório
+	 * da hash dinâmica.
+	 * 
+	 * @return uma representação visual da hash dinâmica mostrando
+	 * o diretório e os buckets dela.
+	 */
+	
+	public String toString(
+		String delimitadorEntreOsPonteirosDoDiretorio,
+		String delimitadorEntreRegistros,
+		String delimitadorEntreOsCamposDoRegistro,
+		boolean mostrarApenasAsChavesDosRegistros,
+		boolean mostrarDiretorio)
+	{
+		return
+			(
+				mostrarDiretorio ? (
+        			"Diretorio:\n" +
+        			diretorio.toString(
+        				delimitadorEntreOsPonteirosDoDiretorio) + "\n"
+        		) : ""
+			) +
+			
+			"Buckets:\n" +
+			buckets.toString(
+				delimitadorEntreRegistros,
+				delimitadorEntreOsCamposDoRegistro,
+				mostrarApenasAsChavesDosRegistros);
+	}
+	
+	/**
+	 * Cria uma representação visual da hash dinâmica mostrando
+	 * o diretório e os buckets dela.
+	 * 
+	 * @param mostrarApenasAsChavesDosRegistros Se {@code true},
+	 * mostra apenas as chaves dos registros do bucket ignorando
+	 * os valores ligados às chaves e as lápides.
+	 * @param mostrarDiretorio Se {@code true}, mostra o diretório
+	 * da hash dinâmica.
+	 * 
+	 * @return uma representação visual da hash dinâmica mostrando
+	 * o diretório e os buckets dela.
+	 */
+	
+	public String toString(boolean mostrarApenasAsChavesDosRegistros, boolean mostrarDiretorio)
+	{
+		return toString(
+			"\n", ", ", ", ",
+			mostrarApenasAsChavesDosRegistros,
+			mostrarDiretorio);
+	}
+	
+	/**
+	 * Cria uma representação visual da hash dinâmica mostrando
+	 * o diretório e os buckets dela.
+	 * 
+	 * @param mostrarApenasAsChavesDosRegistros Se {@code true},
+	 * mostra apenas as chaves dos registros do bucket ignorando
+	 * os valores ligados às chaves e as lápides.
+	 * 
+	 * @return uma representação visual da hash dinâmica mostrando
+	 * o diretório e os buckets dela.
+	 */
+	
+	public String toString(boolean mostrarApenasAsChavesDosRegistros)
+	{
+		return toString(mostrarApenasAsChavesDosRegistros, true);
+	}
+	
+	@Override
+	public String toString()
+	{
+		return toString(false);
 	}
 }
