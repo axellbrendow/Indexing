@@ -90,7 +90,7 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 		
 		this.registroDoIndice =
 			new RegistroDoIndice<>(
-				'*', null, null,
+				RegistroDoIndice.REGISTRO_DESATIVADO, null, null,
 				quantidadeMaximaDeBytesParaAChave,
 				quantidadeMaximaDeBytesParaODado,
 				construtorDaChave,
@@ -440,10 +440,34 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 		
 		if (enderecoDoRegistro > 0)
 		{
-			bucket[enderecoDoRegistro] = '*';
+			bucket[enderecoDoRegistro] = RegistroDoIndice.REGISTRO_DESATIVADO;
 		}
 		
 		return enderecoDoRegistro > 0;
+	}
+	
+	/**
+	 * Exclui todos os registros com a chave informada.
+	 * 
+	 * @param chave Chave a ser procurada.
+	 */
+	
+	protected void excluirRegistrosComAChave(TIPO_DAS_CHAVES chave)
+	{
+		percorrerRegistros(
+			(registro, deslocamento) ->
+			{
+				int status = 0; // indica que o processo deve continuar
+				
+				if (registro.lapide == RegistroDoIndice.REGISTRO_ATIVADO &&
+					registro.chave.toString().equals(chave.toString()))
+				{
+					bucket[deslocamento] = RegistroDoIndice.REGISTRO_DESATIVADO;
+				}
+				
+				return status;
+			}
+		);
 	}
 	
 	/**
@@ -461,7 +485,7 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 		
 		if (enderecoDoRegistro > 0)
 		{
-			bucket[enderecoDoRegistro] = '*';
+			bucket[enderecoDoRegistro] = RegistroDoIndice.REGISTRO_DESATIVADO;
 		}
 		
 		return enderecoDoRegistro > 0;

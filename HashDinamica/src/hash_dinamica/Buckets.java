@@ -517,6 +517,39 @@ public class Buckets<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADO
 	}
 	
 	/**
+	 * Lê o bucket do endereço informado.
+	 *  
+	 * @param enderecoDoBucket Endereço do bucket no arquivo dos buckets.
+	 * 
+	 * @return {@code true} se o processo for bem sucedido. Caso
+	 * contrário, {@code false}.
+	 */
+	
+	private boolean lerBucket(long enderecoDoBucket)
+	{
+		boolean resultado = false;
+		
+		if (enderecoDoBucket > -1 && arquivoDisponivel())
+		{
+			try
+			{
+				arquivoDosBuckets.seek(enderecoDoBucket);
+				
+				bucket.lerObjeto(arquivoDosBuckets);
+				
+				resultado = true;
+			}
+			
+			catch (IOException ioex)
+			{
+				ioex.printStackTrace();
+			}
+		}
+		
+		return resultado;
+	}
+	
+	/**
 	 * Tenta excluir o primeiro registro com a chave informada.
 	 * 
 	 * @param chave Chave a ser excluída.
@@ -530,26 +563,55 @@ public class Buckets<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADO
 	{
 		boolean resultado = false;
 		
-		if (enderecoDoBucket > -1 && arquivoDisponivel())
+		// lê o bucket no endereço informado e registra-o numa variável global
+		if (lerBucket(enderecoDoBucket))
 		{
-			try
+			resultado = excluir(chave, bucket);
+			
+			if (resultado == true) // excluído com sucesso
 			{
-				arquivoDosBuckets.seek(enderecoDoBucket);
-				
-				bucket.lerObjeto(arquivoDosBuckets);
-				
-				resultado = excluir(chave, bucket);
-				
-				if (resultado == true) // excluído com sucesso
+				try
 				{
 					arquivoDosBuckets.seek(enderecoDoBucket);
 					bucket.escreverObjeto(arquivoDosBuckets);
 				}
+				
+				catch (IOException e)
+				{
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return resultado;
+	}
+	
+	/**
+	 * Exclui todos os registros com a chave informada.
+	 * 
+	 * @param chave Chave a ser procurada.
+	 * @param enderecoDoBucket Endereço do bucket no arquivo dos buckets.
+	 */
+	
+	public boolean excluirRegistrosComAChave(TIPO_DAS_CHAVES chave, long enderecoDoBucket)
+	{
+		boolean resultado = false;
+		
+		// lê o bucket no endereço informado e registra-o numa variável global
+		if (lerBucket(enderecoDoBucket) && chave != null)
+		{
+			bucket.excluirRegistrosComAChave(chave);
+			
+			try
+			{
+				arquivoDosBuckets.seek(enderecoDoBucket);
+				bucket.escreverObjeto(arquivoDosBuckets);
+				resultado = true;
 			}
 			
-			catch (IOException ioex)
+			catch (IOException e)
 			{
-				ioex.printStackTrace();
+				e.printStackTrace();
 			}
 		}
 		

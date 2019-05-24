@@ -284,6 +284,17 @@ public class HashDinamicaStringInt extends HashDinamica<StringSerializavel, IntS
 	}
 	
 	/**
+	 * Exclui todos os registros com a chave informada.
+	 * 
+	 * @param chave Chave a ser procurada.
+	 */
+	
+	public boolean excluirRegistrosComAChave(String chave)
+	{
+		return excluirRegistrosComAChave( criarStringSerializavel(chave) );
+	}
+	
+	/**
 	 * Procura todos os registros com uma chave específica e gera
 	 * uma lista com os dados correspondentes a essas chaves.
 	 * 

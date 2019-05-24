@@ -202,6 +202,26 @@ public class HashDinamica<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS
 	}
 	
 	/**
+	 * Exclui todos os registros com a chave informada.
+	 * 
+	 * @param chave Chave a ser procurada.
+	 */
+	
+	public boolean excluirRegistrosComAChave(TIPO_DAS_CHAVES chave)
+	{
+		boolean sucesso = false;
+
+		long enderecoDoBucket = diretorio.obterEndereçoDoBucket(chave);
+		
+		if (enderecoDoBucket != -1)
+		{
+			sucesso = buckets.excluirRegistrosComAChave(chave, enderecoDoBucket);
+		}
+		
+		return sucesso;
+	}
+	
+	/**
 	 * Insere todos os registros ativados de um bucket na
 	 * hash dinâmica.
 	 * 

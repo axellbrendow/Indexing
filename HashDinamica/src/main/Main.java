@@ -83,7 +83,8 @@ public class Main
 			hashDinamica.inserir(15, 0);
 			hashDinamica.inserir(23, 0);
 			IO.println( hashDinamica.toString(true) ); // mostra a hash
-			
+			hashDinamica.excluirRegistrosComAChave(10);
+			IO.println( hashDinamica.toString(false) ); // mostra a hash
 			hashDinamica.inserir(27, 0); // faz a inserção do 27
 			IO.println( hashDinamica.toString(true) ); // mostra a hash
 			
