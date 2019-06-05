@@ -22,7 +22,8 @@ public class Main
 		{
 			hashDinamica = new HashDinamicaStringInt(
 				NOME_DO_ARQUIVO_DO_DIRETORIO,
-				NOME_DO_ARQUIVO_DOS_BUCKETS
+				NOME_DO_ARQUIVO_DOS_BUCKETS,
+				4
 			);
 		}
 		
@@ -59,7 +60,8 @@ public class Main
 		{
 			hashDinamica = new HashDinamicaIntInt(
 				NOME_DO_ARQUIVO_DO_DIRETORIO,
-				NOME_DO_ARQUIVO_DOS_BUCKETS
+				NOME_DO_ARQUIVO_DOS_BUCKETS,
+				4
 			);
 		}
 		
@@ -70,6 +72,7 @@ public class Main
 		
 		if (hashDinamica != null)
 		{
+			IO.println("Inserindo [ 10, 14, 20, 22, 13, 21, 3, 7, 15, 23 ]");
 			hashDinamica.inserir(10, 0); // faz várias inserções
 			hashDinamica.inserir(14, 0);
 			hashDinamica.inserir(20, 0);
@@ -82,14 +85,15 @@ public class Main
 			hashDinamica.inserir(7 , 0);
 			hashDinamica.inserir(15, 0);
 			hashDinamica.inserir(23, 0);
-			IO.println( hashDinamica.toString(true) ); // mostra a hash
-			hashDinamica.excluirRegistrosComAChave(10);
-			IO.println( hashDinamica.toString(false) ); // mostra a hash
-			hashDinamica.inserir(27, 0); // faz a inserção do 27
-			IO.println( hashDinamica.toString(true) ); // mostra a hash
+			IO.println( hashDinamica ); // mostra a hash incluindo apenas as chaves
 			
-			hashDinamica.inserir(0, 0); // faz a inserção do 0
-			IO.println( hashDinamica.toString(true) ); // mostra a hash
+			IO.println("Inserindo [ 27 ]");
+			hashDinamica.inserir(27, 0); // faz a inserção do 27
+			IO.println( hashDinamica.toString(true) );
+
+			IO.println("Inserindo [ 8 ]");
+			hashDinamica.inserir(8, 0); // faz a inserção do 8
+			IO.println( hashDinamica.toString(true) );
 			
 			hashDinamica.fechar();
 		}
