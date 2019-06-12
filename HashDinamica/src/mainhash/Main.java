@@ -1,9 +1,9 @@
-package main;
+package mainhash;
 
 import java.io.File;
 
-import hash_dinamica.implementacoes.HashDinamicaIntInt;
-import hash_dinamica.implementacoes.HashDinamicaStringInt;
+import hashs.HashDinamicaIntInt;
+import hashs.HashDinamicaStringInt;
 import util.IO;
 
 public class Main
@@ -101,8 +101,8 @@ public class Main
 	
 	public static void main(String[] args)
 	{
-		IO.println("Arq dir deletado = " + ARQUIVO_DO_DIRETORIO.delete());
-		IO.println("Arq dir deletado = " + ARQUIVO_DOS_BUCKETS.delete() + "\n");
+		ARQUIVO_DO_DIRETORIO.delete();
+		ARQUIVO_DOS_BUCKETS.delete();
 		
 		//hashStringInt();
 		hashIntInt();

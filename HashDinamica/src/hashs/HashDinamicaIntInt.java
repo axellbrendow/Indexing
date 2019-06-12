@@ -22,12 +22,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-package hash_dinamica.implementacoes;
+package hashs;
 
 import java.util.ArrayList;
 import java.util.function.Function;
 
-import hash_dinamica.HashDinamica;
+import hash.HashDinamica;
 import serializaveis.IntSerializavel;
 
 /**

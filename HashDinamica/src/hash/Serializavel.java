@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-package hash_dinamica;
+package hash;
 
 /**
  * Interface para padronização da forma de serializar objetos.

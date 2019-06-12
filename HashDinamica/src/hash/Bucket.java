@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-package hash_dinamica;
+package hash;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.BiFunction;
 
-import hash_dinamica.RegistroDoIndice;
+import hash.RegistroDoIndice;
 import serializaveis.SerializavelAbstract;
 
 /**

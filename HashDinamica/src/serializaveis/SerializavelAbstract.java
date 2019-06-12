@@ -27,7 +27,7 @@ package serializaveis;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
-import hash_dinamica.Serializavel;
+import hash.Serializavel;
 
 public abstract class SerializavelAbstract implements Serializavel
 {
