@@ -661,7 +661,7 @@ public class Buckets<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADO
 	 * {@code -1} se tudo correr bem;
 	 * {@code -2} se o par (chave, dado) já existe;
 	 * {@code -3} se algum dos parâmetros forem {@code null}.
-	 * {@code -4} se o endereço do bucket for <= -1 ou se o
+	 * {@code -4} se o endereço do bucket for {@code <= -1} ou se o
 	 * arquivo dos buckets não estiver disponível.
 	 */
 	

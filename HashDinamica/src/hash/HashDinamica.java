@@ -128,7 +128,7 @@ public class HashDinamica<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS
 	
 	public ArrayList<TIPO_DOS_DADOS> listarDadosComAChave(TIPO_DAS_CHAVES chave)
 	{
-		return buckets.listarDadosComAChave(chave, diretorio.obterEndereçoDoBucket(chave));
+		return buckets.listarDadosComAChave(chave, diretorio.obterEnderecoDoBucket(chave));
 	}
 	
 	/**
@@ -144,7 +144,7 @@ public class HashDinamica<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS
 	{
 		TIPO_DOS_DADOS dado = null;
 
-		long enderecoDoBucket = diretorio.obterEndereçoDoBucket(chave);
+		long enderecoDoBucket = diretorio.obterEnderecoDoBucket(chave);
 		
 		if (enderecoDoBucket != -1)
 		{
@@ -168,7 +168,7 @@ public class HashDinamica<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS
 	{
 		boolean sucesso = false;
 
-		long enderecoDoBucket = diretorio.obterEndereçoDoBucket(chave);
+		long enderecoDoBucket = diretorio.obterEnderecoDoBucket(chave);
 		
 		if (enderecoDoBucket != -1)
 		{
@@ -191,7 +191,7 @@ public class HashDinamica<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS
 	{
 		boolean sucesso = false;
 
-		long enderecoDoBucket = diretorio.obterEndereçoDoBucket(chave);
+		long enderecoDoBucket = diretorio.obterEnderecoDoBucket(chave);
 		
 		if (enderecoDoBucket != -1)
 		{
@@ -211,7 +211,7 @@ public class HashDinamica<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS
 	{
 		boolean sucesso = false;
 
-		long enderecoDoBucket = diretorio.obterEndereçoDoBucket(chave);
+		long enderecoDoBucket = diretorio.obterEnderecoDoBucket(chave);
 		
 		if (enderecoDoBucket != -1)
 		{
@@ -335,7 +335,7 @@ public class HashDinamica<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS
 	{
 		boolean sucesso = false;
 
-		long enderecoDoBucket = diretorio.obterEndereçoDoBucket(chave);
+		long enderecoDoBucket = diretorio.obterEnderecoDoBucket(chave);
 		
 		if (enderecoDoBucket != -1)
 		{

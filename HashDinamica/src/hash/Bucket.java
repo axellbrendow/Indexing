@@ -136,7 +136,7 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 	
 	/**
 	 * Cria um objeto que gerencia um bucket da hash dinâmica. A profundidade local
-	 * inicial para o bucket será {@link #PROFUNDIDADE_LOCAL_PADRAO}.
+	 * inicial para o bucket será {@link #PADRAO_PROFUNDIDADE_LOCAL}.
 	 * 
 	 * @param numeroDeRegistrosPorBucket Numero de registros por bucket caso o arquivo
 	 * não tenha sido criado ainda.

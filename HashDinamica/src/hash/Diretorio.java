@@ -350,7 +350,7 @@ public class Diretorio<TIPO_DAS_CHAVES extends SerializavelAbstract>
 	 * @return o ponteiro para o bucket onde a chave deve ficar.
 	 */
 	
-	public long obterEndereçoDoBucket(TIPO_DAS_CHAVES chave)
+	public long obterEnderecoDoBucket(TIPO_DAS_CHAVES chave)
 	{
 		long ponteiro = -1;
 
