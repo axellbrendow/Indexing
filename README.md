@@ -27,4 +27,4 @@ então em "Create Pull Request", depois em clique em "Create Pull Request" novam
 
 Aguarde até que sua contribuição seja avaliada.
 
-Tutorial em vídeo: ![Como criar um PULL REQUEST no Github?](https://www.youtube.com/watch?v=E8MPe6tCMo8)
+Tutorial em vídeo: [Como criar um PULL REQUEST no Github?](https://www.youtube.com/watch?v=E8MPe6tCMo8)
