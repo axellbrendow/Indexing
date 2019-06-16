@@ -21,7 +21,7 @@ git commit -a # Depois de apertar ENTER, escreva uma mensagem detalhada sobre su
 git push
 ```
 
-Após isso, vá em seu repositório online, clique em "Pull Request" ou "Compare" ![Exemplo dos botões](http://i68.tinypic.com/6qb5ax.jpg) e então em "Create Pull Request",
+Após isso, vá em seu repositório online, clique em "Pull Request" ou "Compare" ![Exemplo dos botões](http://i66.tinypic.com/2rnzr7c.jpg "Exemplo dos botões") e então em "Create Pull Request",
 depois em clique em "Create Pull Request" novamente.
 
 Aguarde até que sua contribuição seja avaliada.
