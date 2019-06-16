@@ -26,3 +26,5 @@ Após isso, vá em seu repositório online, clique em "Pull Request" ou "Compare
 então em "Create Pull Request", depois em clique em "Create Pull Request" novamente.
 
 Aguarde até que sua contribuição seja avaliada.
+
+Tutorial em vídeo: ![Como criar um PULL REQUEST no Github?](https://www.youtube.com/watch?v=E8MPe6tCMo8)
