@@ -1,5 +1,5 @@
 hash
-hashs
-mainhash
-serializaveis
-util
+hash.hashs
+hash.main
+hash.serializaveis
+hash.util

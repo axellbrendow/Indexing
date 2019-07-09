@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"hash"},{"l":"hashs"},{"l":"mainhash"},{"l":"serializaveis"},{"l":"util"}]
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"hash"},{"l":"hash.hashs"},{"l":"hash.main"},{"l":"hash.serializaveis"},{"l":"hash.util"}]

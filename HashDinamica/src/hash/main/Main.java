@@ -15,7 +15,6 @@ public class Main
 	
 	public static void hashStringInt()
 	{
-		
 		HashDinamicaStringInt hashDinamica = null;
 		
 		try
@@ -53,7 +52,6 @@ public class Main
 	
 	public static void hashIntInt()
 	{
-		
 		HashDinamicaIntInt hashDinamica = null;
 		
 		try
