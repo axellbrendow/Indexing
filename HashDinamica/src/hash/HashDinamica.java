@@ -28,8 +28,8 @@ import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.function.Function;
 
-import serializaveis.SerializavelAbstract;
-import util.IO;
+import hash.serializaveis.SerializavelAbstract;
+import hash.util.IO;
 
 /**
  * Estrutura de hashing dinâmico para indexamento de registros.

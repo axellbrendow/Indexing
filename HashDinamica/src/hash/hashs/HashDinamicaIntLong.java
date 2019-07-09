@@ -22,13 +22,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-package hashs;
+package hash.hashs;
 
 import java.util.ArrayList;
 import java.util.function.Function;
 
 import hash.HashDinamica;
-import serializaveis.IntSerializavel;
+import hash.serializaveis.IntSerializavel;
+import hash.serializaveis.LongSerializavel;
 
 /**
  * Estrutura de hashing dinâmico para indexamento de registros.
@@ -36,7 +37,7 @@ import serializaveis.IntSerializavel;
  * @author Axell Brendow ( https://github.com/axell-brendow )
  */
 
-public class HashDinamicaIntInt extends HashDinamica<IntSerializavel, IntSerializavel>
+public class HashDinamicaIntLong extends HashDinamica<IntSerializavel, LongSerializavel>
 {
 	/**
 	 * Cria um objeto que gerencia uma hash dinâmica.
@@ -54,7 +55,7 @@ public class HashDinamicaIntInt extends HashDinamica<IntSerializavel, IntSeriali
 	 * @throws NoSuchMethodException 
 	 */
 	
-	public HashDinamicaIntInt(
+	public HashDinamicaIntLong(
 		String nomeDoArquivoDoDiretorio,
 		String nomeDoArquivoDosBuckets,
 		int numeroDeRegistrosPorBucket,
@@ -65,9 +66,9 @@ public class HashDinamicaIntInt extends HashDinamica<IntSerializavel, IntSeriali
 			nomeDoArquivoDosBuckets,
 			numeroDeRegistrosPorBucket,
 			(short) Integer.BYTES,
-			(short) Integer.BYTES,
+			(short) Long.BYTES,
 			IntSerializavel.class.getConstructor(),
-			IntSerializavel.class.getConstructor(),
+			LongSerializavel.class.getConstructor(),
 			funcaoHash
 		);
 	}
@@ -85,7 +86,7 @@ public class HashDinamicaIntInt extends HashDinamica<IntSerializavel, IntSeriali
 	 * @throws NoSuchMethodException 
 	 */
 	
-	public HashDinamicaIntInt(
+	public HashDinamicaIntLong(
 		String nomeDoArquivoDoDiretorio,
 		String nomeDoArquivoDosBuckets,
 		int numeroDeRegistrosPorBucket) throws NoSuchMethodException, SecurityException
@@ -109,7 +110,7 @@ public class HashDinamicaIntInt extends HashDinamica<IntSerializavel, IntSeriali
 	 * @throws NoSuchMethodException 
 	 */
 	
-	public HashDinamicaIntInt(
+	public HashDinamicaIntLong(
 		String nomeDoArquivoDoDiretorio,
 		String nomeDoArquivoDosBuckets) throws NoSuchMethodException, SecurityException
 	{
@@ -125,20 +126,20 @@ public class HashDinamicaIntInt extends HashDinamica<IntSerializavel, IntSeriali
 	 * 
 	 * @param chave Chave a ser procurada.
 	 * 
-	 * @return {@link java.lang.Integer#MIN_VALUE} se o registro não
+	 * @return {@link java.lang.Long#MIN_VALUE} se o registro não
 	 * for encontrado; o dado correspondente à chave caso contrário.
 	 */
 	
-	public int pesquisarDadoPelaChave(int chave)
+	public long pesquisarDadoPelaChave(int chave)
 	{
-		int dado = Integer.MIN_VALUE;
+		long dado = Long.MIN_VALUE;
 
-		IntSerializavel intSerializavel =
+		LongSerializavel longSerializavel =
 			pesquisarDadoPelaChave(new IntSerializavel(chave));
 		
-		if (intSerializavel != null)
+		if (longSerializavel != null)
 		{
-			dado = intSerializavel.valor;
+			dado = longSerializavel.valor;
 		}
 		
 		return dado;
@@ -154,9 +155,9 @@ public class HashDinamicaIntInt extends HashDinamica<IntSerializavel, IntSeriali
 	 * {@code false} caso contrário.
 	 */
 	
-	public boolean excluir(int chave, int dado)
+	public boolean excluir(int chave, long dado)
 	{
-		return excluir(new IntSerializavel(chave), new IntSerializavel(dado));
+		return excluir(new IntSerializavel(chave), new LongSerializavel(dado));
 	}
 	
 	/**
@@ -193,13 +194,13 @@ public class HashDinamicaIntInt extends HashDinamica<IntSerializavel, IntSeriali
 	 * @return lista com os dados correspondentes às chaves.
 	 */
 	
-	public int[] listarDadosComAChave(int chave)
+	public long[] listarDadosComAChave(int chave)
 	{
-		ArrayList<IntSerializavel> list =
+		ArrayList<LongSerializavel> list =
 			listarDadosComAChave(new IntSerializavel(chave));
 		int listSize = list.size();
 		
-		int[] dados = new int[listSize];
+		long[] dados = new long[listSize];
 		
 		for (int i = 0; i < listSize; i++)
 		{
@@ -219,8 +220,8 @@ public class HashDinamicaIntInt extends HashDinamica<IntSerializavel, IntSeriali
 	 * Caso contrário, {@code false}.
 	 */
 	
-	public boolean inserir(int chave, int dado)
+	public boolean inserir(int chave, long dado)
 	{
-		return inserir(new IntSerializavel(chave), new IntSerializavel(dado));
+		return inserir(new IntSerializavel(chave), new LongSerializavel(dado));
 	}
 }

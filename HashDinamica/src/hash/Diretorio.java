@@ -29,8 +29,8 @@ import java.io.RandomAccessFile;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import serializaveis.SerializavelAbstract;
-import util.IO;
+import hash.serializaveis.SerializavelAbstract;
+import hash.util.IO;
 
 /**
  * Classe para gerenciamento do diretório de uma hash dinâmica.

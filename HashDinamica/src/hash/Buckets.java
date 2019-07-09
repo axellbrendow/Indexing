@@ -30,8 +30,8 @@ import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.function.BiFunction;
 
-import serializaveis.SerializavelAbstract;
-import util.IO;
+import hash.serializaveis.SerializavelAbstract;
+import hash.util.IO;
 
 /**
  * Classe que gerencia os buckets de uma hash dinâmica.

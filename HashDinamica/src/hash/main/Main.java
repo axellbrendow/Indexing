@@ -1,10 +1,10 @@
-package mainhash;
+package hash.main;
 
 import java.io.File;
 
-import hashs.HashDinamicaIntInt;
-import hashs.HashDinamicaStringInt;
-import util.IO;
+import hash.hashs.HashDinamicaIntInt;
+import hash.hashs.HashDinamicaStringInt;
+import hash.util.IO;
 
 public class Main
 {
@@ -23,7 +23,7 @@ public class Main
 			hashDinamica = new HashDinamicaStringInt(
 				NOME_DO_ARQUIVO_DO_DIRETORIO,
 				NOME_DO_ARQUIVO_DOS_BUCKETS,
-				4
+				4 // número de registros por bucket
 			);
 		}
 		
@@ -34,16 +34,16 @@ public class Main
 		
 		if (hashDinamica != null)
 		{
-			hashDinamica.inserir("Axell", 2);
-			hashDinamica.inserir("Axell", 3);
-			hashDinamica.inserir("Axell", 4);
-			hashDinamica.inserir("Maycon", 6);
-			hashDinamica.inserir("Maycon", 2);
-			hashDinamica.inserir("Maycon", 7);
-			hashDinamica.inserir("Maycon", 5);
-			hashDinamica.inserir("Melo", 3);
-			hashDinamica.inserir("Felipe", 4);
-			//hashDinamica.inserir("Felipe", 4);
+			hashDinamica.inserir("A", 2);
+			hashDinamica.inserir("A", 3);
+			hashDinamica.inserir("A", 4);
+			hashDinamica.inserir("B", 6);
+			hashDinamica.inserir("B", 2);
+			hashDinamica.inserir("B", 7);
+			hashDinamica.inserir("B", 5);
+			hashDinamica.inserir("C", 3);
+			hashDinamica.inserir("D", 4);
+			//hashDinamica.inserir("D", 4);
 			
 			IO.println( hashDinamica.toString(true) );
 			
@@ -61,7 +61,7 @@ public class Main
 			hashDinamica = new HashDinamicaIntInt(
 				NOME_DO_ARQUIVO_DO_DIRETORIO,
 				NOME_DO_ARQUIVO_DOS_BUCKETS,
-				4
+				4 // número de registros por bucket
 			);
 		}
 		

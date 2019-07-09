@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-package serializaveis;
+package hash.serializaveis;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -30,24 +30,24 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class IntSerializavel extends SerializavelAbstract
+public class LongSerializavel extends SerializavelAbstract
 {
-	public int valor;
+	public long valor;
 	
-	public IntSerializavel(int valor)
+	public LongSerializavel(long valor)
 	{
 		this.valor = valor;
 	}
 
-	public IntSerializavel()
+	public LongSerializavel()
 	{
 		this(0);
 	}
-	
+
 	@Override
 	public int obterTamanhoMaximoEmBytes()
 	{
-		return Integer.BYTES;
+		return Long.BYTES;
 	}
 
 	@Override
@@ -58,7 +58,7 @@ public class IntSerializavel extends SerializavelAbstract
 		
 		try
 		{
-			dataOutputStream.writeInt(valor);
+			dataOutputStream.writeLong(valor);
 			dataOutputStream.close();
 		}
 		
@@ -78,7 +78,7 @@ public class IntSerializavel extends SerializavelAbstract
 		
 		try
 		{
-			valor = dataInputStream.readInt();
+			valor = dataInputStream.readLong();
 			dataInputStream.close();
 		}
 		

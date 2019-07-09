@@ -32,7 +32,7 @@ import java.util.Arrays;
 import java.util.function.BiFunction;
 
 import hash.RegistroDoIndice;
-import serializaveis.SerializavelAbstract;
+import hash.serializaveis.SerializavelAbstract;
 
 /**
  * Classe que gerencia um bucket específico.

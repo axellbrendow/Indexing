@@ -1,4 +1,4 @@
-package util;
+package hash.util;
 
 import java.io.FileNotFoundException;
 import java.io.RandomAccessFile;
