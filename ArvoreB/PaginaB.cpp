@@ -2,25 +2,22 @@
 
 using namespace std;
 
-class myclass
+typedef unsigned char byte;
+
+class PaginaB
 {
+    private:
+        byte *byteArray; // guardará os dados da página que vierem do disco
+        int numeroDeChaves;
+
     public:
-        int x;
-
-        myclass(int x) : x(x) {}
-
-        myclass &operator>> (int quantity)
+        PaginaB(byte *byteArray)
         {
-            for (size_t i = 0; i < quantity; i++)
-            {
-                x = x * 2;
-            }
-
-            return *this;
+            //
         }
 };
 
-ostream& operator<< (ostream &stream, myclass &myclass)
+ostream& operator<< (ostream &stream, PaginaB &pagina)
 {
-    return stream << "num = " << myclass.x;
+    return stream << pagina;
 }
