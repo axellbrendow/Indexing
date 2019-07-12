@@ -9,10 +9,10 @@
  * 
  */
 
-#include <iostream>
-#include <vector>
-
+#include "types.hpp"
 #include "PaginaB.cpp"
+
+#include <iostream>
 
 using namespace std;
 

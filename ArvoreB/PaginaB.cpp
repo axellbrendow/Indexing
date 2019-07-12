@@ -9,26 +9,27 @@
  * 
  */
 
+#include "types.hpp"
+
 #include <iostream>
 
 using namespace std;
 
-typedef unsigned char byte;
-
+template<typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS>
 class PaginaB
 {
     private:
-        byte *byteArray; // guardará os dados da página que vierem do disco
-        int numeroDeChaves;
+        vetor_de_bytes bytesDaPagina; // guardará os dados da página que vierem do arquivo
+        int numeroDeElementos;
+        vector<TIPO_DAS_CHAVES> chaves;
+        vector<TIPO_DOS_DADOS> dados;
 
     public:
-        PaginaB(byte *byteArray)
-        {
-            //
-        }
+        PaginaB(vetor_de_bytes byteArray) : byteArray(byteArray) {}
 };
 
-ostream& operator<< (ostream &stream, PaginaB &pagina)
+template<typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS>
+ostream& operator<< (ostream &stream, PaginaB<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> &pagina)
 {
     return stream << pagina;
 }
