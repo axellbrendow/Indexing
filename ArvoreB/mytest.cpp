@@ -25,6 +25,8 @@ using namespace std;
 class Student
 {
     public:
+        const int sizeofSize_t = sizeof(size_t);
+        const int sizeofInt = sizeof(int);
         string name;
         int age;
         
@@ -38,16 +40,31 @@ class Student
          * @return tipo_byte* vector of bytes.
          */
 
-        tipo_byte *generateBytes(int abc)
+        vetor_de_bytes &generateBytes()
         {
-            vetor_de_bytes bytes(sizeof(int) + name.length() + sizeof(int));
+            size_t strlen = name.length();
+
+            vetor_de_bytes bytes(sizeofSize_t + strlen + sizeofInt);
+
+            auto iteradorDosBytes = bytes.cbegin();
+
+            copy(&strlen, &strlen + 1, iteradorDosBytes += sizeofSize_t);
+            copy(name.begin(), name.end(), iteradorDosBytes += strlen);
+            copy(&age, &age + 1, iteradorDosBytes += sizeofInt);
+            for (auto &&byte : bytes)
+            {
+                cout << byte;
+            }
+
+            cout << endl;
+            return bytes;
         }
 };
 
 int main()
 {
-    char c = 'a';
-	// Student one("axell", 19);
+	Student one("axell", 19);
+    one.generateBytes();
 	// ofstream ofs("fifthgrade.ros", ios::binary);
     
 	// ofs.write((char *) &one, sizeof(one));
