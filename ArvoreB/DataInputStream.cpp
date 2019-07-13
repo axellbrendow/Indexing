@@ -12,20 +12,6 @@
 
 class DataInputStream
 {
-    public:
-        /**
-         * @brief O tipo __gnu_cxx::__normal_iterator é apenas uma classe que tem um único campo que é um ponteiro.
-         * Objetos construídos por meio desta classe podem ser usados como se fossem ponteiros, ou seja, aceitam
-         * operações aritméticas, lógicas, relacionais, dereferenciamento e algumas outras. Na dúvida, finja que um
-         * objeto dessa classe é um ponteiro :)
-         * 
-         * <p>Na referência do site [cplusplus](http://www.cplusplus.com/reference/iterator/), essa classe se encaixa
-         * como um iterador do tipo Random Access.</p>
-         * 
-         * @see http://www.cplusplus.com/reference/iterator/
-         */
-        typedef __gnu_cxx::__normal_iterator<tipo_byte *, vetor_de_bytes> iterador;
-
     private:
         // Campos
         vetor_de_bytes &bytes;
@@ -129,8 +115,8 @@ class DataInputStream
 
             if (!throwEstaNoFim())
             {
-                size_t tamanho = 0;
-                copy(cursor, cursor += sizeof(size_t), &tamanho); // Lê o tamanho da string (tamanho em bytes)
+                str_size_type tamanho = 0;
+                copy(cursor, cursor += sizeof(str_size_type), &tamanho); // Lê o tamanho da string (tamanho em bytes)
 
                 char str[tamanho + 1];
 
