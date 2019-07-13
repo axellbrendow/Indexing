@@ -12,10 +12,10 @@
 
 class DataInputStream
 {
-    private:
+    public:
         // Campos
         /** Vetor onde estão os dados a serem extraídos. */
-        vetor_de_bytes &bytes;
+        vetor_de_bytes bytes;
         iterador cursor;
         const iterador posicaoFinal;
 
@@ -30,7 +30,9 @@ class DataInputStream
          */
 
         DataInputStream(vetor_de_bytes bytes) :
-            bytes(bytes), cursor(bytes.begin()), posicaoFinal(bytes.end()) { }
+            bytes(bytes),
+            cursor(this->bytes.begin()),
+            posicaoFinal(this->bytes.end()) { }
 
         /**
          * @brief Constrói um novo objeto DataInputStream tomando como entrada de
@@ -39,8 +41,8 @@ class DataInputStream
          * @param bytes Entrada de onde os dados serão extraídos.
          */
 
-        DataInputStream(vetor_de_bytes &bytes) :
-            bytes(bytes), cursor(bytes.begin()), posicaoFinal(bytes.end()) { }
+        // DataInputStream(vetor_de_bytes &bytes) :
+        //     bytes(bytes), cursor(bytes.begin()), posicaoFinal(bytes.end()) { }
 
         // Métodos
 
@@ -106,7 +108,7 @@ class DataInputStream
             {
                 // Copia, para "valor", os bytes entre o "cursor" e
                 // o "cursor" + tamanhoDoValor
-                copy(cursor, cursor += tamanhoDoValor, ptr);
+                copy(cursor, cursor += tamanhoDoValor, reinterpret_cast<tipo_byte *>(ptr));
             }
         }
         

@@ -27,6 +27,7 @@ class DataOutputStream
          * 
          * @param previsaoDaQuantidadeDeBytes Tamanho inicial do buffer.
          */
+
         DataOutputStream(int previsaoDaQuantidadeDeBytes) :
             bytes( vetor_de_bytes() ),
             cursor( bytes.begin() )
@@ -41,6 +42,28 @@ class DataOutputStream
             return bytes;
         }
 
+        /**
+         * @brief Mostra os bytes do vetor como inteiros.
+         */
+        
+        void print()
+        {
+            if (!bytes.empty())
+            {
+                iterador i = bytes.begin();
+                iterador fim = bytes.end();
+
+                cout << (int) *i; // Trate esse iterador como um ponteiro
+
+                for (i++; i < fim; i++)
+                {
+                    cout << "," << (int) *i;
+                }
+                
+                cout << endl;
+            }
+        }
+        
         /**
          * @brief Escreve bytes no vetor da classe.
          * 

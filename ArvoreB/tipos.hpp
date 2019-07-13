@@ -12,6 +12,9 @@
 
 using namespace std;
 
+#define debug cout << "debug" << endl;
+#define debugv(value) cout << "debug = " << value << endl;
+
 /**
  * Links úteis doxygen:<br>
  * 

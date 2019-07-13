@@ -74,9 +74,13 @@ int main()
     int age;
     float height;
 
-    out << 19 << 1.8;
+    out << 19 << 256;
 
-    DataInputStream in( out.obterVetor() );
+    vetor_de_bytes vetor = out.obterVetor();
+
+    out.print();
+
+    DataInputStream in( vetor );
 
     in >> age >> height;
 
