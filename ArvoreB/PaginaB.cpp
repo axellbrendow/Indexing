@@ -1,15 +1,12 @@
 /**
  * @file PaginaB.cpp
- * @author Axell Brendow (breno.axel@gmail.com)
+ * @author Axell Brendow ( breno.axel@gmail.com ) ( https://github.com/axell-brendow )
  * @brief Arquivo para testes
- * @version 0.1
- * @date 2019-07-11
  * 
  * @copyright Copyright (c) 2019 Axell Brendow Batista Moreira
- * 
  */
 
-#include "types.hpp"
+#include "tipos.hpp"
 
 #include <iostream>
 

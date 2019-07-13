@@ -1,15 +1,12 @@
 /**
  * @file mytest.cpp
- * @author Axell Brendow (breno.axel@gmail.com)
+ * @author Axell Brendow ( breno.axel@gmail.com ) ( https://github.com/axell-brendow )
  * @brief Arquivo para testes
- * @version 0.1
- * @date 2019-07-11
  * 
  * @copyright Copyright (c) 2019 Axell Brendow Batista Moreira
- * 
  */
 
-#include "types.hpp"
+#include "tipos.hpp"
 
 #include <fstream>
 #include <iostream>
@@ -51,12 +48,13 @@ class Student
             copy(&strlen, &strlen + 1, iteradorDosBytes += sizeofSize_t);
             copy(name.begin(), name.end(), iteradorDosBytes += strlen);
             copy(&age, &age + 1, iteradorDosBytes += sizeofInt);
+
             for (auto &&byte : bytes)
             {
                 cout << byte;
             }
-
             cout << endl;
+
             return bytes;
         }
 };
