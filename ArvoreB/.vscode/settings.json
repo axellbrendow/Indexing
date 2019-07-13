@@ -12,6 +12,7 @@
         "initializer_list": "cpp",
         "iosfwd": "cpp",
         "string": "cpp",
-        "cstring": "cpp"
+        "cstring": "cpp",
+        "*.tcc": "cpp"
     }
 }

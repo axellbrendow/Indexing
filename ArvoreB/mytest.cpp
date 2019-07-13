@@ -1,12 +1,14 @@
 /**
  * @file mytest.cpp
- * @author Axell Brendow ( breno.axel@gmail.com ) ( https://github.com/axell-brendow )
+ * @author Axell Brendow ( https://github.com/axell-brendow )
  * @brief Arquivo para testes
  * 
  * @copyright Copyright (c) 2019 Axell Brendow Batista Moreira
  */
 
 #include "tipos.hpp"
+#include "DataInputStream.cpp"
+#include "DataOutputStream.cpp"
 
 #include <fstream>
 #include <iostream>
@@ -39,33 +41,46 @@ class Student
 
         vetor_de_bytes &generateBytes()
         {
-            size_t strlen = name.length();
+            // size_t strlen = name.length();
 
-            vetor_de_bytes bytes(sizeofSize_t + strlen + sizeofInt);
+            // vetor_de_bytes bytes(sizeofSize_t + strlen + sizeofInt);
 
-            auto iteradorDosBytes = bytes.cbegin();
+            // auto iteradorDosBytes = bytes.cbegin();
 
-            copy(&strlen, &strlen + 1, iteradorDosBytes += sizeofSize_t);
-            copy(name.begin(), name.end(), iteradorDosBytes += strlen);
-            copy(&age, &age + 1, iteradorDosBytes += sizeofInt);
+            // copy(&strlen, &strlen + 1, iteradorDosBytes += sizeofSize_t);
+            // copy(name.begin(), name.end(), iteradorDosBytes += strlen);
+            // copy(&age, &age + 1, iteradorDosBytes += sizeofInt);
 
-            for (auto &&byte : bytes)
-            {
-                cout << byte;
-            }
-            cout << endl;
+            // for (auto &&byte : bytes)
+            // {
+            //     cout << byte;
+            // }
+            // cout << endl;
 
-            return bytes;
+            // return bytes;
         }
 };
 
 int main()
 {
-	Student one("axell", 19);
-    one.generateBytes();
+	// Student one("axell", 19);
+    // one.generateBytes();
 	// ofstream ofs("fifthgrade.ros", ios::binary);
     
 	// ofs.write((char *) &one, sizeof(one));
-    
+
+    DataOutputStream out(sizeof(int) + sizeof(float));
+
+    int age;
+    float height;
+
+    out << 19 << 1.8;
+
+    DataInputStream in( out.obterVetor() );
+
+    in >> age >> height;
+
+    cout << "age = " << age << ", height = " << height << endl;
+
 	return 0;
 }

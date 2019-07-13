@@ -1,6 +1,6 @@
 /**
  * @file tipos.hpp
- * @author Axell Brendow ( breno.axel@gmail.com ) ( https://github.com/axell-brendow )
+ * @author Axell Brendow ( https://github.com/axell-brendow )
  * @brief Classe de intermediação entre a entrada de dados e a sua variável.
  * 
  * @copyright Copyright (c) 2019 Axell Brendow Batista Moreira
@@ -24,6 +24,11 @@ using namespace std;
  * 
  * https://docs.microsoft.com/pt-br/cpp/cpp/smart-pointers-modern-cpp?view=vs-2019<br>
  * https://docs.microsoft.com/pt-br/cpp/cpp/how-to-create-and-use-shared-ptr-instances?view=vs-2019<br>
+ */
+
+/**
+ * @brief Tipo criado apenas para padronização da criação de variáveis que guardam
+ * tamanhos de strings.
  */
 
 typedef int str_size_type;

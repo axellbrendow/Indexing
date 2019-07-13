@@ -1,6 +1,6 @@
 /**
  * @file DataOutputStream.cpp
- * @author Axell Brendow ( breno.axel@gmail.com ) ( https://github.com/axell-brendow )
+ * @author Axell Brendow ( https://github.com/axell-brendow )
  * @brief Classe de intermediação entre a sua variável e a saída de dados.
  * 
  * @copyright Copyright (c) 2019 Axell Brendow Batista Moreira
@@ -14,152 +14,112 @@ class DataOutputStream
 {
     private:
         // Campos
+        /** Vetor de bytes onde serão guardados os dados. */
         vetor_de_bytes bytes;
+        iterador cursor;
 
     public:
         // Construtores
-        DataOutputStream(int previsaoDaQuantidadeDeBytes) : bytes( vetor_de_bytes(previsaoDaQuantidadeDeBytes) ) { }
+
+        /**
+         * @brief Constrói um novo objeto DataOutputStream com um tamanho inicial
+         * de buffer.
+         * 
+         * @param previsaoDaQuantidadeDeBytes Tamanho inicial do buffer.
+         */
+        DataOutputStream(int previsaoDaQuantidadeDeBytes) :
+            bytes( vetor_de_bytes() ),
+            cursor( bytes.begin() )
+        {
+            bytes.reserve(previsaoDaQuantidadeDeBytes);
+        }
 
         // Métodos
-        tipo_byte escreverByte(tipo_byte valor)
+
+        vetor_de_bytes obterVetor()
         {
-            // Copia, para "valor", os bytes entre o "cursor" e o "cursor" + sizeof(tipo_byte)
-            tipo_byte destino = 0;
-
-            copy(&valor, &valor + 1, &destino);
-
-            return valor;
+            return bytes;
         }
 
-        char escreverChar()
+        /**
+         * @brief Escreve bytes no vetor da classe.
+         * 
+         * @tparam tipo Tipo do que se deseja escrever.
+         * @param ptrValor Ponteiro para o primeiro byte do valor a ser escrito.
+         * @param tamanhoDoValor Quantidade de bytes a serem escritos. Caso esse
+         * parâmetro não seja fornecido, o seu valor será sizeof(tipo).
+         * 
+         * @return DataOutputStream& Retorna uma referência para este objeto.
+         */
+
+        template<typename tipo>
+        DataOutputStream &escreverPtr(tipo *ptrValor, int tamanhoDoValor = sizeof(tipo))
         {
-            char valor = 0;
+            // reinterpret_cast faz a conversão do ponteiro para "tipo_byte *".
+            // Isso é feito para que eu possa iterar sobre os bytes do valor.
+            tipo_byte *inicio = reinterpret_cast<tipo_byte *>(ptrValor);
 
-            if (!throwEstaNoFim())
-            {
-                // Copia, para "valor", os bytes entre o "cursor" e o "cursor" + sizeof(char)
-                copy(cursor, cursor += sizeof(char), &valor);
-            }
+            // como inicio aponta para o primeiro byte do valor e inicio + tamanhoDoValor
+            // apontará para a posição após o último byte do valor, o .insert() copia
+            // todos bytes do valor para o final do vetor bytes.
+            bytes.insert(bytes.begin() + bytes.size(), inicio, inicio + tamanhoDoValor);
 
-            return valor;
+            // cursor += tamanhoDoValor;
+
+            return *this; // retorna uma referência para este objeto.
         }
 
-        short escreverShort(short valor)
+        /**
+         * @brief Escreve tipos primitivos e objetos com tamanho pré definido no
+         * vetor da classe.
+         * 
+         * @tparam tipo Tipo do que se deseja escrever.
+         * @param valor Valor que se deseja escrever.
+         * @param tamanhoDoValor Tamanho em bytes que o valor gasta. Caso esse parâmetro
+         * não seja fornecido, o seu valor será sizeof(tipo).
+         * 
+         * @return DataOutputStream& Retorna uma referência para este objeto.
+         */
+
+        template<typename tipo>
+        DataOutputStream &escrever(tipo &valor, int tamanhoDoValor = sizeof(tipo))
         {
-            // Copia, para "valor", os bytes entre o "cursor" e o "cursor" + sizeof(short)
-            short destino = 0;
-
-            copy(&valor, &valor + 1, &destino);
-
-            return valor;
+            return escreverPtr(&valor);
         }
 
-        int escreverInt()
+        /**
+         * @brief Escreve uma string no vetor da classe. As strings têm um tratamento
+         * especial pois é necessário escrever primeiro o tamanho delas antes de
+         * escrever os seus caracteres.
+         * 
+         * @param str String a ser escrita.
+         * @return DataOutputStream& Retorna uma referência para este objeto.
+         */
+
+        DataOutputStream &escreverString(string &str)
         {
-            int valor = 0;
+            str_size_type tamanho = str.length();
 
-            if (!throwEstaNoFim())
-            {
-                // Copia, para "valor", os bytes entre o "cursor" e o "cursor" + sizeof(int)
-                copy(cursor, cursor += sizeof(int), &valor);
-            }
+            escrever(tamanho);
 
-            return valor;
-        }
-
-        long escreverLong()
-        {
-            long valor = 0;
-
-            if (!throwEstaNoFim())
-            {
-                // Copia, para "valor", os bytes entre o "cursor" e o "cursor" + sizeof(long)
-                copy(cursor, cursor += sizeof(long), &valor);
-            }
-
-            return valor;
-        }
-
-        string escreverString()
-        {
-            string valor = 0;
-
-            if (!throwEstaNoFim())
-            {
-                size_t tamanho = 0;
-                copy(cursor, cursor += sizeof(size_t), &tamanho); // Lê o tamanho da string (tamanho em bytes)
-
-                char str[tamanho + 1];
-
-                // Copia, para "str", os bytes entre o "cursor" e o "cursor" + "tamanho"
-                copy(cursor, cursor += tamanho, str);
-                
-                str[tamanho] = '\0'; // Termina a string
-
-                valor = string(str);
-            }
-
-            return valor;
+            return escreverPtr(const_cast<char *>( str.c_str() ), tamanho);
         }
 };
 
 // Operadores
-tipo_byte &operator>>(DataOutputStream &dataOutputStream, tipo_byte &variavel)
+template<typename tipo>
+DataOutputStream &operator<<(DataOutputStream &dataOutputStream, tipo variavel)
 {
-    if (dataOutputStream) // checa se é possível escrever alguma coisa
-    {
-        variavel = dataOutputStream.lerByte();
-    }
-
-    return variavel;
+    return dataOutputStream.escrever(variavel);
 }
 
-char &operator>>(DataOutputStream &dataOutputStream, char &variavel)
+template<typename tipo>
+DataOutputStream &operator<<(DataOutputStream &dataOutputStream, tipo &variavel)
 {
-    if (dataOutputStream) // checa se é possível escrever alguma coisa
-    {
-        variavel = dataOutputStream.lerChar();
-    }
-
-    return variavel;
+    return dataOutputStream.escrever(variavel);
 }
 
-short &operator>>(DataOutputStream &dataOutputStream, short &variavel)
+DataOutputStream &operator<<(DataOutputStream &dataOutputStream, string &variavel)
 {
-    if (dataOutputStream) // checa se é possível escrever alguma coisa
-    {
-        variavel = dataOutputStream.lerShort();
-    }
-
-    return variavel;
-}
-
-int &operator>>(DataOutputStream &dataOutputStream, int &variavel)
-{
-    if (dataOutputStream) // checa se é possível escrever alguma coisa
-    {
-        variavel = dataOutputStream.lerInt();
-    }
-
-    return variavel;
-}
-
-long &operator>>(DataOutputStream &dataOutputStream, long &variavel)
-{
-    if (dataOutputStream) // checa se é possível escrever alguma coisa
-    {
-        variavel = dataOutputStream.lerLong();
-    }
-
-    return variavel;
-}
-
-string &operator>>(DataOutputStream &dataOutputStream, string &variavel)
-{
-    if (dataOutputStream) // checa se é possível escrever alguma coisa
-    {
-        variavel = dataOutputStream.lerString();
-    }
-
-    return variavel;
+    return dataOutputStream.escreverString(variavel);
 }
