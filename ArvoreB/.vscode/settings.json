@@ -13,6 +13,7 @@
         "iosfwd": "cpp",
         "string": "cpp",
         "cstring": "cpp",
-        "*.tcc": "cpp"
+        "*.tcc": "cpp",
+        "stdexcept": "cpp"
     }
 }

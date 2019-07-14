@@ -6,6 +6,8 @@
  * @copyright Copyright (c) 2019 Axell Brendow Batista Moreira
  */
 
+#pragma once
+
 #include "tipos.hpp"
 
 #include <iostream>
@@ -136,13 +138,14 @@ DataOutputStream &operator<<(DataOutputStream &dataOutputStream, tipo variavel)
     return dataOutputStream.escrever(variavel);
 }
 
-template<typename tipo>
-DataOutputStream &operator<<(DataOutputStream &dataOutputStream, tipo &variavel)
-{
-    return dataOutputStream.escrever(variavel);
-}
-
 DataOutputStream &operator<<(DataOutputStream &dataOutputStream, string &variavel)
 {
     return dataOutputStream.escreverString(variavel);
+}
+
+DataOutputStream &operator<<(DataOutputStream &dataOutputStream, const char *variavel)
+{
+    string str(variavel);
+
+    return dataOutputStream.escreverString(str);
 }

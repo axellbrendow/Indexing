@@ -6,6 +6,8 @@
  * @copyright Copyright (c) 2019 Axell Brendow Batista Moreira
  */
 
+#pragma once
+
 #include "tipos.hpp"
 #include "DataInputStream.cpp"
 #include "DataOutputStream.cpp"
@@ -24,8 +26,6 @@ using namespace std;
 class Student
 {
     public:
-        const int sizeofSize_t = sizeof(size_t);
-        const int sizeofInt = sizeof(int);
         string name;
         int age;
         
@@ -39,25 +39,11 @@ class Student
          * @return tipo_byte* vector of bytes.
          */
 
-        vetor_de_bytes &generateBytes()
+        vetor_de_bytes generateBytes()
         {
-            // size_t strlen = name.length();
+            DataOutputStream out(sizeof(str_size_type) + name.length() + sizeof(int));
 
-            // vetor_de_bytes bytes(sizeofSize_t + strlen + sizeofInt);
-
-            // auto iteradorDosBytes = bytes.cbegin();
-
-            // copy(&strlen, &strlen + 1, iteradorDosBytes += sizeofSize_t);
-            // copy(name.begin(), name.end(), iteradorDosBytes += strlen);
-            // copy(&age, &age + 1, iteradorDosBytes += sizeofInt);
-
-            // for (auto &&byte : bytes)
-            // {
-            //     cout << byte;
-            // }
-            // cout << endl;
-
-            // return bytes;
+            return (out << name << age).obterVetor();
         }
 };
 
@@ -71,20 +57,17 @@ int main()
 
     DataOutputStream out(sizeof(int) + sizeof(float));
 
+    string name;
     int age;
     float height;
 
-    out << 19 << 256;
+    out << "me" << 19 << 1.8f;
+    
+    DataInputStream in( out.obterVetor() );
 
-    vetor_de_bytes vetor = out.obterVetor();
+    in >> name >> age >> height;
 
-    out.print();
-
-    DataInputStream in( vetor );
-
-    in >> age >> height;
-
-    cout << "age = " << age << ", height = " << height << endl;
+    cout << "name = " << name << ", age = " << age << ", height = " << height << endl;
 
 	return 0;
 }
