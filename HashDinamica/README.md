@@ -17,7 +17,7 @@ Caso você não queira deixar o hash.jar na mesma pasta que a sua classe java, v
 
 Todos os comandos usados:
 
-```
+```PowerShell
 ls | select Name   # coloque sua classe .java e o arquivo hash.jar na mesma pasta como abaixo:
 javac -classpath hash.jar HashTest.java   # compile passando como classpath o caminho de hash.jar
 
@@ -37,7 +37,7 @@ java -classpath ".\lib\*;." HashTest   # execute sua classe com o mesmo classpat
 
 Código de teste:
 
-```
+```Java
 import java.io.File;
 
 import hash.hashs.HashDinamicaStringInt;
