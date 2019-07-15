@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "tipos.hpp"
+#include "templates/tipos.hpp"
 #include "streams/DataInputStream.cpp"
 #include "streams/DataOutputStream.cpp"
 
@@ -30,11 +30,11 @@ class Student
         
         Student(string nome, int idade) : nome(nome), idade(idade) {}
 
-        vetor_de_bytes gerarBytes()
+        DataOutputStream gerarOutputStream()
         {
-            DataOutputStream out(15);
+            DataOutputStream out(sizeof(str_size_type) + nome.length() + sizeof(int));
 
-            return (out << nome << idade).obterVetor();
+            return out << nome << idade;
         }
 
         Student &imprimir()
@@ -44,25 +44,28 @@ class Student
             return *this;
         }
 
-        vetor_de_bytes imprimirVetor()
+        DataOutputStream imprimirVetor()
         {
-            auto vetor = gerarBytes();
+            auto out = gerarOutputStream();
 
-            debugApenasPorIterador(vetor.begin(), vetor.end());
+            cout << out;
 
-            return vetor;
+            return out;
         }
 };
 
 int main()
 {
+    ostream_iterator<int> myiter(cout, ",");
+    *myiter = 100;
+    cout << endl;
 	Student one("axell", 19);
-    one.imprimir();
+    
     auto vetor = one.imprimirVetor();
     
 	ofstream ofs("fifthgrade.ros", ios::binary);
     
-	ofs.write(reinterpret_cast<char *>(vetor.begin().base()), vetor.size());
+	ofs << one.gerarOutputStream();
 
     ofs.close();
 

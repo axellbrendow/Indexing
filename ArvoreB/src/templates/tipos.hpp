@@ -8,6 +8,7 @@
 
 #pragma once
 
+#include <iostream>
 #include <vector>
 
 using namespace std;
@@ -16,25 +17,18 @@ using namespace std;
 #define debugv(value) cout << "debug = " << value << endl;
 
 /**
- * Links úteis doxygen:<br>
- * 
- * https://flcwiki.desy.de/How%20to%20document%20your%20code%20using%20doxygen#How_to_create_a_configuration_file<br>
- * https://gist.github.com/ugovaretto/261bd1d16d9a0d2e76ee<br>
- */
-
-/**
- * Links úteis smart pointers:<br>
- * 
- * https://docs.microsoft.com/pt-br/cpp/cpp/smart-pointers-modern-cpp?view=vs-2019<br>
- * https://docs.microsoft.com/pt-br/cpp/cpp/how-to-create-and-use-shared-ptr-instances?view=vs-2019<br>
- */
-
-/**
- * @brief Tipo criado apenas para padronização da criação de variáveis que guardam
- * tamanhos de strings.
+ * @brief Criado apenas para padronizar o tipo usado para declarar variáveis que
+ * guardam tamanhos de strings.
  */
 
 typedef int str_size_type;
+
+/**
+ * @brief Criado apenas para padronizar o tipo usado para declarar ponteiros que
+ * guardam o endereço de entidades e/ou registros dentro de um arquivo.
+ */
+
+typedef size_t file_pointer_type;
 
 /**
  * @brief Em C++, usamos unsigned char para lidar com bytes. As vezes usa-se char também.
@@ -65,3 +59,31 @@ typedef vector<tipo_byte> vetor_de_bytes;
  */
 
 typedef vetor_de_bytes::iterator iterador;
+
+template<typename tipo>
+void debugPorPonteiro(tipo *start, tipo *end)
+{
+    for (tipo *i = start; i != end; i++)
+    {
+        std::cout << (int) *i << ",";
+    } std::cout << endl;
+}
+
+void debugApenasPorIterador(iterador start, iterador end)
+{
+    for (iterador i = start; i != end; i++)
+    {
+        std::cout << (int) *i << ",";
+    } std::cout << endl;
+}
+
+template<typename tipo>
+void debugCursorComSaida(iterador start, iterador end, tipo *output)
+{
+    for (iterador i = start; i != end; i++)
+    {
+        std::cout << "(input) " << (int) *i << ",";
+        *output = *i;
+        std::cout << "(output) " << (int) *output++ << ",";
+    } std::cout << endl;
+}

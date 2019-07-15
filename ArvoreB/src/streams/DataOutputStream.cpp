@@ -8,9 +8,10 @@
 
 #pragma once
 
-#include "tipos.hpp"
+#include "../templates/tipos.hpp"
 
 #include <iostream>
+#include <iterator>
 #include <fstream>
 
 using namespace std;
@@ -19,12 +20,20 @@ class DataOutputStream
 {
     private:
         // ------------------------- Campos
+
         /** Vetor de bytes onde serão guardados os dados. */
         vetor_de_bytes bytes;
-        iterador cursor;
 
     public:
         // ------------------------- Construtores
+
+        /**
+         * @brief Constrói um novo objeto DataOutputStream com o vetor recebido.
+         * 
+         * @param vetor Vetor inicial.
+         */
+
+        DataOutputStream(vetor_de_bytes vetor) : bytes(vetor) { }
 
         /**
          * @brief Constrói um novo objeto DataOutputStream com um tamanho inicial
@@ -34,9 +43,9 @@ class DataOutputStream
          */
 
         DataOutputStream(int previsaoDaQuantidadeDeBytes) :
-            bytes( vetor_de_bytes() ),
-            cursor( bytes.begin() )
+            DataOutputStream( vetor_de_bytes() )
         {
+            // .reserve() garante mais espaço mas altera o endereço do vetor na memória
             bytes.reserve(previsaoDaQuantidadeDeBytes);
         }
 
@@ -90,33 +99,14 @@ class DataOutputStream
             return bytes.size();
         }
 
+        iterador obterCursor()
+        {
+            return begin() + size();
+        }
+
         vetor_de_bytes obterVetor()
         {
             return bytes;
-        }
-
-        /**
-         * @brief Mostra os bytes do vetor como inteiros.
-         */
-        
-        DataOutputStream &print()
-        {
-            if (!empty())
-            {
-                iterador i = begin();
-                iterador fim = end();
-
-                cout << (int) *i; // Trate esse iterador como um ponteiro
-
-                for (i++; i < fim; i++)
-                {
-                    cout << "," << (int) *i;
-                }
-                
-                cout << endl;
-            }
-
-            return *this;
         }
         
         /**
@@ -136,13 +126,11 @@ class DataOutputStream
             // reinterpret_cast faz a conversão do ponteiro para "tipo_byte *".
             // Isso é feito para que eu possa iterar sobre os bytes do valor.
             tipo_byte *inicio = reinterpret_cast<tipo_byte *>(ptrValor);
-
+            
             // como inicio aponta para o primeiro byte do valor e inicio + tamanhoDoValor
             // apontará para a posição após o último byte do valor, o .insert() copia
             // todos bytes do valor para o final do vetor bytes.
-            bytes.insert(cursor, inicio, inicio + tamanhoDoValor);
-
-            cursor += tamanhoDoValor;
+            bytes.insert(obterCursor(), inicio, inicio + tamanhoDoValor);
 
             return *this; // retorna uma referência para este objeto.
         }
@@ -203,7 +191,21 @@ DataOutputStream &operator<<(DataOutputStream &dataOutputStream, const char *var
     return dataOutputStream << str;
 }
 
-ofstream &operator<<(ofstream ofstream, DataOutputStream &out)
+ostream &operator<<(ostream &ostream, DataOutputStream &out)
+{
+    // Essa instância de iterador do tipo ostream_iterador tem a peculiaridade de
+    // que ela sempre escreve o que for solicitado em cout e logo em seguida escreve
+    // um delimitador. No caso será uma vírgula.
+    // Ex.:
+    // ostream_iterator<int> myiter(cout, ","); // declara um iterador sobre cout
+    // *myiter = 100 // imprime "100," em cout
+    copy( out.begin(), out.end() - 1, ostream_iterator<int>(cout, ",") );
+    cout << *out.end();
+
+    return ostream << endl;
+}
+
+ofstream &operator<<(ofstream &ofstream, DataOutputStream out)
 {
     ofstream.write( reinterpret_cast<char *>( out.begin().base() ), out.size() );
 

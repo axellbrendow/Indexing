@@ -20,6 +20,7 @@ class PaginaB
         int numeroDeElementos;
         vector<TIPO_DAS_CHAVES> chaves;
         vector<TIPO_DOS_DADOS> dados;
+        vector<file_pointer_type> ponteiros;
 
     public:
         PaginaB(vetor_de_bytes byteArray) : byteArray(byteArray) {}

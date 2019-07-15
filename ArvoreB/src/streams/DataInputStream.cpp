@@ -8,42 +8,14 @@
 
 #pragma once
 
-#include "tipos.hpp"
-#include  "DataOutputStream.cpp"
+#include "../templates/tipos.hpp"
+#include "DataOutputStream.cpp"
 
 #include <iostream>
 
-template<typename tipo>
-void debugPorPonteiro(tipo *start, tipo *end)
-{
-    for (tipo *i = start; i != end; i++)
-    {
-        cout << (int) *i << ",";
-    } cout << endl;
-}
-
-void debugApenasPorIterador(iterador start, iterador end)
-{
-    for (iterador i = start; i != end; i++)
-    {
-        cout << (int) *i << ",";
-    } cout << endl;
-}
-
-template<typename tipo>
-void debugCursorComSaida(iterador start, iterador end, tipo *output)
-{
-    for (iterador i = start; i != end; i++)
-    {
-        cout << "(input) " << (int) *i << ",";
-        *output = *i;
-        cout << "(output) " << (int) *output++ << ",";
-    } cout << endl;
-}
-
 class DataInputStream
 {
-    public:
+    private:
         // ------------------------- Campos
 
         /** Vetor onde estão os dados a serem extraídos. */
@@ -76,6 +48,35 @@ class DataInputStream
         DataInputStream(DataOutputStream out) : DataInputStream(out.obterVetor()) { }
 
         // ------------------------- Métodos
+
+        /**
+         * @brief Obtém um iterador que aponta para o primeiro byte deste fluxo.
+         * 
+         * @return iterador Retorna um iterador que aponta para o primeiro byte
+         * deste fluxo.
+         */
+
+        iterador begin()
+        {
+            return bytes.begin();
+        }
+
+        /**
+         * @brief Obtém um iterador que aponta para o último byte deste fluxo.
+         * 
+         * @return iterador Retorna um iterador que aponta para o último byte
+         * deste fluxo.
+         */
+
+        iterador end()
+        {
+            return bytes.end();
+        }
+
+        iterador obterCursor()
+        {
+            return cursor;
+        }
 
         /**
          * @brief Checa se todos os dados do vetor foram consumidos.
@@ -239,4 +240,18 @@ DataInputStream &operator>>(DataInputStream &dataInputStream, string &variavel)
     variavel = dataInputStream.lerString();
 
     return dataInputStream;
+}
+
+ostream &operator<<(ostream &ostream, DataInputStream &in)
+{
+    // Essa instância de iterador do tipo ostream_iterador tem a peculiaridade de
+    // que ela sempre escreve o que for solicitado em cout e logo em seguida escreve
+    // um delimitador. No caso será uma vírgula.
+    // Ex.:
+    // ostream_iterator<int> myiter(cout, ","); // declara um iterador sobre cout
+    // *myiter = 100 // imprime "100," em cout
+    copy( in.begin(), in.end() - 1, ostream_iterator<int>(cout, ",") );
+    cout << *in.end();
+
+    return ostream << endl;
 }
