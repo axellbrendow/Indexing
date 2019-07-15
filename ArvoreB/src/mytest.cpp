@@ -9,8 +9,8 @@
 #pragma once
 
 #include "templates/tipos.hpp"
-#include "streams/DataInputStream.cpp"
-#include "streams/DataOutputStream.cpp"
+#include "streams/DataInputStream.hpp"
+#include "streams/DataOutputStream.hpp"
 
 #include <fstream>
 #include <iostream>
@@ -56,9 +56,6 @@ class Student
 
 int main()
 {
-    ostream_iterator<int> myiter(cout, ",");
-    *myiter = 100;
-    cout << endl;
 	Student one("axell", 19);
     
     auto vetor = one.imprimirVetor();

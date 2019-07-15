@@ -1,5 +1,5 @@
 /**
- * @file DataInputStream.cpp
+ * @file DataInputStream.hpp
  * @author Axell Brendow ( https://github.com/axell-brendow )
  * @brief Classe de intermediação entre a entrada de dados e a sua variável.
  * 
@@ -9,7 +9,7 @@
 #pragma once
 
 #include "../templates/tipos.hpp"
-#include "DataOutputStream.cpp"
+#include "DataOutputStream.hpp"
 
 #include <iostream>
 
@@ -71,6 +71,16 @@ class DataInputStream
         iterador end()
         {
             return bytes.end();
+        }
+
+        size_t size()
+        {
+            return bytes.size();
+        }
+
+        bool empty()
+        {
+            return bytes.empty();
         }
 
         iterador obterCursor()
@@ -244,14 +254,17 @@ DataInputStream &operator>>(DataInputStream &dataInputStream, string &variavel)
 
 ostream &operator<<(ostream &ostream, DataInputStream &in)
 {
-    // Essa instância de iterador do tipo ostream_iterador tem a peculiaridade de
-    // que ela sempre escreve o que for solicitado em cout e logo em seguida escreve
-    // um delimitador. No caso será uma vírgula.
-    // Ex.:
-    // ostream_iterator<int> myiter(cout, ","); // declara um iterador sobre cout
-    // *myiter = 100 // imprime "100," em cout
-    copy( in.begin(), in.end() - 1, ostream_iterator<int>(cout, ",") );
-    cout << *in.end();
+    if (!in.empty())
+    {
+        // Essa instância de iterador do tipo ostream_iterador tem a peculiaridade de
+        // que ela sempre escreve o que for solicitado em cout e logo em seguida escreve
+        // um delimitador. No caso será uma vírgula.
+        // Ex.:
+        // ostream_iterator<int> myiter(cout, ","); // declara um iterador sobre cout
+        // *myiter = 100 // imprime "100," em cout
+        copy( in.begin(), in.end() - 1, ostream_iterator<int>(cout, ",") );
+        cout << (int) *in.end();
+    }
 
     return ostream << endl;
 }

@@ -1,5 +1,5 @@
 /**
- * @file DataOutputStream.cpp
+ * @file DataOutputStream.hpp
  * @author Axell Brendow ( https://github.com/axell-brendow )
  * @brief Classe de intermediação entre a sua variável e a saída de dados.
  * 
@@ -193,14 +193,17 @@ DataOutputStream &operator<<(DataOutputStream &dataOutputStream, const char *var
 
 ostream &operator<<(ostream &ostream, DataOutputStream &out)
 {
-    // Essa instância de iterador do tipo ostream_iterador tem a peculiaridade de
-    // que ela sempre escreve o que for solicitado em cout e logo em seguida escreve
-    // um delimitador. No caso será uma vírgula.
-    // Ex.:
-    // ostream_iterator<int> myiter(cout, ","); // declara um iterador sobre cout
-    // *myiter = 100 // imprime "100," em cout
-    copy( out.begin(), out.end() - 1, ostream_iterator<int>(cout, ",") );
-    cout << *out.end();
+    if (!out.empty())
+    {
+        // Essa instância de iterador do tipo ostream_iterador tem a peculiaridade de
+        // que ela sempre escreve o que for solicitado em cout e logo em seguida escreve
+        // um delimitador. No caso será uma vírgula.
+        // Ex.:
+        // ostream_iterator<int> myiter(cout, ","); // declara um iterador sobre cout
+        // *myiter = 100 // imprime "100" e depois "," resultando em "100,"
+        copy( out.begin(), out.end() - 1, ostream_iterator<int>(cout, ",") );
+        cout << (int) *out.end();
+    }
 
     return ostream << endl;
 }

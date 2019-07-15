@@ -1,5 +1,5 @@
 /**
- * @file PaginaB.cpp
+ * @file PaginaB.hpp
  * @author Axell Brendow ( https://github.com/axell-brendow )
  * @brief Arquivo para testes
  * 
@@ -7,13 +7,14 @@
  */
 
 #include "tipos.hpp"
+#include "templates/serializavel.hpp"
 
 #include <iostream>
 
 using namespace std;
 
 template<typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS>
-class PaginaB
+class PaginaB : 
 {
     private:
         vetor_de_bytes bytesDaPagina; // guardará os dados da página que vierem do arquivo
