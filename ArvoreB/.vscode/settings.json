@@ -14,6 +14,11 @@
         "string": "cpp",
         "cstring": "cpp",
         "*.tcc": "cpp",
-        "stdexcept": "cpp"
+        "stdexcept": "cpp",
+        "type_traits": "cpp",
+        "utility": "cpp",
+        "fstream": "cpp",
+        "ostream": "cpp",
+        "sstream": "cpp"
     }
 }

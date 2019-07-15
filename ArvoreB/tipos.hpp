@@ -37,25 +37,31 @@ using namespace std;
 typedef int str_size_type;
 
 /**
- * Em C++, usamos unsigned char para lidar com bytes, afinal o intervalo de valores do tipo unsigned char
- * é o mesmo do intervalo de um byte, 0 a 255.
+ * @brief Em C++, usamos unsigned char para lidar com bytes. As vezes usa-se char também.
+ * De qualquer forma, o intervalo de valores do tipo unsigned char é o mesmo do
+ * intervalo de um byte, 0 a 255.
  */
+
 typedef unsigned char tipo_byte;
 
 /**
- * Tipo destinado a ser usado para trabalhar com vetores de bytes.
+ * @brief Tipo destinado a ser usado para trabalhar com vetores de bytes.
  */
+
 typedef vector<tipo_byte> vetor_de_bytes;
 
 /**
- * @brief O tipo __gnu_cxx::__normal_iterator é apenas uma classe que tem um único campo que é um ponteiro.
- * Objetos construídos por meio desta classe podem ser usados como se fossem ponteiros, ou seja, aceitam
- * operações aritméticas, lógicas, relacionais, dereferenciamento e algumas outras. Na dúvida, finja que um
- * objeto dessa classe é um ponteiro :)
+ * @brief Tipo de iterador para vetores de bytes.
+ * <p>O tipo vetor_de_bytes::iterator é apenas uma classe que tem um único
+ * campo que é um ponteiro. Objetos construídos por meio dessa classe podem ser
+ * usados como se fossem ponteiros, ou seja, aceitam operações aritméticas, lógicas,
+ * relacionais, dereferenciamento e algumas outras. Na dúvida, finja que um objeto
+ * dessa classe é um ponteiro :)</p>
  * 
- * <p>Na referência do site [cplusplus](http://www.cplusplus.com/reference/iterator/), essa classe se encaixa
- * como um iterador do tipo Random Access.</p>
+ * <p>Na referência do site [cplusplus](http://www.cplusplus.com/reference/iterator/),
+ * essa classe se encaixa como um iterador do tipo Random Access.</p>
  * 
  * @see http://www.cplusplus.com/reference/iterator/
  */
-typedef __gnu_cxx::__normal_iterator<tipo_byte *, vetor_de_bytes> iterador;
+
+typedef vetor_de_bytes::iterator iterador;

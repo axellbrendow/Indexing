@@ -9,8 +9,8 @@
 #pragma once
 
 #include "tipos.hpp"
-#include "DataInputStream.cpp"
-#include "DataOutputStream.cpp"
+#include "streams/DataInputStream.cpp"
+#include "streams/DataOutputStream.cpp"
 
 #include <fstream>
 #include <iostream>
@@ -20,54 +20,51 @@ using namespace std;
 
 /**
  * @brief Classe para estudantes.
- * 
  */
 
 class Student
 {
     public:
-        string name;
-        int age;
+        string nome;
+        int idade;
         
-        Student(string name, int age) : name(name), age(age) {}
+        Student(string nome, int idade) : nome(nome), idade(idade) {}
 
-        /**
-         * @brief This generates bytes.
-         * 
-         * @param abc a number.
-         * 
-         * @return tipo_byte* vector of bytes.
-         */
-
-        vetor_de_bytes generateBytes()
+        vetor_de_bytes gerarBytes()
         {
-            DataOutputStream out(sizeof(str_size_type) + name.length() + sizeof(int));
+            DataOutputStream out(15);
 
-            return (out << name << age).obterVetor();
+            return (out << nome << idade).obterVetor();
+        }
+
+        Student &imprimir()
+        {
+            cout << "nome = " << nome << ", idade = " << idade << endl;
+
+            return *this;
+        }
+
+        vetor_de_bytes imprimirVetor()
+        {
+            auto vetor = gerarBytes();
+
+            debugApenasPorIterador(vetor.begin(), vetor.end());
+
+            return vetor;
         }
 };
 
 int main()
 {
-	// Student one("axell", 19);
-    // one.generateBytes();
-	// ofstream ofs("fifthgrade.ros", ios::binary);
+	Student one("axell", 19);
+    one.imprimir();
+    auto vetor = one.imprimirVetor();
     
-	// ofs.write((char *) &one, sizeof(one));
-
-    DataOutputStream out(sizeof(int) + sizeof(float));
-
-    string name;
-    int age;
-    float height;
-
-    out << "me" << 19 << 1.8f;
+	ofstream ofs("fifthgrade.ros", ios::binary);
     
-    DataInputStream in( out.obterVetor() );
+	ofs.write(reinterpret_cast<char *>(vetor.begin().base()), vetor.size());
 
-    in >> name >> age >> height;
-
-    cout << "name = " << name << ", age = " << age << ", height = " << height << endl;
+    ofs.close();
 
 	return 0;
 }
