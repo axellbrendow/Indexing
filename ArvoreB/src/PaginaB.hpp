@@ -14,17 +14,37 @@
 using namespace std;
 
 template<typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS>
-class PaginaB : 
+class PaginaB : public Serializavel
 {
     private:
-        vetor_de_bytes bytesDaPagina; // guardará os dados da página que vierem do arquivo
+        /** Guardará os dados da página que vierem do arquivo. */
+        vetor_de_bytes bytes;
         int numeroDeElementos;
         vector<TIPO_DAS_CHAVES> chaves;
         vector<TIPO_DOS_DADOS> dados;
         vector<file_pointer_type> ponteiros;
 
+        PaginaB(int maximoDeBytesParaAChave,
+            int maximoDeBytesParaODado,
+            int numeroDeChavesPorPagina,
+            int ordemDaArvore) :
+            maximoDeBytesParaAChave(maximoDeBytesParaAChave),
+            maximoDeBytesParaODado(maximoDeBytesParaODado),
+            numeroDeChavesPorPagina(numeroDeChavesPorPagina),
+            ordemDaArvore(ordemDaArvore) {}
+
     public:
-        PaginaB(vetor_de_bytes byteArray) : byteArray(byteArray) {}
+        const int maximoDeBytesParaAChave;
+        const int maximoDeBytesParaODado;
+        const int numeroDeChavesPorPagina;
+        const int ordemDaArvore;
+
+        PaginaB(vetor_de_bytes bytes) : bytes(bytes) {}
+
+        int obterTamanhoMaximoEmBytes()
+        {
+
+        }
 };
 
 template<typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS>
