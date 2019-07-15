@@ -11,4 +11,7 @@
  * 
  * https://docs.microsoft.com/pt-br/cpp/cpp/smart-pointers-modern-cpp?view=vs-2019<br>
  * https://docs.microsoft.com/pt-br/cpp/cpp/how-to-create-and-use-shared-ptr-instances?view=vs-2019<br>
+ * 
+ * Variadic Templates (∞+ QI):<br>
+ * https://eli.thegreenplace.net/2014/variadic-templates-in-c/
  */

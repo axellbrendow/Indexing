@@ -21,7 +21,7 @@ class DataInputStream
         /** Vetor onde estão os dados a serem extraídos. */
         vetor_de_bytes bytes;
         iterador cursor;
-        const iterador posicaoFinal;
+        iterador posicaoFinal;
 
     public:
         // ------------------------- Construtores
@@ -37,6 +37,29 @@ class DataInputStream
             bytes(bytes),
             cursor(this->bytes.begin()),
             posicaoFinal(this->bytes.end()) { }
+
+        /**
+         * @brief Constrói um novo objeto DataInputStream com um tamanho inicial
+         * de buffer.
+         * 
+         * @param previsaoDaQuantidadeDeBytes Tamanho inicial do buffer.
+         */
+
+        DataInputStream(int previsaoDaQuantidadeDeBytes) :
+            DataInputStream( vetor_de_bytes() )
+        {
+            // .reserve() garante mais espaço mas altera o endereço do vetor na memória
+            bytes.reserve(previsaoDaQuantidadeDeBytes);
+
+            // Consequentemente, é necessário atualizar os cursores
+            cursor = bytes.begin();
+            posicaoFinal = bytes.end();
+        }
+
+        DataInputStream(char *buffer, int tamanho) : DataInputStream(tamanho)
+        {
+            copy(buffer, buffer + tamanho, obterCursor());
+        }
 
         /**
          * @brief Constrói um novo objeto DataInputStream tomando como entrada de
@@ -83,9 +106,19 @@ class DataInputStream
             return bytes.empty();
         }
 
+        size_t capacity()
+        {
+            return bytes.capacity();
+        }
+
         iterador obterCursor()
         {
             return cursor;
+        }
+
+        void moverCursor(int deslocamento)
+        {
+            cursor += deslocamento;
         }
 
         /**
@@ -165,7 +198,7 @@ class DataInputStream
                 copy(cursor, cursor + tamanhoDoValor,
                     reinterpret_cast<tipo_byte *>(ptr));
 
-                cursor += tamanhoDoValor;
+                moverCursor(tamanhoDoValor);
             }
         }
         
@@ -254,7 +287,7 @@ DataInputStream &operator>>(DataInputStream &dataInputStream, string &variavel)
 
 ostream &operator<<(ostream &ostream, DataInputStream &in)
 {
-    if (!in.empty())
+    if (in.capacity() > 0)
     {
         // Essa instância de iterador do tipo ostream_iterador tem a peculiaridade de
         // que ela sempre escreve o que for solicitado em cout e logo em seguida escreve

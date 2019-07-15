@@ -99,6 +99,11 @@ class DataOutputStream
             return bytes.size();
         }
 
+        size_t capacity()
+        {
+            return bytes.capacity();
+        }
+
         iterador obterCursor()
         {
             return begin() + size();
@@ -166,9 +171,9 @@ class DataOutputStream
         {
             str_size_type tamanho = str.length();
 
-            escrever(tamanho);
-
-            return escreverPtr(const_cast<char *>( str.c_str() ), tamanho);
+            escrever(tamanho); // Escreve primeiro a quantidade de bytes que a string gasta
+            
+            return escreverPtr(const_cast<char *>( str.c_str() ), tamanho); // Agora, escreve a string
         }
 };
 
@@ -193,10 +198,10 @@ DataOutputStream &operator<<(DataOutputStream &dataOutputStream, const char *var
 
 ostream &operator<<(ostream &ostream, DataOutputStream &out)
 {
-    if (!out.empty())
+    if (out.capacity() > 0)
     {
         // Essa instância de iterador do tipo ostream_iterador tem a peculiaridade de
-        // que ela sempre escreve o que for solicitado em cout e logo em seguida escreve
+        // que ela sempre escreve o que for solicitado e logo em seguida escreve
         // um delimitador. No caso será uma vírgula.
         // Ex.:
         // ostream_iterator<int> myiter(cout, ","); // declara um iterador sobre cout

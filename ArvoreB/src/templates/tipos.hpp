@@ -13,7 +13,7 @@
 
 using namespace std;
 
-#define debug cout << "debug" << endl;
+#define debug cout << endl << "#######################################" << endl;
 #define debugv(value) cout << "debug = " << value << endl;
 
 /**

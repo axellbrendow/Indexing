@@ -19,6 +19,19 @@
         "utility": "cpp",
         "fstream": "cpp",
         "ostream": "cpp",
-        "sstream": "cpp"
+        "sstream": "cpp",
+        "cctype": "cpp",
+        "clocale": "cpp",
+        "cmath": "cpp",
+        "cstdint": "cpp",
+        "cwctype": "cpp",
+        "istream": "cpp",
+        "limits": "cpp",
+        "new": "cpp",
+        "optional": "cpp",
+        "streambuf": "cpp",
+        "system_error": "cpp",
+        "tuple": "cpp",
+        "typeinfo": "cpp"
     }
 }
