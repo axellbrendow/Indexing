@@ -34,12 +34,15 @@ class Serializavel
         virtual int obterTamanhoMaximoEmBytes() = 0; // = 0 declara esta função como pura
         
         /**
-         * @brief Gera o DataOutputStream contendo o vetor de bytes com os dados da entidade.
+         * @brief Insere os dados da entidade no DataOutputStream recebido.
+         * 
+         * @param out Um objeto DataOutputStream com espaço alocado para o tamanho máximo da
+         * entidade.
          * 
          * @return DataOutputStream Retorna o DataOutputStream contendo o vetor de bytes com os
          * dados da entidade.
          */
-        virtual DataOutputStream gerarDataOutputStream() = 0; // = 0 declara esta função como pura
+        virtual DataOutputStream gerarDataOutputStream(DataOutputStream out) = 0;
 
         /**
          * @brief Lê e interpreta o vetor do input restaurando o objeto da entidade.
@@ -70,6 +73,17 @@ class Serializavel
         DataOutputStream alocarDataOutputStream()
         {
             return DataOutputStream( obterTamanhoMaximoEmBytes() );
+        }
+        
+        /**
+         * @brief Gera o DataOutputStream com os dados da entidade.
+         * 
+         * @return DataOutputStream Retorna o DataOutputStream contendo o vetor de bytes com os
+         * dados da entidade.
+         */
+        DataOutputStream gerarDataOutputStream()
+        {
+            return gerarDataOutputStream( alocarDataOutputStream() );
         }
 
         /**
@@ -110,8 +124,7 @@ ofstream &operator<<(ofstream &ofstream, Serializavel &serializavel)
 
 ifstream &operator>>(ifstream &ifstream, Serializavel &serializavel)
 {
-    auto bytes = serializavel.alocarDataInputStream();
-    auto quantidadeDeBytes = bytes.capacity();
+    auto quantidadeDeBytes = serializavel.obterTamanhoMaximoEmBytes();
 
     char buffer[quantidadeDeBytes]; // Cria um buffer temporário para ler do arquivo
     

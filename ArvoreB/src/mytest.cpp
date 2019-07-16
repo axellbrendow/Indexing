@@ -35,10 +35,8 @@ class Student : public Serializavel
             return sizeof(str_size_type) + padraoTamanhoMaximoStrings + sizeof(int);
         }
 
-        DataOutputStream gerarDataOutputStream()
+        DataOutputStream gerarDataOutputStream(DataOutputStream out)
         {
-            auto out = alocarDataOutputStream();
-            
             return out << nome << idade;
         }
 

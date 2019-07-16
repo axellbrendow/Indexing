@@ -17,33 +17,68 @@ template<typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS>
 class PaginaB : public Serializavel
 {
     private:
+        // ------------------------- Campos
+
         /** Guardará os dados da página que vierem do arquivo. */
-        vetor_de_bytes bytes;
+        DataOutputStream bytes;
         int numeroDeElementos;
         vector<TIPO_DAS_CHAVES> chaves;
         vector<TIPO_DOS_DADOS> dados;
         vector<file_pointer_type> ponteiros;
 
+        // ------------------------- Construtores
+
         PaginaB(int maximoDeBytesParaAChave,
             int maximoDeBytesParaODado,
             int numeroDeChavesPorPagina,
-            int ordemDaArvore) :
+            int ordemDaArvore,
+            int numeroDeElementos) :
+
             maximoDeBytesParaAChave(maximoDeBytesParaAChave),
             maximoDeBytesParaODado(maximoDeBytesParaODado),
             numeroDeChavesPorPagina(numeroDeChavesPorPagina),
-            ordemDaArvore(ordemDaArvore) {}
+            ordemDaArvore(ordemDaArvore),
+            numeroDeElementos(numeroDeElementos) {}
 
     public:
+        // ------------------------- Campos
+
         const int maximoDeBytesParaAChave;
         const int maximoDeBytesParaODado;
         const int numeroDeChavesPorPagina;
         const int ordemDaArvore;
 
+        // ------------------------- Construtores
+
+        PaginaB(int maximoDeBytesParaAChave,
+            int maximoDeBytesParaODado,
+            int ordemDaArvore) :
+
+            PaginaB(maximoDeBytesParaAChave,
+                maximoDeBytesParaODado,
+                ordemDaArvore - 1,
+                ordemDaArvore, 0) {}
+
         PaginaB(vetor_de_bytes bytes) : bytes(bytes) {}
+
+        // ------------------------- Métodos
 
         int obterTamanhoMaximoEmBytes()
         {
+            return sizeof(int) + // bytes para guardar a quantidade de elementos na página
+                ordemDaArvore * sizeof(file_pointer_type) + // bytes para os ponteiros
+                numeroDeChavesPorPagina * maximoDeBytesParaAChave + // bytes para as chaves
+                numeroDeChavesPorPagina * maximoDeBytesParaODado; // bytes para os dados
+        }
 
+        DataOutputStream gerarDataOutputStream(DataOutputStream out)
+        {
+            return out << numeroDeElementos;
+        }
+
+        void lerBytes(DataInputStream input)
+        {
+            input >> numeroDeElementos;
         }
 };
 
