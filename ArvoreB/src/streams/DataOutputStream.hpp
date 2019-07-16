@@ -49,9 +49,9 @@ class DataOutputStream
 
         /**
          * @brief Constrói um novo objeto DataOutputStream com um tamanho inicial
-         * de buffer de 12 bytes.
+         * de buffer de 16 bytes.
          */
-        DataOutputStream() : DataOutputStream(12) {}
+        DataOutputStream() : DataOutputStream(16) {}
 
         // ------------------------- Métodos
 
@@ -156,6 +156,7 @@ class DataOutputStream
          * escrever os seus caracteres.
          * 
          * @param str String a ser escrita.
+         * 
          * @return DataOutputStream& Retorna uma referência para este objeto.
          */
         DataOutputStream &escreverString(string &str)
@@ -163,7 +164,7 @@ class DataOutputStream
             str_size_type tamanho = str.length();
 
             escrever(tamanho); // Escreve primeiro a quantidade de bytes que a string gasta
-            
+
             return escreverPtr(const_cast<char *>( str.c_str() ), tamanho); // Agora, escreve a string
         }
 };

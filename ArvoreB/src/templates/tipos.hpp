@@ -56,20 +56,33 @@ typedef vector<tipo_byte> vetor_de_bytes;
 typedef vetor_de_bytes::iterator iterador;
 
 template<typename tipo>
-void debugPorPonteiro(tipo *start, tipo *end)
+void debugIterar(tipo start, tipo end)
 {
-    for (tipo *i = start; i != end; i++)
+    cout << (int) *start;
+    
+    if (start != end)
     {
-        std::cout << (int) *i << ",";
-    } std::cout << endl;
+        for (tipo i = start + 1; i != end; i++)
+        {
+            std::cout << (int) *i << " ";
+        }
+    }
+    
+    std::cout << endl;
 }
 
-void debugApenasPorIterador(iterador start, iterador end)
+template<typename tipo>
+void debugPrintar(tipo value)
 {
-    for (iterador i = start; i != end; i++)
-    {
-        std::cout << (int) *i << ",";
-    } std::cout << endl;
+    cout << value << endl;
+}
+
+template<typename tipo, typename... OutrosTipos>
+void debugPrintar(tipo value, OutrosTipos... outrosTipos)
+{
+    string delimiter = " ";
+    cout << value << delimiter;
+    debugPrintar(outrosTipos...);
 }
 
 template<typename tipo>

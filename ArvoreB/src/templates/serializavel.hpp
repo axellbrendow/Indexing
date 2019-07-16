@@ -12,6 +12,8 @@
 
 #include <fstream>
 
+static str_size_type padraoTamanhoMaximoStrings = 300;
+
 /**
  * @brief Classe abstrata que todo objeto serializável deve herdar.
  * 
@@ -22,6 +24,8 @@
 class Serializavel
 {
     public:
+        // ------------------------- Métodos
+
         /**
          * @brief Calcula o tamanho máximo, em bytes, que a entidade pode gastar.
          * 
@@ -52,8 +56,8 @@ class Serializavel
          */
         void lerBytes(char *buffer, int tamanho)
         {
-            DataInputStream input(buffer, tamanho);debug
-            cout << input;debug
+            DataInputStream input(buffer, tamanho);
+            
             lerBytes(input);
         }
 
@@ -93,7 +97,7 @@ class Serializavel
 ostream &operator<<(ostream &ostream, Serializavel &serializavel)
 {
     auto out = serializavel.gerarDataOutputStream();
-    
+
     return ostream << out;
 }
 
@@ -111,9 +115,9 @@ ifstream &operator>>(ifstream &ifstream, Serializavel &serializavel)
 
     char buffer[quantidadeDeBytes]; // Cria um buffer temporário para ler do arquivo
     
-    // Lê a quantidade de bytes que a entidade gasta para o buffer
+    // Lê a quantidade máxima de bytes que a entidade pode gastar para o buffer
     ifstream.read(buffer, quantidadeDeBytes);
-
+    
     serializavel.lerBytes(buffer, quantidadeDeBytes); // Interpreta os bytes e restaura o objeto da entidade
 
     return ifstream;

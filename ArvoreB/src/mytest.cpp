@@ -6,9 +6,8 @@
  * @copyright Copyright (c) 2019 Axell Brendow Batista Moreira
  */
 
-#pragma once
+//#pragma once
 
-// #include "templates/tipos.hpp"
 #include "templates/serializavel.hpp"
 #include "streams/DataInputStream.hpp"
 #include "streams/DataOutputStream.hpp"
@@ -33,13 +32,13 @@ class Student : public Serializavel
 
         int obterTamanhoMaximoEmBytes()
         {
-            return sizeof(str_size_type) + nome.length() + sizeof(int);
+            return sizeof(str_size_type) + padraoTamanhoMaximoStrings + sizeof(int);
         }
 
         DataOutputStream gerarDataOutputStream()
         {
             auto out = alocarDataOutputStream();
-
+            
             return out << nome << idade;
         }
 
@@ -69,23 +68,18 @@ int main()
 {
 	Student one("axell", 19);
     
-    cout << one;
-
     one.imprimir();
     
 	ofstream ofs("fifthgrade.ros", ios::binary);
-    
     ofs << one;
-
     ofs.close();
     
     Student two;
+
     two.imprimir();
 
 	ifstream ifs("fifthgrade.ros", ios::binary);
-    
     ifs >> two;
-
     ifs.close();
 
     two.imprimir();

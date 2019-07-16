@@ -32,10 +32,10 @@ class DataInputStream
          * 
          * @param bytes Entrada de onde os dados serão extraídos.
          */
-        DataInputStream(vetor_de_bytes bytes) :
-            bytes(bytes),
-            cursor(this->bytes.begin()),
-            posicaoFinal(this->bytes.end()) { }
+        DataInputStream(vetor_de_bytes bytes) : bytes(bytes)
+        {
+            atualizarCursores();
+        }
 
         /**
          * @brief Constrói um novo objeto DataInputStream com um tamanho inicial
@@ -50,23 +50,23 @@ class DataInputStream
             bytes.reserve(previsaoDaQuantidadeDeBytes);
 
             // Consequentemente, é necessário atualizar os cursores
-            cursor = bytes.begin();
-            posicaoFinal = bytes.end();
+            atualizarCursores();
         }
 
         /**
          * @brief Constrói um novo objeto DataInputStream copiando todos os dados
-         * do buffer recebido para um vetor interno. Não é necessário que realmente
-         * sejam caracteres, podem ser apenas bytes ou qualquer outra coisa, aqui o
-         * seu dado será interpretado como um arranjo de caracteres apenas por motivos
-         * de cópia de memória.
+         * do buffer recebido para um vetor interno. Não é necessário que o buffer
+         * tenha caracteres, podem ser apenas bytes ou qualquer outra coisa. Os dados
+         * serão interpretados como um arranjo de caracteres apenas para facilitar
+         * a cópia de memória.
          * 
-         * @param buffer 
-         * @param tamanho 
+         * @param buffer Arranjo com os dados do DataInputStream.
+         * @param tamanho Quantidade de elementos do arranjo.
          */
-        DataInputStream(char *buffer, int tamanho) : DataInputStream(tamanho)
+        DataInputStream(char *buffer, int tamanho)
         {
-            copy(buffer, buffer + tamanho, obterCursor());
+            bytes.insert(obterCursor(), buffer, buffer + tamanho);
+            atualizarCursores();
         }
 
         /**
@@ -78,6 +78,12 @@ class DataInputStream
         DataInputStream(DataOutputStream out) : DataInputStream(out.obterVetor()) { }
 
         // ------------------------- Métodos
+
+        void atualizarCursores()
+        {
+            cursor = bytes.begin();
+            posicaoFinal = bytes.end();
+        }
 
         /**
          * @brief Obtém um iterador que aponta para o primeiro byte deste fluxo.
