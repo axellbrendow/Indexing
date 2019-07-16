@@ -32,7 +32,6 @@ class DataOutputStream
          * 
          * @param vetor Vetor inicial.
          */
-
         DataOutputStream(vetor_de_bytes vetor) : bytes(vetor) { }
 
         /**
@@ -41,7 +40,6 @@ class DataOutputStream
          * 
          * @param previsaoDaQuantidadeDeBytes Tamanho inicial do buffer.
          */
-
         DataOutputStream(int previsaoDaQuantidadeDeBytes) :
             DataOutputStream( vetor_de_bytes() )
         {
@@ -53,7 +51,6 @@ class DataOutputStream
          * @brief Constrói um novo objeto DataOutputStream com um tamanho inicial
          * de buffer de 12 bytes.
          */
-
         DataOutputStream() : DataOutputStream(12) {}
 
         // ------------------------- Métodos
@@ -64,7 +61,6 @@ class DataOutputStream
          * @return true Retorna true caso este fluxo esteja vazio.
          * @return false Retorna false caso este fluxo não esteja vazio.
          */
-
         bool empty()
         {
             return bytes.empty();
@@ -76,7 +72,6 @@ class DataOutputStream
          * @return iterador Retorna um iterador que aponta para o primeiro byte
          * deste fluxo.
          */
-
         iterador begin()
         {
             return bytes.begin();
@@ -88,7 +83,6 @@ class DataOutputStream
          * @return iterador Retorna um iterador que aponta para o último byte
          * deste fluxo.
          */
-
         iterador end()
         {
             return bytes.end();
@@ -124,7 +118,6 @@ class DataOutputStream
          * 
          * @return DataOutputStream& Retorna uma referência para este objeto.
          */
-
         template<typename tipo>
         DataOutputStream &escreverPtr(tipo *ptrValor, int tamanhoDoValor = sizeof(tipo))
         {
@@ -151,7 +144,6 @@ class DataOutputStream
          * 
          * @return DataOutputStream& Retorna uma referência para este objeto.
          */
-
         template<typename tipo>
         DataOutputStream &escrever(tipo &valor, int tamanhoDoValor = sizeof(tipo))
         {
@@ -166,7 +158,6 @@ class DataOutputStream
          * @param str String a ser escrita.
          * @return DataOutputStream& Retorna uma referência para este objeto.
          */
-
         DataOutputStream &escreverString(string &str)
         {
             str_size_type tamanho = str.length();

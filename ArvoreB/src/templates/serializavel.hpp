@@ -19,7 +19,6 @@
  * @see [Serialização - Wikipédia](https://pt.wikipedia.org/wiki/Serializa%C3%A7%C3%A3o)
  * @see [Funções virtuais](https://techdifferences.com/difference-between-virtual-function-and-pure-virtual-function.html)
  */
-
 class Serializavel
 {
     public:
@@ -28,7 +27,6 @@ class Serializavel
          * 
          * @return int Retorna o tamanho máximo, em bytes, que a entidade pode gastar.
          */
-
         virtual int obterTamanhoMaximoEmBytes() = 0; // = 0 declara esta função como pura
         
         /**
@@ -37,7 +35,6 @@ class Serializavel
          * @return DataOutputStream Retorna o DataOutputStream contendo o vetor de bytes com os
          * dados da entidade.
          */
-
         virtual DataOutputStream gerarDataOutputStream() = 0; // = 0 declara esta função como pura
 
         /**
@@ -45,7 +42,6 @@ class Serializavel
          * 
          * @param input DataInputStream com o vetor de bytes da entidade.
          */
-
         virtual void lerBytes(DataInputStream input) = 0; // = 0 declara esta função como pura
 
         /**
@@ -54,7 +50,6 @@ class Serializavel
          * @param buffer Vetor de bytes da entidade.
          * @param tamanho Quantidade de bytes no buffer.
          */
-
         void lerBytes(char *buffer, int tamanho)
         {
             DataInputStream input(buffer, tamanho);debug
@@ -68,7 +63,6 @@ class Serializavel
          * @return DataOutputStream Retorna o DataOutputStream com obterTamanhoMaximoEmBytes() de
          * espaço alocado.
          */
-
         DataOutputStream alocarDataOutputStream()
         {
             return DataOutputStream( obterTamanhoMaximoEmBytes() );
@@ -80,7 +74,6 @@ class Serializavel
          * @return DataInputStream Retorna o DataInputStream com obterTamanhoMaximoEmBytes() de
          * espaço alocado.
          */
-
         DataInputStream alocarDataInputStream()
         {
             return DataInputStream( obterTamanhoMaximoEmBytes() );
@@ -91,7 +84,6 @@ class Serializavel
          * 
          * @return vetor_de_bytes Retorna o vetor de bytes da entidade.
          */
-
         vetor_de_bytes gerarBytes()
         {
             return gerarDataOutputStream().obterVetor();

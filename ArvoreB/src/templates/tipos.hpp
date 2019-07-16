@@ -20,14 +20,12 @@ using namespace std;
  * @brief Criado apenas para padronizar o tipo usado para declarar variáveis que
  * guardam tamanhos de strings.
  */
-
 typedef int str_size_type;
 
 /**
  * @brief Criado apenas para padronizar o tipo usado para declarar ponteiros que
  * guardam o endereço de entidades e/ou registros dentro de um arquivo.
  */
-
 typedef size_t file_pointer_type;
 
 /**
@@ -35,13 +33,11 @@ typedef size_t file_pointer_type;
  * De qualquer forma, o intervalo de valores do tipo unsigned char é o mesmo do
  * intervalo de um byte, 0 a 255.
  */
-
 typedef unsigned char tipo_byte;
 
 /**
  * @brief Tipo destinado a ser usado para trabalhar com vetores de bytes.
  */
-
 typedef vector<tipo_byte> vetor_de_bytes;
 
 /**
@@ -57,7 +53,6 @@ typedef vector<tipo_byte> vetor_de_bytes;
  * 
  * @see http://www.cplusplus.com/reference/iterator/
  */
-
 typedef vetor_de_bytes::iterator iterador;
 
 template<typename tipo>

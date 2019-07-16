@@ -32,7 +32,6 @@ class DataInputStream
          * 
          * @param bytes Entrada de onde os dados serão extraídos.
          */
-
         DataInputStream(vetor_de_bytes bytes) :
             bytes(bytes),
             cursor(this->bytes.begin()),
@@ -44,7 +43,6 @@ class DataInputStream
          * 
          * @param previsaoDaQuantidadeDeBytes Tamanho inicial do buffer.
          */
-
         DataInputStream(int previsaoDaQuantidadeDeBytes) :
             DataInputStream( vetor_de_bytes() )
         {
@@ -56,6 +54,16 @@ class DataInputStream
             posicaoFinal = bytes.end();
         }
 
+        /**
+         * @brief Constrói um novo objeto DataInputStream copiando todos os dados
+         * do buffer recebido para um vetor interno. Não é necessário que realmente
+         * sejam caracteres, podem ser apenas bytes ou qualquer outra coisa, aqui o
+         * seu dado será interpretado como um arranjo de caracteres apenas por motivos
+         * de cópia de memória.
+         * 
+         * @param buffer 
+         * @param tamanho 
+         */
         DataInputStream(char *buffer, int tamanho) : DataInputStream(tamanho)
         {
             copy(buffer, buffer + tamanho, obterCursor());
@@ -67,7 +75,6 @@ class DataInputStream
          * 
          * @param bytes Entrada de onde os dados serão extraídos.
          */
-
         DataInputStream(DataOutputStream out) : DataInputStream(out.obterVetor()) { }
 
         // ------------------------- Métodos
@@ -78,7 +85,6 @@ class DataInputStream
          * @return iterador Retorna um iterador que aponta para o primeiro byte
          * deste fluxo.
          */
-
         iterador begin()
         {
             return bytes.begin();
@@ -90,7 +96,6 @@ class DataInputStream
          * @return iterador Retorna um iterador que aponta para o último byte
          * deste fluxo.
          */
-
         iterador end()
         {
             return bytes.end();
@@ -127,7 +132,6 @@ class DataInputStream
          * @return true Caso não haja mais dados para se consumir.
          * @return false Caso haja mais dados para se consumir.
          */
-
         bool estaNoFim()
         {
             return cursor >= posicaoFinal;
@@ -144,7 +148,6 @@ class DataInputStream
          * @throws std::out_of_range Lança uma exceção caso não haja mais dados
          * para se consumir.
          */
-
         bool throwEstaNoFim()
         {
             bool noFim = estaNoFim();
@@ -171,7 +174,6 @@ class DataInputStream
          * @return true Retorna true caso haja dados para se consumir.
          * @return false Retorna false caso não haja dados para se consumir.
          */
-
         explicit operator bool()
         {
             return !estaNoFim();
@@ -186,7 +188,6 @@ class DataInputStream
          * @param ptr Ponteiro para onde o valor deve ser colocado.
          * @param tamanhoDoValor Quantidade de bytes do valor.
          */
-
         template<typename tipo>
         void lerParaOPonteiro(tipo *ptr, int tamanhoDoValor = sizeof(tipo))
         {
@@ -210,7 +211,6 @@ class DataInputStream
          * 
          * @return tipo Retorna uma cópia do valor lido.
          */
-
         template<typename tipo>
         tipo ler(int tamanhoDoValor = sizeof(tipo))
         {

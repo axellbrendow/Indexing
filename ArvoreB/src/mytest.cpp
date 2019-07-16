@@ -22,7 +22,6 @@ using namespace std;
 /**
  * @brief Classe para estudantes.
  */
-
 class Student : public Serializavel
 {
     public:
