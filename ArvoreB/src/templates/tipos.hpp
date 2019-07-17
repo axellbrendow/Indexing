@@ -1,7 +1,7 @@
 /**
  * @file tipos.hpp
  * @author Axell Brendow ( https://github.com/axell-brendow )
- * @brief Classe de intermediação entre a entrada de dados e a sua variável.
+ * @brief Arquivo com typedefs e helpers para debug.
  * 
  * @copyright Copyright (c) 2019 Axell Brendow Batista Moreira
  */
