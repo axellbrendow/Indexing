@@ -73,7 +73,20 @@ class PaginaB : public Serializavel
 
         DataOutputStream gerarDataOutputStream(DataOutputStream out)
         {
-            return out << numeroDeElementos;
+			Serializavel chave;
+			Serializavel dado;
+
+            out << numeroDeElementos << ponteiros.at(0);
+
+			for (size_t i = 0; i < numeroDeChavesPorPagina; i++)
+			{
+				chave = chaves.at(i);
+				dado = dados.at(i);
+
+				out << chave;
+				out << dado;
+				out << ponteiros.at(i + 1);
+			}
         }
 
         void lerBytes(DataInputStream input)

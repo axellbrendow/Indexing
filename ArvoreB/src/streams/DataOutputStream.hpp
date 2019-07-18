@@ -107,14 +107,39 @@ class DataOutputStream
         {
             return bytes;
         }
+
+		/**
+		 * @brief Copia bytes a partir do iterador de início até o de fim.
+		 *
+		 * @tparam Iterador Tipo do iterador.
+		 * @param inicio Iterador para o primeiro byte do valor a ser escrito.
+		 * @param fim Quantidade de bytes a serem escritos. Caso esse
+		 * parâmetro não seja fornecido, o valor dele será sizeof(tipo).
+		 *
+		 * @return DataOutputStream& Retorna uma referência para este objeto.
+		 */
+		template<typename Iterador>
+		DataOutputStream& escreverIterador(Iterador inicio, Iterador fim)
+		{
+			// reinterpret_cast faz a conversão do ponteiro para "tipo_byte *".
+			// Isso é feito para que eu possa iterar sobre os bytes do valor.
+			tipo_byte* inicio = reinterpret_cast<tipo_byte*>(ptrValor);
+
+			// como inicio aponta para o primeiro byte do valor e inicio + tamanhoDoValor
+			// apontará para a posição após o último byte do valor, o .insert() copia
+			// todos bytes do valor para o final do vetor bytes.
+			bytes.insert(obterCursor(), inicio, inicio + tamanhoDoValor);
+
+			return *this; // retorna uma referência para este objeto.
+		}
         
         /**
-         * @brief Escreve bytes no vetor da classe.
+         * @brief Copia bytes do ponteiro recebido para o vetor deste objeto.
          * 
          * @tparam tipo Tipo do que se deseja escrever.
          * @param ptrValor Ponteiro para o primeiro byte do valor a ser escrito.
          * @param tamanhoDoValor Quantidade de bytes a serem escritos. Caso esse
-         * parâmetro não seja fornecido, o seu valor será sizeof(tipo).
+         * parâmetro não seja fornecido, o valor dele será sizeof(tipo).
          * 
          * @return DataOutputStream& Retorna uma referência para este objeto.
          */
@@ -135,7 +160,7 @@ class DataOutputStream
 
         /**
          * @brief Escreve tipos primitivos e objetos com tamanho pré definido no
-         * vetor da classe.
+         * vetor deste objeto.
          * 
          * @tparam tipo Tipo do que se deseja escrever.
          * @param valor Valor que se deseja escrever.
@@ -151,7 +176,7 @@ class DataOutputStream
         }
 
         /**
-         * @brief Escreve uma string no vetor da classe. As strings têm um tratamento
+         * @brief Escreve uma string no vetor deste objeto. As strings têm um tratamento
          * especial pois é necessário escrever primeiro o tamanho delas antes de
          * escrever os seus caracteres.
          * 
@@ -167,6 +192,20 @@ class DataOutputStream
 
             return escreverPtr(const_cast<char *>( str.c_str() ), tamanho); // Agora, escreve a string
         }
+
+		/**
+		 * @brief Escreve os dados de um DataOutputStream no vetor deste objeto.
+		 *
+		 * @param out DataOutputStream a ser mesclado com o atual.
+		 *
+		 * @return DataOutputStream& Retorna uma referência para este objeto.
+		 */
+		DataOutputStream& escreverDataOutputStream(DataOutputStream out)
+		{
+			escreverPtr(out.begin(), )
+
+			return *this;
+		}
 };
 
 // ------------------------- Operadores
