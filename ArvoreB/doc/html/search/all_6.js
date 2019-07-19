@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['idade',['idade',['../class_student.html#a543887409539b9eb47337ba94141b3e0',1,'Student']]],
-  ['imprimir',['imprimir',['../class_student.html#a002b08e3bc313417c4a728ffe1d6e7b1',1,'Student']]],
-  ['imprimirvetor',['imprimirVetor',['../class_student.html#a4b810177f84d58f100869582767d4330',1,'Student']]],
-  ['iterador',['iterador',['../tipos_8hpp.html#a2d209fbc6f78d855bad43c238dc551f1',1,'tipos.hpp']]]
+  ['gerarbytes',['gerarBytes',['../class_serializavel.html#a48ddae4eceed0f9c8ca6184a7bc08699',1,'Serializavel']]],
+  ['gerardataoutputstream',['gerarDataOutputStream',['../class_student.html#a982c4e049639847a9bf2ad753f03f7d6',1,'Student::gerarDataOutputStream()'],['../class_pagina_b.html#a127a647da901f0249c9b12f06db2a471',1,'PaginaB::gerarDataOutputStream()'],['../class_serializavel.html#a3d18f966a5d3e9c239b8b50e24c33ba7',1,'Serializavel::gerarDataOutputStream(DataOutputStream out)=0'],['../class_serializavel.html#acc92082ca699d0e43ba35f41d071889b',1,'Serializavel::gerarDataOutputStream()']]]
 ];

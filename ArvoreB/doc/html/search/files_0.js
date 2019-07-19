@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['arvoreb_2ecpp',['ArvoreB.cpp',['../_arvore_b_8cpp.html',1,'']]]
+  ['arvoreb_2ehpp',['ArvoreB.hpp',['../_arvore_b_8hpp.html',1,'']]]
 ];

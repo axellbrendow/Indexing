@@ -68,14 +68,19 @@ $(function() {
 <div class="title">Referência à classe DataOutputStream</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="_data_output_stream_8hpp_source.html">DataOutputStream.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Membros públicos</h2></td></tr>
+<tr class="memitem:a27d2b56afe5429f0cf59599f8d106930"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_output_stream.html#a27d2b56afe5429f0cf59599f8d106930">DataOutputStream</a> (<a class="el" href="tipos_8hpp.html#a458b3a3073fa6d85d6d28dd922e183ca">vetor_de_bytes</a> vetor)</td></tr>
+<tr class="memdesc:a27d2b56afe5429f0cf59599f8d106930"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constrói um novo objeto <a class="el" href="class_data_output_stream.html">DataOutputStream</a> com o vetor recebido.  <a href="#a27d2b56afe5429f0cf59599f8d106930">Mais...</a><br /></td></tr>
+<tr class="separator:a27d2b56afe5429f0cf59599f8d106930"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a776b60d3c628f2aee513007c0196ef8a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_output_stream.html#a776b60d3c628f2aee513007c0196ef8a">DataOutputStream</a> (int previsaoDaQuantidadeDeBytes)</td></tr>
 <tr class="memdesc:a776b60d3c628f2aee513007c0196ef8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constrói um novo objeto <a class="el" href="class_data_output_stream.html">DataOutputStream</a> com um tamanho inicial de buffer.  <a href="#a776b60d3c628f2aee513007c0196ef8a">Mais...</a><br /></td></tr>
 <tr class="separator:a776b60d3c628f2aee513007c0196ef8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ada6c337e1939ee49f7a687a63ee46cbc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_output_stream.html#ada6c337e1939ee49f7a687a63ee46cbc">DataOutputStream</a> ()</td></tr>
-<tr class="memdesc:ada6c337e1939ee49f7a687a63ee46cbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constrói um novo objeto <a class="el" href="class_data_output_stream.html">DataOutputStream</a> com um tamanho inicial de buffer de 12 bytes.  <a href="#ada6c337e1939ee49f7a687a63ee46cbc">Mais...</a><br /></td></tr>
+<tr class="memdesc:ada6c337e1939ee49f7a687a63ee46cbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constrói um novo objeto <a class="el" href="class_data_output_stream.html">DataOutputStream</a> com um tamanho inicial de buffer de 16 bytes.  <a href="#ada6c337e1939ee49f7a687a63ee46cbc">Mais...</a><br /></td></tr>
 <tr class="separator:ada6c337e1939ee49f7a687a63ee46cbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8fd9beeb789dd4f4b0102777bc81caa2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_output_stream.html#a8fd9beeb789dd4f4b0102777bc81caa2">empty</a> ()</td></tr>
 <tr class="memdesc:a8fd9beeb789dd4f4b0102777bc81caa2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checa se este fluxo está vazio.  <a href="#a8fd9beeb789dd4f4b0102777bc81caa2">Mais...</a><br /></td></tr>
@@ -88,26 +93,70 @@ Membros públicos</h2></td></tr>
 <tr class="separator:aa775ddd604069614372a33d9fbf63726"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4eb1a87c45ba17c89b9bd0e27bf28f75"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_output_stream.html#a4eb1a87c45ba17c89b9bd0e27bf28f75">size</a> ()</td></tr>
 <tr class="separator:a4eb1a87c45ba17c89b9bd0e27bf28f75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa38d35101ea3e91603a884c89161ee6f"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_output_stream.html#aa38d35101ea3e91603a884c89161ee6f">capacity</a> ()</td></tr>
+<tr class="separator:aa38d35101ea3e91603a884c89161ee6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36e9c9e4b85b130c224b88458cac0156"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_data_output_stream.html">DataOutputStream</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_output_stream.html#a36e9c9e4b85b130c224b88458cac0156">resize</a> (int <a class="el" href="class_data_output_stream.html#a4eb1a87c45ba17c89b9bd0e27bf28f75">size</a>)</td></tr>
+<tr class="separator:a36e9c9e4b85b130c224b88458cac0156"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab83bd3045f7d3d4d45ab3e4bacdb033c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="tipos_8hpp.html#a2d209fbc6f78d855bad43c238dc551f1">iterador</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_output_stream.html#ab83bd3045f7d3d4d45ab3e4bacdb033c">obterCursor</a> ()</td></tr>
+<tr class="separator:ab83bd3045f7d3d4d45ab3e4bacdb033c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad1e600d1347d92831a2289715f2111bc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="tipos_8hpp.html#a458b3a3073fa6d85d6d28dd922e183ca">vetor_de_bytes</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_output_stream.html#ad1e600d1347d92831a2289715f2111bc">obterVetor</a> ()</td></tr>
 <tr class="separator:ad1e600d1347d92831a2289715f2111bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aca4fbe6b33b2c757b264ce243c7ebcbd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_data_output_stream.html">DataOutputStream</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_output_stream.html#aca4fbe6b33b2c757b264ce243c7ebcbd">print</a> ()</td></tr>
-<tr class="memdesc:aca4fbe6b33b2c757b264ce243c7ebcbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mostra os bytes do vetor como inteiros.  <a href="#aca4fbe6b33b2c757b264ce243c7ebcbd">Mais...</a><br /></td></tr>
-<tr class="separator:aca4fbe6b33b2c757b264ce243c7ebcbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a265d6300b40ffccc823f377542598240"><td class="memTemplParams" colspan="2">template&lt;typename tipo &gt; </td></tr>
-<tr class="memitem:a265d6300b40ffccc823f377542598240"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="class_data_output_stream.html">DataOutputStream</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_data_output_stream.html#a265d6300b40ffccc823f377542598240">escreverPtr</a> (tipo *ptrValor, int tamanhoDoValor=sizeof(tipo))</td></tr>
-<tr class="memdesc:a265d6300b40ffccc823f377542598240"><td class="mdescLeft">&#160;</td><td class="mdescRight">Escreve bytes no vetor da classe.  <a href="#a265d6300b40ffccc823f377542598240">Mais...</a><br /></td></tr>
-<tr class="separator:a265d6300b40ffccc823f377542598240"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada31e825848d2b2c4d9abfbc63fffe58"><td class="memTemplParams" colspan="2">template&lt;typename Iterador &gt; </td></tr>
+<tr class="memitem:ada31e825848d2b2c4d9abfbc63fffe58"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="class_data_output_stream.html">DataOutputStream</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_data_output_stream.html#ada31e825848d2b2c4d9abfbc63fffe58">escreverPorIterador</a> (Iterador inicio, Iterador fim)</td></tr>
+<tr class="memdesc:ada31e825848d2b2c4d9abfbc63fffe58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copia bytes a partir do iterador de início até o de fim.  <a href="#ada31e825848d2b2c4d9abfbc63fffe58">Mais...</a><br /></td></tr>
+<tr class="separator:ada31e825848d2b2c4d9abfbc63fffe58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0434adf332ec21850fd5af2b0e51a51"><td class="memTemplParams" colspan="2">template&lt;typename tipo &gt; </td></tr>
+<tr class="memitem:ac0434adf332ec21850fd5af2b0e51a51"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="class_data_output_stream.html">DataOutputStream</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_data_output_stream.html#ac0434adf332ec21850fd5af2b0e51a51">escreverPorPonteiro</a> (tipo *ptrValor, int tamanhoDoValor=sizeof(tipo))</td></tr>
+<tr class="memdesc:ac0434adf332ec21850fd5af2b0e51a51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copia bytes do ponteiro recebido para o vetor deste objeto.  <a href="#ac0434adf332ec21850fd5af2b0e51a51">Mais...</a><br /></td></tr>
+<tr class="separator:ac0434adf332ec21850fd5af2b0e51a51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a853ee88f6bd662216e84f812b8a2ef0b"><td class="memTemplParams" colspan="2">template&lt;typename tipo &gt; </td></tr>
 <tr class="memitem:a853ee88f6bd662216e84f812b8a2ef0b"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="class_data_output_stream.html">DataOutputStream</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_data_output_stream.html#a853ee88f6bd662216e84f812b8a2ef0b">escrever</a> (tipo &amp;valor, int tamanhoDoValor=sizeof(tipo))</td></tr>
-<tr class="memdesc:a853ee88f6bd662216e84f812b8a2ef0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Escreve tipos primitivos e objetos com tamanho pré definido no vetor da classe.  <a href="#a853ee88f6bd662216e84f812b8a2ef0b">Mais...</a><br /></td></tr>
+<tr class="memdesc:a853ee88f6bd662216e84f812b8a2ef0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Escreve tipos primitivos e objetos com tamanho pré definido no vetor deste objeto.  <a href="#a853ee88f6bd662216e84f812b8a2ef0b">Mais...</a><br /></td></tr>
 <tr class="separator:a853ee88f6bd662216e84f812b8a2ef0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a28ce9f9f4f07d1b239a78d6238f71cb3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_data_output_stream.html">DataOutputStream</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_output_stream.html#a28ce9f9f4f07d1b239a78d6238f71cb3">escreverString</a> (string &amp;str)</td></tr>
-<tr class="memdesc:a28ce9f9f4f07d1b239a78d6238f71cb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Escreve uma string no vetor da classe. As strings têm um tratamento especial pois é necessário escrever primeiro o tamanho delas antes de escrever os seus caracteres.  <a href="#a28ce9f9f4f07d1b239a78d6238f71cb3">Mais...</a><br /></td></tr>
+<tr class="memdesc:a28ce9f9f4f07d1b239a78d6238f71cb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Escreve uma string no vetor deste objeto. As strings têm um tratamento especial pois é necessário escrever primeiro o tamanho delas antes de escrever os seus caracteres.  <a href="#a28ce9f9f4f07d1b239a78d6238f71cb3">Mais...</a><br /></td></tr>
 <tr class="separator:a28ce9f9f4f07d1b239a78d6238f71cb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0df47c28a46caf54a26a79b7299a3f75"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_data_output_stream.html">DataOutputStream</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_output_stream.html#a0df47c28a46caf54a26a79b7299a3f75">escreverDataOutputStream</a> (<a class="el" href="class_data_output_stream.html">DataOutputStream</a> &amp;out)</td></tr>
+<tr class="memdesc:a0df47c28a46caf54a26a79b7299a3f75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Escreve os dados de um <a class="el" href="class_data_output_stream.html">DataOutputStream</a> no vetor deste objeto.  <a href="#a0df47c28a46caf54a26a79b7299a3f75">Mais...</a><br /></td></tr>
+<tr class="separator:a0df47c28a46caf54a26a79b7299a3f75"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Documentação dos Construtores &amp; Destrutor</h2>
+<a id="a27d2b56afe5429f0cf59599f8d106930"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a27d2b56afe5429f0cf59599f8d106930">&#9670;&nbsp;</a></span>DataOutputStream() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">DataOutputStream::DataOutputStream </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="tipos_8hpp.html#a458b3a3073fa6d85d6d28dd922e183ca">vetor_de_bytes</a>&#160;</td>
+          <td class="paramname"><em>vetor</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constrói um novo objeto <a class="el" href="class_data_output_stream.html">DataOutputStream</a> com o vetor recebido. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vetor</td><td>Vetor inicial. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a776b60d3c628f2aee513007c0196ef8a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a776b60d3c628f2aee513007c0196ef8a">&#9670;&nbsp;</a></span>DataOutputStream() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a776b60d3c628f2aee513007c0196ef8a">&#9670;&nbsp;</a></span>DataOutputStream() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -141,7 +190,7 @@ Membros públicos</h2></td></tr>
 </div>
 </div>
 <a id="ada6c337e1939ee49f7a687a63ee46cbc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ada6c337e1939ee49f7a687a63ee46cbc">&#9670;&nbsp;</a></span>DataOutputStream() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ada6c337e1939ee49f7a687a63ee46cbc">&#9670;&nbsp;</a></span>DataOutputStream() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -163,7 +212,7 @@ Membros públicos</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Constrói um novo objeto <a class="el" href="class_data_output_stream.html">DataOutputStream</a> com um tamanho inicial de buffer de 12 bytes. </p>
+<p>Constrói um novo objeto <a class="el" href="class_data_output_stream.html">DataOutputStream</a> com um tamanho inicial de buffer de 16 bytes. </p>
 
 </div>
 </div>
@@ -193,6 +242,31 @@ Membros públicos</h2></td></tr>
 
 <p>Obtém um iterador que aponta para o primeiro byte deste fluxo. </p>
 <dl class="section return"><dt>Retorna</dt><dd>iterador Retorna um iterador que aponta para o primeiro byte deste fluxo. </dd></dl>
+
+</div>
+</div>
+<a id="aa38d35101ea3e91603a884c89161ee6f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa38d35101ea3e91603a884c89161ee6f">&#9670;&nbsp;</a></span>capacity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t DataOutputStream::capacity </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -290,7 +364,7 @@ template&lt;typename tipo &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Escreve tipos primitivos e objetos com tamanho pré definido no vetor da classe. </p>
+<p>Escreve tipos primitivos e objetos com tamanho pré definido no vetor deste objeto. </p>
 <dl class="tparams"><dt>Parâmetros de template</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">tipo</td><td>Tipo do que se deseja escrever. </td></tr>
@@ -308,8 +382,97 @@ template&lt;typename tipo &gt; </div>
 
 </div>
 </div>
-<a id="a265d6300b40ffccc823f377542598240"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a265d6300b40ffccc823f377542598240">&#9670;&nbsp;</a></span>escreverPtr()</h2>
+<a id="a0df47c28a46caf54a26a79b7299a3f75"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0df47c28a46caf54a26a79b7299a3f75">&#9670;&nbsp;</a></span>escreverDataOutputStream()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_data_output_stream.html">DataOutputStream</a>&amp; DataOutputStream::escreverDataOutputStream </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_data_output_stream.html">DataOutputStream</a> &amp;&#160;</td>
+          <td class="paramname"><em>out</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Escreve os dados de um <a class="el" href="class_data_output_stream.html">DataOutputStream</a> no vetor deste objeto. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">out</td><td><a class="el" href="class_data_output_stream.html">DataOutputStream</a> a ser mesclado com o atual.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Retorna</dt><dd><a class="el" href="class_data_output_stream.html">DataOutputStream</a>&amp; Retorna uma referência para este objeto. </dd></dl>
+
+</div>
+</div>
+<a id="ada31e825848d2b2c4d9abfbc63fffe58"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada31e825848d2b2c4d9abfbc63fffe58">&#9670;&nbsp;</a></span>escreverPorIterador()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Iterador &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_data_output_stream.html">DataOutputStream</a>&amp; DataOutputStream::escreverPorIterador </td>
+          <td>(</td>
+          <td class="paramtype">Iterador&#160;</td>
+          <td class="paramname"><em>inicio</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Iterador&#160;</td>
+          <td class="paramname"><em>fim</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Copia bytes a partir do iterador de início até o de fim. </p>
+<dl class="tparams"><dt>Parâmetros de template</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Iterador</td><td>Tipo do iterador. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">inicio</td><td>Iterador sobre o primeiro byte do valor a ser escrito. </td></tr>
+    <tr><td class="paramname">fim</td><td>Iterador sobre a posição após o último byte do valor a ser escrito.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Retorna</dt><dd><a class="el" href="class_data_output_stream.html">DataOutputStream</a>&amp; Retorna uma referência para este objeto. </dd></dl>
+
+</div>
+</div>
+<a id="ac0434adf332ec21850fd5af2b0e51a51"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0434adf332ec21850fd5af2b0e51a51">&#9670;&nbsp;</a></span>escreverPorPonteiro()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -320,7 +483,7 @@ template&lt;typename tipo &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_data_output_stream.html">DataOutputStream</a>&amp; DataOutputStream::escreverPtr </td>
+          <td class="memname"><a class="el" href="class_data_output_stream.html">DataOutputStream</a>&amp; DataOutputStream::escreverPorPonteiro </td>
           <td>(</td>
           <td class="paramtype">tipo *&#160;</td>
           <td class="paramname"><em>ptrValor</em>, </td>
@@ -344,7 +507,7 @@ template&lt;typename tipo &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Escreve bytes no vetor da classe. </p>
+<p>Copia bytes do ponteiro recebido para o vetor deste objeto. </p>
 <dl class="tparams"><dt>Parâmetros de template</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">tipo</td><td>Tipo do que se deseja escrever. </td></tr>
@@ -354,7 +517,7 @@ template&lt;typename tipo &gt; </div>
 <dl class="params"><dt>Parâmetros</dt><dd>
   <table class="params">
     <tr><td class="paramname">ptrValor</td><td>Ponteiro para o primeiro byte do valor a ser escrito. </td></tr>
-    <tr><td class="paramname">tamanhoDoValor</td><td>Quantidade de bytes a serem escritos. Caso esse parâmetro não seja fornecido, o seu valor será sizeof(tipo).</td></tr>
+    <tr><td class="paramname">tamanhoDoValor</td><td>Quantidade de bytes a serem escritos. Caso esse parâmetro não seja fornecido, o valor dele será sizeof(tipo).</td></tr>
   </table>
   </dd>
 </dl>
@@ -386,14 +549,39 @@ template&lt;typename tipo &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Escreve uma string no vetor da classe. As strings têm um tratamento especial pois é necessário escrever primeiro o tamanho delas antes de escrever os seus caracteres. </p>
+<p>Escreve uma string no vetor deste objeto. As strings têm um tratamento especial pois é necessário escrever primeiro o tamanho delas antes de escrever os seus caracteres. </p>
 <dl class="params"><dt>Parâmetros</dt><dd>
   <table class="params">
-    <tr><td class="paramname">str</td><td>String a ser escrita. </td></tr>
+    <tr><td class="paramname">str</td><td>String a ser escrita.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Retorna</dt><dd><a class="el" href="class_data_output_stream.html">DataOutputStream</a>&amp; Retorna uma referência para este objeto. </dd></dl>
+
+</div>
+</div>
+<a id="ab83bd3045f7d3d4d45ab3e4bacdb033c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab83bd3045f7d3d4d45ab3e4bacdb033c">&#9670;&nbsp;</a></span>obterCursor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="tipos_8hpp.html#a2d209fbc6f78d855bad43c238dc551f1">iterador</a> DataOutputStream::obterCursor </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -422,8 +610,8 @@ template&lt;typename tipo &gt; </div>
 
 </div>
 </div>
-<a id="aca4fbe6b33b2c757b264ce243c7ebcbd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aca4fbe6b33b2c757b264ce243c7ebcbd">&#9670;&nbsp;</a></span>print()</h2>
+<a id="a36e9c9e4b85b130c224b88458cac0156"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a36e9c9e4b85b130c224b88458cac0156">&#9670;&nbsp;</a></span>resize()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -432,9 +620,10 @@ template&lt;typename tipo &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_data_output_stream.html">DataOutputStream</a>&amp; DataOutputStream::print </td>
+          <td class="memname"><a class="el" href="class_data_output_stream.html">DataOutputStream</a>&amp; DataOutputStream::resize </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>size</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -444,8 +633,6 @@ template&lt;typename tipo &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Mostra os bytes do vetor como inteiros. </p>
 
 </div>
 </div>
@@ -475,7 +662,7 @@ template&lt;typename tipo &gt; </div>
 </div>
 </div>
 <hr/>A documentação para esta classe foi gerada a partir do seguinte ficheiro:<ul>
-<li>streams/<a class="el" href="_data_output_stream_8cpp.html">DataOutputStream.cpp</a></li>
+<li>streams/<a class="el" href="_data_output_stream_8hpp_source.html">DataOutputStream.hpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

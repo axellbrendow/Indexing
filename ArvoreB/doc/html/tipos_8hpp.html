@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.15"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ArvoreB: Referência ao ficheiro tipos.hpp</title>
+<title>ArvoreB: Referência ao ficheiro templates/tipos.hpp</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -59,34 +59,43 @@ $(function() {
 </iframe>
 </div>
 
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_096b0de097b3e98f91191e9d894d4363.html">templates</a></li>  </ul>
+</div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#define-members">Macros</a> &#124;
-<a href="#typedef-members">Definições de tipos</a>  </div>
+<a href="#typedef-members">Definições de tipos</a> &#124;
+<a href="#func-members">Funções</a>  </div>
   <div class="headertitle">
 <div class="title">Referência ao ficheiro tipos.hpp</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Classe de intermediação entre a entrada de dados e a sua variável.  
+<p>Arquivo com typedefs e helpers para debug.  
 <a href="#details">Mais...</a></p>
-<div class="textblock"><code>#include &lt;vector&gt;</code><br />
+<div class="textblock"><code>#include &lt;iostream&gt;</code><br />
+<code>#include &lt;vector&gt;</code><br />
 </div>
 <p><a href="tipos_8hpp_source.html">Ir para o código fonte deste ficheiro.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a322565ccf348d13e4d3de13af771e5fc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tipos_8hpp.html#a322565ccf348d13e4d3de13af771e5fc">debug</a>&#160;&#160;&#160;cout &lt;&lt; &quot;debug&quot; &lt;&lt; endl;</td></tr>
+<tr class="memitem:a322565ccf348d13e4d3de13af771e5fc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tipos_8hpp.html#a322565ccf348d13e4d3de13af771e5fc">debug</a>&#160;&#160;&#160;cout &lt;&lt; endl &lt;&lt; &quot;#######################################&quot; &lt;&lt; endl;</td></tr>
 <tr class="separator:a322565ccf348d13e4d3de13af771e5fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab80535be67ee46c0cf5fe130312c9d24"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tipos_8hpp.html#ab80535be67ee46c0cf5fe130312c9d24">debugv</a>(value)&#160;&#160;&#160;cout &lt;&lt; &quot;debug = &quot; &lt;&lt; value &lt;&lt; endl;</td></tr>
 <tr class="separator:ab80535be67ee46c0cf5fe130312c9d24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Definições de tipos</h2></td></tr>
-<tr class="memitem:a14ad2ddcc295ee3feb1f46731116465e"><td class="memItemLeft" align="right" valign="top">typedef int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tipos_8hpp.html#a14ad2ddcc295ee3feb1f46731116465e">str_vetor_de_bytes</a></td></tr>
-<tr class="memdesc:a14ad2ddcc295ee3feb1f46731116465e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tipo criado apenas para padronização da criação de variáveis que guardam tamanhos de strings.  <a href="#a14ad2ddcc295ee3feb1f46731116465e">Mais...</a><br /></td></tr>
+<tr class="memitem:a14ad2ddcc295ee3feb1f46731116465e"><td class="memItemLeft" align="right" valign="top">typedef int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tipos_8hpp.html#a14ad2ddcc295ee3feb1f46731116465e">str_size_type</a></td></tr>
+<tr class="memdesc:a14ad2ddcc295ee3feb1f46731116465e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Criado apenas para padronizar o tipo usado para declarar variáveis que guardam tamanhos de strings.  <a href="#a14ad2ddcc295ee3feb1f46731116465e">Mais...</a><br /></td></tr>
 <tr class="separator:a14ad2ddcc295ee3feb1f46731116465e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69b249493aea51bdd416b998e829cd86"><td class="memItemLeft" align="right" valign="top">typedef size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tipos_8hpp.html#a69b249493aea51bdd416b998e829cd86">file_pointer_type</a></td></tr>
+<tr class="memdesc:a69b249493aea51bdd416b998e829cd86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Criado apenas para padronizar o tipo usado para declarar ponteiros que guardam o endereço de entidades e/ou registros dentro de um arquivo.  <a href="#a69b249493aea51bdd416b998e829cd86">Mais...</a><br /></td></tr>
+<tr class="separator:a69b249493aea51bdd416b998e829cd86"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6a251888af90f851a6e15a8887f86bc1"><td class="memItemLeft" align="right" valign="top">typedef unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tipos_8hpp.html#a6a251888af90f851a6e15a8887f86bc1">tipo_byte</a></td></tr>
 <tr class="memdesc:a6a251888af90f851a6e15a8887f86bc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Em C++, usamos unsigned char para lidar com bytes. As vezes usa-se char também. De qualquer forma, o intervalo de valores do tipo unsigned char é o mesmo do intervalo de um byte, 0 a 255.  <a href="#a6a251888af90f851a6e15a8887f86bc1">Mais...</a><br /></td></tr>
 <tr class="separator:a6a251888af90f851a6e15a8887f86bc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -96,9 +105,24 @@ Definições de tipos</h2></td></tr>
 <tr class="memitem:a2d209fbc6f78d855bad43c238dc551f1"><td class="memItemLeft" align="right" valign="top">typedef vetor_de_bytes::iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tipos_8hpp.html#a2d209fbc6f78d855bad43c238dc551f1">iterador</a></td></tr>
 <tr class="memdesc:a2d209fbc6f78d855bad43c238dc551f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tipo de iterador para vetores de bytes.  <a href="#a2d209fbc6f78d855bad43c238dc551f1">Mais...</a><br /></td></tr>
 <tr class="separator:a2d209fbc6f78d855bad43c238dc551f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Funções</h2></td></tr>
+<tr class="memitem:aa642a885c3749fad70810b48289ac250"><td class="memTemplParams" colspan="2">template&lt;typename tipo &gt; </td></tr>
+<tr class="memitem:aa642a885c3749fad70810b48289ac250"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="tipos_8hpp.html#aa642a885c3749fad70810b48289ac250">debugIterar</a> (tipo start, tipo end)</td></tr>
+<tr class="separator:aa642a885c3749fad70810b48289ac250"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab627ecbf5242fad1c458c94c7022e0e3"><td class="memTemplParams" colspan="2">template&lt;typename tipo &gt; </td></tr>
+<tr class="memitem:ab627ecbf5242fad1c458c94c7022e0e3"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="tipos_8hpp.html#ab627ecbf5242fad1c458c94c7022e0e3">debugPrintar</a> (tipo value)</td></tr>
+<tr class="separator:ab627ecbf5242fad1c458c94c7022e0e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7fa09b5eb9fb9fcf59747ece70db5bf"><td class="memTemplParams" colspan="2">template&lt;typename tipo , typename... OutrosTipos&gt; </td></tr>
+<tr class="memitem:ad7fa09b5eb9fb9fcf59747ece70db5bf"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="tipos_8hpp.html#ad7fa09b5eb9fb9fcf59747ece70db5bf">debugPrintar</a> (tipo value, OutrosTipos... outrosTipos)</td></tr>
+<tr class="separator:ad7fa09b5eb9fb9fcf59747ece70db5bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab122ce6ddb7af3c5050525763c9327a4"><td class="memTemplParams" colspan="2">template&lt;typename tipo &gt; </td></tr>
+<tr class="memitem:ab122ce6ddb7af3c5050525763c9327a4"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="tipos_8hpp.html#ab122ce6ddb7af3c5050525763c9327a4">debugCursorComSaida</a> (<a class="el" href="tipos_8hpp.html#a2d209fbc6f78d855bad43c238dc551f1">iterador</a> start, <a class="el" href="tipos_8hpp.html#a2d209fbc6f78d855bad43c238dc551f1">iterador</a> end, tipo *output)</td></tr>
+<tr class="separator:ab122ce6ddb7af3c5050525763c9327a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Descrição detalhada</h2>
-<div class="textblock"><p>Classe de intermediação entre a entrada de dados e a sua variável. </p>
+<div class="textblock"><p>Arquivo com typedefs e helpers para debug. </p>
 <dl class="section author"><dt>Autor</dt><dd>Axell Brendow ( <a href="https://github.com/axell-brendow">https://github.com/axell-brendow</a> ) </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2019 Axell Brendow Batista Moreira </dd></dl>
 </div><h2 class="groupheader">Documentação das macros</h2>
@@ -109,7 +133,7 @@ Definições de tipos</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define debug&#160;&#160;&#160;cout &lt;&lt; &quot;debug&quot; &lt;&lt; endl;</td>
+          <td class="memname">#define debug&#160;&#160;&#160;cout &lt;&lt; endl &lt;&lt; &quot;#######################################&quot; &lt;&lt; endl;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -135,6 +159,22 @@ Definições de tipos</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Documentação dos tipos</h2>
+<a id="a69b249493aea51bdd416b998e829cd86"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a69b249493aea51bdd416b998e829cd86">&#9670;&nbsp;</a></span>file_pointer_type</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef size_t <a class="el" href="tipos_8hpp.html#a69b249493aea51bdd416b998e829cd86">file_pointer_type</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Criado apenas para padronizar o tipo usado para declarar ponteiros que guardam o endereço de entidades e/ou registros dentro de um arquivo. </p>
+
+</div>
+</div>
 <a id="a2d209fbc6f78d855bad43c238dc551f1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2d209fbc6f78d855bad43c238dc551f1">&#9670;&nbsp;</a></span>iterador</h2>
 
@@ -155,27 +195,18 @@ Definições de tipos</h2></td></tr>
 </div>
 </div>
 <a id="a14ad2ddcc295ee3feb1f46731116465e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a14ad2ddcc295ee3feb1f46731116465e">&#9670;&nbsp;</a></span>str_vetor_de_bytes</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a14ad2ddcc295ee3feb1f46731116465e">&#9670;&nbsp;</a></span>str_size_type</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef int <a class="el" href="tipos_8hpp.html#a14ad2ddcc295ee3feb1f46731116465e">str_vetor_de_bytes</a></td>
+          <td class="memname">typedef int <a class="el" href="tipos_8hpp.html#a14ad2ddcc295ee3feb1f46731116465e">str_size_type</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Tipo criado apenas para padronização da criação de variáveis que guardam tamanhos de strings. </p>
-<p>Links úteis doxygen:<br />
-</p>
-<p><a href="https://flcwiki.desy.de/How%20to%20document%20your%20code%20using%20doxygen#How_to_create_a_configuration_file">https://flcwiki.desy.de/How%20to%20document%20your%20code%20using%20doxygen#How_to_create_a_configuration_file</a><br />
- <a href="https://gist.github.com/ugovaretto/261bd1d16d9a0d2e76ee">https://gist.github.com/ugovaretto/261bd1d16d9a0d2e76ee</a><br />
-Links úteis smart pointers:<br />
-</p>
-<p><a href="https://docs.microsoft.com/pt-br/cpp/cpp/smart-pointers-modern-cpp?view=vs-2019">https://docs.microsoft.com/pt-br/cpp/cpp/smart-pointers-modern-cpp?view=vs-2019</a><br />
- <a href="https://docs.microsoft.com/pt-br/cpp/cpp/how-to-create-and-use-shared-ptr-instances?view=vs-2019">https://docs.microsoft.com/pt-br/cpp/cpp/how-to-create-and-use-shared-ptr-instances?view=vs-2019</a><br />
- </p>
+<p>Criado apenas para padronizar o tipo usado para declarar variáveis que guardam tamanhos de strings. </p>
 
 </div>
 </div>
@@ -208,6 +239,123 @@ Links úteis smart pointers:<br />
 </div><div class="memdoc">
 
 <p>Tipo destinado a ser usado para trabalhar com vetores de bytes. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Documentação das funções</h2>
+<a id="ab122ce6ddb7af3c5050525763c9327a4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab122ce6ddb7af3c5050525763c9327a4">&#9670;&nbsp;</a></span>debugCursorComSaida()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename tipo &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void debugCursorComSaida </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="tipos_8hpp.html#a2d209fbc6f78d855bad43c238dc551f1">iterador</a>&#160;</td>
+          <td class="paramname"><em>start</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="tipos_8hpp.html#a2d209fbc6f78d855bad43c238dc551f1">iterador</a>&#160;</td>
+          <td class="paramname"><em>end</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">tipo *&#160;</td>
+          <td class="paramname"><em>output</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa642a885c3749fad70810b48289ac250"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa642a885c3749fad70810b48289ac250">&#9670;&nbsp;</a></span>debugIterar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename tipo &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void debugIterar </td>
+          <td>(</td>
+          <td class="paramtype">tipo&#160;</td>
+          <td class="paramname"><em>start</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">tipo&#160;</td>
+          <td class="paramname"><em>end</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab627ecbf5242fad1c458c94c7022e0e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab627ecbf5242fad1c458c94c7022e0e3">&#9670;&nbsp;</a></span>debugPrintar() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename tipo &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void debugPrintar </td>
+          <td>(</td>
+          <td class="paramtype">tipo&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad7fa09b5eb9fb9fcf59747ece70db5bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad7fa09b5eb9fb9fcf59747ece70db5bf">&#9670;&nbsp;</a></span>debugPrintar() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename tipo , typename... OutrosTipos&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void debugPrintar </td>
+          <td>(</td>
+          <td class="paramtype">tipo&#160;</td>
+          <td class="paramname"><em>value</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">OutrosTipos...&#160;</td>
+          <td class="paramname"><em>outrosTipos</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>

@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['obtervetor',['obterVetor',['../class_data_output_stream.html#ad1e600d1347d92831a2289715f2111bc',1,'DataOutputStream']]],
-  ['operator_20bool',['operator bool',['../class_data_input_stream.html#ae310c7e775b743fab98ea0daf68b9898',1,'DataInputStream']]],
-  ['operator_3c_3c',['operator&lt;&lt;',['../_pagina_b_8cpp.html#a1101b3ece26c089dbf268b6060a314df',1,'operator&lt;&lt;(ostream &amp;stream, PaginaB&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt; &amp;pagina):&#160;PaginaB.cpp'],['../_data_output_stream_8cpp.html#a9c38819da8e127887f2121faff880e1f',1,'operator&lt;&lt;(DataOutputStream &amp;dataOutputStream, tipo variavel):&#160;DataOutputStream.cpp'],['../_data_output_stream_8cpp.html#acfb8d21640bf7ad1fed206cefc41ed0f',1,'operator&lt;&lt;(DataOutputStream &amp;dataOutputStream, string &amp;variavel):&#160;DataOutputStream.cpp'],['../_data_output_stream_8cpp.html#a1b38194774857493383f6a35c283ecdd',1,'operator&lt;&lt;(DataOutputStream &amp;dataOutputStream, const char *variavel):&#160;DataOutputStream.cpp'],['../_data_output_stream_8cpp.html#a7ddf54e1ea1be7447dbd6e17418ae403',1,'operator&lt;&lt;(ofstream ofstream, DataOutputStream &amp;out):&#160;DataOutputStream.cpp']]],
-  ['operator_3e_3e',['operator&gt;&gt;',['../_data_input_stream_8cpp.html#aa64c654a8ba70d9b0514ba2f67392add',1,'operator&gt;&gt;(DataInputStream &amp;dataInputStream, tipo &amp;variavel):&#160;DataInputStream.cpp'],['../_data_input_stream_8cpp.html#adbe173a0ae946f9a7cc0819f402fe455',1,'operator&gt;&gt;(DataInputStream &amp;dataInputStream, string &amp;variavel):&#160;DataInputStream.cpp']]]
+  ['nome',['nome',['../class_student.html#a21bf0748ceae38fe4f8886a60aacfeb9',1,'Student']]],
+  ['nomedoarquivo',['nomeDoArquivo',['../class_arvore_b.html#ad63dbfca400b5f71682400ece826e9f4',1,'ArvoreB']]],
+  ['numerodechavesporpagina',['numeroDeChavesPorPagina',['../class_arvore_b.html#a49c412c79c14d050d175c048bbeb637f',1,'ArvoreB']]]
 ];

@@ -1,7 +1,14 @@
 var searchData=
 [
-  ['obtervetor',['obterVetor',['../class_data_output_stream.html#ad1e600d1347d92831a2289715f2111bc',1,'DataOutputStream']]],
-  ['operator_20bool',['operator bool',['../class_data_input_stream.html#ae310c7e775b743fab98ea0daf68b9898',1,'DataInputStream']]],
-  ['operator_3c_3c',['operator&lt;&lt;',['../_pagina_b_8cpp.html#a1101b3ece26c089dbf268b6060a314df',1,'operator&lt;&lt;(ostream &amp;stream, PaginaB&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt; &amp;pagina):&#160;PaginaB.cpp'],['../_data_output_stream_8cpp.html#a9c38819da8e127887f2121faff880e1f',1,'operator&lt;&lt;(DataOutputStream &amp;dataOutputStream, tipo variavel):&#160;DataOutputStream.cpp'],['../_data_output_stream_8cpp.html#acfb8d21640bf7ad1fed206cefc41ed0f',1,'operator&lt;&lt;(DataOutputStream &amp;dataOutputStream, string &amp;variavel):&#160;DataOutputStream.cpp'],['../_data_output_stream_8cpp.html#a1b38194774857493383f6a35c283ecdd',1,'operator&lt;&lt;(DataOutputStream &amp;dataOutputStream, const char *variavel):&#160;DataOutputStream.cpp'],['../_data_output_stream_8cpp.html#a7ddf54e1ea1be7447dbd6e17418ae403',1,'operator&lt;&lt;(ofstream ofstream, DataOutputStream &amp;out):&#160;DataOutputStream.cpp']]],
-  ['operator_3e_3e',['operator&gt;&gt;',['../_data_input_stream_8cpp.html#aa64c654a8ba70d9b0514ba2f67392add',1,'operator&gt;&gt;(DataInputStream &amp;dataInputStream, tipo &amp;variavel):&#160;DataInputStream.cpp'],['../_data_input_stream_8cpp.html#adbe173a0ae946f9a7cc0819f402fe455',1,'operator&gt;&gt;(DataInputStream &amp;dataInputStream, string &amp;variavel):&#160;DataInputStream.cpp']]]
+  ['ler',['ler',['../class_data_input_stream.html#adea32f9488656af59dc1e8cf3acdd201',1,'DataInputStream']]],
+  ['lerbyte',['lerByte',['../class_data_input_stream.html#a4da78de611ae80da2dfaa430ebe002c6',1,'DataInputStream']]],
+  ['lerbytes',['lerBytes',['../class_student.html#a451dd9c2b28fafa28e5fde833b1f75d2',1,'Student::lerBytes()'],['../class_pagina_b.html#a483d5e9d6b3d78e8b97ecbcb3b449559',1,'PaginaB::lerBytes()'],['../class_serializavel.html#a664f80ee7111ae0b57f2b06b98026d65',1,'Serializavel::lerBytes(DataInputStream &amp;input)=0'],['../class_serializavel.html#a56d1629ec045b7cc79f5d1e5c4092dcf',1,'Serializavel::lerBytes(char *buffer, int tamanho)']]],
+  ['lerchar',['lerChar',['../class_data_input_stream.html#ad03b9480f8cb0c6d9dc1db1c41113ebb',1,'DataInputStream']]],
+  ['lerdouble',['lerDouble',['../class_data_input_stream.html#a6536fa82378b789733625c36f1a7f9fe',1,'DataInputStream']]],
+  ['lerfloat',['lerFloat',['../class_data_input_stream.html#ac3b4e8f22bfc4f63dc12f9f519a0d893',1,'DataInputStream']]],
+  ['lerint',['lerInt',['../class_data_input_stream.html#a01368b4a9f70f12398ca1bc11bf92479',1,'DataInputStream']]],
+  ['lerlong',['lerLong',['../class_data_input_stream.html#a5a96785f0813da63dfbcb76f3e456fd1',1,'DataInputStream']]],
+  ['lerparaoponteiro',['lerParaOPonteiro',['../class_data_input_stream.html#a9b81c91c9867f97f4a8864e8333e4575',1,'DataInputStream']]],
+  ['lershort',['lerShort',['../class_data_input_stream.html#a9b3276b6ca7d785102951a931c74a778',1,'DataInputStream']]],
+  ['lerstring',['lerString',['../class_data_input_stream.html#ad37627a636dbaa5bff155ab62a8a3e01',1,'DataInputStream']]]
 ];

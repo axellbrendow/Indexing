@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['paginab',['PaginaB',['../class_pagina_b.html#a2e6983c349b2ab816ee20f0d0b23b647',1,'PaginaB']]],
-  ['print',['print',['../class_data_output_stream.html#aca4fbe6b33b2c757b264ce243c7ebcbd',1,'DataOutputStream']]]
+  ['main',['main',['../copy_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;copy.cpp'],['../mytest_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;mytest.cpp']]],
+  ['movercursor',['moverCursor',['../class_data_input_stream.html#a611dd5508996267a5c16fc4108a02c75',1,'DataInputStream']]]
 ];

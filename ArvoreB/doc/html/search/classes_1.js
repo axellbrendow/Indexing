@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['paginab',['PaginaB',['../class_pagina_b.html',1,'']]]
+  ['base',['Base',['../class_base.html',1,'']]]
 ];
