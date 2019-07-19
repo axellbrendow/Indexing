@@ -20,48 +20,39 @@ template<typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS>
 class ArvoreB
 {
 public:
+	// ------------------------- Typedefs
+
+	/**
+	 * @brief Padroniza o tipo da página da árvore. Typedefs dentro de classes ou structs
+	 * são considerados como boa prática em C++.
+	 */
+	typedef PaginaB<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> Pagina
+
 	// ------------------------- Campos
 
 	const string nomeDoArquivo;
+	const fstream arquivo;
+
 	const int maximoDeBytesParaAChave;
 	const int maximoDeBytesParaODado;
 	const int numeroDeChavesPorPagina;
 	const int ordemDaArvore;
 
-	PaginaB paginaPai;
-	PaginaB paginaFilha;
+	const Pagina paginaPai;
+	const Pagina paginaFilha;
+	const Pagina paginaIrma;
 
 	// ------------------------- Construtores e destrutores
 
-	ArvoreB(string nomeDoArquivo,
-		int maximoDeBytesParaAChave,
-		int maximoDeBytesParaODado,
-		int ordemDaArvore);
-
-	~ArvoreB();
-
-	// ------------------------- M�todos
-
-
-private:
-	// ------------------------- Campos
-
-	fstream arquivo;
-};
-
-ArvoreB::ArvoreB(
-	string nomeDoArquivo,
-	int maximoDeBytesParaAChave,
-	int maximoDeBytesParaODado,
-	int ordemDaArvore) :
-		
+	ArvoreB(string nomeDoArquivo, int ordemDaArvore) :
 		nomeDoArquivo(nomeDoArquivo),
-		arquivo( fstream(nomeDoArquivo, ios::binary | ios::in | ios::out) ),
+		arquivo( fstream(nomeDoArquivo, ios::binary | ios::in | ios::out) )
+	{
+		// declval -> http://www.cplusplus.com/reference/utility/declval/?kw=declval
+		maximoDeBytesParaAChave = declval<TIPO_DAS_CHAVES>().obterTamanhoMaximoEmBytes();
+		maximoDeBytesParaODado = declval<TIPO_DOS_DADOS>().obterTamanhoMaximoEmBytes();
+	}
 
-		pagina(maximoDeBytesParaAChave,
-			maximoDeBytesParaODado,
-			ordemDaArvore) { }
-
-ArvoreB::~ArvoreB()
-{
-}
+	// ------------------------- Métodos
+	
+};

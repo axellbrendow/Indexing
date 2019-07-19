@@ -18,194 +18,189 @@ using namespace std;
 
 class DataOutputStream
 {
-    private:
-        // ------------------------- Campos
+private:
+    // ------------------------- Campos
 
-        /** Vetor de bytes onde serão guardados os dados. */
-        vetor_de_bytes bytes;
+    /** Vetor de bytes onde serão guardados os dados. */
+    vetor_de_bytes bytes;
 
-    public:
-        // ------------------------- Construtores
+public:
+    // ------------------------- Construtores
 
-        /**
-         * @brief Constrói um novo objeto DataOutputStream com o vetor recebido.
-         * 
-         * @param vetor Vetor inicial.
-         */
-        DataOutputStream(vetor_de_bytes vetor) : bytes(vetor) { }
+    /**
+     * @brief Constrói um novo objeto DataOutputStream com o vetor recebido.
+     * 
+     * @param vetor Vetor inicial.
+     */
+    DataOutputStream(vetor_de_bytes vetor) : bytes(vetor) { }
 
-        /**
-         * @brief Constrói um novo objeto DataOutputStream com um tamanho inicial
-         * de buffer.
-         * 
-         * @param previsaoDaQuantidadeDeBytes Tamanho inicial do buffer.
-         */
-        DataOutputStream(int previsaoDaQuantidadeDeBytes) :
-            DataOutputStream( vetor_de_bytes() )
-        {
-            // .reserve() garante mais espaço mas altera o endereço do vetor na memória
-            bytes.reserve(previsaoDaQuantidadeDeBytes);
-        }
+    /**
+     * @brief Constrói um novo objeto DataOutputStream com um tamanho inicial
+     * de buffer.
+     * 
+     * @param previsaoDaQuantidadeDeBytes Tamanho inicial do buffer.
+     */
+    DataOutputStream(int previsaoDaQuantidadeDeBytes) :
+        DataOutputStream( vetor_de_bytes() )
+    {
+        // .reserve() garante mais espaço mas altera o endereço do vetor na memória
+        bytes.reserve(previsaoDaQuantidadeDeBytes);
+    }
 
-        /**
-         * @brief Constrói um novo objeto DataOutputStream com um tamanho inicial
-         * de buffer de 16 bytes.
-         */
-        DataOutputStream() : DataOutputStream(16) {}
+    /**
+     * @brief Constrói um novo objeto DataOutputStream com um tamanho inicial
+     * de buffer de 16 bytes.
+     */
+    DataOutputStream() : DataOutputStream(16) {}
 
-        // ------------------------- Métodos
+    // ------------------------- Métodos
 
-        /**
-         * @brief Checa se este fluxo está vazio.
-         * 
-         * @return true Retorna true caso este fluxo esteja vazio.
-         * @return false Retorna false caso este fluxo não esteja vazio.
-         */
-        bool empty()
-        {
-            return bytes.empty();
-        }
+    /**
+     * @brief Checa se este fluxo está vazio.
+     * 
+     * @return true Retorna true caso este fluxo esteja vazio.
+     * @return false Retorna false caso este fluxo não esteja vazio.
+     */
+    bool empty()
+    {
+        return bytes.empty();
+    }
 
-        /**
-         * @brief Obtém um iterador que aponta para o primeiro byte deste fluxo.
-         * 
-         * @return iterador Retorna um iterador que aponta para o primeiro byte
-         * deste fluxo.
-         */
-        iterador begin()
-        {
-            return bytes.begin();
-        }
+    /**
+     * @brief Obtém um iterador que aponta para o primeiro byte deste fluxo.
+     * 
+     * @return iterador Retorna um iterador que aponta para o primeiro byte
+     * deste fluxo.
+     */
+    iterador begin()
+    {
+        return bytes.begin();
+    }
 
-        /**
-         * @brief Obtém um iterador que aponta para o último byte deste fluxo.
-         * 
-         * @return iterador Retorna um iterador que aponta para o último byte
-         * deste fluxo.
-         */
-        iterador end()
-        {
-            return bytes.end();
-        }
+    /**
+     * @brief Obtém um iterador que aponta para o último byte deste fluxo.
+     * 
+     * @return iterador Retorna um iterador que aponta para o último byte
+     * deste fluxo.
+     */
+    iterador end()
+    {
+        return bytes.end();
+    }
 
-        size_t size()
-        {
-            return bytes.size();
-        }
+    size_t size()
+    {
+        return bytes.size();
+    }
 
-        size_t capacity()
-        {
-            return bytes.capacity();
-        }
+    size_t capacity()
+    {
+        return bytes.capacity();
+    }
 
-        iterador obterCursor()
-        {
-            return begin() + size();
-        }
+    DataOutputStream &resize(int size)
+    {
+        bytes.resize(size);
 
-        vetor_de_bytes obterVetor()
-        {
-            return bytes;
-        }
+        return *this;
+    }
 
-		/**
-		 * @brief Copia bytes a partir do iterador de início até o de fim.
-		 *
-		 * @tparam Iterador Tipo do iterador.
-		 * @param inicio Iterador para o primeiro byte do valor a ser escrito.
-		 * @param fim Quantidade de bytes a serem escritos. Caso esse
-		 * parâmetro não seja fornecido, o valor dele será sizeof(tipo).
-		 *
-		 * @return DataOutputStream& Retorna uma referência para este objeto.
-		 */
-		template<typename Iterador>
-		DataOutputStream& escreverIterador(Iterador inicio, Iterador fim)
-		{
-			// reinterpret_cast faz a conversão do ponteiro para "tipo_byte *".
-			// Isso é feito para que eu possa iterar sobre os bytes do valor.
-			tipo_byte* inicio = reinterpret_cast<tipo_byte*>(ptrValor);
+    iterador obterCursor()
+    {
+        return begin() + size();
+    }
 
-			// como inicio aponta para o primeiro byte do valor e inicio + tamanhoDoValor
-			// apontará para a posição após o último byte do valor, o .insert() copia
-			// todos bytes do valor para o final do vetor bytes.
-			bytes.insert(obterCursor(), inicio, inicio + tamanhoDoValor);
+    vetor_de_bytes obterVetor()
+    {
+        return bytes;
+    }
 
-			return *this; // retorna uma referência para este objeto.
-		}
+    /**
+     * @brief Copia bytes a partir do iterador de início até o de fim.
+     *
+     * @tparam Iterador Tipo do iterador.
+     * @param inicio Iterador sobre o primeiro byte do valor a ser escrito.
+     * @param fim Iterador sobre a posição após o último byte do valor a ser escrito.
+     *
+     * @return DataOutputStream& Retorna uma referência para este objeto.
+     */
+    template<typename Iterador>
+    DataOutputStream& escreverPorIterador(Iterador inicio, Iterador fim)
+    {
+        // como inicio aponta para o primeiro byte do valor e fim para uma posição
+        // após o último byte, o .insert() copia todos bytes do valor e guarda no
+        // vetor deste objeto.
+        bytes.insert(obterCursor(), inicio, fim);
+
+        return *this; // retorna uma referência para este objeto.
+    }
+    
+    /**
+     * @brief Copia bytes do ponteiro recebido para o vetor deste objeto.
+     * 
+     * @tparam tipo Tipo do que se deseja escrever.
+     * @param ptrValor Ponteiro para o primeiro byte do valor a ser escrito.
+     * @param tamanhoDoValor Quantidade de bytes a serem escritos. Caso esse
+     * parâmetro não seja fornecido, o valor dele será sizeof(tipo).
+     * 
+     * @return DataOutputStream& Retorna uma referência para este objeto.
+     */
+    template<typename tipo>
+    DataOutputStream &escreverPorPonteiro(tipo *ptrValor, int tamanhoDoValor = sizeof(tipo))
+    {
+        // reinterpret_cast faz a conversão do ponteiro para "tipo_byte *".
+        // Isso é feito para que eu possa iterar sobre os bytes do valor.
+        tipo_byte *inicio = reinterpret_cast<tipo_byte *>(ptrValor);
         
-        /**
-         * @brief Copia bytes do ponteiro recebido para o vetor deste objeto.
-         * 
-         * @tparam tipo Tipo do que se deseja escrever.
-         * @param ptrValor Ponteiro para o primeiro byte do valor a ser escrito.
-         * @param tamanhoDoValor Quantidade de bytes a serem escritos. Caso esse
-         * parâmetro não seja fornecido, o valor dele será sizeof(tipo).
-         * 
-         * @return DataOutputStream& Retorna uma referência para este objeto.
-         */
-        template<typename tipo>
-        DataOutputStream &escreverPtr(tipo *ptrValor, int tamanhoDoValor = sizeof(tipo))
-        {
-            // reinterpret_cast faz a conversão do ponteiro para "tipo_byte *".
-            // Isso é feito para que eu possa iterar sobre os bytes do valor.
-            tipo_byte *inicio = reinterpret_cast<tipo_byte *>(ptrValor);
-            
-            // como inicio aponta para o primeiro byte do valor e inicio + tamanhoDoValor
-            // apontará para a posição após o último byte do valor, o .insert() copia
-            // todos bytes do valor para o final do vetor bytes.
-            bytes.insert(obterCursor(), inicio, inicio + tamanhoDoValor);
+        return escreverPorIterador(inicio, inicio + tamanhoDoValor);
+    }
 
-            return *this; // retorna uma referência para este objeto.
-        }
+    /**
+     * @brief Escreve tipos primitivos e objetos com tamanho pré definido no
+     * vetor deste objeto.
+     * 
+     * @tparam tipo Tipo do que se deseja escrever.
+     * @param valor Valor que se deseja escrever.
+     * @param tamanhoDoValor Tamanho em bytes que o valor gasta. Caso esse parâmetro
+     * não seja fornecido, o seu valor será sizeof(tipo).
+     * 
+     * @return DataOutputStream& Retorna uma referência para este objeto.
+     */
+    template<typename tipo>
+    DataOutputStream &escrever(tipo &valor, int tamanhoDoValor = sizeof(tipo))
+    {
+        return escreverPorPonteiro(&valor);
+    }
 
-        /**
-         * @brief Escreve tipos primitivos e objetos com tamanho pré definido no
-         * vetor deste objeto.
-         * 
-         * @tparam tipo Tipo do que se deseja escrever.
-         * @param valor Valor que se deseja escrever.
-         * @param tamanhoDoValor Tamanho em bytes que o valor gasta. Caso esse parâmetro
-         * não seja fornecido, o seu valor será sizeof(tipo).
-         * 
-         * @return DataOutputStream& Retorna uma referência para este objeto.
-         */
-        template<typename tipo>
-        DataOutputStream &escrever(tipo &valor, int tamanhoDoValor = sizeof(tipo))
-        {
-            return escreverPtr(&valor);
-        }
+    /**
+     * @brief Escreve uma string no vetor deste objeto. As strings têm um tratamento
+     * especial pois é necessário escrever primeiro o tamanho delas antes de
+     * escrever os seus caracteres.
+     * 
+     * @param str String a ser escrita.
+     * 
+     * @return DataOutputStream& Retorna uma referência para este objeto.
+     */
+    DataOutputStream &escreverString(string &str)
+    {
+        str_size_type tamanho = str.length();
 
-        /**
-         * @brief Escreve uma string no vetor deste objeto. As strings têm um tratamento
-         * especial pois é necessário escrever primeiro o tamanho delas antes de
-         * escrever os seus caracteres.
-         * 
-         * @param str String a ser escrita.
-         * 
-         * @return DataOutputStream& Retorna uma referência para este objeto.
-         */
-        DataOutputStream &escreverString(string &str)
-        {
-            str_size_type tamanho = str.length();
+        escrever(tamanho); // Escreve primeiro a quantidade de bytes que a string gasta
 
-            escrever(tamanho); // Escreve primeiro a quantidade de bytes que a string gasta
+        return escreverPorPonteiro(const_cast<char *>( str.c_str() ), tamanho); // Agora, escreve a string
+    }
 
-            return escreverPtr(const_cast<char *>( str.c_str() ), tamanho); // Agora, escreve a string
-        }
-
-		/**
-		 * @brief Escreve os dados de um DataOutputStream no vetor deste objeto.
-		 *
-		 * @param out DataOutputStream a ser mesclado com o atual.
-		 *
-		 * @return DataOutputStream& Retorna uma referência para este objeto.
-		 */
-		DataOutputStream& escreverDataOutputStream(DataOutputStream out)
-		{
-			escreverPtr(out.begin(), )
-
-			return *this;
-		}
+    /**
+     * @brief Escreve os dados de um DataOutputStream no vetor deste objeto.
+     *
+     * @param out DataOutputStream a ser mesclado com o atual.
+     *
+     * @return DataOutputStream& Retorna uma referência para este objeto.
+     */
+    DataOutputStream& escreverDataOutputStream(DataOutputStream &out)
+    {
+        return escreverPorIterador(out.begin(), out.obterCursor());
+    }
 };
 
 // ------------------------- Operadores
@@ -227,6 +222,13 @@ DataOutputStream &operator<<(DataOutputStream &dataOutputStream, const char *var
     return dataOutputStream << str;
 }
 
+DataOutputStream &operator<<(
+    DataOutputStream &dataOutputStream,
+    DataOutputStream &variavel)
+{
+    return dataOutputStream.escreverDataOutputStream(variavel);
+}
+
 ostream &operator<<(ostream &ostream, DataOutputStream &out)
 {
     if (out.capacity() > 0)
@@ -237,16 +239,16 @@ ostream &operator<<(ostream &ostream, DataOutputStream &out)
         // Ex.:
         // ostream_iterator<int> myiter(cout, ","); // declara um iterador sobre cout
         // *myiter = 100 // imprime "100" e depois "," resultando em "100,"
-        copy( out.begin(), out.end() - 1, ostream_iterator<int>(cout, ",") );
+        copy( out.begin(), out.end() - 1, ostream_iterator<int>(ostream, ",") );
         cout << (int) *out.end();
     }
 
     return ostream << endl;
 }
 
-ofstream &operator<<(ofstream &ofstream, DataOutputStream out)
+fstream &operator<<(fstream &fstream, DataOutputStream &out)
 {
-    ofstream.write( reinterpret_cast<char *>( out.begin().base() ), out.size() );
+    fstream.write( reinterpret_cast<char *>( out.begin().base() ), out.capacity() );
 
-    return ofstream;
+    return fstream;
 }

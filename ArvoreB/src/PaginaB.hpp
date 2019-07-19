@@ -16,83 +16,78 @@ using namespace std;
 template<typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS>
 class PaginaB : public Serializavel
 {
-    private:
-        // ------------------------- Campos
+private:
+    // ------------------------- Campos
 
-        /** Guardará os dados da página que vierem do arquivo. */
-        DataOutputStream bytes;
-        int numeroDeElementos;
-        vector<TIPO_DAS_CHAVES> chaves;
-        vector<TIPO_DOS_DADOS> dados;
-        vector<file_pointer_type> ponteiros;
+    /** Guardará os dados da página que vierem do arquivo. */
+    DataInputStream bytes;
+    int numeroDeElementos;
 
-        // ------------------------- Construtores
+public:
+    // ------------------------- Campos
+    
+    const vector<TIPO_DAS_CHAVES> chaves;
+    const vector<TIPO_DOS_DADOS> dados;
+    const vector<file_pointer_type> ponteiros;
 
-        PaginaB(int maximoDeBytesParaAChave,
-            int maximoDeBytesParaODado,
-            int numeroDeChavesPorPagina,
-            int ordemDaArvore,
-            int numeroDeElementos) :
+    // ------------------------- Construtores
 
-            maximoDeBytesParaAChave(maximoDeBytesParaAChave),
-            maximoDeBytesParaODado(maximoDeBytesParaODado),
-            numeroDeChavesPorPagina(numeroDeChavesPorPagina),
-            ordemDaArvore(ordemDaArvore),
-            numeroDeElementos(numeroDeElementos) {}
+    /**
+     * @brief Constrói uma nova página vazia.
+     */
+    PaginaB() {}
 
-    public:
-        // ------------------------- Campos
+    /**
+     * @brief Constrói uma nova página a partir do vetor de bytes do DataInputStream.
+     * 
+     * @param bytes DataInputStream com o vetor de bytes da página.
+     */
+    PaginaB(DataInputStream &bytes) : bytes(bytes) {}
 
-        const int maximoDeBytesParaAChave;
-        const int maximoDeBytesParaODado;
-        const int numeroDeChavesPorPagina;
-        const int ordemDaArvore;
+    // ------------------------- Métodos herdados de Serializavel
 
-        // ------------------------- Construtores
+    virtual int obterTamanhoMaximoEmBytes() override
+    {
+        return sizeof(int) + // bytes para guardar a quantidade de elementos na página
+            ordemDaArvore * sizeof(file_pointer_type) + // bytes para os ponteiros
+            numeroDeChavesPorPagina * maximoDeBytesParaAChave + // bytes para as chaves
+            numeroDeChavesPorPagina * maximoDeBytesParaODado; // bytes para os dados
+    }
 
-        PaginaB(int maximoDeBytesParaAChave,
-            int maximoDeBytesParaODado,
-            int ordemDaArvore) :
+    virtual DataOutputStream gerarDataOutputStream(DataOutputStream out) override
+    {
+        Serializavel chave;
+        Serializavel dado;
 
-            PaginaB(maximoDeBytesParaAChave,
-                maximoDeBytesParaODado,
-                ordemDaArvore - 1,
-                ordemDaArvore, 0) {}
+        out << numeroDeElementos << ponteiros.at(0);
 
-        PaginaB(vetor_de_bytes bytes) : bytes(bytes) {}
-
-        // ------------------------- Métodos
-
-        int obterTamanhoMaximoEmBytes()
+        for (size_t i = 0; i < numeroDeChavesPorPagina; i++)
         {
-            return sizeof(int) + // bytes para guardar a quantidade de elementos na página
-                ordemDaArvore * sizeof(file_pointer_type) + // bytes para os ponteiros
-                numeroDeChavesPorPagina * maximoDeBytesParaAChave + // bytes para as chaves
-                numeroDeChavesPorPagina * maximoDeBytesParaODado; // bytes para os dados
+            chave = chaves.at(i);
+            dado = dados.at(i);
+
+            out << chave;
+            out << dado;
+            out << ponteiros.at(i + 1);
         }
+    }
 
-        DataOutputStream gerarDataOutputStream(DataOutputStream out)
-        {
-			Serializavel chave;
-			Serializavel dado;
+    virtual void lerBytes(DataInputStream &input) override
+    {
+        input >> numeroDeElementos;
+    }
 
-            out << numeroDeElementos << ponteiros.at(0);
+    // ------------------------- Métodos
 
-			for (size_t i = 0; i < numeroDeChavesPorPagina; i++)
-			{
-				chave = chaves.at(i);
-				dado = dados.at(i);
-
-				out << chave;
-				out << dado;
-				out << ponteiros.at(i + 1);
-			}
-        }
-
-        void lerBytes(DataInputStream input)
-        {
-            input >> numeroDeElementos;
-        }
+    /**
+     * @brief Retorna o número de elementos da página caso ela tenha sido carregada.
+     * 
+     * @return int Retorna o número de elementos da página.
+     */
+    int obterNumeroDeElementos()
+    {
+        return numeroDeElementos;
+    }
 };
 
 template<typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS>

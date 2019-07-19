@@ -23,62 +23,74 @@ using namespace std;
  */
 class Student : public Serializavel
 {
-    public:
-        string nome;
-        int idade;
-        
-        Student(string nome, int idade) : nome(nome), idade(idade) {}
-        Student() : Student("Desconhecido", 0) {}
+public:
+    string nome;
+    int idade;
+    
+    Student(string nome, int idade) : nome(nome), idade(idade) {}
+    Student() : Student("Desconhecido", 0) {}
 
-        int obterTamanhoMaximoEmBytes()
-        {
-            return sizeof(str_size_type) + padraoTamanhoMaximoStrings + sizeof(int);
-        }
+    /** Recomendo a leitura do link abaixo para entender o porquê de eu usar "using" aqui.
+     * 
+     * https://stackoverflow.com/questions/14212190/c-issue-with-function-overloading-in-an-inherited-class
+     */
+    using Serializavel::gerarDataOutputStream;
 
-        DataOutputStream gerarDataOutputStream(DataOutputStream out)
-        {
-            return out << nome << idade;
-        }
+    virtual int obterTamanhoMaximoEmBytes() override
+    {
+        return sizeof(str_size_type) + padraoTamanhoMaximoStrings + sizeof(int);
+    }
 
-        void lerBytes(DataInputStream input)
-        {
-            input >> nome >> idade;
-        }
+    virtual DataOutputStream gerarDataOutputStream(DataOutputStream out) override
+    {
+        return out << nome << idade;
+    }
 
-        Student &imprimir()
-        {
-            cout << "nome = " << nome << ", idade = " << idade << endl;
+    virtual void lerBytes(DataInputStream &input) override
+    {
+        input >> nome >> idade;
+    }
 
-            return *this;
-        }
+    Student &imprimir()
+    {
+        cout << "nome = " << nome << ", idade = " << idade << endl;
 
-        DataOutputStream imprimirVetor()
-        {
-            auto out = gerarDataOutputStream();
+        return *this;
+    }
 
-            cout << out;
+    DataOutputStream imprimirVetor()
+    {
+        auto out = gerarDataOutputStream();
 
-            return out;
-        }
+        cout << out;
+
+        return out;
+    }
 };
 
 int main()
 {
 	Student one("axell", 19);
-    
     one.imprimir();
     
-	ofstream ofs("fifthgrade.ros", ios::binary);
-    ofs << one;
-    ofs.close();
+    // Apenas para criar ou zerar o arquivo
+    fstream("fifthgrade.ros", fstream::out | fstream::trunc).close();
+	fstream stream("fifthgrade.ros", fstream::binary | fstream::in | fstream::out);
+
+    // https://programmingdimension.wordpress.com/2015/04/30/seekg-tellg-seekp-tellp/
+    stream.seekp(0);
+    stream << one;
+
+    one.nome = "batista";
+    one.idade = 20;
+    stream << one;
     
     Student two;
-
     two.imprimir();
-
-	ifstream ifs("fifthgrade.ros", ios::binary);
-    ifs >> two;
-    ifs.close();
+    
+    stream.seekg(0);
+    stream >> two;
+    stream >> two;
 
     two.imprimir();
 

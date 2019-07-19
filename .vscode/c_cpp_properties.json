@@ -3,21 +3,18 @@
         {
             "name": "Win32",
             "includePath": [
-                "${workspaceFolder}/**",
-                "c:/cygwin64/lib/gcc/x86_64-pc-cygwin/7.3.0/include/**",
-                "C:/cygwin64/lib/gcc/x86_64-pc-cygwin/6.4.0/include/**",
-                "c:/cygwin64/lib/w32api",
-                "c:/cygwin64/usr/include/**"
+                "${workspaceFolder}/**"
             ],
             "defines": [
                 "_DEBUG",
                 "UNICODE",
                 "_UNICODE"
             ],
+            "windowsSdkVersion": "8.1",
             "compilerPath": "C:/cygwin64/bin/g++.exe",
             "cStandard": "c11",
             "cppStandard": "c++17",
-            "intelliSenseMode": "clang-x64"
+            "intelliSenseMode": "gcc-x64"
         }
     ],
     "version": 4
