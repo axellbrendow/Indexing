@@ -8,6 +8,7 @@
 
 #include "templates/tipos.hpp"
 #include "templates/serializavel.hpp"
+#include "ArvoreB.hpp"
 
 #include <iostream>
 
@@ -22,6 +23,24 @@ private:
     /** Guardará os dados da página que vierem do arquivo. */
     DataInputStream bytes;
     int numeroDeElementos;
+
+	const int maximoDeBytesParaAChave;
+	const int maximoDeBytesParaODado;
+	const int numeroDeChavesPorPagina;
+	const int ordemDaArvore;
+
+    PaginB(DataInputStream &bytes,
+        int numeroDeElementos,
+        int maximoDeBytesParaAChave,
+        int maximoDeBytesParaODado,
+        int numeroDeChavesPorPagina,
+        int ordemDaArvore) :
+            bytes(bytes),
+            numeroDeElementos(numeroDeElementos),
+            maximoDeBytesParaAChave(maximoDeBytesParaAChave),
+            maximoDeBytesParaODado(maximoDeBytesParaODado),
+            numeroDeChavesPorPagina(numeroDeChavesPorPagina),
+            ordemDaArvore(ordemDaArvore)
 
 public:
     // ------------------------- Campos
@@ -74,7 +93,23 @@ public:
 
     virtual void lerBytes(DataInputStream &input) override
     {
-        input >> numeroDeElementos;
+        TIPO_DAS_CHAVES chave;
+        TIPO_DOS_DADOS dado;
+        file_pointer_type ponteiro;
+
+        input >> numeroDeElementos >> ponteiro;
+        ponteiros[0] = ponteiro;
+
+        for (size_t i = 0; i < numeroDeChavesPorPagina; i++)
+        {
+            input >> chave;
+            input >> dado;
+            input >> ponteiro;
+
+            chaves[i] = chave;
+            dados[i] = dado;
+            ponteiros[i + 1] = ponteiro;
+        }
     }
 
     // ------------------------- Métodos

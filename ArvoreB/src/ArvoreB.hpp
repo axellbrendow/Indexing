@@ -19,6 +19,11 @@ using namespace std;
 template<typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS>
 class ArvoreB
 {
+protected:
+	Pagina paginaPai;
+	Pagina paginaFilha;
+	Pagina paginaIrma;
+
 public:
 	// ------------------------- Typedefs
 
@@ -38,19 +43,24 @@ public:
 	const int numeroDeChavesPorPagina;
 	const int ordemDaArvore;
 
-	const Pagina paginaPai;
-	const Pagina paginaFilha;
-	const Pagina paginaIrma;
-
 	// ------------------------- Construtores e destrutores
 
 	ArvoreB(string nomeDoArquivo, int ordemDaArvore) :
 		nomeDoArquivo(nomeDoArquivo),
-		arquivo( fstream(nomeDoArquivo, ios::binary | ios::in | ios::out) )
+		arquivo( fstream(nomeDoArquivo, fstream::binary | fstream::in | fstream::out) ),
+		numeroDeChavesPorPagina(ordemDaArvore - 1),
+		ordemDaArvore(ordemDaArvore)
 	{
-		// declval -> http://www.cplusplus.com/reference/utility/declval/?kw=declval
-		maximoDeBytesParaAChave = declval<TIPO_DAS_CHAVES>().obterTamanhoMaximoEmBytes();
-		maximoDeBytesParaODado = declval<TIPO_DOS_DADOS>().obterTamanhoMaximoEmBytes();
+		// is_fundamental<> checa se o tipo da chave é primitivo
+		// https://stackoverflow.com/questions/580922/identifying-primitive-types-in-templates
+		maximoDeBytesParaAChave = is_fundamental<TIPO_DAS_CHAVES>::value ?
+			sizeof(TIPO_DAS_CHAVES) :
+			// declval -> http://www.cplusplus.com/reference/utility/declval/?kw=declval
+			declval<TIPO_DAS_CHAVES>().obterTamanhoMaximoEmBytes();
+			
+		maximoDeBytesParaODado = is_fundamental<TIPO_DOS_DADOS>::value ?
+			sizeof(TIPO_DOS_DADOS) :
+			declval<TIPO_DOS_DADOS>().obterTamanhoMaximoEmBytes();
 	}
 
 	// ------------------------- Métodos

@@ -30,9 +30,9 @@ int main()
 
     vec.resize(6);
 
-    for (auto &&i : vec)
+    for (size_t i = 0; i < vec.capacity(); i++)
     {
-        std::cout << i << ",";
+        std::cout << vec.at(i) << ",";
     }
     std::cout << std::endl;
 
