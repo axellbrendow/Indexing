@@ -92,11 +92,35 @@ public:
 	 * @return false Caso um erro ocorra.
 	 */
 	bool excluir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado);
-	
+
+	/**
+	 * @brief Exclui o primeiro registro que for encontrado com a chave informada.
+	 * 
+	 * @param chave Chave a ser procurada.
+	 * 
+	 * @return TIPO_DOS_DADOS Retorna TIPO_DOS_DADOS() caso a chave não seja encontrada.
+	 * Ou seja, para chegar se houve falha, faça if (excluir(chave) == TIPO_DOS_DADOS()).
+	 * Caso contrário, o dado correspondente à chave.
+	 */
 	TIPO_DOS_DADOS excluir(TIPO_DAS_CHAVES chave);
 	
+	/**
+	 * @brief Exclui todos os registros que forem encontrados com a chave informada.
+	 * 
+	 * @param chave Chave a ser procurada.
+	 * 
+	 * @return vector<TIPO_DOS_DADOS> Vetor com cada dado correspondente à chave.
+	 */
 	vector<TIPO_DOS_DADOS> excluirRegistrosComAChave(TIPO_DAS_CHAVES chave);
 
+	/**
+	 * @brief Procura o primeiro registro com a chave informada e pega o dado
+	 * correspondente à ela.
+	 * 
+	 * @param chave Chave a ser procurada.
+	 * 
+	 * @return TIPO_DOS_DADOS Dado correspondente à chave.
+	 */
 	TIPO_DOS_DADOS pesquisar(TIPO_DAS_CHAVES chave);
 
 	vector<TIPO_DOS_DADOS> listarDadosComAChave(TIPO_DAS_CHAVES chave);
@@ -105,5 +129,5 @@ public:
 		TIPO_DAS_CHAVES chaveMenor,
 		TIPO_DAS_CHAVES chaveMaior);
 
-	void printar();
+	int printar() { return NULL; }
 };
