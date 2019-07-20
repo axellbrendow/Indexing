@@ -179,28 +179,7 @@ public:
 
 	/**
 	 * @brief Imprime, na saída padrão, uma representação vertical da árvore.
-	 * A saída é similar à do comando "tree /f" do windows. Exemplo:
-	 * 
-	 * @code
-	 * render3
-	 * │   r3_types.js
-	 * │   util.d.ts
-	 * │   util.js
-	 * │
-	 * └───view
-	 *     │   api.d.ts
-	 *     │   api.js
-	 *     │   compiler.d.ts
-	 *     │   compiler.js
-	 *     │
-	 *     ├───i18n
-	 *     │       context.d.ts
-	 *     │       context.js
-	 *     │
-	 *     └───i19n
-	 *             serializer.d.ts
-	 *             serializer.js
-	 * @endcode
+	 * A saída é similar à do comando "tree /f" do windows.
 	 */
 	void print();
 };
