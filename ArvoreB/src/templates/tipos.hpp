@@ -42,6 +42,10 @@ typedef vector<tipo_byte> vetor_de_bytes;
 
 /**
  * @brief Tipo de iterador para vetores de bytes.
+ * 
+ * <p>Iteradores são usados para obter, alterar e andar sobre elementos de um
+ * container (ex.: arranjo).</p>
+ * 
  * <p>O tipo vetor_de_bytes::iterator é apenas uma classe que tem um único
  * campo que é um ponteiro. Objetos construídos por meio dessa classe podem ser
  * usados como se fossem ponteiros, ou seja, aceitam operações aritméticas, lógicas,
@@ -64,11 +68,11 @@ void debugIterar(tipo start, tipo end)
     {
         for (tipo i = start + 1; i != end; i++)
         {
-            std::cout << (int) *i << " ";
+            cout << (int) *i << " ";
         }
     }
     
-    std::cout << endl;
+    cout << endl;
 }
 
 template<typename tipo>
@@ -90,8 +94,8 @@ void debugCursorComSaida(iterador start, iterador end, tipo *output)
 {
     for (iterador i = start; i != end; i++)
     {
-        std::cout << "(input) " << (int) *i << ",";
+        cout << "(input) " << (int) *i << ",";
         *output = *i;
-        std::cout << "(output) " << (int) *output++ << ",";
-    } std::cout << endl;
+        cout << "(output) " << (int) *output++ << ",";
+    } cout << endl;
 }

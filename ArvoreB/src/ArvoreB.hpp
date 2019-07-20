@@ -20,9 +20,15 @@ template<typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS>
 class ArvoreB
 {
 protected:
+	// ------------------------- Campos
+
 	Pagina paginaPai;
 	Pagina paginaFilha;
 	Pagina paginaIrma;
+
+	// ------------------------- Métodos
+	
+	bool inserirRecursivo(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado);
 
 public:
 	// ------------------------- Typedefs
@@ -65,4 +71,39 @@ public:
 
 	// ------------------------- Métodos
 	
+	/**
+	 * @brief Insere o par (chave, dado) na árvore.
+	 * 
+	 * @param chave Chave a ser inserida.
+	 * @param dado Dado a ser inserido.
+	 * 
+	 * @return true Caso tudo corra bem.
+	 * @return false Caso um erro ocorra.
+	 */
+	bool inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado);
+	
+	/**
+	 * @brief Remove o par (chave, dado) da árvore.
+	 * 
+	 * @param chave Chave a ser removida.
+	 * @param dado Dado a ser removido.
+	 * 
+	 * @return true Caso tudo corra bem.
+	 * @return false Caso um erro ocorra.
+	 */
+	bool excluir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado);
+	
+	TIPO_DOS_DADOS excluir(TIPO_DAS_CHAVES chave);
+	
+	vector<TIPO_DOS_DADOS> excluirRegistrosComAChave(TIPO_DAS_CHAVES chave);
+
+	TIPO_DOS_DADOS pesquisar(TIPO_DAS_CHAVES chave);
+
+	vector<TIPO_DOS_DADOS> listarDadosComAChave(TIPO_DAS_CHAVES chave);
+
+	vector<TIPO_DOS_DADOS> listarDadosComAChaveEntre(
+		TIPO_DAS_CHAVES chaveMenor,
+		TIPO_DAS_CHAVES chaveMaior);
+
+	void printar();
 };

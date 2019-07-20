@@ -177,8 +177,8 @@ public:
 	/**
 	 * @brief Valor retornado ao usar um objeto desta classe numa expressão booleana.
 	 *
-	 * @return true Retorna true caso haja dados para se consumir.
-	 * @return false Retorna false caso não haja dados para se consumir.
+	 * @return true Caso haja dados para se consumir.
+	 * @return false Caso não haja dados para se consumir.
 	 */
 	explicit operator bool()
 	{

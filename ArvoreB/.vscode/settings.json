@@ -33,6 +33,7 @@
         "system_error": "cpp",
         "tuple": "cpp",
         "typeinfo": "cpp",
-        "xtr1common": "cpp"
+        "xtr1common": "cpp",
+        "functional": "cpp"
     }
 }
