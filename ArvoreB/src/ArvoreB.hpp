@@ -59,10 +59,11 @@ public:
 	{
 		// is_fundamental<> checa se o tipo da chave é primitivo
 		// https://stackoverflow.com/questions/580922/identifying-primitive-types-in-templates
+		
 		maximoDeBytesParaAChave = is_fundamental<TIPO_DAS_CHAVES>::value ?
 			sizeof(TIPO_DAS_CHAVES) :
-			// declval -> http://www.cplusplus.com/reference/utility/declval/?kw=declval
 			declval<TIPO_DAS_CHAVES>().obterTamanhoMaximoEmBytes();
+			// declval -> http://www.cplusplus.com/reference/utility/declval/?kw=declval
 			
 		maximoDeBytesParaODado = is_fundamental<TIPO_DOS_DADOS>::value ?
 			sizeof(TIPO_DOS_DADOS) :
@@ -98,9 +99,20 @@ public:
 	 * 
 	 * @param chave Chave a ser procurada.
 	 * 
-	 * @return TIPO_DOS_DADOS Retorna TIPO_DOS_DADOS() caso a chave não seja encontrada.
-	 * Ou seja, para chegar se houve falha, faça if (excluir(chave) == TIPO_DOS_DADOS()).
-	 * Caso contrário, o dado correspondente à chave.
+	 * @return TIPO_DOS_DADOS Caso tudo corra bem, retorna o dado correspondente
+	 * à chave. Caso contrário, retorna
+	 * 
+	 * @code{.cpp}
+	 * TIPO_DOS_DADOS() // Ex.: se os dados são inteiros, retorna int(), que é 0.
+	 * @endcode
+	 * 
+	 * Em casos de erro, uma flag interna é ativada. Dessa forma, você pode usar
+	 * qualquer um dos dois ifs abaixo para checar erros:
+	 * 
+	 * @code{.cpp}
+	 * if (ArvoreB.excluir(chave) == TIPO_DOS_DADOS()) ArvoreB.printError();
+	 * if (ArvoreB.erro) ArvoreB.printError();
+	 * @endcode
 	 */
 	TIPO_DOS_DADOS excluir(TIPO_DAS_CHAVES chave);
 	
@@ -119,15 +131,76 @@ public:
 	 * 
 	 * @param chave Chave a ser procurada.
 	 * 
-	 * @return TIPO_DOS_DADOS Dado correspondente à chave.
+	 * @return TIPO_DOS_DADOS Caso tudo corra bem, retorna o dado correspondente
+	 * à chave. Caso contrário, retorna
+	 * 
+	 * @code{.cpp}
+	 * TIPO_DOS_DADOS() // Ex.: se os dados são inteiros, retorna int(), que é 0.
+	 * @endcode
+	 * 
+	 * Em casos de erro, uma flag interna é ativada. Dessa forma, você pode usar
+	 * qualquer um dos dois ifs abaixo para checar erros:
+	 * 
+	 * @code{.cpp}
+	 * if (ArvoreB.excluir(chave) == TIPO_DOS_DADOS()) ArvoreB.printError();
+	 * if (ArvoreB.erro) ArvoreB.printError();
+	 * @endcode
 	 */
 	TIPO_DOS_DADOS pesquisar(TIPO_DAS_CHAVES chave);
-
+	
+	/**
+	 * @brief Procura todos os registros que forem encontrados com a chave informada.
+	 * 
+	 * @param chave Chave a ser procurada.
+	 * 
+	 * @return vector<TIPO_DOS_DADOS> Vetor com cada dado correspondente à chave.
+	 */
 	vector<TIPO_DOS_DADOS> listarDadosComAChave(TIPO_DAS_CHAVES chave);
 
+	/**
+	 * @brief Procura todos os registros que forem encontrados com a chave entre
+	 * as chaves informadas. Inclui as próprias chaves. O intervalo é
+	 * [chaveMenor, chaveMaior].
+	 * 
+	 * <p><b>Caso TIPO_DAS_CHAVES e TIPO_DOS_DADOS forem primitivos, ignore o
+	 * próximo parágrafo.</b></p>
+	 * 
+	 * <p><b>Esta função exige que TIPO_DAS_CHAVES e TIPO_DOS_DADOS sobrecarreguem
+	 * os operadores <= (menor ou igual) e >= (maior ou igual).</b></p>
+	 * 
+	 * @param chaveMenor Valor do limite inferior.
+	 * @param chaveMaior Valor do limite superior.
+	 * 
+	 * @return vector<TIPO_DOS_DADOS> Vetor com cada dado correspondente à chave.
+	 */
 	vector<TIPO_DOS_DADOS> listarDadosComAChaveEntre(
 		TIPO_DAS_CHAVES chaveMenor,
 		TIPO_DAS_CHAVES chaveMaior);
 
-	int printar() { return NULL; }
+	/**
+	 * @brief Imprime, na saída padrão, uma representação vertical da árvore.
+	 * A saída é similar à do comando "tree /f" do windows. Exemplo:
+	 * 
+	 * @code
+	 * render3
+	 * │   r3_types.js
+	 * │   util.d.ts
+	 * │   util.js
+	 * │
+	 * └───view
+	 *     │   api.d.ts
+	 *     │   api.js
+	 *     │   compiler.d.ts
+	 *     │   compiler.js
+	 *     │
+	 *     ├───i18n
+	 *     │       context.d.ts
+	 *     │       context.js
+	 *     │
+	 *     └───i19n
+	 *             serializer.d.ts
+	 *             serializer.js
+	 * @endcode
+	 */
+	void print();
 };

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['paginab',['PaginaB',['../class_pagina_b.html#a9ea242156b08998a52579ff588a49b01',1,'PaginaB::PaginaB()'],['../class_pagina_b.html#a7777f63fd8562543817bf004e0ea6686',1,'PaginaB::PaginaB(DataInputStream &amp;bytes)']]]
+  ['pesquisar',['pesquisar',['../class_arvore_b.html#a235973399b5bf70340495c84e26b2450',1,'ArvoreB']]],
+  ['print',['print',['../class_arvore_b.html#adad9da0658fe6b399b79c36252dc823c',1,'ArvoreB']]]
 ];

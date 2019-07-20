@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['nome',['nome',['../class_student.html#a21bf0748ceae38fe4f8886a60aacfeb9',1,'Student']]],
-  ['numerodechavesporpagina',['numeroDeChavesPorPagina',['../class_arvore_b.html#a49c412c79c14d050d175c048bbeb637f',1,'ArvoreB']]]
+  ['paginafilha',['paginaFilha',['../class_arvore_b.html#a824bc2248b1dbba354ee10e9ae4d33fb',1,'ArvoreB']]],
+  ['paginairma',['paginaIrma',['../class_arvore_b.html#aa57c68b4f89446e179f0181a4176be7b',1,'ArvoreB']]],
+  ['paginapai',['paginaPai',['../class_arvore_b.html#af102d41f247b25f90a08a86f195e8338',1,'ArvoreB']]]
 ];

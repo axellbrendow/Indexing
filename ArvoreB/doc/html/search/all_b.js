@@ -1,8 +1,7 @@
 var searchData=
 [
   ['obtercursor',['obterCursor',['../class_data_input_stream.html#aa06db35da8436f0d7028e395d6e48ca4',1,'DataInputStream::obterCursor()'],['../class_data_output_stream.html#ab83bd3045f7d3d4d45ab3e4bacdb033c',1,'DataOutputStream::obterCursor()']]],
-  ['obternumerodeelementos',['obterNumeroDeElementos',['../class_pagina_b.html#a87e29c2ff5ee48a1e842a0fcf11ddd93',1,'PaginaB']]],
-  ['obtertamanhomaximoembytes',['obterTamanhoMaximoEmBytes',['../class_student.html#a352cca1faa94a9b6395eb305bab1f1ac',1,'Student::obterTamanhoMaximoEmBytes()'],['../class_pagina_b.html#a1722112b0406cb7e50961dbc8183f7ca',1,'PaginaB::obterTamanhoMaximoEmBytes()'],['../class_serializavel.html#a614b2c74539381172fecc6422e92837f',1,'Serializavel::obterTamanhoMaximoEmBytes()']]],
+  ['obtertamanhomaximoembytes',['obterTamanhoMaximoEmBytes',['../class_student.html#a352cca1faa94a9b6395eb305bab1f1ac',1,'Student::obterTamanhoMaximoEmBytes()'],['../class_serializavel.html#a614b2c74539381172fecc6422e92837f',1,'Serializavel::obterTamanhoMaximoEmBytes()']]],
   ['obtervetor',['obterVetor',['../class_data_output_stream.html#ad1e600d1347d92831a2289715f2111bc',1,'DataOutputStream']]],
   ['one',['one',['../class_base.html#a7c648d83c1beed00c3d548080e9f46f2',1,'Base::one()'],['../class_derived.html#a5e9b39db0bd6aca9a429fd8af65aca67',1,'Derived::one()']]],
   ['operator_20bool',['operator bool',['../class_data_input_stream.html#ae310c7e775b743fab98ea0daf68b9898',1,'DataInputStream']]],

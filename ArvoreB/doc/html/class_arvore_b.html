@@ -65,6 +65,8 @@ $(function() {
 <a href="#pub-types">Tipos Públicos</a> &#124;
 <a href="#pub-methods">Membros públicos</a> &#124;
 <a href="#pub-attribs">Atributos Públicos</a> &#124;
+<a href="#pro-methods">Membros protegidos</a> &#124;
+<a href="#pro-attribs">Atributos Protegidos</a> &#124;
 <a href="class_arvore_b-members.html">Mostrar lista completa dos membros</a>  </div>
   <div class="headertitle">
 <div class="title">Referência à classe Template ArvoreB&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;</div>  </div>
@@ -83,6 +85,30 @@ Tipos Públicos</h2></td></tr>
 Membros públicos</h2></td></tr>
 <tr class="memitem:a44c83826f7d230150d66a80f20b61a77"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#a44c83826f7d230150d66a80f20b61a77">ArvoreB</a> (string <a class="el" href="class_arvore_b.html#ad63dbfca400b5f71682400ece826e9f4">nomeDoArquivo</a>, int <a class="el" href="class_arvore_b.html#a7a6d3550624b13c388c55cd67fff2f0a">ordemDaArvore</a>)</td></tr>
 <tr class="separator:a44c83826f7d230150d66a80f20b61a77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e55ed43d742fbe3e8b6de881d62a7d5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#a2e55ed43d742fbe3e8b6de881d62a7d5">inserir</a> (TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)</td></tr>
+<tr class="memdesc:a2e55ed43d742fbe3e8b6de881d62a7d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insere o par (chave, dado) na árvore.  <a href="#a2e55ed43d742fbe3e8b6de881d62a7d5">Mais...</a><br /></td></tr>
+<tr class="separator:a2e55ed43d742fbe3e8b6de881d62a7d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7426cc32f204237a504c5f0b47381856"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#a7426cc32f204237a504c5f0b47381856">excluir</a> (TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)</td></tr>
+<tr class="memdesc:a7426cc32f204237a504c5f0b47381856"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove o par (chave, dado) da árvore.  <a href="#a7426cc32f204237a504c5f0b47381856">Mais...</a><br /></td></tr>
+<tr class="separator:a7426cc32f204237a504c5f0b47381856"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0298f02f5882698733c138a589c8c81"><td class="memItemLeft" align="right" valign="top">TIPO_DOS_DADOS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#aa0298f02f5882698733c138a589c8c81">excluir</a> (TIPO_DAS_CHAVES chave)</td></tr>
+<tr class="memdesc:aa0298f02f5882698733c138a589c8c81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exclui o primeiro registro que for encontrado com a chave informada.  <a href="#aa0298f02f5882698733c138a589c8c81">Mais...</a><br /></td></tr>
+<tr class="separator:aa0298f02f5882698733c138a589c8c81"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83152deaf79b3c4e6d73d8f8be483cef"><td class="memItemLeft" align="right" valign="top">vector&lt; TIPO_DOS_DADOS &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#a83152deaf79b3c4e6d73d8f8be483cef">excluirRegistrosComAChave</a> (TIPO_DAS_CHAVES chave)</td></tr>
+<tr class="memdesc:a83152deaf79b3c4e6d73d8f8be483cef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exclui todos os registros que forem encontrados com a chave informada.  <a href="#a83152deaf79b3c4e6d73d8f8be483cef">Mais...</a><br /></td></tr>
+<tr class="separator:a83152deaf79b3c4e6d73d8f8be483cef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a235973399b5bf70340495c84e26b2450"><td class="memItemLeft" align="right" valign="top">TIPO_DOS_DADOS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#a235973399b5bf70340495c84e26b2450">pesquisar</a> (TIPO_DAS_CHAVES chave)</td></tr>
+<tr class="memdesc:a235973399b5bf70340495c84e26b2450"><td class="mdescLeft">&#160;</td><td class="mdescRight">Procura o primeiro registro com a chave informada e pega o dado correspondente à ela.  <a href="#a235973399b5bf70340495c84e26b2450">Mais...</a><br /></td></tr>
+<tr class="separator:a235973399b5bf70340495c84e26b2450"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02b1f155d76306201291f5e27e05c628"><td class="memItemLeft" align="right" valign="top">vector&lt; TIPO_DOS_DADOS &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#a02b1f155d76306201291f5e27e05c628">listarDadosComAChave</a> (TIPO_DAS_CHAVES chave)</td></tr>
+<tr class="memdesc:a02b1f155d76306201291f5e27e05c628"><td class="mdescLeft">&#160;</td><td class="mdescRight">Procura todos os registros que forem encontrados com a chave informada.  <a href="#a02b1f155d76306201291f5e27e05c628">Mais...</a><br /></td></tr>
+<tr class="separator:a02b1f155d76306201291f5e27e05c628"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a525c35eb70a1171d793cef2057c97bc9"><td class="memItemLeft" align="right" valign="top">vector&lt; TIPO_DOS_DADOS &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#a525c35eb70a1171d793cef2057c97bc9">listarDadosComAChaveEntre</a> (TIPO_DAS_CHAVES chaveMenor, TIPO_DAS_CHAVES chaveMaior)</td></tr>
+<tr class="memdesc:a525c35eb70a1171d793cef2057c97bc9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Procura todos os registros que forem encontrados com a chave entre as chaves informadas. Inclui as próprias chaves. O intervalo é [chaveMenor, chaveMaior].  <a href="#a525c35eb70a1171d793cef2057c97bc9">Mais...</a><br /></td></tr>
+<tr class="separator:a525c35eb70a1171d793cef2057c97bc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adad9da0658fe6b399b79c36252dc823c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#adad9da0658fe6b399b79c36252dc823c">print</a> ()</td></tr>
+<tr class="memdesc:adad9da0658fe6b399b79c36252dc823c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Imprime, na saída padrão, uma representação vertical da árvore. A saída é similar à do comando "tree /f" do windows (e algumas distribuições baseadas no kernel Linux). Exemplo:  <a href="#adad9da0658fe6b399b79c36252dc823c">Mais...</a><br /></td></tr>
+<tr class="separator:adad9da0658fe6b399b79c36252dc823c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Atributos Públicos</h2></td></tr>
@@ -96,12 +122,20 @@ Atributos Públicos</h2></td></tr>
 <tr class="separator:a49c412c79c14d050d175c048bbeb637f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7a6d3550624b13c388c55cd67fff2f0a"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#a7a6d3550624b13c388c55cd67fff2f0a">ordemDaArvore</a></td></tr>
 <tr class="separator:a7a6d3550624b13c388c55cd67fff2f0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4b58b7cbe70913d78069e1cdb46c4bd"><td class="memItemLeft" align="right" valign="top">const Pagina&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#aa4b58b7cbe70913d78069e1cdb46c4bd">paginaPai</a></td></tr>
-<tr class="separator:aa4b58b7cbe70913d78069e1cdb46c4bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a624dd6b149350ff9de564a8d64e77d44"><td class="memItemLeft" align="right" valign="top">const Pagina&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#a624dd6b149350ff9de564a8d64e77d44">paginaFilha</a></td></tr>
-<tr class="separator:a624dd6b149350ff9de564a8d64e77d44"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0a1bd9a243020f05c1296d9575d9291d"><td class="memItemLeft" align="right" valign="top">const Pagina&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#a0a1bd9a243020f05c1296d9575d9291d">paginaIrma</a></td></tr>
-<tr class="separator:a0a1bd9a243020f05c1296d9575d9291d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Membros protegidos</h2></td></tr>
+<tr class="memitem:a58fdfe47624aa745cef2281c555e71f1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#a58fdfe47624aa745cef2281c555e71f1">inserirRecursivo</a> (TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)</td></tr>
+<tr class="separator:a58fdfe47624aa745cef2281c555e71f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Atributos Protegidos</h2></td></tr>
+<tr class="memitem:af102d41f247b25f90a08a86f195e8338"><td class="memItemLeft" align="right" valign="top">Pagina&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#af102d41f247b25f90a08a86f195e8338">paginaPai</a></td></tr>
+<tr class="separator:af102d41f247b25f90a08a86f195e8338"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a824bc2248b1dbba354ee10e9ae4d33fb"><td class="memItemLeft" align="right" valign="top">Pagina&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#a824bc2248b1dbba354ee10e9ae4d33fb">paginaFilha</a></td></tr>
+<tr class="separator:a824bc2248b1dbba354ee10e9ae4d33fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa57c68b4f89446e179f0181a4176be7b"><td class="memItemLeft" align="right" valign="top">Pagina&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#aa57c68b4f89446e179f0181a4176be7b">paginaIrma</a></td></tr>
+<tr class="separator:aa57c68b4f89446e179f0181a4176be7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Documentação das definições de tipo</h2>
 <a id="ad63dbfca400b5f71682400ece826e9f4"></a>
@@ -159,6 +193,310 @@ template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
 </table>
 </div><div class="memdoc">
 
+</div>
+</div>
+<h2 class="groupheader">Documentação dos métodos</h2>
+<a id="a7426cc32f204237a504c5f0b47381856"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7426cc32f204237a504c5f0b47381856">&#9670;&nbsp;</a></span>excluir() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_arvore_b.html">ArvoreB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::excluir </td>
+          <td>(</td>
+          <td class="paramtype">TIPO_DAS_CHAVES&#160;</td>
+          <td class="paramname"><em>chave</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TIPO_DOS_DADOS&#160;</td>
+          <td class="paramname"><em>dado</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Remove o par (chave, dado) da árvore. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">chave</td><td>Chave a ser removida. </td></tr>
+    <tr><td class="paramname">dado</td><td>Dado a ser removido.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Retorna</dt><dd>true Caso tudo corra bem. </dd>
+<dd>
+false Caso um erro ocorra. </dd></dl>
+
+</div>
+</div>
+<a id="aa0298f02f5882698733c138a589c8c81"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0298f02f5882698733c138a589c8c81">&#9670;&nbsp;</a></span>excluir() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">TIPO_DOS_DADOS <a class="el" href="class_arvore_b.html">ArvoreB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::excluir </td>
+          <td>(</td>
+          <td class="paramtype">TIPO_DAS_CHAVES&#160;</td>
+          <td class="paramname"><em>chave</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Exclui o primeiro registro que for encontrado com a chave informada. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">chave</td><td>Chave a ser procurada.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Retorna</dt><dd>TIPO_DOS_DADOS Caso tudo corra bem, retorna o dado correspondente à chave. Caso contrário, retorna</dd></dl>
+<div class="fragment"><div class="line">TIPO_DOS_DADOS() <span class="comment">// Ex.: se os dados são inteiros, retorna int(), que é 0.</span></div></div><!-- fragment --><p>Em casos de erro, uma flag interna é ativada. Dessa forma, você pode usar qualquer um dos dois ifs abaixo para checar erros:</p>
+<div class="fragment"><div class="line"><span class="keywordflow">if</span> (<a class="code" href="class_arvore_b.html">ArvoreB</a>.<a class="code" href="class_arvore_b.html#a7426cc32f204237a504c5f0b47381856">excluir</a>(chave) == TIPO_DOS_DADOS()) <a class="code" href="class_arvore_b.html">ArvoreB</a>.printError();</div><div class="line"><span class="keywordflow">if</span> (<a class="code" href="class_arvore_b.html">ArvoreB</a>.erro) <a class="code" href="class_arvore_b.html">ArvoreB</a>.printError();</div></div><!-- fragment --> 
+</div>
+</div>
+<a id="a83152deaf79b3c4e6d73d8f8be483cef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a83152deaf79b3c4e6d73d8f8be483cef">&#9670;&nbsp;</a></span>excluirRegistrosComAChave()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt;TIPO_DOS_DADOS&gt; <a class="el" href="class_arvore_b.html">ArvoreB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::excluirRegistrosComAChave </td>
+          <td>(</td>
+          <td class="paramtype">TIPO_DAS_CHAVES&#160;</td>
+          <td class="paramname"><em>chave</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Exclui todos os registros que forem encontrados com a chave informada. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">chave</td><td>Chave a ser procurada.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Retorna</dt><dd>vector&lt;TIPO_DOS_DADOS&gt; Vetor com cada dado correspondente à chave. </dd></dl>
+
+</div>
+</div>
+<a id="a2e55ed43d742fbe3e8b6de881d62a7d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e55ed43d742fbe3e8b6de881d62a7d5">&#9670;&nbsp;</a></span>inserir()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_arvore_b.html">ArvoreB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::inserir </td>
+          <td>(</td>
+          <td class="paramtype">TIPO_DAS_CHAVES&#160;</td>
+          <td class="paramname"><em>chave</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TIPO_DOS_DADOS&#160;</td>
+          <td class="paramname"><em>dado</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Insere o par (chave, dado) na árvore. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">chave</td><td>Chave a ser inserida. </td></tr>
+    <tr><td class="paramname">dado</td><td>Dado a ser inserido.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Retorna</dt><dd>true Caso tudo corra bem. </dd>
+<dd>
+false Caso um erro ocorra. </dd></dl>
+
+</div>
+</div>
+<a id="a58fdfe47624aa745cef2281c555e71f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a58fdfe47624aa745cef2281c555e71f1">&#9670;&nbsp;</a></span>inserirRecursivo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_arvore_b.html">ArvoreB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::inserirRecursivo </td>
+          <td>(</td>
+          <td class="paramtype">TIPO_DAS_CHAVES&#160;</td>
+          <td class="paramname"><em>chave</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TIPO_DOS_DADOS&#160;</td>
+          <td class="paramname"><em>dado</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a02b1f155d76306201291f5e27e05c628"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02b1f155d76306201291f5e27e05c628">&#9670;&nbsp;</a></span>listarDadosComAChave()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt;TIPO_DOS_DADOS&gt; <a class="el" href="class_arvore_b.html">ArvoreB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::listarDadosComAChave </td>
+          <td>(</td>
+          <td class="paramtype">TIPO_DAS_CHAVES&#160;</td>
+          <td class="paramname"><em>chave</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Procura todos os registros que forem encontrados com a chave informada. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">chave</td><td>Chave a ser procurada.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Retorna</dt><dd>vector&lt;TIPO_DOS_DADOS&gt; Vetor com cada dado correspondente à chave. </dd></dl>
+
+</div>
+</div>
+<a id="a525c35eb70a1171d793cef2057c97bc9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a525c35eb70a1171d793cef2057c97bc9">&#9670;&nbsp;</a></span>listarDadosComAChaveEntre()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt;TIPO_DOS_DADOS&gt; <a class="el" href="class_arvore_b.html">ArvoreB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::listarDadosComAChaveEntre </td>
+          <td>(</td>
+          <td class="paramtype">TIPO_DAS_CHAVES&#160;</td>
+          <td class="paramname"><em>chaveMenor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TIPO_DAS_CHAVES&#160;</td>
+          <td class="paramname"><em>chaveMaior</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Procura todos os registros que forem encontrados com a chave entre as chaves informadas. Inclui as próprias chaves. O intervalo é [chaveMenor, chaveMaior]. </p>
+<p><b>Caso TIPO_DAS_CHAVES e TIPO_DOS_DADOS forem primitivos, ignore o próximo parágrafo.</b></p>
+<p><b>Esta função exige que TIPO_DAS_CHAVES e TIPO_DOS_DADOS sobrecarreguem os operadores &lt;= (menor ou igual) e &gt;= (maior ou igual).</b></p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">chaveMenor</td><td>Valor do limite inferior. </td></tr>
+    <tr><td class="paramname">chaveMaior</td><td>Valor do limite superior.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Retorna</dt><dd>vector&lt;TIPO_DOS_DADOS&gt; Vetor com cada dado correspondente à chave. </dd></dl>
+
+</div>
+</div>
+<a id="a235973399b5bf70340495c84e26b2450"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a235973399b5bf70340495c84e26b2450">&#9670;&nbsp;</a></span>pesquisar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">TIPO_DOS_DADOS <a class="el" href="class_arvore_b.html">ArvoreB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::pesquisar </td>
+          <td>(</td>
+          <td class="paramtype">TIPO_DAS_CHAVES&#160;</td>
+          <td class="paramname"><em>chave</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Procura o primeiro registro com a chave informada e pega o dado correspondente à ela. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">chave</td><td>Chave a ser procurada.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Retorna</dt><dd>TIPO_DOS_DADOS Caso tudo corra bem, retorna o dado correspondente à chave. Caso contrário, retorna</dd></dl>
+<div class="fragment"><div class="line">TIPO_DOS_DADOS() <span class="comment">// Ex.: se os dados são inteiros, retorna int(), que é 0.</span></div></div><!-- fragment --><p>Em casos de erro, uma flag interna é ativada. Dessa forma, você pode usar qualquer um dos dois ifs abaixo para checar erros:</p>
+<div class="fragment"><div class="line"><span class="keywordflow">if</span> (<a class="code" href="class_arvore_b.html">ArvoreB</a>.<a class="code" href="class_arvore_b.html#a7426cc32f204237a504c5f0b47381856">excluir</a>(chave) == TIPO_DOS_DADOS()) <a class="code" href="class_arvore_b.html">ArvoreB</a>.printError();</div><div class="line"><span class="keywordflow">if</span> (<a class="code" href="class_arvore_b.html">ArvoreB</a>.erro) <a class="code" href="class_arvore_b.html">ArvoreB</a>.printError();</div></div><!-- fragment --> 
+</div>
+</div>
+<a id="adad9da0658fe6b399b79c36252dc823c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adad9da0658fe6b399b79c36252dc823c">&#9670;&nbsp;</a></span>print()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_arvore_b.html">ArvoreB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::print </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Imprime, na saída padrão, uma representação vertical da árvore. A saída é similar à do comando "tree /f" do windows (e algumas distribuições baseadas no kernel Linux). Exemplo: </p>
+<div class="fragment"><div class="line">render3</div><div class="line">│   r3_types.js</div><div class="line">│   util.d.ts</div><div class="line">│   util.js</div><div class="line">│</div><div class="line">└───view</div><div class="line">    │   api.d.ts</div><div class="line">    │   api.js</div><div class="line">    │   compiler.d.ts</div><div class="line">    │   compiler.js</div><div class="line">    │</div><div class="line">    ├───i18n</div><div class="line">    │       context.d.ts</div><div class="line">    │       context.js</div><div class="line">    │</div><div class="line">    └───i19n</div><div class="line">            serializer.d.ts</div><div class="line">            serializer.js</div></div><!-- fragment --> 
 </div>
 </div>
 <h2 class="groupheader">Documentação dos dados membro</h2>
@@ -242,50 +580,74 @@ template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
 
 </div>
 </div>
-<a id="a624dd6b149350ff9de564a8d64e77d44"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a624dd6b149350ff9de564a8d64e77d44">&#9670;&nbsp;</a></span>paginaFilha</h2>
+<a id="a824bc2248b1dbba354ee10e9ae4d33fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a824bc2248b1dbba354ee10e9ae4d33fb">&#9670;&nbsp;</a></span>paginaFilha</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const Pagina <a class="el" href="class_arvore_b.html">ArvoreB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::paginaFilha</td>
+          <td class="memname">Pagina <a class="el" href="class_arvore_b.html">ArvoreB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::paginaFilha</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a0a1bd9a243020f05c1296d9575d9291d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0a1bd9a243020f05c1296d9575d9291d">&#9670;&nbsp;</a></span>paginaIrma</h2>
+<a id="aa57c68b4f89446e179f0181a4176be7b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa57c68b4f89446e179f0181a4176be7b">&#9670;&nbsp;</a></span>paginaIrma</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const Pagina <a class="el" href="class_arvore_b.html">ArvoreB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::paginaIrma</td>
+          <td class="memname">Pagina <a class="el" href="class_arvore_b.html">ArvoreB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::paginaIrma</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="aa4b58b7cbe70913d78069e1cdb46c4bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa4b58b7cbe70913d78069e1cdb46c4bd">&#9670;&nbsp;</a></span>paginaPai</h2>
+<a id="af102d41f247b25f90a08a86f195e8338"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af102d41f247b25f90a08a86f195e8338">&#9670;&nbsp;</a></span>paginaPai</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const Pagina <a class="el" href="class_arvore_b.html">ArvoreB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::paginaPai</td>
+          <td class="memname">Pagina <a class="el" href="class_arvore_b.html">ArvoreB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::paginaPai</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>

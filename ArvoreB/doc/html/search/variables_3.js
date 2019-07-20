@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['idade',['idade',['../class_student.html#a543887409539b9eb47337ba94141b3e0',1,'Student']]]
+  ['nome',['nome',['../class_student.html#a21bf0748ceae38fe4f8886a60aacfeb9',1,'Student']]],
+  ['numerodechavesporpagina',['numeroDeChavesPorPagina',['../class_arvore_b.html#a49c412c79c14d050d175c048bbeb637f',1,'ArvoreB']]]
 ];

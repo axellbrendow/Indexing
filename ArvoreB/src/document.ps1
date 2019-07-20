@@ -8,7 +8,7 @@ OUTPUT_LANGUAGE = Portuguese
 OUTPUT_DIRECTORY = ../doc
 GENERATE_HTML = YES
 GENERATE_LATEX = NO" | Out-File -Encoding "UTF8" doxyconfig.txt
-# Caso esteja num sistema unix, substitua a linha a cima por:
+# Caso você esteja num sistema unix, substitua a linha a cima por:
 # GENERATE_LATEX = NO" > doxyconfig.txt
 
 doxygen doxyconfig.txt

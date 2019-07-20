@@ -1,9 +1,10 @@
 var searchData=
 [
-  ['paginab',['PaginaB',['../class_pagina_b.html',1,'PaginaB&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;'],['../class_pagina_b.html#a9ea242156b08998a52579ff588a49b01',1,'PaginaB::PaginaB()'],['../class_pagina_b.html#a7777f63fd8562543817bf004e0ea6686',1,'PaginaB::PaginaB(DataInputStream &amp;bytes)']]],
+  ['paginab',['PaginaB',['../class_pagina_b.html',1,'']]],
   ['paginab_2ehpp',['PaginaB.hpp',['../_pagina_b_8hpp.html',1,'']]],
-  ['paginafilha',['paginaFilha',['../class_arvore_b.html#a624dd6b149350ff9de564a8d64e77d44',1,'ArvoreB']]],
-  ['paginairma',['paginaIrma',['../class_arvore_b.html#a0a1bd9a243020f05c1296d9575d9291d',1,'ArvoreB']]],
-  ['paginapai',['paginaPai',['../class_arvore_b.html#aa4b58b7cbe70913d78069e1cdb46c4bd',1,'ArvoreB']]],
-  ['ponteiros',['ponteiros',['../class_pagina_b.html#a91ea87c93738f4803196badf068b71b4',1,'PaginaB']]]
+  ['paginafilha',['paginaFilha',['../class_arvore_b.html#a824bc2248b1dbba354ee10e9ae4d33fb',1,'ArvoreB']]],
+  ['paginairma',['paginaIrma',['../class_arvore_b.html#aa57c68b4f89446e179f0181a4176be7b',1,'ArvoreB']]],
+  ['paginapai',['paginaPai',['../class_arvore_b.html#af102d41f247b25f90a08a86f195e8338',1,'ArvoreB']]],
+  ['pesquisar',['pesquisar',['../class_arvore_b.html#a235973399b5bf70340495c84e26b2450',1,'ArvoreB']]],
+  ['print',['print',['../class_arvore_b.html#adad9da0658fe6b399b79c36252dc823c',1,'ArvoreB']]]
 ];
