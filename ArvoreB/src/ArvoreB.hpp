@@ -1,7 +1,7 @@
 /**
  * @file ArvoreB.hpp
  * @author Axell Brendow ( https://github.com/axell-brendow )
- * @brief Arquivo para testes
+ * @brief Arquivo da classe ArvoreB.
  * 
  * @copyright Copyright (c) 2019 Axell Brendow Batista Moreira
  */
@@ -15,6 +15,36 @@
 #include <fstream>
 
 using namespace std;
+
+// Especialização para classes abstratas
+// https://stackoverflow.com/questions/24936862/c-template-specialization-for-subclasses-with-abstract-base-class
+template<typename TIPO, bool = is_base_of<Serializavel, TIPO>::value>
+struct Medidor
+{
+	static size_t obterTamanhoEmBytes()
+	{
+		// static_assert -> https://www.geeksforgeeks.org/understanding-static_assert-c-11/
+		// is_fundamental<> checa se o tipo do seu parâmetro é primitivo
+		// https://stackoverflow.com/questions/580922/identifying-primitive-types-in-templates
+		static_assert(
+			is_fundamental<TIPO>::value,
+			"O tipo da árvore deve ser primitivo caso ele não herde de Serializavel."
+		);
+
+		return sizeof(TIPO);
+	}
+};
+
+// Especialização para classes abstratas
+// https://stackoverflow.com/questions/24936862/c-template-specialization-for-subclasses-with-abstract-base-class
+template<typename TIPO>
+struct Medidor<TIPO, true> // true quando TIPO herdar de Serializavel
+{
+	static size_t obterTamanhoEmBytes()
+	{
+		return TIPO().obterTamanhoMaximoEmBytes();
+	}
+};
 
 /**
  * @brief Classe da árvore B, uma estrutura eficiente para indexamento de registros
@@ -36,6 +66,50 @@ using namespace std;
 template<typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS>
 class ArvoreB
 {
+private:
+	// ------------------------- Métodos
+	
+	void abrirArquivo(string nome)
+	{
+		arquivo = fstream(nomeDoArquivo, fstream::binary | fstream::in | fstream::out);
+
+		if (!arquivo) // Checa se o arquivo não existe
+		{
+			// Caso não, cria um arquivo novo removendo o modo fstream::in e o fecha
+			fstream(nomeDoArquivo, fstream::binary | fstream::out).close();
+			// Agora sim reabre o arquivo nos modos de leitura e escrita
+			arquivo = 
+				fstream(nomeDoArquivo, fstream::binary | fstream::in | fstream::out);
+		}
+	}
+
+	void obterTamanhoEmBytesDaChaveEDoDado()
+	{
+		maximoDeBytesParaAChave = Medidor<TIPO_DAS_CHAVES>::obterTamanhoEmBytes();
+		maximoDeBytesParaODado = Medidor<TIPO_DOS_DADOS>::obterTamanhoEmBytes();
+	}
+
+	void criarPaginasPaiFilhaEIrma()
+	{
+		Pagina paginaPai = Pagina(
+			ordemDaArvore,
+			maximoDeBytesParaAChave,
+			maximoDeBytesParaODado
+		);
+
+		Pagina paginaFilha = Pagina(
+			ordemDaArvore,
+			maximoDeBytesParaAChave,
+			maximoDeBytesParaODado
+		);
+
+		Pagina paginaIrma = Pagina(
+			ordemDaArvore,
+			maximoDeBytesParaAChave,
+			maximoDeBytesParaODado
+		);
+	}
+
 public:
 	// ------------------------- Typedefs
 
@@ -43,12 +117,19 @@ public:
 	 * @brief Padroniza o tipo da página da árvore. Typedefs dentro de classes ou
 	 * structs são considerados como boa prática em C++.
 	 */
-	typedef PaginaB<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> Pagina
+	typedef PaginaB<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> Pagina;
 
 protected:
 	// ------------------------- Campos
 
 	string erro;
+	string nomeDoArquivo;
+	fstream arquivo;
+
+	int maximoDeBytesParaAChave;
+	int maximoDeBytesParaODado;
+	int numeroDeChavesPorPagina;
+	int ordemDaArvore;
 
 	Pagina paginaPai;
 	Pagina paginaFilha;
@@ -59,39 +140,29 @@ protected:
 	bool inserirRecursivo(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado);
 
 public:
-	// ------------------------- Campos
-
-	const string nomeDoArquivo;
-	const fstream arquivo;
-
-	const int maximoDeBytesParaAChave;
-	const int maximoDeBytesParaODado;
-	const int numeroDeChavesPorPagina;
-	const int ordemDaArvore;
-
 	// ------------------------- Construtores e destrutores
 
 	ArvoreB(string nomeDoArquivo, int ordemDaArvore) :
 		nomeDoArquivo(nomeDoArquivo),
-		arquivo( fstream(nomeDoArquivo, fstream::binary | fstream::in | fstream::out) ),
 		numeroDeChavesPorPagina(ordemDaArvore - 1),
 		ordemDaArvore(ordemDaArvore)
 	{
-		// is_fundamental<> checa se o tipo da chave é primitivo
-		// https://stackoverflow.com/questions/580922/identifying-primitive-types-in-templates
-		
-		maximoDeBytesParaAChave = is_fundamental<TIPO_DAS_CHAVES>::value ?
-			sizeof(TIPO_DAS_CHAVES) :
-			declval<TIPO_DAS_CHAVES>().obterTamanhoMaximoEmBytes();
-			// declval -> http://www.cplusplus.com/reference/utility/declval/?kw=declval
-			
-		maximoDeBytesParaODado = is_fundamental<TIPO_DOS_DADOS>::value ?
-			sizeof(TIPO_DOS_DADOS) :
-			declval<TIPO_DOS_DADOS>().obterTamanhoMaximoEmBytes();
+		// static_assert -> https://www.geeksforgeeks.org/understanding-static_assert-c-11/
+		// is_default_constructible -> http://www.cplusplus.com/reference/type_traits/is_default_constructible/?kw=is_default_constructible
+		static_assert(is_default_constructible<TIPO_DAS_CHAVES>::value,
+			"O tipo das chaves da árvore deve ter um construtor sem parâmetros."
+		);
+		static_assert(is_default_constructible<TIPO_DOS_DADOS>::value,
+			"O tipo dos dados da árvore deve ter um construtor sem parâmetros."
+		);
+
+		abrirArquivo(nomeDoArquivo);
+		obterTamanhoEmBytesDaChaveEDoDado();
+		criarPaginasPaiFilhaEIrma();
 	}
 
 	// ------------------------- Métodos
-	
+
 	/**
 	 * @brief Insere o par (chave, dado) na árvore.
 	 * 

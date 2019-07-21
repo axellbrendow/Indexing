@@ -19,4 +19,8 @@
  * Makefiles:<br>
  * 
  * https://www.youtube.com/watch?v=_r7i5X0rXJk
+ * 
+ * lvalue, rvalue, xvalue, glvalue, prvalue:<br>
+ * 
+ * https://pt.stackoverflow.com/questions/6373/o-que-s%C3%A3o-os-rvalues-lvalues-xvalues-glvalues-e-prvalues
  */

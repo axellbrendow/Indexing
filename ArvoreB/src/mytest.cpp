@@ -11,7 +11,7 @@
 #include "templates/serializavel.hpp"
 #include "streams/DataInputStream.hpp"
 #include "streams/DataOutputStream.hpp"
-#include "PaginaB.hpp"
+#include "ArvoreB.hpp"
 
 #include <fstream>
 #include <iostream>
@@ -71,12 +71,13 @@ public:
 
 int main()
 {
+    string fileName("fifthgrade.ros");
 	// Student one("axell", 19);
     // one.imprimir();
     
     // // Apenas para criar ou zerar o arquivo
-    // fstream("fifthgrade.ros", fstream::out | fstream::trunc).close();
-	// fstream stream("fifthgrade.ros", fstream::binary | fstream::in | fstream::out);
+    // fstream(fileName, fstream::out | fstream::trunc).close();
+	// fstream stream(fileName, fstream::binary | fstream::in | fstream::out);
 
     // // https://programmingdimension.wordpress.com/2015/04/30/seekg-tellg-seekp-tellp/
     // stream.seekp(0);
@@ -95,27 +96,29 @@ int main()
 
     // two.imprimir();
 ////
-    vector<int> vetorIntDaPagina{
-        3, // Número de elementos
-        0, // Primeiro ponteiro
-        10, 20, 1, // (chave, dado, ponteiro)
-        11, 21, 2, // (chave, dado, ponteiro)
-        12, 22, 3 // (chave, dado, ponteiro)
-    };
+    // vector<int> vetorIntDaPagina{
+    //     3, // Número de elementos
+    //     0, // Primeiro ponteiro
+    //     10, 20, 1, // (chave, dado, ponteiro)
+    //     11, 21, 2, // (chave, dado, ponteiro)
+    //     12, 22, 3 // (chave, dado, ponteiro)
+    // };
     
-    vector<tipo_byte> vetorDaPagina;
+    // vector<tipo_byte> vetorDaPagina;
 
-    vetorDaPagina.insert(
-        vetorDaPagina.begin(),
-        reinterpret_cast<tipo_byte*>(vetorIntDaPagina.begin().base()),
-        reinterpret_cast<tipo_byte*>(vetorIntDaPagina.end().base())
-    );
+    // vetorDaPagina.insert(
+    //     vetorDaPagina.begin(),
+    //     reinterpret_cast<tipo_byte*>(vetorIntDaPagina.begin().base()),
+    //     reinterpret_cast<tipo_byte*>(vetorIntDaPagina.end().base())
+    // );
 
-    DataInputStream input(vetorDaPagina);
+    // DataInputStream input(vetorDaPagina);
 
-    PaginaB<int, int> pagina(input, 4);
+    // PaginaB<int, int> pagina(input, 4);
 
-    pagina.print();
+    // pagina.print();
+////
+    ArvoreB<int, Student> arvore(fileName, 4);
 
 	return 0;
 }

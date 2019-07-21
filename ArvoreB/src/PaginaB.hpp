@@ -1,7 +1,7 @@
 /**
  * @file PaginaB.hpp
  * @author Axell Brendow ( https://github.com/axell-brendow )
- * @brief Arquivo para testes
+ * @brief Arquivo da classe PaginaB.
  * 
  * @copyright Copyright (c) 2019 Axell Brendow Batista Moreira
  */
@@ -49,6 +49,8 @@ public:
     vector<file_pointer_type> ponteiros;
 
     // ------------------------- Construtores
+
+    PaginaB() {}
 
     /**
      * @brief Constrói uma nova página com a ordem informada.

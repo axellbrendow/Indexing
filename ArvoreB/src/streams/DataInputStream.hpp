@@ -179,6 +179,8 @@ public:
 	 *
 	 * @return true Caso haja dados para se consumir.
 	 * @return false Caso não haja dados para se consumir.
+	 * 
+	 * @see [palavra-chave explicit](https://stackoverflow.com/questions/121162/what-does-the-explicit-keyword-mean)
 	 */
 	explicit operator bool()
 	{
@@ -220,7 +222,7 @@ public:
 	template<typename tipo>
 	tipo ler(int tamanhoDoValor = sizeof(tipo))
 	{
-		tipo valor = 0;
+		tipo valor;
 
 		lerParaOPonteiro(&valor, tamanhoDoValor);
 
