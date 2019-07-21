@@ -62,11 +62,17 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-methods">Membros públicos</a> &#124;
+<a href="#pub-attribs">Atributos Públicos</a> &#124;
+<a href="#pro-attribs">Atributos Protegidos</a> &#124;
 <a href="class_pagina_b-members.html">Mostrar lista completa dos membros</a>  </div>
   <div class="headertitle">
 <div class="title">Referência à classe Template PaginaB&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Classe com as características da página da árvore B.  
+ <a href="class_pagina_b.html#details">Mais...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_pagina_b_8hpp_source.html">PaginaB.hpp</a>&gt;</code></p>
 <div class="dynheader">
@@ -79,8 +85,32 @@ Diagrama de heranças da classe PaginaB&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;
   </map>
 </div></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
-Outros membros herdados</h2></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Membros públicos</h2></td></tr>
+<tr class="memitem:a70fcd5a3ee281f5a2318cdc7fce02500"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a70fcd5a3ee281f5a2318cdc7fce02500">PaginaB</a> (int <a class="el" href="class_pagina_b.html#a96e733b2791bf6cac60449e5fc5c625f">ordemDaArvore</a>, int <a class="el" href="class_pagina_b.html#aa7ccd04e90ca132d0dfa292597447a62">maximoDeBytesParaAChave</a>=sizeof(TIPO_DAS_CHAVES), int <a class="el" href="class_pagina_b.html#a7a11f642e1985c3a754cc30acf33ee27">maximoDeBytesParaODado</a>=sizeof(TIPO_DOS_DADOS))</td></tr>
+<tr class="memdesc:a70fcd5a3ee281f5a2318cdc7fce02500"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constrói uma nova página com a ordem informada.  <a href="#a70fcd5a3ee281f5a2318cdc7fce02500">Mais...</a><br /></td></tr>
+<tr class="separator:a70fcd5a3ee281f5a2318cdc7fce02500"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe6d71ebc777a71e4deb299b20dae6dd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#abe6d71ebc777a71e4deb299b20dae6dd">PaginaB</a> (<a class="el" href="class_data_input_stream.html">DataInputStream</a> &amp;bytes, int <a class="el" href="class_pagina_b.html#a96e733b2791bf6cac60449e5fc5c625f">ordemDaArvore</a>, int <a class="el" href="class_pagina_b.html#aa7ccd04e90ca132d0dfa292597447a62">maximoDeBytesParaAChave</a>=sizeof(TIPO_DAS_CHAVES), int <a class="el" href="class_pagina_b.html#a7a11f642e1985c3a754cc30acf33ee27">maximoDeBytesParaODado</a>=sizeof(TIPO_DOS_DADOS))</td></tr>
+<tr class="memdesc:abe6d71ebc777a71e4deb299b20dae6dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constrói uma nova página a partir do vetor de bytes do <a class="el" href="class_data_input_stream.html">DataInputStream</a>.  <a href="#abe6d71ebc777a71e4deb299b20dae6dd">Mais...</a><br /></td></tr>
+<tr class="separator:abe6d71ebc777a71e4deb299b20dae6dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1722112b0406cb7e50961dbc8183f7ca"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a1722112b0406cb7e50961dbc8183f7ca">obterTamanhoMaximoEmBytes</a> () override</td></tr>
+<tr class="memdesc:a1722112b0406cb7e50961dbc8183f7ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcula o tamanho máximo, em bytes, que a entidade pode gastar.  <a href="#a1722112b0406cb7e50961dbc8183f7ca">Mais...</a><br /></td></tr>
+<tr class="separator:a1722112b0406cb7e50961dbc8183f7ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78da04cb567892e6857a5193d7097df2"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_data_output_stream.html">DataOutputStream</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a78da04cb567892e6857a5193d7097df2">gerarDataOutputStream</a> (<a class="el" href="class_data_output_stream.html">DataOutputStream</a> &amp;out) override</td></tr>
+<tr class="memdesc:a78da04cb567892e6857a5193d7097df2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insere os dados da entidade no <a class="el" href="class_data_output_stream.html">DataOutputStream</a> recebido e o retorna.  <a href="#a78da04cb567892e6857a5193d7097df2">Mais...</a><br /></td></tr>
+<tr class="separator:a78da04cb567892e6857a5193d7097df2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a483d5e9d6b3d78e8b97ecbcb3b449559"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a483d5e9d6b3d78e8b97ecbcb3b449559">lerBytes</a> (<a class="el" href="class_data_input_stream.html">DataInputStream</a> &amp;input) override</td></tr>
+<tr class="memdesc:a483d5e9d6b3d78e8b97ecbcb3b449559"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lê e interpreta o vetor do input restaurando o objeto da entidade.  <a href="#a483d5e9d6b3d78e8b97ecbcb3b449559">Mais...</a><br /></td></tr>
+<tr class="separator:a483d5e9d6b3d78e8b97ecbcb3b449559"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87e29c2ff5ee48a1e842a0fcf11ddd93"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a87e29c2ff5ee48a1e842a0fcf11ddd93">obterNumeroDeElementos</a> ()</td></tr>
+<tr class="memdesc:a87e29c2ff5ee48a1e842a0fcf11ddd93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retorna 0 (zero) caso a página não tenha sido carregada do arquivo ainda. Caso contrário, retorna o seu número de elementos.  <a href="#a87e29c2ff5ee48a1e842a0fcf11ddd93">Mais...</a><br /></td></tr>
+<tr class="separator:a87e29c2ff5ee48a1e842a0fcf11ddd93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50c8736c454dbc27c767f8934f90542f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a50c8736c454dbc27c767f8934f90542f">vazia</a> ()</td></tr>
+<tr class="memdesc:a50c8736c454dbc27c767f8934f90542f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checa se a página está sem elementos.  <a href="#a50c8736c454dbc27c767f8934f90542f">Mais...</a><br /></td></tr>
+<tr class="separator:a50c8736c454dbc27c767f8934f90542f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8be3782caae0659cc89cd0118c1723b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#ad8be3782caae0659cc89cd0118c1723b">print</a> (string delimitadorEntreOsItens=&quot; &quot;, ostream &amp;ostream=cout)</td></tr>
+<tr class="memdesc:ad8be3782caae0659cc89cd0118c1723b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Imprime, na output stream recebida, cada elemento da página gerando o seguinte formato:  <a href="#ad8be3782caae0659cc89cd0118c1723b">Mais...</a><br /></td></tr>
+<tr class="separator:ad8be3782caae0659cc89cd0118c1723b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_serializavel"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_serializavel')"><img src="closed.png" alt="-"/>&#160;Membros públicos herdados de <a class="el" href="class_serializavel.html">Serializavel</a></td></tr>
 <tr class="memitem:a56d1629ec045b7cc79f5d1e5c4092dcf inherit pub_methods_class_serializavel"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_serializavel.html#a56d1629ec045b7cc79f5d1e5c4092dcf">lerBytes</a> (char *buffer, int tamanho)</td></tr>
 <tr class="memdesc:a56d1629ec045b7cc79f5d1e5c4092dcf inherit pub_methods_class_serializavel"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lê e interpreta o buffer restaurando o objeto da entidade.  <a href="class_serializavel.html#a56d1629ec045b7cc79f5d1e5c4092dcf">Mais...</a><br /></td></tr>
@@ -97,7 +127,551 @@ Outros membros herdados</h2></td></tr>
 <tr class="memitem:a48ddae4eceed0f9c8ca6184a7bc08699 inherit pub_methods_class_serializavel"><td class="memItemLeft" align="right" valign="top"><a class="el" href="tipos_8hpp.html#a458b3a3073fa6d85d6d28dd922e183ca">vetor_de_bytes</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_serializavel.html#a48ddae4eceed0f9c8ca6184a7bc08699">gerarBytes</a> ()</td></tr>
 <tr class="memdesc:a48ddae4eceed0f9c8ca6184a7bc08699 inherit pub_methods_class_serializavel"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gera o vetor de bytes da entidade.  <a href="class_serializavel.html#a48ddae4eceed0f9c8ca6184a7bc08699">Mais...</a><br /></td></tr>
 <tr class="separator:a48ddae4eceed0f9c8ca6184a7bc08699 inherit pub_methods_class_serializavel"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Atributos Públicos</h2></td></tr>
+<tr class="memitem:a267bf39967dc0735a1db4ddc0ee6dd1d"><td class="memItemLeft" align="right" valign="top">vector&lt; TIPO_DAS_CHAVES &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a267bf39967dc0735a1db4ddc0ee6dd1d">chaves</a></td></tr>
+<tr class="separator:a267bf39967dc0735a1db4ddc0ee6dd1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25d41f5e31c46f85929bfa77bc4992ea"><td class="memItemLeft" align="right" valign="top">vector&lt; TIPO_DOS_DADOS &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a25d41f5e31c46f85929bfa77bc4992ea">dados</a></td></tr>
+<tr class="separator:a25d41f5e31c46f85929bfa77bc4992ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e3379b22ff2c6cc29b1bf0a4314eda1"><td class="memItemLeft" align="right" valign="top">vector&lt; <a class="el" href="tipos_8hpp.html#af1229d7be6c43c4e9d64ba570f0d6582">file_pointer_type</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a8e3379b22ff2c6cc29b1bf0a4314eda1">ponteiros</a></td></tr>
+<tr class="separator:a8e3379b22ff2c6cc29b1bf0a4314eda1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Atributos Protegidos</h2></td></tr>
+<tr class="memitem:a2abd7e0be3a5f70520e8cd1bce189c48"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a2abd7e0be3a5f70520e8cd1bce189c48">numeroDeElementos</a></td></tr>
+<tr class="separator:a2abd7e0be3a5f70520e8cd1bce189c48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7ccd04e90ca132d0dfa292597447a62"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#aa7ccd04e90ca132d0dfa292597447a62">maximoDeBytesParaAChave</a></td></tr>
+<tr class="separator:aa7ccd04e90ca132d0dfa292597447a62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a11f642e1985c3a754cc30acf33ee27"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a7a11f642e1985c3a754cc30acf33ee27">maximoDeBytesParaODado</a></td></tr>
+<tr class="separator:a7a11f642e1985c3a754cc30acf33ee27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad576c29444c691b7fbd259904525e8a9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#ad576c29444c691b7fbd259904525e8a9">numeroDeChavesPorPagina</a></td></tr>
+<tr class="separator:ad576c29444c691b7fbd259904525e8a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96e733b2791bf6cac60449e5fc5c625f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a96e733b2791bf6cac60449e5fc5c625f">ordemDaArvore</a></td></tr>
+<tr class="separator:a96e733b2791bf6cac60449e5fc5c625f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Descrição detalhada</h2>
+<div class="textblock"><h3>template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt;<br />
+class PaginaB&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;</h3>
+
+<p>Classe com as características da página da árvore B. </p>
+<p>Caso for usar o método <a class="el" href="class_pagina_b.html#ad8be3782caae0659cc89cd0118c1723b" title="Imprime, na output stream recebida, cada elemento da página gerando o seguinte formato:">print()</a> dá classe, é necessário que a chave e o dado sejam tipos primitivos ou então o operador &lt;&lt; deve ser sobrecarregado para que seja possível inserir esses itens num ostream (output stream).</p>
+<dl class="section see"><dt>Veja também</dt><dd><a href="https://docs.microsoft.com/pt-br/cpp/standard-library/overloading-the-output-operator-for-your-own-classes?view=vs-2019">Sobrecarregando o operador &lt;&lt;</a></dd></dl>
+<dl class="tparams"><dt>Parâmetros de template</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">TIPO_DAS_CHAVES</td><td>Tipo da chave dos registros. <b>É necessário que a chave seja um tipo primitivo ou então que a sua classe/struct herde de <a class="el" href="class_serializavel.html" title="Classe abstrata que todo objeto serializável deve herdar.">Serializavel</a> e tenha um construtor sem parâmetros.</b> </td></tr>
+    <tr><td class="paramname">TIPO_DOS_DADOS</td><td>Tipo do dado dos registros. <b>É necessário que o dado seja um tipo primitivo ou então que a sua classe/struct herde de <a class="el" href="class_serializavel.html" title="Classe abstrata que todo objeto serializável deve herdar.">Serializavel</a> e tenha um construtor sem parâmetros.</b> </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><h2 class="groupheader">Documentação dos Construtores &amp; Destrutor</h2>
+<a id="a70fcd5a3ee281f5a2318cdc7fce02500"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70fcd5a3ee281f5a2318cdc7fce02500">&#9670;&nbsp;</a></span>PaginaB() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_pagina_b.html">PaginaB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::<a class="el" href="class_pagina_b.html">PaginaB</a> </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>ordemDaArvore</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>maximoDeBytesParaAChave</em> = <code>sizeof(TIPO_DAS_CHAVES)</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>maximoDeBytesParaODado</em> = <code>sizeof(TIPO_DOS_DADOS)</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constrói uma nova página com a ordem informada. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ordemDaArvore</td><td>Ordem da árvore B (quantidade máxima de filhos por página). </td></tr>
+    <tr><td class="paramname">maximoDeBytesParaAChave</td><td>Quantidade máxima de bytes que a chave pode gastar nos registros. Valor padrão = sizeof(TIPO_DAS_CHAVES). </td></tr>
+    <tr><td class="paramname">maximoDeBytesParaODado</td><td>Quantidade máxima de bytes que o dado pode gastar nos registros. Valor padrão = sizeof(TIPO_DOS_DADOS). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="abe6d71ebc777a71e4deb299b20dae6dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abe6d71ebc777a71e4deb299b20dae6dd">&#9670;&nbsp;</a></span>PaginaB() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_pagina_b.html">PaginaB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::<a class="el" href="class_pagina_b.html">PaginaB</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_data_input_stream.html">DataInputStream</a> &amp;&#160;</td>
+          <td class="paramname"><em>bytes</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>ordemDaArvore</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>maximoDeBytesParaAChave</em> = <code>sizeof(TIPO_DAS_CHAVES)</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>maximoDeBytesParaODado</em> = <code>sizeof(TIPO_DOS_DADOS)</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constrói uma nova página a partir do vetor de bytes do <a class="el" href="class_data_input_stream.html">DataInputStream</a>. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">bytes</td><td><a class="el" href="class_data_input_stream.html">DataInputStream</a> com o vetor de bytes da página. </td></tr>
+    <tr><td class="paramname">ordemDaArvore</td><td>Ordem da árvore B (quantidade máxima de filhos por página). </td></tr>
+    <tr><td class="paramname">maximoDeBytesParaAChave</td><td>Quantidade máxima de bytes que a chave pode gastar nos registros. Valor padrão = sizeof(TIPO_DAS_CHAVES). </td></tr>
+    <tr><td class="paramname">maximoDeBytesParaODado</td><td>Quantidade máxima de bytes que o dado pode gastar nos registros. Valor padrão = sizeof(TIPO_DOS_DADOS). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Documentação dos métodos</h2>
+<a id="a78da04cb567892e6857a5193d7097df2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78da04cb567892e6857a5193d7097df2">&#9670;&nbsp;</a></span>gerarDataOutputStream()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="class_data_output_stream.html">DataOutputStream</a>&amp; <a class="el" href="class_pagina_b.html">PaginaB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::gerarDataOutputStream </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_data_output_stream.html">DataOutputStream</a> &amp;&#160;</td>
+          <td class="paramname"><em>out</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Insere os dados da entidade no <a class="el" href="class_data_output_stream.html">DataOutputStream</a> recebido e o retorna. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">out</td><td>Um objeto <a class="el" href="class_data_output_stream.html">DataOutputStream</a> com espaço alocado para o tamanho máximo da entidade.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Retorna</dt><dd><a class="el" href="class_data_output_stream.html">DataOutputStream</a> Retorna o <a class="el" href="class_data_output_stream.html">DataOutputStream</a> contendo o vetor de bytes com os dados da entidade.</dd></dl>
+<dl class="section see"><dt>Veja também</dt><dd><a href="https://www.tutorialspoint.com/difference-between-a-virtual-function-and-a-pure-virtual-function-in-cplusplus">Funções virtuais</a> </dd></dl>
+
+<p>Implementa <a class="el" href="class_serializavel.html#a09a05fde1ad4696e10283e0cfa222dad">Serializavel</a>.</p>
+
+</div>
+</div>
+<a id="a483d5e9d6b3d78e8b97ecbcb3b449559"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a483d5e9d6b3d78e8b97ecbcb3b449559">&#9670;&nbsp;</a></span>lerBytes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void <a class="el" href="class_pagina_b.html">PaginaB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::lerBytes </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_data_input_stream.html">DataInputStream</a> &amp;&#160;</td>
+          <td class="paramname"><em>input</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Lê e interpreta o vetor do input restaurando o objeto da entidade. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">input</td><td><a class="el" href="class_data_input_stream.html">DataInputStream</a> com o vetor de bytes da entidade.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>Veja também</dt><dd><a href="https://www.tutorialspoint.com/difference-between-a-virtual-function-and-a-pure-virtual-function-in-cplusplus">Funções virtuais</a> </dd></dl>
+
+<p>Implementa <a class="el" href="class_serializavel.html#a664f80ee7111ae0b57f2b06b98026d65">Serializavel</a>.</p>
+
+</div>
+</div>
+<a id="a87e29c2ff5ee48a1e842a0fcf11ddd93"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a87e29c2ff5ee48a1e842a0fcf11ddd93">&#9670;&nbsp;</a></span>obterNumeroDeElementos()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="class_pagina_b.html">PaginaB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::obterNumeroDeElementos </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retorna 0 (zero) caso a página não tenha sido carregada do arquivo ainda. Caso contrário, retorna o seu número de elementos. </p>
+<dl class="section return"><dt>Retorna</dt><dd>int O número de elementos da página. </dd></dl>
+
+</div>
+</div>
+<a id="a1722112b0406cb7e50961dbc8183f7ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1722112b0406cb7e50961dbc8183f7ca">&#9670;&nbsp;</a></span>obterTamanhoMaximoEmBytes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual int <a class="el" href="class_pagina_b.html">PaginaB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::obterTamanhoMaximoEmBytes </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calcula o tamanho máximo, em bytes, que a entidade pode gastar. </p>
+<dl class="section return"><dt>Retorna</dt><dd>int Retorna o tamanho máximo, em bytes, que a entidade pode gastar.</dd></dl>
+<dl class="section see"><dt>Veja também</dt><dd><a href="https://www.tutorialspoint.com/difference-between-a-virtual-function-and-a-pure-virtual-function-in-cplusplus">Funções virtuais</a> </dd></dl>
+
+<p>Implementa <a class="el" href="class_serializavel.html#a614b2c74539381172fecc6422e92837f">Serializavel</a>.</p>
+
+</div>
+</div>
+<a id="ad8be3782caae0659cc89cd0118c1723b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8be3782caae0659cc89cd0118c1723b">&#9670;&nbsp;</a></span>print()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_pagina_b.html">PaginaB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::print </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>delimitadorEntreOsItens</em> = <code>&quot;&#160;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ostream &amp;&#160;</td>
+          <td class="paramname"><em>ostream</em> = <code>cout</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Imprime, na output stream recebida, cada elemento da página gerando o seguinte formato: </p>
+<p>1º ponteiro &lt;delimitadorEntreOsItens&gt; 1º chave &lt;delimitadorEntreOsItens&gt; 1º dado &lt;delimitadorEntreOsItens&gt; 2º ponteiro &lt;delimitadorEntreOsItens&gt; ... </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">delimitadorEntreOsItens</td><td>Delimitador entre cada elemento da página. Valor padrão = " ". </td></tr>
+    <tr><td class="paramname">ostream</td><td>Fluxo de saída onde a página será impressa. Valor padrão = std::cout. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a50c8736c454dbc27c767f8934f90542f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a50c8736c454dbc27c767f8934f90542f">&#9670;&nbsp;</a></span>vazia()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_pagina_b.html">PaginaB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::vazia </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checa se a página está sem elementos. </p>
+<dl class="section return"><dt>Retorna</dt><dd>true Caso não haja elementos na página. </dd>
+<dd>
+false Caso haja elementos na página. </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Documentação dos dados membro</h2>
+<a id="a267bf39967dc0735a1db4ddc0ee6dd1d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a267bf39967dc0735a1db4ddc0ee6dd1d">&#9670;&nbsp;</a></span>chaves</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt;TIPO_DAS_CHAVES&gt; <a class="el" href="class_pagina_b.html">PaginaB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::chaves</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a25d41f5e31c46f85929bfa77bc4992ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25d41f5e31c46f85929bfa77bc4992ea">&#9670;&nbsp;</a></span>dados</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt;TIPO_DOS_DADOS&gt; <a class="el" href="class_pagina_b.html">PaginaB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::dados</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa7ccd04e90ca132d0dfa292597447a62"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7ccd04e90ca132d0dfa292597447a62">&#9670;&nbsp;</a></span>maximoDeBytesParaAChave</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="class_pagina_b.html">PaginaB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::maximoDeBytesParaAChave</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7a11f642e1985c3a754cc30acf33ee27"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a11f642e1985c3a754cc30acf33ee27">&#9670;&nbsp;</a></span>maximoDeBytesParaODado</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="class_pagina_b.html">PaginaB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::maximoDeBytesParaODado</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad576c29444c691b7fbd259904525e8a9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad576c29444c691b7fbd259904525e8a9">&#9670;&nbsp;</a></span>numeroDeChavesPorPagina</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="class_pagina_b.html">PaginaB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::numeroDeChavesPorPagina</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2abd7e0be3a5f70520e8cd1bce189c48"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2abd7e0be3a5f70520e8cd1bce189c48">&#9670;&nbsp;</a></span>numeroDeElementos</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="class_pagina_b.html">PaginaB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::numeroDeElementos</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a96e733b2791bf6cac60449e5fc5c625f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96e733b2791bf6cac60449e5fc5c625f">&#9670;&nbsp;</a></span>ordemDaArvore</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="class_pagina_b.html">PaginaB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::ordemDaArvore</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8e3379b22ff2c6cc29b1bf0a4314eda1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e3379b22ff2c6cc29b1bf0a4314eda1">&#9670;&nbsp;</a></span>ponteiros</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt;<a class="el" href="tipos_8hpp.html#af1229d7be6c43c4e9d64ba570f0d6582">file_pointer_type</a>&gt; <a class="el" href="class_pagina_b.html">PaginaB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::ponteiros</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <hr/>A documentação para esta classe foi gerada a partir do seguinte ficheiro:<ul>
 <li><a class="el" href="_pagina_b_8hpp_source.html">PaginaB.hpp</a></li>
 </ul>

@@ -6,6 +6,8 @@
  * @copyright Copyright (c) 2019 Axell Brendow Batista Moreira
  */
 
+#pragma once
+
 #include "tipos.hpp"
 #include "../streams/DataOutputStream.hpp"
 #include "../streams/DataInputStream.hpp"
@@ -19,7 +21,6 @@ static str_size_type padraoTamanhoMaximoStrings = 300;
  * 
  * @see [Interfaces C++](https://www.tutorialspoint.com/cplusplus/cpp_interfaces)
  * @see [Serialização - Wikipédia](https://pt.wikipedia.org/wiki/Serializa%C3%A7%C3%A3o)
- * @see [Funções virtuais](https://techdifferences.com/difference-between-virtual-function-and-pure-virtual-function.html)
  */
 class Serializavel
 {
@@ -30,26 +31,32 @@ public:
      * @brief Calcula o tamanho máximo, em bytes, que a entidade pode gastar.
      * 
      * @return int Retorna o tamanho máximo, em bytes, que a entidade pode gastar.
+     * 
+     * @see [Funções virtuais](https://www.tutorialspoint.com/difference-between-a-virtual-function-and-a-pure-virtual-function-in-cplusplus)
      */
     virtual int obterTamanhoMaximoEmBytes() = 0; // = 0 declara esta função como pura
     
     /**
-     * @brief Insere os dados da entidade no DataOutputStream recebido.
+     * @brief Insere os dados da entidade no DataOutputStream recebido e o retorna.
      * 
      * @param out Um objeto DataOutputStream com espaço alocado para o tamanho máximo da
      * entidade.
      * 
      * @return DataOutputStream Retorna o DataOutputStream contendo o vetor de bytes com os
      * dados da entidade.
+     * 
+     * @see [Funções virtuais](https://www.tutorialspoint.com/difference-between-a-virtual-function-and-a-pure-virtual-function-in-cplusplus)
      */
-    virtual DataOutputStream gerarDataOutputStream(DataOutputStream out) = 0;
+    virtual DataOutputStream& gerarDataOutputStream(DataOutputStream& out) = 0;
 
     /**
      * @brief Lê e interpreta o vetor do input restaurando o objeto da entidade.
      * 
      * @param input DataInputStream com o vetor de bytes da entidade.
+     * 
+     * @see [Funções virtuais](https://www.tutorialspoint.com/difference-between-a-virtual-function-and-a-pure-virtual-function-in-cplusplus)
      */
-    virtual void lerBytes(DataInputStream &input) = 0; // = 0 declara esta função como pura
+    virtual void lerBytes(DataInputStream& input) = 0; // = 0 declara esta função como pura
 
     /**
      * @brief Lê e interpreta o buffer restaurando o objeto da entidade.
@@ -84,8 +91,9 @@ public:
      */
     DataOutputStream gerarDataOutputStream()
     {
-        return gerarDataOutputStream( alocarDataOutputStream() )
-            .resize( obterTamanhoMaximoEmBytes() );
+        DataOutputStream out = alocarDataOutputStream();
+
+        return gerarDataOutputStream(out).resize( obterTamanhoMaximoEmBytes() );
     }
 
     /**

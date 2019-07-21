@@ -16,11 +16,39 @@
 
 using namespace std;
 
+/**
+ * @brief Classe da árvore B, uma estrutura eficiente para indexamento de registros
+ * em disco.
+ * 
+ * <p>Caso for usar o método print() dá classe, é necessário que a chave e o dado
+ * sejam tipos primitivos ou então o operador << deve ser sobrecarregado para que
+ * seja possível inserir esses itens num ostream (output stream).</p>
+ * 
+ * @see [Sobrecarregando o operador <<](https://docs.microsoft.com/pt-br/cpp/standard-library/overloading-the-output-operator-for-your-own-classes?view=vs-2019)
+ * 
+ * @tparam TIPO_DAS_CHAVES Tipo da chave dos registros. <b>É necessário que a chave
+ * seja um tipo primitivo ou então que a sua classe/struct herde de Serializavel e
+ * tenha um construtor sem parâmetros.</b>
+ * @tparam TIPO_DOS_DADOS Tipo do dado dos registros. <b>É necessário que o dado
+ * seja um tipo primitivo ou então que a sua classe/struct herde de Serializavel e
+ * tenha um construtor sem parâmetros.</b>
+ */
 template<typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS>
 class ArvoreB
 {
+public:
+	// ------------------------- Typedefs
+
+	/**
+	 * @brief Padroniza o tipo da página da árvore. Typedefs dentro de classes ou
+	 * structs são considerados como boa prática em C++.
+	 */
+	typedef PaginaB<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> Pagina
+
 protected:
 	// ------------------------- Campos
+
+	string erro;
 
 	Pagina paginaPai;
 	Pagina paginaFilha;
@@ -31,14 +59,6 @@ protected:
 	bool inserirRecursivo(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado);
 
 public:
-	// ------------------------- Typedefs
-
-	/**
-	 * @brief Padroniza o tipo da página da árvore. Typedefs dentro de classes ou structs
-	 * são considerados como boa prática em C++.
-	 */
-	typedef PaginaB<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> Pagina
-
 	// ------------------------- Campos
 
 	const string nomeDoArquivo;

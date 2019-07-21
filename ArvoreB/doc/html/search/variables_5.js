@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['paginafilha',['paginaFilha',['../class_arvore_b.html#a824bc2248b1dbba354ee10e9ae4d33fb',1,'ArvoreB']]],
-  ['paginairma',['paginaIrma',['../class_arvore_b.html#aa57c68b4f89446e179f0181a4176be7b',1,'ArvoreB']]],
-  ['paginapai',['paginaPai',['../class_arvore_b.html#af102d41f247b25f90a08a86f195e8338',1,'ArvoreB']]]
+  ['maximodebytesparaachave',['maximoDeBytesParaAChave',['../class_arvore_b.html#a9045d5be84ab1fe4a13de2dfcabd518c',1,'ArvoreB::maximoDeBytesParaAChave()'],['../class_pagina_b.html#aa7ccd04e90ca132d0dfa292597447a62',1,'PaginaB::maximoDeBytesParaAChave()']]],
+  ['maximodebytesparaodado',['maximoDeBytesParaODado',['../class_arvore_b.html#a786b32392be9d0641e2e16cf4066758c',1,'ArvoreB::maximoDeBytesParaODado()'],['../class_pagina_b.html#a7a11f642e1985c3a754cc30acf33ee27',1,'PaginaB::maximoDeBytesParaODado()']]]
 ];

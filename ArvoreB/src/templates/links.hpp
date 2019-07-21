@@ -11,4 +11,12 @@
  * Variadic Templates (∞+ QI):<br>
  * 
  * https://eli.thegreenplace.net/2014/variadic-templates-in-c/
+ * 
+ * Introduction to Type Traits:<br>
+ * 
+ * http://blog.aaronballman.com/2011/11/a-simple-introduction-to-type-traits/
+ * 
+ * Makefiles:<br>
+ * 
+ * https://www.youtube.com/watch?v=_r7i5X0rXJk
  */

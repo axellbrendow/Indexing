@@ -26,6 +26,7 @@ int main()
     // Derived obj;
 
     // std::cout << obj.one(7) << std::endl;
+////
     std::vector<int> vec{ 1, 2, 3 };
 
     vec.resize(6);
@@ -35,6 +36,7 @@ int main()
         std::cout << vec.at(i) << ",";
     }
     std::cout << std::endl;
+////
 
     return 0;
 }

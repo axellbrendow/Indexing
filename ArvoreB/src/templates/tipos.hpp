@@ -26,7 +26,7 @@ typedef int str_size_type;
  * @brief Criado apenas para padronizar o tipo usado para declarar ponteiros que
  * guardam o endereço de entidades e/ou registros dentro de um arquivo.
  */
-typedef size_t file_pointer_type;
+typedef int file_pointer_type;
 
 /**
  * @brief Em C++, usamos unsigned char para lidar com bytes. As vezes usa-se char também.

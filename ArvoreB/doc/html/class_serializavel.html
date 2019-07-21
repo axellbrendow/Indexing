@@ -79,7 +79,7 @@ Diagrama de heranças da classe Serializavel</div>
  <div class="center">
   <img src="class_serializavel.png" usemap="#Serializavel_map" alt=""/>
   <map id="Serializavel_map" name="Serializavel_map">
-<area href="class_pagina_b.html" alt="PaginaB&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;" shape="rect" coords="0,56,326,80"/>
+<area href="class_pagina_b.html" title="Classe com as características da página da árvore B." alt="PaginaB&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;" shape="rect" coords="0,56,326,80"/>
 <area href="class_student.html" title="Classe para estudantes." alt="Student" shape="rect" coords="336,56,662,80"/>
   </map>
 </div></div>
@@ -89,9 +89,9 @@ Membros públicos</h2></td></tr>
 <tr class="memitem:a614b2c74539381172fecc6422e92837f"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_serializavel.html#a614b2c74539381172fecc6422e92837f">obterTamanhoMaximoEmBytes</a> ()=0</td></tr>
 <tr class="memdesc:a614b2c74539381172fecc6422e92837f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcula o tamanho máximo, em bytes, que a entidade pode gastar.  <a href="#a614b2c74539381172fecc6422e92837f">Mais...</a><br /></td></tr>
 <tr class="separator:a614b2c74539381172fecc6422e92837f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3d18f966a5d3e9c239b8b50e24c33ba7"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_data_output_stream.html">DataOutputStream</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_serializavel.html#a3d18f966a5d3e9c239b8b50e24c33ba7">gerarDataOutputStream</a> (<a class="el" href="class_data_output_stream.html">DataOutputStream</a> out)=0</td></tr>
-<tr class="memdesc:a3d18f966a5d3e9c239b8b50e24c33ba7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insere os dados da entidade no <a class="el" href="class_data_output_stream.html">DataOutputStream</a> recebido.  <a href="#a3d18f966a5d3e9c239b8b50e24c33ba7">Mais...</a><br /></td></tr>
-<tr class="separator:a3d18f966a5d3e9c239b8b50e24c33ba7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09a05fde1ad4696e10283e0cfa222dad"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_data_output_stream.html">DataOutputStream</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_serializavel.html#a09a05fde1ad4696e10283e0cfa222dad">gerarDataOutputStream</a> (<a class="el" href="class_data_output_stream.html">DataOutputStream</a> &amp;out)=0</td></tr>
+<tr class="memdesc:a09a05fde1ad4696e10283e0cfa222dad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insere os dados da entidade no <a class="el" href="class_data_output_stream.html">DataOutputStream</a> recebido e o retorna.  <a href="#a09a05fde1ad4696e10283e0cfa222dad">Mais...</a><br /></td></tr>
+<tr class="separator:a09a05fde1ad4696e10283e0cfa222dad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a664f80ee7111ae0b57f2b06b98026d65"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_serializavel.html#a664f80ee7111ae0b57f2b06b98026d65">lerBytes</a> (<a class="el" href="class_data_input_stream.html">DataInputStream</a> &amp;input)=0</td></tr>
 <tr class="memdesc:a664f80ee7111ae0b57f2b06b98026d65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lê e interpreta o vetor do input restaurando o objeto da entidade.  <a href="#a664f80ee7111ae0b57f2b06b98026d65">Mais...</a><br /></td></tr>
 <tr class="separator:a664f80ee7111ae0b57f2b06b98026d65"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -115,9 +115,7 @@ Membros públicos</h2></td></tr>
 <div class="textblock"><p>Classe abstrata que todo objeto serializável deve herdar. </p>
 <dl class="section see"><dt>Veja também</dt><dd><a href="https://www.tutorialspoint.com/cplusplus/cpp_interfaces">Interfaces C++</a> </dd>
 <dd>
-<a href="https://pt.wikipedia.org/wiki/Serializa%C3%A7%C3%A3o">Serialização - Wikipédia</a> </dd>
-<dd>
-<a href="https://techdifferences.com/difference-between-virtual-function-and-pure-virtual-function.html">Funções virtuais</a> </dd></dl>
+<a href="https://pt.wikipedia.org/wiki/Serializa%C3%A7%C3%A3o">Serialização - Wikipédia</a> </dd></dl>
 </div><h2 class="groupheader">Documentação dos métodos</h2>
 <a id="aec986f9cd1f8f6e638047e366d6e079a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aec986f9cd1f8f6e638047e366d6e079a">&#9670;&nbsp;</a></span>alocarDataInputStream()</h2>
@@ -203,8 +201,8 @@ Membros públicos</h2></td></tr>
 
 </div>
 </div>
-<a id="a3d18f966a5d3e9c239b8b50e24c33ba7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3d18f966a5d3e9c239b8b50e24c33ba7">&#9670;&nbsp;</a></span>gerarDataOutputStream() <span class="overload">[1/2]</span></h2>
+<a id="a09a05fde1ad4696e10283e0cfa222dad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09a05fde1ad4696e10283e0cfa222dad">&#9670;&nbsp;</a></span>gerarDataOutputStream() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -213,9 +211,9 @@ Membros públicos</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual <a class="el" href="class_data_output_stream.html">DataOutputStream</a> Serializavel::gerarDataOutputStream </td>
+          <td class="memname">virtual <a class="el" href="class_data_output_stream.html">DataOutputStream</a>&amp; Serializavel::gerarDataOutputStream </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_data_output_stream.html">DataOutputStream</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="class_data_output_stream.html">DataOutputStream</a> &amp;&#160;</td>
           <td class="paramname"><em>out</em></td><td>)</td>
           <td></td>
         </tr>
@@ -227,16 +225,17 @@ Membros públicos</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Insere os dados da entidade no <a class="el" href="class_data_output_stream.html">DataOutputStream</a> recebido. </p>
+<p>Insere os dados da entidade no <a class="el" href="class_data_output_stream.html">DataOutputStream</a> recebido e o retorna. </p>
 <dl class="params"><dt>Parâmetros</dt><dd>
   <table class="params">
     <tr><td class="paramname">out</td><td>Um objeto <a class="el" href="class_data_output_stream.html">DataOutputStream</a> com espaço alocado para o tamanho máximo da entidade.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Retorna</dt><dd><a class="el" href="class_data_output_stream.html">DataOutputStream</a> Retorna o <a class="el" href="class_data_output_stream.html">DataOutputStream</a> contendo o vetor de bytes com os dados da entidade. </dd></dl>
+<dl class="section return"><dt>Retorna</dt><dd><a class="el" href="class_data_output_stream.html">DataOutputStream</a> Retorna o <a class="el" href="class_data_output_stream.html">DataOutputStream</a> contendo o vetor de bytes com os dados da entidade.</dd></dl>
+<dl class="section see"><dt>Veja também</dt><dd><a href="https://www.tutorialspoint.com/difference-between-a-virtual-function-and-a-pure-virtual-function-in-cplusplus">Funções virtuais</a> </dd></dl>
 
-<p>Implementado em <a class="el" href="class_student.html#a982c4e049639847a9bf2ad753f03f7d6">Student</a>.</p>
+<p>Implementado em <a class="el" href="class_pagina_b.html#a78da04cb567892e6857a5193d7097df2">PaginaB&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;</a> e <a class="el" href="class_student.html#afaec794402d75747eb8104571d4b02c5">Student</a>.</p>
 
 </div>
 </div>
@@ -295,12 +294,13 @@ Membros públicos</h2></td></tr>
 <p>Lê e interpreta o vetor do input restaurando o objeto da entidade. </p>
 <dl class="params"><dt>Parâmetros</dt><dd>
   <table class="params">
-    <tr><td class="paramname">input</td><td><a class="el" href="class_data_input_stream.html">DataInputStream</a> com o vetor de bytes da entidade. </td></tr>
+    <tr><td class="paramname">input</td><td><a class="el" href="class_data_input_stream.html">DataInputStream</a> com o vetor de bytes da entidade.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section see"><dt>Veja também</dt><dd><a href="https://www.tutorialspoint.com/difference-between-a-virtual-function-and-a-pure-virtual-function-in-cplusplus">Funções virtuais</a> </dd></dl>
 
-<p>Implementado em <a class="el" href="class_student.html#a451dd9c2b28fafa28e5fde833b1f75d2">Student</a>.</p>
+<p>Implementado em <a class="el" href="class_pagina_b.html#a483d5e9d6b3d78e8b97ecbcb3b449559">PaginaB&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;</a> e <a class="el" href="class_student.html#a451dd9c2b28fafa28e5fde833b1f75d2">Student</a>.</p>
 
 </div>
 </div>
@@ -373,9 +373,10 @@ Membros públicos</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Calcula o tamanho máximo, em bytes, que a entidade pode gastar. </p>
-<dl class="section return"><dt>Retorna</dt><dd>int Retorna o tamanho máximo, em bytes, que a entidade pode gastar. </dd></dl>
+<dl class="section return"><dt>Retorna</dt><dd>int Retorna o tamanho máximo, em bytes, que a entidade pode gastar.</dd></dl>
+<dl class="section see"><dt>Veja também</dt><dd><a href="https://www.tutorialspoint.com/difference-between-a-virtual-function-and-a-pure-virtual-function-in-cplusplus">Funções virtuais</a> </dd></dl>
 
-<p>Implementado em <a class="el" href="class_student.html#a352cca1faa94a9b6395eb305bab1f1ac">Student</a>.</p>
+<p>Implementado em <a class="el" href="class_pagina_b.html#a1722112b0406cb7e50961dbc8183f7ca">PaginaB&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;</a> e <a class="el" href="class_student.html#a352cca1faa94a9b6395eb305bab1f1ac">Student</a>.</p>
 
 </div>
 </div>
