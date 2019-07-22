@@ -1,6 +1,7 @@
 var searchData=
 [
   ['obtercursor',['obterCursor',['../class_data_input_stream.html#aa06db35da8436f0d7028e395d6e48ca4',1,'DataInputStream::obterCursor()'],['../class_data_output_stream.html#ab83bd3045f7d3d4d45ab3e4bacdb033c',1,'DataOutputStream::obterCursor()']]],
+  ['obterindicedeinsercao',['obterIndiceDeInsercao',['../class_pagina_b.html#acc2b7c65b93107b47cf83050734c6c1a',1,'PaginaB']]],
   ['obternumerodeelementos',['obterNumeroDeElementos',['../class_pagina_b.html#a87e29c2ff5ee48a1e842a0fcf11ddd93',1,'PaginaB']]],
   ['obtertamanhoembytes',['obterTamanhoEmBytes',['../struct_medidor.html#a661b2c6ec50559e0237b2fc8399df0c9',1,'Medidor::obterTamanhoEmBytes()'],['../struct_medidor_3_01_t_i_p_o_00_01true_01_4.html#a3dc75f6e099abfced0a6be6850c9d3c4',1,'Medidor&lt; TIPO, true &gt;::obterTamanhoEmBytes()']]],
   ['obtertamanhoembytesdachaveedodado',['obterTamanhoEmBytesDaChaveEDoDado',['../tipos_arvore_8hpp.html#a0dd3aa21d4b6635d751edae92326a28b',1,'tiposArvore.hpp']]],

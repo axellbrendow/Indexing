@@ -10,8 +10,14 @@
 #include "templates/serializavel.hpp"
 
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
+
+namespace constantes
+{
+    static const file_pointer_type ptrNuloPagina = -1;
+}
 
 /**
  * @brief Classe com as características da página da árvore B.
@@ -42,6 +48,14 @@ protected:
 	int ordemDaArvore;
 
 public:
+	// ------------------------- Typedefs
+
+	/**
+	 * @brief Padroniza o tipo da página da árvore. Typedefs dentro de classes ou
+	 * structs são considerados como boa prática em C++.
+	 */
+	typedef PaginaB<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> Pagina;
+
     // ------------------------- Campos
     
     vector<TIPO_DAS_CHAVES> chaves;
@@ -50,7 +64,7 @@ public:
 
     // ------------------------- Construtores
 
-    PaginaB() { }
+    PaginaB() : numeroDeElementos(0) { }
 
     /**
      * @brief Constrói uma nova página com a ordem informada.
@@ -65,6 +79,7 @@ public:
         int maximoDeBytesParaAChave,
         int maximoDeBytesParaODado) :
 
+        numeroDeElementos(0),
         maximoDeBytesParaAChave(maximoDeBytesParaAChave),
         maximoDeBytesParaODado(maximoDeBytesParaODado),
         numeroDeChavesPorPagina(ordemDaArvore - 1),
@@ -73,6 +88,8 @@ public:
         chaves.reserve(numeroDeChavesPorPagina);
         dados.reserve(numeroDeChavesPorPagina);
         ponteiros.reserve(ordemDaArvore);
+
+        fill(ponteiros.begin(), ponteiros.end(), constantes::ptrNuloPagina);
     }
 
     /**
@@ -181,6 +198,150 @@ public:
     bool vazia()
     {
         return numeroDeElementos == 0;
+    }
+
+    /**
+     * @brief Checa se a página está cheia.
+     * 
+     * @return true Caso a página esteja cheia.
+     * @return false Caso a página não esteja cheia.
+     */
+    bool cheia()
+    {
+        return numeroDeElementos == numeroDeChavesPorPagina;
+    }
+
+    /**
+     * @brief Zera a quantidade de elementos e limpa todos os vetores internos.
+     */
+    void limpar()
+    {
+        numeroDeElementos = 0;
+
+        chaves.clear();
+        dados.clear();
+        ponteiros.clear();
+    }
+
+    /**
+     * @brief Calcula qual é o índice em que a chave deve ser inserida ou então
+     * qual é o índice do ponteiro para descer na árvore.
+     * 
+     * @param chave Chave de pesquisa.
+     * 
+     * @return int Índice em que a chave deve ser inserida ou então
+     * o índice do ponteiro para descer na árvore.
+     */
+    int obterIndiceDeInsercao(TIPO_DAS_CHAVES chave)
+    {
+        // lower_bound (pesquisa binária) -> http://www.cplusplus.com/reference/algorithm/lower_bound/
+        auto iteradorDeInsercao = lower_bound(chaves.begin(), chaves.begin() + chaves.size(), chave);
+
+        return iteradorDeInsercao - chaves.begin();
+    }
+
+    /**
+     * @brief Insere o par (chave, dado) na página no índice informado.
+     * 
+     * @param chave Chave do par.
+     * @param dado Dado do par.
+     * @param indiceDeInsercao Índice de inserção do par.
+     * 
+     * @return true Caso tudo corra bem.
+     * @return false Caso a página esteja cheia.
+     */
+    bool inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado, int indiceDeInsercao)
+    {
+        bool sucesso = !cheia(); // Só é possível inserir se a página não estiver cheia
+
+		if (sucesso)
+		{
+            chaves.insert(indiceDeInsercao, chave);
+            dados.insert(indiceDeInsercao, dado);
+            ponteiros.insert(indiceDeInsercao + 1, constantes::ptrNuloPagina);
+            
+            numeroDeElementos++;
+		}
+
+        return sucesso;
+    }
+
+    /**
+     * @brief Insere o par (chave, dado) na página de forma ordenada.
+     * 
+     * @param chave Chave do par.
+     * @param dado Dado do par.
+     * 
+     * @return true Caso tudo corra bem.
+     * @return false Caso a página esteja cheia.
+     */
+    bool inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)
+    {
+        return inserir(chave, dado, obterIndiceDeInsercao(chave));
+    }
+
+    void transferirElementoPara(Pagina* paginaDestino, int indiceNoDestino, int indiceLocal)
+    {
+        paginaDestino->inserir(chaves[indiceLocal], dados[indiceLocal], indiceNoDestino);
+
+        chaves.erase(indiceLocal);
+        dados.erase(indiceLocal);
+    }
+
+	/**
+	 * @brief Pega o elemento mais à direita desta página e o promove para
+	 * o índice informado na página destino.
+	 * 
+     * @param pagina Página destino.
+	 * @param indice Índice de inserção na página destino.
+	 */
+	void promoverElementoParaAPagina(Pagina* pagina, int indice)
+	{
+		int numeroDeElementosDaPagina = pagina->obterNumeroDeElementos();
+
+		pagina->inserir(
+			chaves[numeroDeElementosDaPagina],
+			dados[numeroDeElementosDaPagina],
+			indice
+		);
+	}
+
+    /**
+     * @brief Transfere metade das chaves e dos dados para outra página.
+     * 
+     * @param paginaDestino Página destino.
+     */
+    template<typename ContainerFonte, typename ContainerDestino>
+    void transferirMetadePara(ContainerDestino& containerDestino, ContainerFonte& containerFonte, int quantidade)
+    {
+        auto inicio = containerFonte.end() - quantidade;
+        auto fim = containerFonte.end();
+
+        containerDestino.insert( // move para o destino usando iteradores sobre a fonte
+            containerDestino.end(),
+            // move_iterator é usado para mover os elementos invés de copiá-los
+            make_move_iterator(inicio),
+            make_move_iterator(fim)
+        );
+
+        containerFonte.erase(inicio, fim);
+    }
+
+    /**
+     * @brief Transfere metade das chaves e dos dados para outra página.
+     * 
+     * @param paginaDestino Página destino.
+     */
+    void transferirMetadePara(Pagina* paginaDestino)
+    {
+        int quantidadeRemovida = numeroDeElementos / 2;
+        
+        transferirMetadePara(paginaDestino->chaves, chaves, quantidadeRemovida);
+        transferirMetadePara(paginaDestino->dados, dados, quantidadeRemovida);
+        transferirMetadePara(paginaDestino->ponteiros, ponteiros, quantidadeRemovida + 1); // falta aqui
+
+        numeroDeElementos -= quantidadeRemovida;
+        paginaDestino->numeroDeElementos += quantidadeRemovida;
     }
 
     /**

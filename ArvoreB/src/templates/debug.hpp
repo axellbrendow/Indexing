@@ -22,7 +22,7 @@ void debugIterar(tipo start, tipo end)
     {
         for (tipo i = start + 1; i != end; i++)
         {
-            cout << (int) *i << " ";
+            cout << " " << (int) *i;
         }
     }
     

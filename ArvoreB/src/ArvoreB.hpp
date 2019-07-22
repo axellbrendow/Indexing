@@ -126,9 +126,33 @@ public:
 	 */
 	bool inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)
 	{
-		arquivo.seekg(tamanhoCabecalho);
+		arquivo.seekg(tamanhoCabecalho); // Pula o cabeçalho do arquivo
 		
-		arquivo >> paginaFilha;
+		arquivo >> paginaFilha; // Carrega a raiz
+
+		int indiceDeInsercao = paginaFilha->obterIndiceDeInsercao(chave);
+
+		// Checa se uma folha foi encontrada
+		if (paginaFilha->ponteiros[indiceDeInsercao] == constantes::ptrNuloPagina)
+		{
+			// Checa se a inserção na folha falhou. Ela falha quando a folha está cheia.
+			if (!paginaFilha->inserir(chave, dado, indiceDeInsercao))
+			{
+				// Inicia o processo de duplicação da folha
+				paginaIrma->limpar();
+				paginaFilha->transferirMetadePara(paginaIrma);
+				paginaFilha->inserir(chave, dado);
+
+				// Cria uma nova raiz
+				paginaPai->limpar();
+				promoverElementoParaOIndice(0);
+			}
+		}
+
+		if (!paginaFilha->inserir(chave, dado)) // Caso simples falhou
+		{
+			//
+		}
 	}
 	
 	/**

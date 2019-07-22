@@ -11,6 +11,7 @@ var searchData=
   ['lerparaoponteiro',['lerParaOPonteiro',['../class_data_input_stream.html#a9b81c91c9867f97f4a8864e8333e4575',1,'DataInputStream']]],
   ['lershort',['lerShort',['../class_data_input_stream.html#a9b3276b6ca7d785102951a931c74a778',1,'DataInputStream']]],
   ['lerstring',['lerString',['../class_data_input_stream.html#ad37627a636dbaa5bff155ab62a8a3e01',1,'DataInputStream']]],
+  ['limpar',['limpar',['../class_pagina_b.html#a0b071d3f038a3716fc3fcaa2b8f057c2',1,'PaginaB']]],
   ['listardadoscomachave',['listarDadosComAChave',['../class_arvore_b.html#a02b1f155d76306201291f5e27e05c628',1,'ArvoreB']]],
   ['listardadoscomachaveentre',['listarDadosComAChaveEntre',['../class_arvore_b.html#a525c35eb70a1171d793cef2057c97bc9',1,'ArvoreB']]]
 ];

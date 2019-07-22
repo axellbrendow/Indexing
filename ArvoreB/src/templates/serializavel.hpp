@@ -15,7 +15,10 @@
 
 #include <fstream>
 
-static str_size_type padraoTamanhoMaximoStrings = 300;
+namespace constantes
+{
+    static str_size_type tamanhoMaximoStrings = 300;
+}
 
 /**
  * @brief Classe abstrata que todo objeto serializável deve herdar.

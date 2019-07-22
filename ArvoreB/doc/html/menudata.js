@@ -23,6 +23,8 @@ for the JavaScript code in this file
 */
 var menudata={children:[
 {text:"Página principal",url:"index.html"},
+{text:"Namespaces",url:"namespaces.html",children:[
+{text:"Lista de namespaces",url:"namespaces.html"}]},
 {text:"Classes",url:"annotated.html",children:[
 {text:"Lista de componentes",url:"annotated.html"},
 {text:"Índice dos componentes",url:"classes.html"},

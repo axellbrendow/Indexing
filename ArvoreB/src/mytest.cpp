@@ -39,7 +39,7 @@ public:
 
     virtual int obterTamanhoMaximoEmBytes() override
     {
-        return sizeof(str_size_type) + padraoTamanhoMaximoStrings + sizeof(int);
+        return sizeof(str_size_type) + constantes::tamanhoMaximoStrings + sizeof(int);
     }
 
     virtual DataOutputStream& gerarDataOutputStream(DataOutputStream& out) override
