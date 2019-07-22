@@ -52,7 +52,7 @@ public:
         input >> nome >> idade;
     }
 
-    Student &imprimir()
+    Student& imprimir()
     {
         cout << "nome = " << nome << ", idade = " << idade << endl;
 
@@ -72,7 +72,7 @@ public:
 int main()
 {
     string fileName("fifthgrade.ros");
-	// Student one("axell", 19);
+	Student one("axell", 19);
     // one.imprimir();
     
     // // Apenas para criar ou zerar o arquivo
@@ -119,6 +119,8 @@ int main()
     // pagina.print();
 ////
     ArvoreB<int, Student> arvore(fileName, 4);
+
+    arvore.inserir(0, one);
 
 	return 0;
 }

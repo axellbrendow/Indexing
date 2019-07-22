@@ -9,6 +9,7 @@
 #pragma once
 
 #include "tipos.hpp"
+#include "debug.hpp"
 #include "../streams/DataOutputStream.hpp"
 #include "../streams/DataInputStream.hpp"
 
@@ -118,38 +119,67 @@ public:
     }
 };
 
-DataOutputStream &operator<<(DataOutputStream &dataOutputStream, Serializavel &variavel)
+DataOutputStream& operator<<(DataOutputStream& dataOutputStream, Serializavel* variavel)
 {
-    auto out = variavel.gerarDataOutputStream();
+    auto out = variavel->gerarDataOutputStream();
 
     return dataOutputStream << out;
 }
 
-ostream &operator<<(ostream &ostream, Serializavel &serializavel)
+DataOutputStream& operator<<(DataOutputStream& dataOutputStream, Serializavel& variavel)
 {
-    auto out = serializavel.gerarDataOutputStream();
+    return dataOutputStream << &variavel;
+}
+
+ostream& operator<<(ostream& ostream, Serializavel* serializavel)
+{
+    auto out = serializavel->gerarDataOutputStream();
 
     return ostream << out;
 }
 
-fstream &operator<<(fstream &fstream, Serializavel &serializavel)
+ostream& operator<<(ostream& ostream, Serializavel& serializavel)
 {
-    auto out = serializavel.gerarDataOutputStream();
+    return ostream << &serializavel;
+}
+
+fstream& operator<<(fstream& fstream, Serializavel* serializavel)
+{
+    auto out = serializavel->gerarDataOutputStream();
     
     return fstream << out;
 }
 
-fstream &operator>>(fstream &fstream, Serializavel &serializavel)
+fstream& operator<<(fstream& fstream, Serializavel& serializavel)
 {
-    auto quantidadeDeBytes = serializavel.obterTamanhoMaximoEmBytes();
+    return fstream << &serializavel;
+}
 
+fstream& operator>>(fstream& fstream, Serializavel* serializavel)
+{
+    auto quantidadeDeBytes = serializavel->obterTamanhoMaximoEmBytes();
+    
     char buffer[quantidadeDeBytes]; // Cria um buffer temporário para ler do arquivo
     
     // Lê a quantidade máxima de bytes que a entidade pode gastar para o buffer
     fstream.read(buffer, quantidadeDeBytes);
+
+    if (fstream.fail())
+    {
+        // cerr é a saída padrão de erros. Em alguns caso pode ser igual a cout.
+        cerr << "[Serializavel] Não foi possível ler a entidade do arquivo."
+            << endl << "Exceção lançada" << endl;
+
+        throw length_error("[Serializavel] Não foi possível ler a entidade do arquivo.");
+    }
     
     // Interpreta os bytes e restaura o objeto da entidade
-    serializavel.lerBytes(buffer, quantidadeDeBytes);
-
+    serializavel->lerBytes(buffer, quantidadeDeBytes);
+    
     return fstream;
+}
+
+fstream& operator>>(fstream& fstream, Serializavel& serializavel)
+{
+    return fstream >> &serializavel;
 }

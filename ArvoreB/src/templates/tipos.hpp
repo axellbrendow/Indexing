@@ -13,9 +13,6 @@
 
 using namespace std;
 
-#define debug cout << endl << "#######################################" << endl;
-#define debugv(value) cout << "debug = " << value << endl;
-
 /**
  * @brief Criado apenas para padronizar o tipo usado para declarar variáveis que
  * guardam tamanhos de strings.
@@ -58,44 +55,3 @@ typedef vector<tipo_byte> vetor_de_bytes;
  * @see http://www.cplusplus.com/reference/iterator/
  */
 typedef vetor_de_bytes::iterator iterador;
-
-template<typename tipo>
-void debugIterar(tipo start, tipo end)
-{
-    cout << (int) *start;
-    
-    if (start != end)
-    {
-        for (tipo i = start + 1; i != end; i++)
-        {
-            cout << (int) *i << " ";
-        }
-    }
-    
-    cout << endl;
-}
-
-template<typename tipo>
-void debugPrintar(tipo value)
-{
-    cout << value << endl;
-}
-
-template<typename tipo, typename... OutrosTipos>
-void debugPrintar(tipo value, OutrosTipos... outrosTipos)
-{
-    string delimiter = " ";
-    cout << value << delimiter;
-    debugPrintar(outrosTipos...);
-}
-
-template<typename tipo>
-void debugCursorComSaida(iterador start, iterador end, tipo *output)
-{
-    for (iterador i = start; i != end; i++)
-    {
-        cout << "(input) " << (int) *i << ",";
-        *output = *i;
-        cout << "(output) " << (int) *output++ << ",";
-    } cout << endl;
-}

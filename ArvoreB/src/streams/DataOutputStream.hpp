@@ -98,7 +98,7 @@ public:
         return bytes.capacity();
     }
 
-    DataOutputStream &resize(int size)
+    DataOutputStream& resize(int size)
     {
         bytes.resize(size);
 
@@ -146,7 +146,7 @@ public:
      * @return DataOutputStream& Retorna uma referência para este objeto.
      */
     template<typename tipo>
-    DataOutputStream &escreverPorPonteiro(tipo *ptrValor, int tamanhoDoValor = sizeof(tipo))
+    DataOutputStream& escreverPorPonteiro(tipo *ptrValor, int tamanhoDoValor = sizeof(tipo))
     {
         // reinterpret_cast faz a conversão do ponteiro para "tipo_byte *".
         // Isso é feito para que eu possa iterar sobre os bytes do valor.
@@ -167,7 +167,7 @@ public:
      * @return DataOutputStream& Retorna uma referência para este objeto.
      */
     template<typename tipo>
-    DataOutputStream &escrever(tipo &valor, int tamanhoDoValor = sizeof(tipo))
+    DataOutputStream& escrever(tipo& valor, int tamanhoDoValor = sizeof(tipo))
     {
         return escreverPorPonteiro(&valor);
     }
@@ -181,7 +181,7 @@ public:
      * 
      * @return DataOutputStream& Retorna uma referência para este objeto.
      */
-    DataOutputStream &escreverString(string &str)
+    DataOutputStream& escreverString(string& str)
     {
         str_size_type tamanho = str.length();
 
@@ -197,7 +197,7 @@ public:
      *
      * @return DataOutputStream& Retorna uma referência para este objeto.
      */
-    DataOutputStream& escreverDataOutputStream(DataOutputStream &out)
+    DataOutputStream& escreverDataOutputStream(DataOutputStream& out)
     {
         return escreverPorIterador(out.begin(), out.obterCursor());
     }
@@ -205,31 +205,31 @@ public:
 
 // ------------------------- Operadores
 template<typename tipo>
-DataOutputStream &operator<<(DataOutputStream &dataOutputStream, tipo variavel)
+DataOutputStream& operator<<(DataOutputStream& dataOutputStream, tipo variavel)
 {
     return dataOutputStream.escrever(variavel);
 }
 
-DataOutputStream &operator<<(DataOutputStream &dataOutputStream, string &variavel)
+DataOutputStream& operator<<(DataOutputStream& dataOutputStream, string& variavel)
 {
     return dataOutputStream.escreverString(variavel);
 }
 
-DataOutputStream &operator<<(DataOutputStream &dataOutputStream, const char *variavel)
+DataOutputStream& operator<<(DataOutputStream& dataOutputStream, const char *variavel)
 {
     string str(variavel);
 
     return dataOutputStream << str;
 }
 
-DataOutputStream &operator<<(
-    DataOutputStream &dataOutputStream,
-    DataOutputStream &variavel)
+DataOutputStream& operator<<(
+    DataOutputStream& dataOutputStream,
+    DataOutputStream& variavel)
 {
     return dataOutputStream.escreverDataOutputStream(variavel);
 }
 
-ostream &operator<<(ostream &ostream, DataOutputStream &out)
+ostream& operator<<(ostream& ostream, DataOutputStream& out)
 {
     if (out.capacity() > 0)
     {
@@ -246,7 +246,7 @@ ostream &operator<<(ostream &ostream, DataOutputStream &out)
     return ostream << endl;
 }
 
-fstream &operator<<(fstream &fstream, DataOutputStream &out)
+fstream& operator<<(fstream& fstream, DataOutputStream& out)
 {
     fstream.write( reinterpret_cast<char *>( out.begin().base() ), out.capacity() );
 

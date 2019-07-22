@@ -9,42 +9,14 @@
 #pragma once
 
 #include "templates/tipos.hpp"
+#include "templates/debug.hpp"
+#include "tiposArvore.hpp"
 #include "PaginaB.hpp"
 
 #include <iostream>
 #include <fstream>
 
 using namespace std;
-
-// Especialização para classes abstratas
-// https://stackoverflow.com/questions/24936862/c-template-specialization-for-subclasses-with-abstract-base-class
-template<typename TIPO, bool = is_base_of<Serializavel, TIPO>::value>
-struct Medidor
-{
-	static size_t obterTamanhoEmBytes()
-	{
-		// static_assert -> https://www.geeksforgeeks.org/understanding-static_assert-c-11/
-		// is_fundamental<> checa se o tipo do seu parâmetro é primitivo
-		// https://stackoverflow.com/questions/580922/identifying-primitive-types-in-templates
-		static_assert(
-			is_fundamental<TIPO>::value,
-			"O tipo da árvore deve ser primitivo caso ele não herde de Serializavel."
-		);
-
-		return sizeof(TIPO);
-	}
-};
-
-// Especialização para classes abstratas
-// https://stackoverflow.com/questions/24936862/c-template-specialization-for-subclasses-with-abstract-base-class
-template<typename TIPO>
-struct Medidor<TIPO, true> // true quando TIPO herdar de Serializavel
-{
-	static size_t obterTamanhoEmBytes()
-	{
-		return TIPO().obterTamanhoMaximoEmBytes();
-	}
-};
 
 /**
  * @brief Classe da árvore B, uma estrutura eficiente para indexamento de registros
@@ -71,43 +43,16 @@ private:
 	
 	void abrirArquivo(string nome)
 	{
-		arquivo = fstream(nomeDoArquivo, fstream::binary | fstream::in | fstream::out);
+		arquivo = fstream(nome, fstream::binary | fstream::in | fstream::out);
 
-		if (!arquivo) // Checa se o arquivo não existe
+		if (!arquivo) // Checa se o arquivo não existe ou não está acessível
 		{
-			// Caso não, cria um arquivo novo removendo o modo fstream::in e o fecha
-			fstream(nomeDoArquivo, fstream::binary | fstream::out).close();
+			// Caso não, cria um arquivo e o fecha
+			fstream(nome, fstream::binary | fstream::out).close();
 			// Agora sim reabre o arquivo nos modos de leitura e escrita
 			arquivo = 
-				fstream(nomeDoArquivo, fstream::binary | fstream::in | fstream::out);
+				fstream(nome, fstream::binary | fstream::in | fstream::out);
 		}
-	}
-
-	void obterTamanhoEmBytesDaChaveEDoDado()
-	{
-		maximoDeBytesParaAChave = Medidor<TIPO_DAS_CHAVES>::obterTamanhoEmBytes();
-		maximoDeBytesParaODado = Medidor<TIPO_DOS_DADOS>::obterTamanhoEmBytes();
-	}
-
-	void criarPaginasPaiFilhaEIrma()
-	{
-		Pagina paginaPai = Pagina(
-			ordemDaArvore,
-			maximoDeBytesParaAChave,
-			maximoDeBytesParaODado
-		);
-
-		Pagina paginaFilha = Pagina(
-			ordemDaArvore,
-			maximoDeBytesParaAChave,
-			maximoDeBytesParaODado
-		);
-
-		Pagina paginaIrma = Pagina(
-			ordemDaArvore,
-			maximoDeBytesParaAChave,
-			maximoDeBytesParaODado
-		);
 	}
 
 public:
@@ -131,34 +76,42 @@ protected:
 	int numeroDeChavesPorPagina;
 	int ordemDaArvore;
 
-	Pagina paginaPai;
-	Pagina paginaFilha;
-	Pagina paginaIrma;
+	Pagina *paginaPai; // falta link aqui
+	Pagina *paginaFilha;
+	Pagina *paginaIrma;
 
 	// ------------------------- Métodos
 	
 	bool inserirRecursivo(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado);
 
 public:
+	// ------------------------- Campos
+
+	const int tamanhoCabecalho = 0;
+
 	// ------------------------- Construtores e destrutores
 
 	ArvoreB(string nomeDoArquivo, int ordemDaArvore) :
 		nomeDoArquivo(nomeDoArquivo),
 		numeroDeChavesPorPagina(ordemDaArvore - 1),
-		ordemDaArvore(ordemDaArvore)
+		ordemDaArvore(ordemDaArvore),
+		paginaPai(new Pagina(ordemDaArvore) ),
+		paginaFilha(new Pagina(ordemDaArvore) ),
+		paginaIrma(new Pagina(ordemDaArvore) )
 	{
-		// static_assert -> https://www.geeksforgeeks.org/understanding-static_assert-c-11/
-		// is_default_constructible -> http://www.cplusplus.com/reference/type_traits/is_default_constructible/?kw=is_default_constructible
-		static_assert(is_default_constructible<TIPO_DAS_CHAVES>::value,
-			"O tipo das chaves da árvore deve ter um construtor sem parâmetros."
-		);
-		static_assert(is_default_constructible<TIPO_DOS_DADOS>::value,
-			"O tipo dos dados da árvore deve ter um construtor sem parâmetros."
-		);
 
 		abrirArquivo(nomeDoArquivo);
-		obterTamanhoEmBytesDaChaveEDoDado();
-		criarPaginasPaiFilhaEIrma();
+
+		obterTamanhoEmBytesDaChaveEDoDado<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>(
+			maximoDeBytesParaAChave, maximoDeBytesParaODado
+		);
+	}
+
+	~ArvoreB()
+	{
+		delete paginaPai;
+		delete paginaFilha;
+		delete paginaIrma;
 	}
 
 	// ------------------------- Métodos
@@ -172,7 +125,12 @@ public:
 	 * @return true Caso tudo corra bem.
 	 * @return false Caso um erro ocorra.
 	 */
-	bool inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado);
+	bool inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)
+	{
+		arquivo.seekg(tamanhoCabecalho);
+		
+		arquivo >> paginaFilha;
+	}
 	
 	/**
 	 * @brief Remove o par (chave, dado) da árvore.

@@ -75,7 +75,7 @@ public:
 	 *
 	 * @param bytes Entrada de onde os dados serão extraídos.
 	 */
-	DataInputStream(DataOutputStream &out) : DataInputStream(out.obterVetor()) { }
+	DataInputStream(DataOutputStream& out) : DataInputStream(out.obterVetor()) { }
 
 	// ------------------------- Métodos
 

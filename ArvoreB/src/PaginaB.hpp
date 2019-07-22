@@ -50,7 +50,7 @@ public:
 
     // ------------------------- Construtores
 
-    PaginaB() {}
+    PaginaB() { }
 
     /**
      * @brief Constrói uma nova página com a ordem informada.
@@ -62,8 +62,8 @@ public:
      * nos registros. Valor padrão = sizeof(TIPO_DOS_DADOS).
      */
     PaginaB(int ordemDaArvore,
-        int maximoDeBytesParaAChave = sizeof(TIPO_DAS_CHAVES),
-        int maximoDeBytesParaODado = sizeof(TIPO_DOS_DADOS)) :
+        int maximoDeBytesParaAChave,
+        int maximoDeBytesParaODado) :
 
         maximoDeBytesParaAChave(maximoDeBytesParaAChave),
         maximoDeBytesParaODado(maximoDeBytesParaODado),
@@ -76,6 +76,19 @@ public:
     }
 
     /**
+     * @brief Constrói uma nova página com a ordem informada e infere automaticamente
+     * a quantidade de bytes que o TIPO_DAS_CHAVES e o TIPO_DOS_DADOS gasta.
+     * 
+     * @param ordemDaArvore Ordem da árvore B (quantidade máxima de filhos por página).
+     */
+    PaginaB(int ordemDaArvore) : PaginaB(ordemDaArvore, 0, 0)
+    {
+        obterTamanhoEmBytesDaChaveEDoDado<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>(
+            maximoDeBytesParaAChave, maximoDeBytesParaODado
+        );
+    }
+
+    /**
      * @brief Constrói uma nova página a partir do vetor de bytes do DataInputStream.
      * 
      * @param bytes DataInputStream com o vetor de bytes da página.
@@ -85,16 +98,7 @@ public:
      * @param maximoDeBytesParaODado Quantidade máxima de bytes que o dado pode gastar
      * nos registros. Valor padrão = sizeof(TIPO_DOS_DADOS).
      */
-    PaginaB(DataInputStream& bytes,
-        int ordemDaArvore,
-        int maximoDeBytesParaAChave = sizeof(TIPO_DAS_CHAVES),
-        int maximoDeBytesParaODado = sizeof(TIPO_DOS_DADOS)) :
-
-        PaginaB(
-            ordemDaArvore,
-            maximoDeBytesParaAChave,
-            maximoDeBytesParaODado
-        )
+    PaginaB(DataInputStream& bytes, int ordemDaArvore) : PaginaB(ordemDaArvore)
     {
         lerBytes(bytes);
     }
@@ -103,7 +107,8 @@ public:
 
     virtual int obterTamanhoMaximoEmBytes() override
     {
-        return sizeof(int) + // bytes para guardar a quantidade de elementos na página
+        // bytes para guardar a quantidade de elementos na página
+        return sizeof( decltype(numeroDeElementos) ) + // falta link aqui
             ordemDaArvore * sizeof(file_pointer_type) + // bytes para os ponteiros
             numeroDeChavesPorPagina * maximoDeBytesParaAChave + // bytes para as chaves
             numeroDeChavesPorPagina * maximoDeBytesParaODado; // bytes para os dados
