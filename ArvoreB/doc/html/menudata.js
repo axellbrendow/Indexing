@@ -44,7 +44,8 @@ var menudata={children:[
 {text:"r",url:"functions.html#index_r"},
 {text:"s",url:"functions.html#index_s"},
 {text:"t",url:"functions.html#index_t"},
-{text:"v",url:"functions.html#index_v"}]},
+{text:"v",url:"functions.html#index_v"},
+{text:"~",url:"functions.html#index__7E"}]},
 {text:"Funções",url:"functions_func.html",children:[
 {text:"a",url:"functions_func.html#index_a"},
 {text:"b",url:"functions_func.html#index_b"},
@@ -60,12 +61,22 @@ var menudata={children:[
 {text:"r",url:"functions_func.html#index_r"},
 {text:"s",url:"functions_func.html#index_s"},
 {text:"t",url:"functions_func.html#index_t"},
-{text:"v",url:"functions_func.html#index_v"}]},
-{text:"Variáveis",url:"functions_vars.html"}]}]},
+{text:"v",url:"functions_func.html#index_v"},
+{text:"~",url:"functions_func.html#index__7E"}]},
+{text:"Variáveis",url:"functions_vars.html"},
+{text:"Definições de tipos",url:"functions_type.html"}]}]},
 {text:"Ficheiros",url:"files.html",children:[
 {text:"Lista de ficheiros",url:"files.html"},
 {text:"Membros dos Ficheiros",url:"globals.html",children:[
-{text:"Tudo",url:"globals.html"},
+{text:"Tudo",url:"globals.html",children:[
+{text:"d",url:"globals.html#index_d"},
+{text:"f",url:"globals.html#index_f"},
+{text:"i",url:"globals.html#index_i"},
+{text:"m",url:"globals.html#index_m"},
+{text:"o",url:"globals.html#index_o"},
+{text:"s",url:"globals.html#index_s"},
+{text:"t",url:"globals.html#index_t"},
+{text:"v",url:"globals.html#index_v"}]},
 {text:"Funções",url:"globals_func.html"},
 {text:"Definições de tipos",url:"globals_type.html"},
 {text:"Macros",url:"globals_defs.html"}]}]}]}

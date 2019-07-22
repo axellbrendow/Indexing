@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['debug',['debug',['../tipos_8hpp.html#a322565ccf348d13e4d3de13af771e5fc',1,'tipos.hpp']]],
-  ['debugv',['debugv',['../tipos_8hpp.html#ab80535be67ee46c0cf5fe130312c9d24',1,'tipos.hpp']]]
+  ['debug',['DEBUG',['../debug_8hpp.html#ad72dbcf6d0153db1b8d8a58001feed83',1,'debug.hpp']]],
+  ['debugv',['DEBUGV',['../debug_8hpp.html#a400b7dfdb0ac4c9cc82ef6a0ad6e7c8b',1,'debug.hpp']]]
 ];

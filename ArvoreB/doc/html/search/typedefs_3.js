@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['tipo_5fbyte',['tipo_byte',['../tipos_8hpp.html#a6a251888af90f851a6e15a8887f86bc1',1,'tipos.hpp']]]
+  ['str_5fsize_5ftype',['str_size_type',['../tipos_8hpp.html#a14ad2ddcc295ee3feb1f46731116465e',1,'tipos.hpp']]]
 ];

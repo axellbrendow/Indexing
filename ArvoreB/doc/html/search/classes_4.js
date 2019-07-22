@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['serializavel',['Serializavel',['../class_serializavel.html',1,'']]],
-  ['student',['Student',['../class_student.html',1,'']]]
+  ['paginab',['PaginaB',['../class_pagina_b.html',1,'']]]
 ];

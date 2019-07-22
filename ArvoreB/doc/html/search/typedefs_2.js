@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['str_5fsize_5ftype',['str_size_type',['../tipos_8hpp.html#a14ad2ddcc295ee3feb1f46731116465e',1,'tipos.hpp']]]
+  ['pagina',['Pagina',['../class_arvore_b.html#a33a9cc9c13f102525a84a634d277a764',1,'ArvoreB']]]
 ];

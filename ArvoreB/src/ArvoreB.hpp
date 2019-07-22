@@ -99,7 +99,6 @@ public:
 		paginaFilha(new Pagina(ordemDaArvore) ),
 		paginaIrma(new Pagina(ordemDaArvore) )
 	{
-
 		abrirArquivo(nomeDoArquivo);
 
 		obterTamanhoEmBytesDaChaveEDoDado<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>(
