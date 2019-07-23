@@ -74,6 +74,7 @@ $(function() {
 <a href="#details">Mais...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="tipos_8hpp_source.html">templates/tipos.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="serializavel_8hpp_source.html">templates/serializavel.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="helpers_arvore_8hpp_source.html">helpersArvore.hpp</a>&quot;</code><br />
 <code>#include &lt;iostream&gt;</code><br />
 <code>#include &lt;algorithm&gt;</code><br />
 </div>
@@ -95,6 +96,9 @@ Funções</h2></td></tr>
 <tr class="memitem:a51e174f2db11eda7348c8d9036d769e3"><td class="memTemplParams" colspan="2">template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </td></tr>
 <tr class="memitem:a51e174f2db11eda7348c8d9036d769e3"><td class="memTemplItemLeft" align="right" valign="top">ostream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_pagina_b_8hpp.html#a51e174f2db11eda7348c8d9036d769e3">operator&lt;&lt;</a> (ostream &amp;ostream, <a class="el" href="class_pagina_b.html">PaginaB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt; &amp;pagina)</td></tr>
 <tr class="separator:a51e174f2db11eda7348c8d9036d769e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf81ff03d7504e46f05832b7a1ced76d"><td class="memTemplParams" colspan="2">template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </td></tr>
+<tr class="memitem:acf81ff03d7504e46f05832b7a1ced76d"><td class="memTemplItemLeft" align="right" valign="top">fstream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_pagina_b_8hpp.html#acf81ff03d7504e46f05832b7a1ced76d">operator&gt;&gt;</a> (fstream &amp;fstream, <a class="el" href="class_pagina_b.html">PaginaB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt; &amp;pagina)</td></tr>
+<tr class="separator:acf81ff03d7504e46f05832b7a1ced76d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Descrição detalhada</h2>
 <div class="textblock"><p>Arquivo da classe <a class="el" href="class_pagina_b.html" title="Classe com as características da página da árvore B.">PaginaB</a>. </p>
@@ -114,6 +118,36 @@ template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
           <td>(</td>
           <td class="paramtype">ostream &amp;&#160;</td>
           <td class="paramname"><em>ostream</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_pagina_b.html">PaginaB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt; &amp;&#160;</td>
+          <td class="paramname"><em>pagina</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="acf81ff03d7504e46f05832b7a1ced76d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf81ff03d7504e46f05832b7a1ced76d">&#9670;&nbsp;</a></span>operator&gt;&gt;()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">fstream&amp; operator&gt;&gt; </td>
+          <td>(</td>
+          <td class="paramtype">fstream &amp;&#160;</td>
+          <td class="paramname"><em>fstream</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
