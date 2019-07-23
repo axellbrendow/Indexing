@@ -78,9 +78,9 @@ public:
      * 
      * @param ordemDaArvore Ordem da árvore B (quantidade máxima de filhos por página).
      * @param maximoDeBytesParaAChave Quantidade máxima de bytes que a chave pode gastar
-     * nos registros.  Valor padrão = sizeof(TIPO_DAS_CHAVES).
+     * nos registros.
      * @param maximoDeBytesParaODado Quantidade máxima de bytes que o dado pode gastar
-     * nos registros. Valor padrão = sizeof(TIPO_DOS_DADOS).
+     * nos registros.
      */
     PaginaB(int ordemDaArvore,
         int maximoDeBytesParaAChave,
@@ -118,9 +118,9 @@ public:
      * @param bytes DataInputStream com o vetor de bytes da página.
      * @param ordemDaArvore Ordem da árvore B (quantidade máxima de filhos por página).
      * @param maximoDeBytesParaAChave Quantidade máxima de bytes que a chave pode gastar
-     * nos registros.  Valor padrão = sizeof(TIPO_DAS_CHAVES).
+     * nos registros.
      * @param maximoDeBytesParaODado Quantidade máxima de bytes que o dado pode gastar
-     * nos registros. Valor padrão = sizeof(TIPO_DOS_DADOS).
+     * nos registros.
      */
     PaginaB(DataInputStream& bytes, int ordemDaArvore) : PaginaB(ordemDaArvore)
     {
@@ -257,16 +257,18 @@ public:
     }
 
     /**
-     * @brief Insere o par (chave, dado) na página no índice informado.
+     * @brief Insere a tripla (ponteiro, chave, dado) na página no índice informado.
      * 
      * @param chave Chave do par.
      * @param dado Dado do par.
      * @param indiceDeInsercao Índice de inserção do par.
+     * @param ponteiro Ponteiro à esquerda do par (chave, dado).
      * 
      * @return true Caso tudo corra bem.
      * @return false Caso a página esteja cheia.
      */
-    bool inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado, int indiceDeInsercao)
+    bool inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado, int indiceDeInsercao,
+        file_pointer_type ponteiro = constantes::ptrNuloPagina)
     {
         bool sucesso = !cheia(); // Só é possível inserir se a página não estiver cheia
 
@@ -274,7 +276,7 @@ public:
 		{
             chaves.insert(chaves.begin() + indiceDeInsercao, chave);
             dados.insert(dados.begin() + indiceDeInsercao, dado);
-            ponteiros.insert(ponteiros.begin() + indiceDeInsercao, constantes::ptrNuloPagina);
+            ponteiros.insert(ponteiros.begin() + indiceDeInsercao, ponteiro);
             
             numeroDeElementos++;
 		}
@@ -288,28 +290,41 @@ public:
      * @param chave Chave do par.
      * @param dado Dado do par.
      * 
-     * @return true Caso tudo corra bem.
-     * @return false Caso a página esteja cheia.
+     * @return int -1 caso a inserção falhe (página cheia). Caso contrário,
+     * o índice onde o par foi inserido.
      */
-    bool inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)
+    int inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)
     {
-        return inserir(chave, dado, obterIndiceDeDescida(chave));
+        int indiceDeInsercao = obterIndiceDeDescida(chave);
+
+        if (inserir(chave, dado, indiceDeInsercao))
+        {
+            indiceDeInsercao = -1;
+        }
+
+        return indiceDeInsercao;
     }
 
 	/**
-	 * @brief Pega o par (chave, dado) no indiceLocal e o insere no indiceNoDestino
-     * da paginaDestino.
+	 * @brief Pega a quádrupla (ponteiro, chave, dado, ponteiro) no indiceLocal e o
+     * insere no indiceNoDestino da paginaDestino.
 	 * 
      * @param paginaDestino Página destino.
 	 * @param indiceNoDestino Índice de inserção na página destino.
-	 * @param indiceLocal Índice do par nesta página.
+	 * @param indiceLocal Índice do par (chave, dado) nesta página.
 	 */
     void transferirElementoPara(Pagina* paginaDestino, int indiceNoDestino, int indiceLocal)
     {
-        paginaDestino->inserir(chaves[indiceLocal], dados[indiceLocal], indiceNoDestino);
+        paginaDestino->ponteiros[indiceNoDestino] = ponteiros[indiceLocal + 1]; // falta/olhar isso
+
+        paginaDestino->inserir(
+            chaves[indiceLocal], dados[indiceLocal],
+            indiceNoDestino, ponteiros[indiceLocal]
+        );
 
         chaves.erase(chaves.begin() + indiceLocal);
         dados.erase(dados.begin() + indiceLocal);
+        ponteiros.erase(ponteiros.begin() + indiceLocal);
     }
 
 	/**
@@ -320,22 +335,35 @@ public:
 	 * 
      * @param pagina Página destino.
 	 * @param indice Índice de inserção na página destino.
+     * @param paginaCheia Ponteiro para a página cheia que provocou a duplicação.
      * @param novaPagina Ponteiro para a nova página que foi criada na duplicação.
+     * @param promoverElementoDoInicio Caso seja true, promove o primeiro elemento
+     * desta página. Caso contrário, promove o último.
      * 
      * @return Tripla Uma tripla (chave, dado, ponteiro) onde a chave, o dado e o
      * ponteiro são os valores que estavam no índice informado na página de destino.
      * O ponteiro é sempre o ponteiro à direita da chave e do dado.
 	 */
-	Tripla promoverElementoPara(Pagina* pagina, int indice, Pagina* novaPagina)
+	Tripla promoverElementoPara(Pagina* pagina, int indice, Pagina* paginaCheia,
+        Pagina* novaPagina, bool promoverElementoDoInicio)
 	{
         Tripla tripla(
-            pagina->chaves[indice],
-            pagina->dados[indice],
-            pagina->ponteiros[indice + 1]
+            pagina->chaves[indice], // Salva a chave no índice informado
+            pagina->dados[indice], // Salva o dado no índice informado
+            pagina->ponteiros[indice + 1] // Salva o ponteiro posterior ao índice informado
         );
 
-		transferirElementoPara(pagina, indice, --numeroDeElementos);
+        int indiceDeRemocao = (promoverElementoDoInicio ? 0 : numeroDeElementos - 1);
 
+		transferirElementoPara(pagina, indice, indiceDeRemocao);
+
+        numeroDeElementos--;
+
+        // Quando um elemento é promovido, o ponteiro da esquerda dele deve apontar
+        // para a página que estava cheia (a que provocou a duplicação).
+        // Já o ponteiro da direita deve apontar para a nova página (gerada pela
+        // duplicação).
+        pagina->ponteiros[indice] = paginaCheia->endereco;
         pagina->ponteiros[indice + 1] = novaPagina->endereco;
 
         return tripla;
@@ -389,9 +417,7 @@ public:
      * </p>
      * 
      * @param delimitadorEntreOsItens Delimitador entre cada elemento da página.
-     * Valor padrão = " ".
      * @param ostream Fluxo de saída onde a página será impressa.
-     * Valor padrão = std::cout.
      */
     void print(string delimitadorEntreOsItens = " ", ostream& ostream = cout)
     {

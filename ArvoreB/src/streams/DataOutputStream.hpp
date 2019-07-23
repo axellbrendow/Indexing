@@ -141,7 +141,6 @@ public:
      * @tparam tipo Tipo do que se deseja escrever.
      * @param ptrValor Ponteiro para o primeiro byte do valor a ser escrito.
      * @param tamanhoDoValor Quantidade de bytes a serem escritos.
-     * Valor padrão = sizeof(tipo).
      * 
      * @return DataOutputStream& Retorna uma referência para este objeto.
      */
@@ -162,7 +161,6 @@ public:
      * @tparam tipo Tipo do que se deseja escrever.
      * @param valor Valor que se deseja escrever.
      * @param tamanhoDoValor Tamanho em bytes que o valor gasta.
-     * Valor padrão = sizeof(tipo).
      * 
      * @return DataOutputStream& Retorna uma referência para este objeto.
      */

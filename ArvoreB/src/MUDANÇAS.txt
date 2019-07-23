@@ -1,4 +1,1 @@
-1 - Muda a struct Par para struct Tripla para que eu possa retornar a chave, o dado e o ponteiro à direita deles.
-2 - Muda a responsabilidade da função de transferência de elementos de uma página para a outra. Agora a transferência não olha nada sobre a página que ela afeta. Já a função de promoção de elementos ficou com a responsabilidade de guardar a chave, o dado e o ponteiro afetados na página de destino antes de fazer a transferência.
-3 - Adiciona o campo "endereco" nas páginas para que elas possam guardar os seus próprios endereços no arquivo.
-4 - Adiciona mais um overload no operador >> para (fstream&, PaginaB<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>&). Esse overload faz o set do campo endereço da página antes de lê-la do arquivo.
+1 - Muda definitivamente a lógica de promoção de elementos. A lógica certa é a seguinte: quando o elemento for promovido, o ponteiro da esquerda dele deve apontar para a página cheia (a que provocou duplicação). Já o ponteiro da direita deve apontar para a nova página (gerada pela duplicação).

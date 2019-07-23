@@ -174,16 +174,25 @@ public:
 					paginaFilha->transferirMetadePara(paginaIrma);
 
 					// Escolhe a página onde a chave será inserida
+					bool inserirNaNovaPagina =
+						chave > paginaFilha->chaves.back() ? true : false;
+
 					Pagina* paginaDeInsercao =
-						chave < paginaIrma->chaves.back() ?
-						paginaFilha : paginaIrma;
+						inserirNaNovaPagina ? paginaIrma : paginaFilha;
 
 					paginaDeInsercao->inserir(chave, dado);
 
 					// Inicia o processo de criação da nova raiz
 					paginaPai->limpar();
-					paginaDeInsercao->promoverElementoPara(paginaPai, 0, paginaIrma);
-					paginaPai->ponteiros[0] = enderecoDaRaiz;
+					paginaDeInsercao->promoverElementoPara(
+						paginaPai, 0,
+						paginaFilha,
+						paginaIrma,
+						// caso a inserção do par (chave, dado) seja na nova
+						// página, o primeiro elemento dela deve ser promovido
+						// (o mais à esquerda).
+						inserirNaNovaPagina
+					);
 				}
 			}
 		}

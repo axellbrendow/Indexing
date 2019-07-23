@@ -194,7 +194,7 @@ public:
 	 *
 	 * @tparam tipo Tipo do valor apontado pelo ponteiro.
 	 * @param ptr Ponteiro para onde o valor deve ser colocado.
-	 * @param tamanhoDoValor Quantidade de bytes do valor. Valor padrão = sizeof(tipo).
+	 * @param tamanhoDoValor Quantidade de bytes do valor.
 	 */
 	template<typename tipo>
 	void lerParaOPonteiro(tipo* ptr, int tamanhoDoValor = sizeof(tipo))
@@ -215,7 +215,7 @@ public:
 	 * @brief Lê um tipo primitivo ou um objeto com tamanho pré definido.
 	 *
 	 * @tparam tipo Tipo do valor a ser lido.
-	 * @param tamanhoDoValor Quantidade de bytes do valor. Valor padrão = sizeof(tipo).
+	 * @param tamanhoDoValor Quantidade de bytes do valor.
 	 *
 	 * @return tipo Retorna uma cópia do valor lido.
 	 */
