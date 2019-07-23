@@ -1,5 +1,5 @@
 /**
- * @file tiposArvore.hpp
+ * @file helpersArvore.hpp
  * @author Axell Brendow ( https://github.com/axell-brendow )
  * @brief Arquivo com typedefs e helpers para a árvore B.
  * 

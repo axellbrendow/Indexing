@@ -8,6 +8,7 @@
 
 #include "templates/tipos.hpp"
 #include "templates/serializavel.hpp"
+#include "helpersArvore.hpp"
 
 #include <iostream>
 #include <algorithm>
@@ -46,6 +47,7 @@ protected:
 	int maximoDeBytesParaODado;
 	int numeroDeChavesPorPagina;
 	int ordemDaArvore;
+    file_pointer_type endereco;
 
 public:
 	// ------------------------- Typedefs
@@ -59,7 +61,7 @@ public:
     /**
      * @brief Padroniza o tipo do par (chave, dado).
      */
-    typedef struct Par<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> Par;
+    typedef struct Tripla<TIPO_DAS_CHAVES, TIPO_DOS_DADOS, file_pointer_type> Tripla;
 
     // ------------------------- Campos
     
@@ -183,6 +185,14 @@ public:
 
     // ------------------------- Métodos
 
+    file_pointer_type setEndereco(file_pointer_type endereco)
+    {
+        if (endereco > -1)
+        {
+            this->endereco = endereco;
+        }
+    }
+
     /**
      * @brief Retorna 0 (zero) caso a página não tenha sido carregada do arquivo ainda.
      * Caso contrário, retorna o seu número de elementos.
@@ -237,7 +247,7 @@ public:
      * @return int Índice em que a chave deve ser inserida ou então
      * o índice do ponteiro para descer na árvore.
      */
-    int obterIndiceDeInsercao(TIPO_DAS_CHAVES chave)
+    int obterIndiceDeDescida(TIPO_DAS_CHAVES chave)
     {
         // lower_bound (pesquisa binária) -> http://www.cplusplus.com/reference/algorithm/lower_bound/
         auto iteradorDeInsercao =
@@ -283,49 +293,52 @@ public:
      */
     bool inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)
     {
-        return inserir(chave, dado, obterIndiceDeInsercao(chave));
+        return inserir(chave, dado, obterIndiceDeDescida(chave));
     }
 
 	/**
 	 * @brief Pega o par (chave, dado) no indiceLocal e o insere no indiceNoDestino
-     * da paginaDestino. A operação pode falhar caso a página destino esteja cheia.
+     * da paginaDestino.
 	 * 
      * @param paginaDestino Página destino.
 	 * @param indiceNoDestino Índice de inserção na página destino.
 	 * @param indiceLocal Índice do par nesta página.
-     * 
-     * @return Par Um par com a chave e o dado que seriam transferidos e uma flag
-     * success que diz se o par foi transferido ou não.
 	 */
-    Par transferirElementoPara(Pagina* paginaDestino, int indiceNoDestino, int indiceLocal)
+    void transferirElementoPara(Pagina* paginaDestino, int indiceNoDestino, int indiceLocal)
     {
-        Par par(chaves[indiceLocal], dados[indiceLocal]);
-
-        if (!paginaDestino->cheia())
-        {
-            paginaDestino->inserir(par.first, par.second, indiceNoDestino);
-        }
+        paginaDestino->inserir(chaves[indiceLocal], dados[indiceLocal], indiceNoDestino);
 
         chaves.erase(chaves.begin() + indiceLocal);
         dados.erase(dados.begin() + indiceLocal);
-
-        return par;
     }
 
 	/**
-	 * @brief Pega o elemento mais à direita desta página e o promove para o índice
-     * informado na página destino. A operação pode falhar caso a página destino
-     * esteja cheia.
+	 * @brief Pega o par (chave, dado) mais à direita desta página e o promove para
+     * o índice informado na página destino. Caso a página destino esteja cheia,
+     * os elementos que estiverem no índice informado são removidos antes da promoção
+     * acontecer.
 	 * 
      * @param pagina Página destino.
 	 * @param indice Índice de inserção na página destino.
+     * @param novaPagina Ponteiro para a nova página que foi criada na duplicação.
      * 
-     * @return Par Um par com a chave e o dado que seriam transferidos e uma flag
-     * success que diz se o par foi transferido ou não.
+     * @return Tripla Uma tripla (chave, dado, ponteiro) onde a chave, o dado e o
+     * ponteiro são os valores que estavam no índice informado na página de destino.
+     * O ponteiro é sempre o ponteiro à direita da chave e do dado.
 	 */
-	Par promoverElementoPara(Pagina* pagina, int indice)
+	Tripla promoverElementoPara(Pagina* pagina, int indice, Pagina* novaPagina)
 	{
-		return transferirElementoPara(pagina, indice, --numeroDeElementos);
+        Tripla tripla(
+            pagina->chaves[indice],
+            pagina->dados[indice],
+            pagina->ponteiros[indice + 1]
+        );
+
+		transferirElementoPara(pagina, indice, --numeroDeElementos);
+
+        pagina->ponteiros[indice + 1] = novaPagina->endereco;
+
+        return tripla;
 	}
 
     /**
@@ -360,7 +373,7 @@ public:
         
         transferirMetadePara(paginaDestino->chaves, chaves, quantidadeRemovida);
         transferirMetadePara(paginaDestino->dados, dados, quantidadeRemovida);
-        transferirMetadePara(paginaDestino->ponteiros, ponteiros, quantidadeRemovida); // falta aqui
+        transferirMetadePara(paginaDestino->ponteiros, ponteiros, quantidadeRemovida);
 
         numeroDeElementos -= quantidadeRemovida;
         paginaDestino->numeroDeElementos += quantidadeRemovida;
@@ -399,9 +412,18 @@ public:
 };
 
 template<typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS>
-ostream& operator<< (ostream& ostream, PaginaB<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>& pagina)
+ostream& operator<<(ostream& ostream, PaginaB<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>& pagina)
 {
     pagina.print(" ", ostream);
 
     return ostream;
+}
+
+template<typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS>
+fstream& operator>>(fstream& fstream, PaginaB<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>& pagina)
+{
+    pagina->setEndereco(fstream.tellg());
+    Serializavel& serializavel = pagina;
+
+    return fstream >> serializavel;
 }

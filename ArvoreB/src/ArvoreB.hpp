@@ -10,7 +10,7 @@
 
 #include "templates/tipos.hpp"
 #include "templates/debug.hpp"
-#include "tiposArvore.hpp"
+#include "helpersArvore.hpp"
 #include "PaginaB.hpp"
 
 #include <iostream>
@@ -67,7 +67,7 @@ public:
     /**
      * @brief Padroniza o tipo do par (chave, dado).
      */
-    typedef struct Par<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> Par;
+    typedef struct Tripla<TIPO_DAS_CHAVES, TIPO_DOS_DADOS, file_pointer_type> Tripla;
 
 protected:
 	// ------------------------- Campos
@@ -121,6 +121,16 @@ public:
 
 	// ------------------------- Métodos
 
+	file_pointer_type adicionarNoArquivo(Pagina* pagina)
+	{
+		file_pointer_type endereco = constantes::ptrNuloPagina;
+
+		arquivo.seekp(0, fstream::end);
+		endereco = arquivo.tellp();
+
+		return endereco;
+	}
+
 	/**
 	 * @brief Insere o par (chave, dado) na árvore.
 	 * 
@@ -132,7 +142,7 @@ public:
 	 */
 	bool inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)
 	{
-		// Pula o cabeçalho do arquivo que vem antes do endereço raiz
+		// Pula as coisas do cabeçalho do arquivo que vierem antes do endereço da raiz
 		arquivo.seekg(tamanhoCabecalhoAntesDaRaiz);
 		
 		file_pointer_type enderecoDaRaiz;
@@ -151,7 +161,7 @@ public:
 
 		else
 		{
-			int indiceDeInsercao = paginaFilha->obterIndiceDeInsercao(chave);
+			int indiceDeInsercao = paginaFilha->obterIndiceDeDescida(chave);
 
 			// Checa se não há ponteiro de descida. Caso não, a raiz é uma folha.
 			if (paginaFilha->ponteiros[indiceDeInsercao] == constantes::ptrNuloPagina)
@@ -162,7 +172,8 @@ public:
 					// Inicia o processo de duplicação da raiz
 					paginaIrma->limpar();
 					paginaFilha->transferirMetadePara(paginaIrma);
-					
+
+					// Escolhe a página onde a chave será inserida
 					Pagina* paginaDeInsercao =
 						chave < paginaIrma->chaves.back() ?
 						paginaFilha : paginaIrma;
@@ -171,8 +182,8 @@ public:
 
 					// Inicia o processo de criação da nova raiz
 					paginaPai->limpar();
-					paginaDeInsercao->promoverElementoPara(paginaPai, 0);
-					paginaPai->ponteiros[0] = tamanhoCabecalhoAntesDaRaiz;
+					paginaDeInsercao->promoverElementoPara(paginaPai, 0, paginaIrma);
+					paginaPai->ponteiros[0] = enderecoDaRaiz;
 				}
 			}
 		}
