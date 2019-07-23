@@ -55,3 +55,22 @@ typedef vector<tipo_byte> vetor_de_bytes;
  * @see http://www.cplusplus.com/reference/iterator/
  */
 typedef vetor_de_bytes::iterator iterador;
+
+/**
+ * @brief A struct Par extende a std::pair adicionando uma flag success para
+ * indicar um estado em que o par esteja.
+ * 
+ * @tparam Tipo1 Tipo do primeiro elemento.
+ * @tparam Tipo2 Tipo do segundo elemento.
+ */
+template<typename Tipo1, typename Tipo2>
+struct Par : public pair<Tipo1, Tipo2>
+{
+public:
+    int success;
+
+    Par(Tipo1& first, Tipo2& second, int success = 0) : pair<Tipo1, Tipo2>(first, second)
+    {
+        this->success = success;
+    }
+};

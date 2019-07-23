@@ -91,6 +91,9 @@ Tipos Públicos</h2></td></tr>
 <tr class="memitem:a0abe8feb25bb6cbd273f1663eab1d324"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="class_pagina_b.html">PaginaB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a0abe8feb25bb6cbd273f1663eab1d324">Pagina</a></td></tr>
 <tr class="memdesc:a0abe8feb25bb6cbd273f1663eab1d324"><td class="mdescLeft">&#160;</td><td class="mdescRight">Padroniza o tipo da página da árvore. Typedefs dentro de classes ou structs são considerados como boa prática em C++.  <a href="#a0abe8feb25bb6cbd273f1663eab1d324">Mais...</a><br /></td></tr>
 <tr class="separator:a0abe8feb25bb6cbd273f1663eab1d324"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7a849512caf185e430b6ad9c17a9365"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="class_pagina_b.html#ad7a849512caf185e430b6ad9c17a9365">Par</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#ad7a849512caf185e430b6ad9c17a9365">Par</a></td></tr>
+<tr class="memdesc:ad7a849512caf185e430b6ad9c17a9365"><td class="mdescLeft">&#160;</td><td class="mdescRight">Padroniza o tipo do par (chave, dado).  <a href="#ad7a849512caf185e430b6ad9c17a9365">Mais...</a><br /></td></tr>
+<tr class="separator:ad7a849512caf185e430b6ad9c17a9365"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Membros públicos</h2></td></tr>
@@ -135,11 +138,12 @@ Membros públicos</h2></td></tr>
 <tr class="memitem:afaab38aebc81e0ba7192cd9ce54f1806"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#afaab38aebc81e0ba7192cd9ce54f1806">inserir</a> (TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)</td></tr>
 <tr class="memdesc:afaab38aebc81e0ba7192cd9ce54f1806"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insere o par (chave, dado) na página de forma ordenada.  <a href="#afaab38aebc81e0ba7192cd9ce54f1806">Mais...</a><br /></td></tr>
 <tr class="separator:afaab38aebc81e0ba7192cd9ce54f1806"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a778385010bd675c0b47c88bba45620a8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a778385010bd675c0b47c88bba45620a8">transferirElementoPara</a> (<a class="el" href="class_pagina_b.html#a0abe8feb25bb6cbd273f1663eab1d324">Pagina</a> *paginaDestino, int indiceNoDestino, int indiceLocal)</td></tr>
-<tr class="separator:a778385010bd675c0b47c88bba45620a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa24384c78c0405f9e3ed7588b132b7c4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#aa24384c78c0405f9e3ed7588b132b7c4">promoverElementoParaAPagina</a> (<a class="el" href="class_pagina_b.html#a0abe8feb25bb6cbd273f1663eab1d324">Pagina</a> *pagina, int indice)</td></tr>
-<tr class="memdesc:aa24384c78c0405f9e3ed7588b132b7c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pega o elemento mais à direita desta página e o promove para o índice informado na página destino.  <a href="#aa24384c78c0405f9e3ed7588b132b7c4">Mais...</a><br /></td></tr>
-<tr class="separator:aa24384c78c0405f9e3ed7588b132b7c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9377f13205820e6e47058aad51c1d17"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_pagina_b.html#ad7a849512caf185e430b6ad9c17a9365">Par</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#ad9377f13205820e6e47058aad51c1d17">transferirElementoPara</a> (<a class="el" href="class_pagina_b.html#a0abe8feb25bb6cbd273f1663eab1d324">Pagina</a> *paginaDestino, int indiceNoDestino, int indiceLocal)</td></tr>
+<tr class="memdesc:ad9377f13205820e6e47058aad51c1d17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pega o par (chave, dado) no indiceLocal e o insere no indiceNoDestino da paginaDestino. A operação pode falhar caso a página destino esteja cheia.  <a href="#ad9377f13205820e6e47058aad51c1d17">Mais...</a><br /></td></tr>
+<tr class="separator:ad9377f13205820e6e47058aad51c1d17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ecca753b97a4e231770a2d9fb075c74"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_pagina_b.html#ad7a849512caf185e430b6ad9c17a9365">Par</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a1ecca753b97a4e231770a2d9fb075c74">promoverElementoPara</a> (<a class="el" href="class_pagina_b.html#a0abe8feb25bb6cbd273f1663eab1d324">Pagina</a> *pagina, int indice)</td></tr>
+<tr class="memdesc:a1ecca753b97a4e231770a2d9fb075c74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pega o elemento mais à direita desta página e o promove para o índice informado na página destino. A operação pode falhar caso a página destino esteja cheia.  <a href="#a1ecca753b97a4e231770a2d9fb075c74">Mais...</a><br /></td></tr>
+<tr class="separator:a1ecca753b97a4e231770a2d9fb075c74"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a090a787bfc1c970f5d2a31e5af9cc3c7"><td class="memTemplParams" colspan="2">template&lt;typename ContainerFonte , typename ContainerDestino &gt; </td></tr>
 <tr class="memitem:a090a787bfc1c970f5d2a31e5af9cc3c7"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a090a787bfc1c970f5d2a31e5af9cc3c7">transferirMetadePara</a> (ContainerDestino &amp;containerDestino, ContainerFonte &amp;containerFonte, int quantidade)</td></tr>
 <tr class="memdesc:a090a787bfc1c970f5d2a31e5af9cc3c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfere metade das chaves e dos dados para outra página.  <a href="#a090a787bfc1c970f5d2a31e5af9cc3c7">Mais...</a><br /></td></tr>
@@ -219,6 +223,24 @@ template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
 </div><div class="memdoc">
 
 <p>Padroniza o tipo da página da árvore. Typedefs dentro de classes ou structs são considerados como boa prática em C++. </p>
+
+</div>
+</div>
+<a id="ad7a849512caf185e430b6ad9c17a9365"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad7a849512caf185e430b6ad9c17a9365">&#9670;&nbsp;</a></span>Par</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="class_pagina_b.html#ad7a849512caf185e430b6ad9c17a9365">Par</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt; <a class="el" href="class_pagina_b.html">PaginaB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::<a class="el" href="class_pagina_b.html#ad7a849512caf185e430b6ad9c17a9365">Par</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Padroniza o tipo do par (chave, dado). </p>
 
 </div>
 </div>
@@ -785,8 +807,8 @@ template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
 
 </div>
 </div>
-<a id="aa24384c78c0405f9e3ed7588b132b7c4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa24384c78c0405f9e3ed7588b132b7c4">&#9670;&nbsp;</a></span>promoverElementoParaAPagina()</h2>
+<a id="a1ecca753b97a4e231770a2d9fb075c74"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1ecca753b97a4e231770a2d9fb075c74">&#9670;&nbsp;</a></span>promoverElementoPara()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -797,7 +819,7 @@ template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="class_pagina_b.html">PaginaB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::promoverElementoParaAPagina </td>
+          <td class="memname"><a class="el" href="class_pagina_b.html#ad7a849512caf185e430b6ad9c17a9365">Par</a> <a class="el" href="class_pagina_b.html">PaginaB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::promoverElementoPara </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_pagina_b.html#a0abe8feb25bb6cbd273f1663eab1d324">Pagina</a> *&#160;</td>
           <td class="paramname"><em>pagina</em>, </td>
@@ -821,19 +843,20 @@ template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Pega o elemento mais à direita desta página e o promove para o índice informado na página destino. </p>
+<p>Pega o elemento mais à direita desta página e o promove para o índice informado na página destino. A operação pode falhar caso a página destino esteja cheia. </p>
 <dl class="params"><dt>Parâmetros</dt><dd>
   <table class="params">
     <tr><td class="paramname">pagina</td><td>Página destino. </td></tr>
-    <tr><td class="paramname">indice</td><td>Índice de inserção na página destino. </td></tr>
+    <tr><td class="paramname">indice</td><td>Índice de inserção na página destino.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Retorna</dt><dd><a class="el" href="struct_par.html" title="A struct Par extende a std::pair adicionando uma flag success para indicar um estado em que o par est...">Par</a> Um par com a chave e o dado que seriam transferidos e uma flag success que diz se o par foi transferido ou não. </dd></dl>
 
 </div>
 </div>
-<a id="a778385010bd675c0b47c88bba45620a8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a778385010bd675c0b47c88bba45620a8">&#9670;&nbsp;</a></span>transferirElementoPara()</h2>
+<a id="ad9377f13205820e6e47058aad51c1d17"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad9377f13205820e6e47058aad51c1d17">&#9670;&nbsp;</a></span>transferirElementoPara()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -844,7 +867,7 @@ template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="class_pagina_b.html">PaginaB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::transferirElementoPara </td>
+          <td class="memname"><a class="el" href="class_pagina_b.html#ad7a849512caf185e430b6ad9c17a9365">Par</a> <a class="el" href="class_pagina_b.html">PaginaB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::transferirElementoPara </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_pagina_b.html#a0abe8feb25bb6cbd273f1663eab1d324">Pagina</a> *&#160;</td>
           <td class="paramname"><em>paginaDestino</em>, </td>
@@ -873,6 +896,17 @@ template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Pega o par (chave, dado) no indiceLocal e o insere no indiceNoDestino da paginaDestino. A operação pode falhar caso a página destino esteja cheia. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">paginaDestino</td><td>Página destino. </td></tr>
+    <tr><td class="paramname">indiceNoDestino</td><td>Índice de inserção na página destino. </td></tr>
+    <tr><td class="paramname">indiceLocal</td><td>Índice do par nesta página.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Retorna</dt><dd><a class="el" href="struct_par.html" title="A struct Par extende a std::pair adicionando uma flag success para indicar um estado em que o par est...">Par</a> Um par com a chave e o dado que seriam transferidos e uma flag success que diz se o par foi transferido ou não. </dd></dl>
 
 </div>
 </div>

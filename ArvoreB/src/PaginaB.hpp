@@ -56,6 +56,11 @@ public:
 	 */
 	typedef PaginaB<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> Pagina;
 
+    /**
+     * @brief Padroniza o tipo do par (chave, dado).
+     */
+    typedef struct Par<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> Par;
+
     // ------------------------- Campos
     
     vector<TIPO_DAS_CHAVES> chaves;
@@ -140,7 +145,7 @@ public:
 
         out << numeroDeElementos << ponteiros.at(0);
 
-        for (size_t i = 0; i < numeroDeChavesPorPagina; i++)
+        for (size_t i = 0; i < numeroDeElementos; i++)
         {
             chave = chaves.at(i);
             dado = dados.at(i);
@@ -164,7 +169,7 @@ public:
         input >> numeroDeElementos >> ponteiro;
         ponteiros[0] = ponteiro;
         
-        for (size_t i = 0; i < numeroDeChavesPorPagina; i++)
+        for (size_t i = 0; i < numeroDeElementos; i++)
         {
             input >> chave;
             input >> dado;
@@ -235,7 +240,8 @@ public:
     int obterIndiceDeInsercao(TIPO_DAS_CHAVES chave)
     {
         // lower_bound (pesquisa binária) -> http://www.cplusplus.com/reference/algorithm/lower_bound/
-        auto iteradorDeInsercao = lower_bound(chaves.begin(), chaves.begin() + chaves.size(), chave);
+        auto iteradorDeInsercao =
+            lower_bound(chaves.begin(), chaves.begin() + chaves.size(), chave);
 
         return iteradorDeInsercao - chaves.begin();
     }
@@ -256,9 +262,9 @@ public:
 
 		if (sucesso)
 		{
-            chaves.insert(indiceDeInsercao, chave);
-            dados.insert(indiceDeInsercao, dado);
-            ponteiros.insert(indiceDeInsercao + 1, constantes::ptrNuloPagina);
+            chaves.insert(chaves.begin() + indiceDeInsercao, chave);
+            dados.insert(dados.begin() + indiceDeInsercao, dado);
+            ponteiros.insert(ponteiros.begin() + indiceDeInsercao, constantes::ptrNuloPagina);
             
             numeroDeElementos++;
 		}
@@ -280,30 +286,46 @@ public:
         return inserir(chave, dado, obterIndiceDeInsercao(chave));
     }
 
-    void transferirElementoPara(Pagina* paginaDestino, int indiceNoDestino, int indiceLocal)
+	/**
+	 * @brief Pega o par (chave, dado) no indiceLocal e o insere no indiceNoDestino
+     * da paginaDestino. A operação pode falhar caso a página destino esteja cheia.
+	 * 
+     * @param paginaDestino Página destino.
+	 * @param indiceNoDestino Índice de inserção na página destino.
+	 * @param indiceLocal Índice do par nesta página.
+     * 
+     * @return Par Um par com a chave e o dado que seriam transferidos e uma flag
+     * success que diz se o par foi transferido ou não.
+	 */
+    Par transferirElementoPara(Pagina* paginaDestino, int indiceNoDestino, int indiceLocal)
     {
-        paginaDestino->inserir(chaves[indiceLocal], dados[indiceLocal], indiceNoDestino);
+        Par par(chaves[indiceLocal], dados[indiceLocal]);
 
-        chaves.erase(indiceLocal);
-        dados.erase(indiceLocal);
+        if (!paginaDestino->cheia())
+        {
+            paginaDestino->inserir(par.first, par.second, indiceNoDestino);
+        }
+
+        chaves.erase(chaves.begin() + indiceLocal);
+        dados.erase(dados.begin() + indiceLocal);
+
+        return par;
     }
 
 	/**
-	 * @brief Pega o elemento mais à direita desta página e o promove para
-	 * o índice informado na página destino.
+	 * @brief Pega o elemento mais à direita desta página e o promove para o índice
+     * informado na página destino. A operação pode falhar caso a página destino
+     * esteja cheia.
 	 * 
      * @param pagina Página destino.
 	 * @param indice Índice de inserção na página destino.
+     * 
+     * @return Par Um par com a chave e o dado que seriam transferidos e uma flag
+     * success que diz se o par foi transferido ou não.
 	 */
-	void promoverElementoParaAPagina(Pagina* pagina, int indice)
+	Par promoverElementoPara(Pagina* pagina, int indice)
 	{
-		int numeroDeElementosDaPagina = pagina->obterNumeroDeElementos();
-
-		pagina->inserir(
-			chaves[numeroDeElementosDaPagina],
-			dados[numeroDeElementosDaPagina],
-			indice
-		);
+		return transferirElementoPara(pagina, indice, --numeroDeElementos);
 	}
 
     /**
@@ -338,7 +360,7 @@ public:
         
         transferirMetadePara(paginaDestino->chaves, chaves, quantidadeRemovida);
         transferirMetadePara(paginaDestino->dados, dados, quantidadeRemovida);
-        transferirMetadePara(paginaDestino->ponteiros, ponteiros, quantidadeRemovida + 1); // falta aqui
+        transferirMetadePara(paginaDestino->ponteiros, ponteiros, quantidadeRemovida); // falta aqui
 
         numeroDeElementos -= quantidadeRemovida;
         paginaDestino->numeroDeElementos += quantidadeRemovida;

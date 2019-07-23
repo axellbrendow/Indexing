@@ -64,6 +64,11 @@ public:
 	 */
 	typedef PaginaB<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> Pagina;
 
+    /**
+     * @brief Padroniza o tipo do par (chave, dado).
+     */
+    typedef struct Par<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> Par;
+
 protected:
 	// ------------------------- Campos
 
@@ -87,7 +92,8 @@ protected:
 public:
 	// ------------------------- Campos
 
-	const int tamanhoCabecalho = 0;
+	const int tamanhoCabecalhoAntesDaRaiz = 0;
+	const int tamanhoCabecalho = tamanhoCabecalhoAntesDaRaiz + sizeof(file_pointer_type);
 
 	// ------------------------- Construtores e destrutores
 
@@ -126,32 +132,49 @@ public:
 	 */
 	bool inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)
 	{
-		arquivo.seekg(tamanhoCabecalho); // Pula o cabeçalho do arquivo
+		// Pula o cabeçalho do arquivo que vem antes do endereço raiz
+		arquivo.seekg(tamanhoCabecalhoAntesDaRaiz);
 		
+		file_pointer_type enderecoDaRaiz;
+		arquivo >> enderecoDaRaiz;
+		arquivo.seekg(enderecoDaRaiz);
 		arquivo >> paginaFilha; // Carrega a raiz
 
-		int indiceDeInsercao = paginaFilha->obterIndiceDeInsercao(chave);
-
-		// Checa se uma folha foi encontrada
-		if (paginaFilha->ponteiros[indiceDeInsercao] == constantes::ptrNuloPagina)
+		if (arquivo.fail())
 		{
-			// Checa se a inserção na folha falhou. Ela falha quando a folha está cheia.
-			if (!paginaFilha->inserir(chave, dado, indiceDeInsercao))
-			{
-				// Inicia o processo de duplicação da folha
-				paginaIrma->limpar();
-				paginaFilha->transferirMetadePara(paginaIrma);
-				paginaFilha->inserir(chave, dado);
+			// cerr é a saída padrão de erros. Em alguns caso pode ser igual a cout.
+			cerr << "[ArvoreB] Não foi possível ler a raiz do arquivo."
+				<< endl << "Exceção lançada" << endl;
 
-				// Cria uma nova raiz
-				paginaPai->limpar();
-				promoverElementoParaOIndice(0);
-			}
+			throw length_error("[ArvoreB] Não foi possível ler a raiz do arquivo.");
 		}
 
-		if (!paginaFilha->inserir(chave, dado)) // Caso simples falhou
+		else
 		{
-			//
+			int indiceDeInsercao = paginaFilha->obterIndiceDeInsercao(chave);
+
+			// Checa se não há ponteiro de descida. Caso não, a raiz é uma folha.
+			if (paginaFilha->ponteiros[indiceDeInsercao] == constantes::ptrNuloPagina)
+			{
+				// Checa se a inserção na raiz falhou. Acontece quando ela está cheia.
+				if (!paginaFilha->inserir(chave, dado, indiceDeInsercao))
+				{
+					// Inicia o processo de duplicação da raiz
+					paginaIrma->limpar();
+					paginaFilha->transferirMetadePara(paginaIrma);
+					
+					Pagina* paginaDeInsercao =
+						chave < paginaIrma->chaves.back() ?
+						paginaFilha : paginaIrma;
+
+					paginaDeInsercao->inserir(chave, dado);
+
+					// Inicia o processo de criação da nova raiz
+					paginaPai->limpar();
+					paginaDeInsercao->promoverElementoPara(paginaPai, 0);
+					paginaPai->ponteiros[0] = tamanhoCabecalhoAntesDaRaiz;
+				}
+			}
 		}
 	}
 	

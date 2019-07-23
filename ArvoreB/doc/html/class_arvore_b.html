@@ -83,6 +83,9 @@ Tipos Públicos</h2></td></tr>
 <tr class="memitem:a33a9cc9c13f102525a84a634d277a764"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="class_pagina_b.html">PaginaB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#a33a9cc9c13f102525a84a634d277a764">Pagina</a></td></tr>
 <tr class="memdesc:a33a9cc9c13f102525a84a634d277a764"><td class="mdescLeft">&#160;</td><td class="mdescRight">Padroniza o tipo da página da árvore. Typedefs dentro de classes ou structs são considerados como boa prática em C++.  <a href="#a33a9cc9c13f102525a84a634d277a764">Mais...</a><br /></td></tr>
 <tr class="separator:a33a9cc9c13f102525a84a634d277a764"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e7c8c0dfc6fccc5bca692c6b8735929"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="class_arvore_b.html#a9e7c8c0dfc6fccc5bca692c6b8735929">Par</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#a9e7c8c0dfc6fccc5bca692c6b8735929">Par</a></td></tr>
+<tr class="memdesc:a9e7c8c0dfc6fccc5bca692c6b8735929"><td class="mdescLeft">&#160;</td><td class="mdescRight">Padroniza o tipo do par (chave, dado).  <a href="#a9e7c8c0dfc6fccc5bca692c6b8735929">Mais...</a><br /></td></tr>
+<tr class="separator:a9e7c8c0dfc6fccc5bca692c6b8735929"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Membros públicos</h2></td></tr>
@@ -117,7 +120,9 @@ Membros públicos</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Atributos Públicos</h2></td></tr>
-<tr class="memitem:a3c370347662dd9392e185199ceead539"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#a3c370347662dd9392e185199ceead539">tamanhoCabecalho</a> = 0</td></tr>
+<tr class="memitem:a68ad44e77798113c7fda5060ec22de5b"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#a68ad44e77798113c7fda5060ec22de5b">tamanhoCabecalhoAntesDaRaiz</a> = 0</td></tr>
+<tr class="separator:a68ad44e77798113c7fda5060ec22de5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c370347662dd9392e185199ceead539"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#a3c370347662dd9392e185199ceead539">tamanhoCabecalho</a> = <a class="el" href="class_arvore_b.html#a68ad44e77798113c7fda5060ec22de5b">tamanhoCabecalhoAntesDaRaiz</a> + sizeof(<a class="el" href="tipos_8hpp.html#af1229d7be6c43c4e9d64ba570f0d6582">file_pointer_type</a>)</td></tr>
 <tr class="separator:a3c370347662dd9392e185199ceead539"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
@@ -178,6 +183,24 @@ template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
 </div><div class="memdoc">
 
 <p>Padroniza o tipo da página da árvore. Typedefs dentro de classes ou structs são considerados como boa prática em C++. </p>
+
+</div>
+</div>
+<a id="a9e7c8c0dfc6fccc5bca692c6b8735929"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e7c8c0dfc6fccc5bca692c6b8735929">&#9670;&nbsp;</a></span>Par</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="class_arvore_b.html#a9e7c8c0dfc6fccc5bca692c6b8735929">Par</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt; <a class="el" href="class_arvore_b.html">ArvoreB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::<a class="el" href="class_arvore_b.html#a9e7c8c0dfc6fccc5bca692c6b8735929">Par</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Padroniza o tipo do par (chave, dado). </p>
 
 </div>
 </div>
@@ -809,7 +832,23 @@ template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
 template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">const int <a class="el" href="class_arvore_b.html">ArvoreB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::tamanhoCabecalho = 0</td>
+          <td class="memname">const int <a class="el" href="class_arvore_b.html">ArvoreB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::tamanhoCabecalho = <a class="el" href="class_arvore_b.html#a68ad44e77798113c7fda5060ec22de5b">tamanhoCabecalhoAntesDaRaiz</a> + sizeof(<a class="el" href="tipos_8hpp.html#af1229d7be6c43c4e9d64ba570f0d6582">file_pointer_type</a>)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a68ad44e77798113c7fda5060ec22de5b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a68ad44e77798113c7fda5060ec22de5b">&#9670;&nbsp;</a></span>tamanhoCabecalhoAntesDaRaiz</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">const int <a class="el" href="class_arvore_b.html">ArvoreB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::tamanhoCabecalhoAntesDaRaiz = 0</td>
         </tr>
       </table>
 </div><div class="memdoc">
