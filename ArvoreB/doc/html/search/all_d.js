@@ -9,5 +9,5 @@ var searchData=
   ['pesquisar',['pesquisar',['../class_arvore_b.html#a235973399b5bf70340495c84e26b2450',1,'ArvoreB']]],
   ['ponteiros',['ponteiros',['../class_pagina_b.html#a8e3379b22ff2c6cc29b1bf0a4314eda1',1,'PaginaB']]],
   ['print',['print',['../class_arvore_b.html#adad9da0658fe6b399b79c36252dc823c',1,'ArvoreB::print()'],['../class_pagina_b.html#ad8be3782caae0659cc89cd0118c1723b',1,'PaginaB::print()']]],
-  ['promoverelementopara',['promoverElementoPara',['../class_pagina_b.html#a6d5463eb74c85bbf181fb76bbc7814fb',1,'PaginaB']]]
+  ['promoverelementopara',['promoverElementoPara',['../class_pagina_b.html#af328a7a9a102871fa6aba6f48f917353',1,'PaginaB']]]
 ];
