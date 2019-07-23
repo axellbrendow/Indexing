@@ -1,0 +1,6 @@
+###############################################################################
+# Marca a pasta doc/ como documentação.
+# Isso faz com que ela seja ignorada nas estatísticas.
+###############################################################################
+
+doc/* linguist-documentation

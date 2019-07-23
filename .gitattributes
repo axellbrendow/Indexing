@@ -8,4 +8,5 @@
 # Isso faz com que ela seja ignorada nas estatísticas.
 ###############################################################################
 
-doc/* linguist-documentation
+ArvoreB/doc/* linguist-documentation
+HashDinamica/doc/* linguist-documentation
