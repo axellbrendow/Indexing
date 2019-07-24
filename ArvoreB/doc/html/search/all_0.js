@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['adicionarnoarquivo',['adicionarNoArquivo',['../class_arvore_b.html#ad81386d620cc12ca6ad17bad45a81ada',1,'ArvoreB']]],
   ['alocardatainputstream',['alocarDataInputStream',['../class_serializavel.html#aec986f9cd1f8f6e638047e366d6e079a',1,'Serializavel']]],
   ['alocardataoutputstream',['alocarDataOutputStream',['../class_serializavel.html#a3d434eb2836c2929c6eef69081092348',1,'Serializavel']]],
   ['arquivo',['arquivo',['../class_arvore_b.html#abd84c668f8f8a20b86e38fbe6b8a099d',1,'ArvoreB']]],

@@ -122,6 +122,9 @@ Membros públicos</h2></td></tr>
 <tr class="memitem:a87e29c2ff5ee48a1e842a0fcf11ddd93"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a87e29c2ff5ee48a1e842a0fcf11ddd93">obterNumeroDeElementos</a> ()</td></tr>
 <tr class="memdesc:a87e29c2ff5ee48a1e842a0fcf11ddd93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retorna 0 (zero) caso a página não tenha sido carregada do arquivo ainda. Caso contrário, retorna o seu número de elementos.  <a href="#a87e29c2ff5ee48a1e842a0fcf11ddd93">Mais...</a><br /></td></tr>
 <tr class="separator:a87e29c2ff5ee48a1e842a0fcf11ddd93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f3ebced943ba6f958b190d73c10aa87"><td class="memItemLeft" align="right" valign="top"><a class="el" href="tipos_8hpp.html#a060c8d79366d67ac97d23bac085fb4f7">file_pointer_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a3f3ebced943ba6f958b190d73c10aa87">obterEndereco</a> ()</td></tr>
+<tr class="memdesc:a3f3ebced943ba6f958b190d73c10aa87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtém o endereço da página no arquivo.  <a href="#a3f3ebced943ba6f958b190d73c10aa87">Mais...</a><br /></td></tr>
+<tr class="separator:a3f3ebced943ba6f958b190d73c10aa87"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a50c8736c454dbc27c767f8934f90542f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a50c8736c454dbc27c767f8934f90542f">vazia</a> ()</td></tr>
 <tr class="memdesc:a50c8736c454dbc27c767f8934f90542f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checa se a página está sem elementos.  <a href="#a50c8736c454dbc27c767f8934f90542f">Mais...</a><br /></td></tr>
 <tr class="separator:a50c8736c454dbc27c767f8934f90542f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -135,23 +138,23 @@ Membros públicos</h2></td></tr>
 <tr class="memdesc:a99d1f14d574e05a1055fdb6a9a0915b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcula qual é o índice em que a chave deve ser inserida ou então qual é o índice do ponteiro para descer na árvore.  <a href="#a99d1f14d574e05a1055fdb6a9a0915b0">Mais...</a><br /></td></tr>
 <tr class="separator:a99d1f14d574e05a1055fdb6a9a0915b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a06dcd03604e87d5ae4eb936dd42886e6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a06dcd03604e87d5ae4eb936dd42886e6">inserir</a> (TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado, int indiceDeInsercao, <a class="el" href="tipos_8hpp.html#a060c8d79366d67ac97d23bac085fb4f7">file_pointer_type</a> ponteiro=constantes::ptrNuloPagina)</td></tr>
-<tr class="memdesc:a06dcd03604e87d5ae4eb936dd42886e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insere a tripla (ponteiro, chave, dado) na página no índice informado.  <a href="#a06dcd03604e87d5ae4eb936dd42886e6">Mais...</a><br /></td></tr>
+<tr class="memdesc:a06dcd03604e87d5ae4eb936dd42886e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insere a tripla (chave, dado, ponteiro) na página no índice informado.  <a href="#a06dcd03604e87d5ae4eb936dd42886e6">Mais...</a><br /></td></tr>
 <tr class="separator:a06dcd03604e87d5ae4eb936dd42886e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a65d0f139f16256a85da09312adfc52e0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a65d0f139f16256a85da09312adfc52e0">inserir</a> (TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)</td></tr>
 <tr class="memdesc:a65d0f139f16256a85da09312adfc52e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insere o par (chave, dado) na página de forma ordenada.  <a href="#a65d0f139f16256a85da09312adfc52e0">Mais...</a><br /></td></tr>
 <tr class="separator:a65d0f139f16256a85da09312adfc52e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a778385010bd675c0b47c88bba45620a8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a778385010bd675c0b47c88bba45620a8">transferirElementoPara</a> (<a class="el" href="class_pagina_b.html#a0abe8feb25bb6cbd273f1663eab1d324">Pagina</a> *paginaDestino, int indiceNoDestino, int indiceLocal)</td></tr>
-<tr class="memdesc:a778385010bd675c0b47c88bba45620a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pega a quádrupla (ponteiro, chave, dado, ponteiro) no indiceLocal e o insere no indiceNoDestino da paginaDestino.  <a href="#a778385010bd675c0b47c88bba45620a8">Mais...</a><br /></td></tr>
+<tr class="memdesc:a778385010bd675c0b47c88bba45620a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pega o par (chave, dado) no indiceLocal e a insere no indiceNoDestino da paginaDestino. Após isso, remove o par e o seu desta página.  <a href="#a778385010bd675c0b47c88bba45620a8">Mais...</a><br /></td></tr>
 <tr class="separator:a778385010bd675c0b47c88bba45620a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af328a7a9a102871fa6aba6f48f917353"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_pagina_b.html#a35193e0c43edb7505d3701be49838506">Tripla</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#af328a7a9a102871fa6aba6f48f917353">promoverElementoPara</a> (<a class="el" href="class_pagina_b.html#a0abe8feb25bb6cbd273f1663eab1d324">Pagina</a> *pagina, int indice, <a class="el" href="class_pagina_b.html#a0abe8feb25bb6cbd273f1663eab1d324">Pagina</a> *paginaCheia, <a class="el" href="class_pagina_b.html#a0abe8feb25bb6cbd273f1663eab1d324">Pagina</a> *novaPagina, bool promoverElementoDoInicio)</td></tr>
-<tr class="memdesc:af328a7a9a102871fa6aba6f48f917353"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pega o par (chave, dado) mais à direita desta página e o promove para o índice informado na página destino. Caso a página destino esteja cheia, os elementos que estiverem no índice informado são removidos antes da promoção acontecer.  <a href="#af328a7a9a102871fa6aba6f48f917353">Mais...</a><br /></td></tr>
-<tr class="separator:af328a7a9a102871fa6aba6f48f917353"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c0109a7915699e0dd942b34c0e131ba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a9c0109a7915699e0dd942b34c0e131ba">promoverElementoPara</a> (<a class="el" href="class_pagina_b.html#a0abe8feb25bb6cbd273f1663eab1d324">Pagina</a> *paginaDestino, int indice, <a class="el" href="class_pagina_b.html#a0abe8feb25bb6cbd273f1663eab1d324">Pagina</a> *exPaginaCheia, <a class="el" href="class_pagina_b.html#a0abe8feb25bb6cbd273f1663eab1d324">Pagina</a> *novaPagina, bool promoverElementoDoInicio)</td></tr>
+<tr class="memdesc:a9c0109a7915699e0dd942b34c0e131ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Caso a inserção do par (chave, dado) tenha acontecido na nova página, o primeiro elemento dela deve ser promovido (o mais à esquerda). Caso a inserção tenha acontecido na página que estava cheia, o último elemento dela deve ser promovido (o mais à direita).  <a href="#a9c0109a7915699e0dd942b34c0e131ba">Mais...</a><br /></td></tr>
+<tr class="separator:a9c0109a7915699e0dd942b34c0e131ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a090a787bfc1c970f5d2a31e5af9cc3c7"><td class="memTemplParams" colspan="2">template&lt;typename ContainerFonte , typename ContainerDestino &gt; </td></tr>
 <tr class="memitem:a090a787bfc1c970f5d2a31e5af9cc3c7"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a090a787bfc1c970f5d2a31e5af9cc3c7">transferirMetadePara</a> (ContainerDestino &amp;containerDestino, ContainerFonte &amp;containerFonte, int quantidade)</td></tr>
-<tr class="memdesc:a090a787bfc1c970f5d2a31e5af9cc3c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfere metade das chaves e dos dados para outra página.  <a href="#a090a787bfc1c970f5d2a31e5af9cc3c7">Mais...</a><br /></td></tr>
+<tr class="memdesc:a090a787bfc1c970f5d2a31e5af9cc3c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfere a quantidade de dados informada do containerFonte, da direita para a esquerda, para o containerDestino.  <a href="#a090a787bfc1c970f5d2a31e5af9cc3c7">Mais...</a><br /></td></tr>
 <tr class="separator:a090a787bfc1c970f5d2a31e5af9cc3c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0f8fbdde743e0a551c3b6a5076efdc7d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a0f8fbdde743e0a551c3b6a5076efdc7d">transferirMetadePara</a> (<a class="el" href="class_pagina_b.html#a0abe8feb25bb6cbd273f1663eab1d324">Pagina</a> *paginaDestino)</td></tr>
-<tr class="memdesc:a0f8fbdde743e0a551c3b6a5076efdc7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfere metade das chaves e dos dados para outra página.  <a href="#a0f8fbdde743e0a551c3b6a5076efdc7d">Mais...</a><br /></td></tr>
+<tr class="memdesc:a0f8fbdde743e0a551c3b6a5076efdc7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfere metade das chaves, dos dados e dos ponteiros (com 1 a mais) para outra página. Esses dados são pegos da direita para a esquerda.  <a href="#a0f8fbdde743e0a551c3b6a5076efdc7d">Mais...</a><br /></td></tr>
 <tr class="separator:a0f8fbdde743e0a551c3b6a5076efdc7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad8be3782caae0659cc89cd0118c1723b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#ad8be3782caae0659cc89cd0118c1723b">print</a> (string delimitadorEntreOsItens=&quot; &quot;, ostream &amp;ostream=cout)</td></tr>
 <tr class="memdesc:ad8be3782caae0659cc89cd0118c1723b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Imprime, na output stream recebida, cada elemento da página gerando o seguinte formato:  <a href="#ad8be3782caae0659cc89cd0118c1723b">Mais...</a><br /></td></tr>
@@ -536,13 +539,13 @@ template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Insere a tripla (ponteiro, chave, dado) na página no índice informado. </p>
+<p>Insere a tripla (chave, dado, ponteiro) na página no índice informado. </p>
 <dl class="params"><dt>Parâmetros</dt><dd>
   <table class="params">
     <tr><td class="paramname">chave</td><td>Chave do par. </td></tr>
     <tr><td class="paramname">dado</td><td>Dado do par. </td></tr>
-    <tr><td class="paramname">indiceDeInsercao</td><td>Índice de inserção do par. </td></tr>
-    <tr><td class="paramname">ponteiro</td><td>Ponteiro à esquerda do par (chave, dado).</td></tr>
+    <tr><td class="paramname">indiceDeInsercao</td><td>Índice de inserção do par (chave, dado). </td></tr>
+    <tr><td class="paramname">ponteiro</td><td>Ponteiro à direita do par (chave, dado).</td></tr>
   </table>
   </dd>
 </dl>
@@ -665,6 +668,36 @@ template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
 </div><div class="memdoc">
 
 <p>Zera a quantidade de elementos e limpa todos os vetores internos. </p>
+
+</div>
+</div>
+<a id="a3f3ebced943ba6f958b190d73c10aa87"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f3ebced943ba6f958b190d73c10aa87">&#9670;&nbsp;</a></span>obterEndereco()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="tipos_8hpp.html#a060c8d79366d67ac97d23bac085fb4f7">file_pointer_type</a> <a class="el" href="class_pagina_b.html">PaginaB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::obterEndereco </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Obtém o endereço da página no arquivo. </p>
+<dl class="section return"><dt>Retorna</dt><dd>file_pointer_type Endereço da página no arquivo. </dd></dl>
 
 </div>
 </div>
@@ -816,8 +849,8 @@ template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
 
 </div>
 </div>
-<a id="af328a7a9a102871fa6aba6f48f917353"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af328a7a9a102871fa6aba6f48f917353">&#9670;&nbsp;</a></span>promoverElementoPara()</h2>
+<a id="a9c0109a7915699e0dd942b34c0e131ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c0109a7915699e0dd942b34c0e131ba">&#9670;&nbsp;</a></span>promoverElementoPara()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -828,10 +861,10 @@ template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_pagina_b.html#a35193e0c43edb7505d3701be49838506">Tripla</a> <a class="el" href="class_pagina_b.html">PaginaB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::promoverElementoPara </td>
+          <td class="memname">void <a class="el" href="class_pagina_b.html">PaginaB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::promoverElementoPara </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_pagina_b.html#a0abe8feb25bb6cbd273f1663eab1d324">Pagina</a> *&#160;</td>
-          <td class="paramname"><em>pagina</em>, </td>
+          <td class="paramname"><em>paginaDestino</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -843,7 +876,7 @@ template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="class_pagina_b.html#a0abe8feb25bb6cbd273f1663eab1d324">Pagina</a> *&#160;</td>
-          <td class="paramname"><em>paginaCheia</em>, </td>
+          <td class="paramname"><em>exPaginaCheia</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -870,18 +903,17 @@ template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Pega o par (chave, dado) mais à direita desta página e o promove para o índice informado na página destino. Caso a página destino esteja cheia, os elementos que estiverem no índice informado são removidos antes da promoção acontecer. </p>
+<p>Caso a inserção do par (chave, dado) tenha acontecido na nova página, o primeiro elemento dela deve ser promovido (o mais à esquerda). Caso a inserção tenha acontecido na página que estava cheia, o último elemento dela deve ser promovido (o mais à direita). </p>
 <dl class="params"><dt>Parâmetros</dt><dd>
   <table class="params">
-    <tr><td class="paramname">pagina</td><td>Página destino. </td></tr>
+    <tr><td class="paramname">paginaDestino</td><td>Página destino. </td></tr>
     <tr><td class="paramname">indice</td><td>Índice de inserção na página destino. </td></tr>
-    <tr><td class="paramname">paginaCheia</td><td>Ponteiro para a página cheia que provocou a duplicação. </td></tr>
+    <tr><td class="paramname">exPaginaCheia</td><td>Ponteiro para a página que estava cheia e provocou a duplicação. </td></tr>
     <tr><td class="paramname">novaPagina</td><td>Ponteiro para a nova página que foi criada na duplicação. </td></tr>
-    <tr><td class="paramname">promoverElementoDoInicio</td><td>Caso seja true, promove o primeiro elemento desta página. Caso contrário, promove o último.</td></tr>
+    <tr><td class="paramname">promoverElementoDoInicio</td><td>Caso seja true, promove o primeiro elemento desta página. Caso contrário, promove o último. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Retorna</dt><dd><a class="el" href="struct_tripla.html" title="A struct Tripla extende a std::pair adicionando o campo third e uma flag status para indicar o estado...">Tripla</a> Uma tripla (chave, dado, ponteiro) onde a chave, o dado e o ponteiro são os valores que estavam no índice informado na página de destino. O ponteiro é sempre o ponteiro à direita da chave e do dado. </dd></dl>
 
 </div>
 </div>
@@ -955,7 +987,7 @@ template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Pega a quádrupla (ponteiro, chave, dado, ponteiro) no indiceLocal e o insere no indiceNoDestino da paginaDestino. </p>
+<p>Pega o par (chave, dado) no indiceLocal e a insere no indiceNoDestino da paginaDestino. Após isso, remove o par e o seu desta página. </p>
 <dl class="params"><dt>Parâmetros</dt><dd>
   <table class="params">
     <tr><td class="paramname">paginaDestino</td><td>Página destino. </td></tr>
@@ -1011,10 +1043,12 @@ template&lt;typename ContainerFonte , typename ContainerDestino &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Transfere metade das chaves e dos dados para outra página. </p>
+<p>Transfere a quantidade de dados informada do containerFonte, da direita para a esquerda, para o containerDestino. </p>
 <dl class="params"><dt>Parâmetros</dt><dd>
   <table class="params">
-    <tr><td class="paramname">paginaDestino</td><td>Página destino. </td></tr>
+    <tr><td class="paramname">containerDestino</td><td>Destino. </td></tr>
+    <tr><td class="paramname">containerFonte</td><td>Fonte. </td></tr>
+    <tr><td class="paramname">quantidade</td><td>Quantidade de dados. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1047,7 +1081,7 @@ template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Transfere metade das chaves e dos dados para outra página. </p>
+<p>Transfere metade das chaves, dos dados e dos ponteiros (com 1 a mais) para outra página. Esses dados são pegos da direita para a esquerda. </p>
 <dl class="params"><dt>Parâmetros</dt><dd>
   <table class="params">
     <tr><td class="paramname">paginaDestino</td><td>Página destino. </td></tr>
