@@ -43,20 +43,20 @@ protected:
     // ------------------------- Campos
 
     int numeroDeElementos;
-	int maximoDeBytesParaAChave;
-	int maximoDeBytesParaODado;
-	int numeroDeChavesPorPagina;
-	int ordemDaArvore;
+    int maximoDeBytesParaAChave;
+    int maximoDeBytesParaODado;
+    int numeroDeChavesPorPagina;
+    int ordemDaArvore;
     file_pointer_type endereco;
 
 public:
-	// ------------------------- Typedefs
+    // ------------------------- Typedefs
 
-	/**
-	 * @brief Padroniza o tipo da página da árvore. Typedefs dentro de classes ou
-	 * structs são considerados como boa prática em C++.
-	 */
-	typedef PaginaB<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> Pagina;
+    /**
+     * @brief Padroniza o tipo da página da árvore. Typedefs dentro de classes ou
+     * structs são considerados como boa prática em C++.
+     */
+    typedef PaginaB<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> Pagina;
 
     /**
      * @brief Padroniza o tipo do par (chave, dado).
@@ -205,6 +205,16 @@ public:
     }
 
     /**
+     * @brief Obtém o endereço da página no arquivo.
+     * 
+     * @return file_pointer_type Endereço da página no arquivo.
+     */
+    file_pointer_type obterEndereco()
+    {
+        return endereco;
+    }
+
+    /**
      * @brief Checa se a página está sem elementos.
      * 
      * @return true Caso não haja elementos na página.
@@ -232,6 +242,7 @@ public:
     void limpar()
     {
         numeroDeElementos = 0;
+        endereco = constantes::ptrNuloPagina;
 
         chaves.clear();
         dados.clear();
@@ -257,12 +268,12 @@ public:
     }
 
     /**
-     * @brief Insere a tripla (ponteiro, chave, dado) na página no índice informado.
+     * @brief Insere a tripla (chave, dado, ponteiro) na página no índice informado.
      * 
      * @param chave Chave do par.
      * @param dado Dado do par.
-     * @param indiceDeInsercao Índice de inserção do par.
-     * @param ponteiro Ponteiro à esquerda do par (chave, dado).
+     * @param indiceDeInsercao Índice de inserção do par (chave, dado).
+     * @param ponteiro Ponteiro à direita do par (chave, dado).
      * 
      * @return true Caso tudo corra bem.
      * @return false Caso a página esteja cheia.
@@ -272,18 +283,18 @@ public:
     {
         bool sucesso = !cheia(); // Só é possível inserir se a página não estiver cheia
 
-		if (sucesso)
-		{
+        if (sucesso)
+        {
             chaves.insert(chaves.begin() + indiceDeInsercao, chave);
             dados.insert(dados.begin() + indiceDeInsercao, dado);
-            ponteiros.insert(ponteiros.begin() + indiceDeInsercao, ponteiro);
-            
+            ponteiros.insert(ponteiros.begin() + indiceDeInsercao + 1, ponteiro);
+
             numeroDeElementos++;
-		}
+        }
 
         return sucesso;
     }
-
+    
     /**
      * @brief Insere o par (chave, dado) na página de forma ordenada.
      * 
@@ -305,83 +316,86 @@ public:
         return indiceDeInsercao;
     }
 
-	/**
-	 * @brief Pega a quádrupla (ponteiro, chave, dado, ponteiro) no indiceLocal e o
-     * insere no indiceNoDestino da paginaDestino.
-	 * 
+    /**
+     * @brief Pega o par (chave, dado) no indiceLocal e a insere no indiceNoDestino
+     * da paginaDestino. Após isso, remove o par e o seu desta página.
+     * 
      * @param paginaDestino Página destino.
-	 * @param indiceNoDestino Índice de inserção na página destino.
-	 * @param indiceLocal Índice do par (chave, dado) nesta página.
-	 */
+     * @param indiceNoDestino Índice de inserção na página destino.
+     * @param indiceLocal Índice do par (chave, dado) nesta página.
+     */
     void transferirElementoPara(Pagina* paginaDestino, int indiceNoDestino, int indiceLocal)
     {
-        paginaDestino->ponteiros[indiceNoDestino] = ponteiros[indiceLocal + 1]; // falta/olhar isso
-
         paginaDestino->inserir(
             chaves[indiceLocal], dados[indiceLocal],
-            indiceNoDestino, ponteiros[indiceLocal]
+            indiceNoDestino/* , ponteiros[indiceLocal + 1] */
         );
 
         chaves.erase(chaves.begin() + indiceLocal);
         dados.erase(dados.begin() + indiceLocal);
-        ponteiros.erase(ponteiros.begin() + indiceLocal);
+        // ponteiros.erase(ponteiros.begin() + indiceLocal + 1);
     }
 
-	/**
-	 * @brief Pega o par (chave, dado) mais à direita desta página e o promove para
-     * o índice informado na página destino. Caso a página destino esteja cheia,
-     * os elementos que estiverem no índice informado são removidos antes da promoção
-     * acontecer.
-	 * 
-     * @param pagina Página destino.
-	 * @param indice Índice de inserção na página destino.
-     * @param paginaCheia Ponteiro para a página cheia que provocou a duplicação.
+    /**
+     * @brief Caso a inserção do par (chave, dado) tenha acontecido na nova página,
+     * o primeiro elemento dela deve ser promovido (o mais à esquerda). Caso a
+     * inserção tenha acontecido na página que estava cheia, o último elemento dela
+     * deve ser promovido (o mais à direita).
+     * 
+     * @param paginaDestino Página destino.
+     * @param indice Índice de inserção na página destino.
+     * @param exPaginaCheia Ponteiro para a página que estava cheia e provocou a
+     * duplicação.
      * @param novaPagina Ponteiro para a nova página que foi criada na duplicação.
      * @param promoverElementoDoInicio Caso seja true, promove o primeiro elemento
      * desta página. Caso contrário, promove o último.
-     * 
-     * @return Tripla Uma tripla (chave, dado, ponteiro) onde a chave, o dado e o
-     * ponteiro são os valores que estavam no índice informado na página de destino.
-     * O ponteiro é sempre o ponteiro à direita da chave e do dado.
-	 */
-	Tripla promoverElementoPara(Pagina* pagina, int indice, Pagina* paginaCheia,
+     */
+    void promoverElementoPara(Pagina* paginaDestino, int indice, Pagina* exPaginaCheia,
         Pagina* novaPagina, bool promoverElementoDoInicio)
-	{
-        Tripla tripla(
-            pagina->chaves[indice], // Salva a chave no índice informado
-            pagina->dados[indice], // Salva o dado no índice informado
-            pagina->ponteiros[indice + 1] // Salva o ponteiro posterior ao índice informado
-        );
+    {
+        if (promoverElementoDoInicio) // Checa se a página nova será afetada na promoção
+        {
+            novaPagina->ponteiros.erase(novaPagina->ponteiros.begin());
 
-        int indiceDeRemocao = (promoverElementoDoInicio ? 0 : numeroDeElementos - 1);
+            transferirElementoPara(paginaDestino, indice, 0);
+        }
 
-		transferirElementoPara(pagina, indice, indiceDeRemocao);
+        else // Ex página cheia será afetada na promoção
+        {
+            exPaginaCheia->ponteiros.erase(
+                exPaginaCheia->ponteiros.begin() + exPaginaCheia->numeroDeElementos);
 
+            transferirElementoPara(paginaDestino, indice, numeroDeElementos - 1);
+        }
+        
         numeroDeElementos--;
 
         // Quando um elemento é promovido, o ponteiro da esquerda dele deve apontar
         // para a página que estava cheia (a que provocou a duplicação).
         // Já o ponteiro da direita deve apontar para a nova página (gerada pela
         // duplicação).
-        pagina->ponteiros[indice] = paginaCheia->endereco;
-        pagina->ponteiros[indice + 1] = novaPagina->endereco;
-
-        return tripla;
-	}
+        paginaDestino->ponteiros[indice] = exPaginaCheia->endereco;
+        paginaDestino->ponteiros[indice + 1] = novaPagina->endereco;
+    }
 
     /**
-     * @brief Transfere metade das chaves e dos dados para outra página.
+     * @brief Transfere a quantidade de dados informada do containerFonte, da direita
+     * para a esquerda, para o containerDestino.
      * 
-     * @param paginaDestino Página destino.
+     * @param containerDestino Destino.
+     * @param containerFonte Fonte.
+     * @param quantidade Quantidade de dados.
      */
     template<typename ContainerFonte, typename ContainerDestino>
-    void transferirMetadePara(ContainerDestino& containerDestino, ContainerFonte& containerFonte, int quantidade)
+    void transferirMetadePara(
+        ContainerDestino& containerDestino,
+        ContainerFonte& containerFonte, int quantidade)
     {
         auto inicio = containerFonte.end() - quantidade;
         auto fim = containerFonte.end();
 
         containerDestino.insert( // move para o destino usando iteradores sobre a fonte
-            containerDestino.end(),
+            containerDestino.begin(),
             // move_iterator é usado para mover os elementos invés de copiá-los
             make_move_iterator(inicio),
             make_move_iterator(fim)
@@ -391,7 +405,8 @@ public:
     }
 
     /**
-     * @brief Transfere metade das chaves e dos dados para outra página.
+     * @brief Transfere metade das chaves, dos dados e dos ponteiros (com 1 a mais)
+     * para outra página. Esses dados são pegos da direita para a esquerda.
      * 
      * @param paginaDestino Página destino.
      */
@@ -401,7 +416,7 @@ public:
         
         transferirMetadePara(paginaDestino->chaves, chaves, quantidadeRemovida);
         transferirMetadePara(paginaDestino->dados, dados, quantidadeRemovida);
-        transferirMetadePara(paginaDestino->ponteiros, ponteiros, quantidadeRemovida);
+        transferirMetadePara(paginaDestino->ponteiros, ponteiros, quantidadeRemovida + 1);
 
         numeroDeElementos -= quantidadeRemovida;
         paginaDestino->numeroDeElementos += quantidadeRemovida;

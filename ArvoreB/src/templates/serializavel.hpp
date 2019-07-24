@@ -122,6 +122,8 @@ public:
     }
 };
 
+// ------------------------- DataStream e serializáveis
+
 DataOutputStream& operator<<(DataOutputStream& dataOutputStream, Serializavel* variavel)
 {
     auto out = variavel->gerarDataOutputStream();
@@ -134,6 +136,10 @@ DataOutputStream& operator<<(DataOutputStream& dataOutputStream, Serializavel& v
     return dataOutputStream << &variavel;
 }
 
+// ------------------------- Operadores
+
+// ------------------------- OutputStream e serializáveis
+
 ostream& operator<<(ostream& ostream, Serializavel* serializavel)
 {
     auto out = serializavel->gerarDataOutputStream();
@@ -145,6 +151,8 @@ ostream& operator<<(ostream& ostream, Serializavel& serializavel)
 {
     return ostream << &serializavel;
 }
+
+// ------------------------- FileStream e serializáveis
 
 fstream& operator<<(fstream& fstream, Serializavel* serializavel)
 {

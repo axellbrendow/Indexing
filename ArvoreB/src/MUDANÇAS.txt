@@ -1,1 +1,4 @@
-1 - Muda definitivamente a lógica de promoção de elementos. A lógica certa é a seguinte: quando o elemento for promovido, o ponteiro da esquerda dele deve apontar para a página cheia (a que provocou duplicação). Já o ponteiro da direita deve apontar para a nova página (gerada pela duplicação).
+Muda, entre outras coisas, a inserção e a transferência de uma página para outra
+
+1 - Ao mover metade de uma página para outra, fica um ponteiro igual (duplicado) entre as páginas.
+2 - Cria um encapsulamento geral no algoritmo de inserção.

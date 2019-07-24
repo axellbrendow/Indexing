@@ -202,6 +202,7 @@ public:
 };
 
 // ------------------------- Operadores
+
 template<typename tipo>
 DataOutputStream& operator<<(DataOutputStream& dataOutputStream, tipo variavel)
 {
@@ -227,6 +228,8 @@ DataOutputStream& operator<<(
     return dataOutputStream.escreverDataOutputStream(variavel);
 }
 
+// ------------------------- OutputStream e DataOutputStream
+
 ostream& operator<<(ostream& ostream, DataOutputStream& out)
 {
     if (out.capacity() > 0)
@@ -243,6 +246,8 @@ ostream& operator<<(ostream& ostream, DataOutputStream& out)
 
     return ostream << endl;
 }
+
+// ------------------------- FileStream e DataOutputStream
 
 fstream& operator<<(fstream& fstream, DataOutputStream& out)
 {

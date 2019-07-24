@@ -17,18 +17,18 @@ using namespace std;
 template<typename TIPO, bool = is_base_of<Serializavel, TIPO>::value>
 struct Medidor
 {
-	static size_t obterTamanhoEmBytes()
-	{
-		// static_assert -> https://www.geeksforgeeks.org/understanding-static_assert-c-11/
-		// is_fundamental<> checa se o tipo do seu parâmetro é primitivo
-		// https://stackoverflow.com/questions/580922/identifying-primitive-types-in-templates
-		static_assert(
-			is_fundamental<TIPO>::value,
-			"O tipo deve ser primitivo caso ele não herde de Serializavel."
-		);
+    static size_t obterTamanhoEmBytes()
+    {
+        // static_assert -> https://www.geeksforgeeks.org/understanding-static_assert-c-11/
+        // is_fundamental<> checa se o tipo do seu parâmetro é primitivo
+        // https://stackoverflow.com/questions/580922/identifying-primitive-types-in-templates
+        static_assert(
+            is_fundamental<TIPO>::value,
+            "O tipo deve ser primitivo caso ele não herde de Serializavel."
+        );
 
-		return sizeof(TIPO);
-	}
+        return sizeof(TIPO);
+    }
 };
 
 // Especialização para classes abstratas
@@ -36,10 +36,10 @@ struct Medidor
 template<typename TIPO>
 struct Medidor<TIPO, true> // true quando TIPO herdar de Serializavel
 {
-	static size_t obterTamanhoEmBytes()
-	{
-		return TIPO().obterTamanhoMaximoEmBytes();
-	}
+    static size_t obterTamanhoEmBytes()
+    {
+        return TIPO().obterTamanhoMaximoEmBytes();
+    }
 };
 
 template<typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS>

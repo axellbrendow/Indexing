@@ -1,4 +1,11 @@
 /**
+ * Frases de Bjarne Stroustrup (o pai do C++):<br>
+ * 
+ * https://kdfrases.com/autor/bjarne-stroustrup
+ * 
+ * “C faz com que dar um tiro no pé seja fácil; C++ torna isso mais difícil,
+ * mas quando nós o fazemos rebenta com a perna toda.” ― Bjarne Stroustrup
+ * 
  * Links úteis doxygen:<br>
  * 
  * https://flcwiki.desy.de/How%20to%20document%20your%20code%20using%20doxygen#How_to_create_a_configuration_file<br>
