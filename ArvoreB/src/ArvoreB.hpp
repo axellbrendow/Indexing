@@ -69,39 +69,6 @@ private:
     }
 
     /**
-     * @brief Atualiza a página no arquivo caso ela já tenha um endereço. Caso
-     * contrário, adiciona-a ao final do arquivo.
-     * 
-     * @param pagina Página a ser colocada no arquivo.
-     * 
-     * @return file_pointer_type constantes::ptrNuloPagina caso haja algum erro.
-     * Caso contrário, retorna o endereço no qual a página foi colocada.
-     */
-    file_pointer_type colocarNoArquivo(Pagina* pagina)
-    {
-        file_pointer_type endereco = constantes::ptrNuloPagina;
-        file_pointer_type enderecoPagina = pagina->obterEndereco();
-
-        if (enderecoPagina != constantes::ptrNuloPagina)
-        {
-            arquivo.seekp(enderecoPagina);
-        }
-
-        else
-        {
-            arquivo.seekp(0, fstream::end);
-        }
-
-        if (!arquivo.fail())
-        {
-            endereco = arquivo.tellp();
-            arquivo << pagina;
-        }
-
-        return endereco;
-    }
-
-    /**
      * @brief Vai para o endereço informado e tenta carregar a página.
      * 
      * @param pagina Página a ser carregada.
@@ -132,37 +99,44 @@ private:
     }
 
     /**
-     * @brief Cria a página irmã e transfere metade da página filha para ela.
-     * Depois, insere a chave e o dado em alguma delas de acordo com a ordenação.
-     * A inserção da chave e do dado pode ser ignorada por meio do parâmetro
-     * @p inserir.
+     * @brief Decide em qual página a chave deve ser inserida.
      * 
-     * @param filha Página a ser "duplicada".
      * @param irma Página a ser criada.
+     * @param filha Página a ser "duplicada".
      * @param chave Chave a ser inserida.
-     * @param dado Dado a ser inserido.
-     * @param inserir Diz se a inserção da chave e do dado realmente deve ser feita.
+     * 
+     * @return pair<Pagina *, bool> Um par onde o primeiro elemento é a página onde
+     * a chave deve ser inserida e o segundo elemento é um booleano que indica se a
+     * inserção deve ser feita na página filha.
+     */
+    pair<Pagina *, bool> obterPaginaDeInsercao(
+        Pagina *irma, Pagina *filha, TIPO_DAS_CHAVES &chave)
+    {
+        // Escolhe a página onde a chave será inserida
+        bool inserirNaPaginaFilha = chave <= irma->chaves[0] ? true : false;
+        Pagina *paginaDeInsercao = inserirNaPaginaFilha ? filha : irma;
+
+        return pair<Pagina *, bool>(paginaDeInsercao, inserirNaPaginaFilha);
+    }
+
+    /**
+     * @brief Cria a página irmã e transfere metade da página filha para ela.
+     * 
+     * @param irma Página a ser criada.
+     * @param filha Página a ser "duplicada".
+     * @param chave Chave a ser inserida em alguma dessas páginas.
      * 
      * @return pair<Pagina*, bool> Um par onde o primeiro elemento é a página onde
-     * a chave e o dado foram inseridos e o segundo elemento é um booleano que
-     * indica se a inserção foi na página irmã.
+     * a chave deve ser inserida e o segundo elemento é um booleano que indica se
+     * a inserção deve ser na página filha.
      */
-    pair<Pagina*, bool> criar(
-        Pagina* irma, Pagina* filha,
-        TIPO_DAS_CHAVES& chave, TIPO_DOS_DADOS& dado,
-        bool inserir = true)
+    pair<Pagina *, bool> criar(Pagina *irma, Pagina *filha, TIPO_DAS_CHAVES &chave)
     {
         // Inicia o processo de duplicação da página
         irma->limpar(); // Nova página
         filha->transferirMetadePara(irma);
 
-        // Escolhe a página onde a chave será inserida
-        bool inserirNaPaginaIrma = chave > filha->chaves.back() ? true : false;
-        Pagina* paginaDeInsercao = inserirNaPaginaIrma ? irma : filha;
-
-        if (inserir) paginaDeInsercao->inserir(chave, dado);
-
-        return pair<Pagina*, bool>(paginaDeInsercao, inserirNaPaginaIrma);
+        return obterPaginaDeInsercao(irma, filha, chave);
     }
 
 protected:
@@ -185,37 +159,86 @@ protected:
     // ------------------------- Métodos
 
     /**
-     * @brief Duplica a página filha gerando a página irmã, insere a chave e o dado
-     * em alguma delas e promove o elemento de acordo com a inserção feita. Caso
-     * necessário, duplica a página pai também para que o elemento seja promovido.
+     * @brief Promove o par (chave, dado) que estiver sobrando na paginaDeInsercao
+     * para a página pai. Caso a página pai esteja cheia, ela é duplicada para que
+     * o par possa ser promovido.
      * 
-     * @param chave Chave a ser inserida.
-     * @param dado Dado a ser inserido.
-     * @param infoPai Um par onde o primeiro elemento será um ponteiro para a página
-     * onde foi promovido o elemento após a duplicação da página pai (caso aconteça).
+     * @param chave Chave do par.
+     * @param indiceDePromocao Índice para onde o par (chave, dado) deve ser
+     * promovido na página pai.
+     * @param paginaDeInsercao Ponteiro para a página que acabou de receber o elemento
+     * que causará a promoção.
+     * @param inseriuNaPaginaFilha Deve ser true quando o elemento que causará a
+     * promoção tiver sido inserido na página filha (a que estava cheia antes de ser
+     * duplicada). E false quando o elemento tiver sido inserido na página irmã
+     * (a que foi gerada na duplicação).
+     * @param infoPai Considerando que a página pai irá receber um elemento
+     * promovido, que ela esteja cheia e não o possa receber, esse parâmetro será
+     * preenchido com um par onde o primeiro elemento será um ponteiro para a página
+     * que receber o elemento promovido (após a duplicação da página pai) e o segundo
+     * elemento é um booleano que indica se a promoção foi na página pai ou em sua irmã.
      */
-    void tratarPaginaCheia(
-        TIPO_DAS_CHAVES &chave, TIPO_DOS_DADOS &dado, pair<Pagina *, bool>& infoPai)
+    void promoverOParQueEstiverSobrando(
+        int indiceDePromocao, Pagina *paginaDeInsercao,
+        bool inseriuNaPaginaFilha, pair<Pagina *, bool> &infoPai)
     {
-        auto info = criar(paginaIrma, paginaFilha, chave, dado);
-        Pagina *paginaDeInsercao = info.first;
-        bool inserirNaNovaPagina = info.second;
+        Pagina *paginaDestino = paginaPai;
+        int indice = indiceDePromocao;
 
-        // Checa se é necessário duplicar a página pai antes de
-        // promover um elemento.
+        // Checa se é necessário duplicar a página pai antes de promover o par.
         if (paginaPai->cheia())
         {
-            infoPai = criar(paginaIrmaPai, paginaPai, chave, dado, false);
+            // Pega a chave do par que será promovido
+            TIPO_DAS_CHAVES& chave = inseriuNaPaginaFilha ?
+                paginaFilha->chaves.back() : paginaIrma->chaves[0];
+
+            infoPai = criar(paginaIrmaPai, paginaPai, chave);
+            // Pega a página que receberá o elemento promovido
+            paginaDestino = infoPai.first;
+            // Obtém o índice no qual o par deve ser promovido
+            indice = paginaDestino->obterIndiceDeDescida(chave);
         }
 
         paginaDeInsercao->promoverElementoPara(
-            paginaPai, 0, // Promove para a posição 0
+            paginaDestino, indice, // Promove para o índice
             paginaFilha,  // Página que estava cheia
             paginaIrma,   // Página criada
-            // Ajuda a saber qual é a posição do elemento que será
-            // promovido desta página. (paginaDeInsercao).
-            inserirNaNovaPagina
+            // Ajuda a saber qual é a posição do elemento que será promovido
+            // da paginaDeInsercao.
+            inseriuNaPaginaFilha,
+            arquivo // Arquivo onde as páginas serão colocadas
         );
+    }
+
+    /**
+     * @brief Duplica a página filha gerando a página irmã, insere a chave e o dado
+     * em alguma delas e promove o elemento que estiver sobrando de acordo com a
+     * inserção feita. Caso necessário, duplica a página pai também para que o
+     * elemento seja promovido.
+     * 
+     * @param chave Chave a ser inserida.
+     * @param dado Dado a ser inserido.
+     * @param indiceDePromocao Índice para onde o par (chave, dado) deve ser
+     * promovido na página pai.
+     * @param infoPai Considerando que a página pai irá receber um elemento
+     * promovido, que ela esteja cheia e não o possa receber, esse parâmetro será
+     * preenchido com um par onde o primeiro elemento será um ponteiro para a página
+     * que receber o elemento promovido (após a duplicação da página pai) e o segundo
+     * elemento é um booleano que indica se a promoção foi na página pai ou em sua irmã.
+     */
+    void tratarPaginaCheia(
+        TIPO_DAS_CHAVES &chave, TIPO_DOS_DADOS &dado,
+        int indiceDePromocao, pair<Pagina *, bool> &infoPai)
+    {
+        auto info = criar(paginaIrma, paginaFilha, chave);
+        Pagina *paginaDeInsercao = info.first;
+        bool inserirNaPaginaFilha = info.second;
+
+        paginaDeInsercao->inserir(chave, dado);
+
+        promoverOParQueEstiverSobrando(
+            indiceDePromocao, paginaDeInsercao,
+            inserirNaPaginaFilha, infoPai);
     }
 
     /**
@@ -223,15 +246,21 @@ protected:
      * 
      * @param chave Chave a ser inserida.
      * @param dado Dado a ser inserido.
+     * @param indiceDePromocao Índice na página pai para o qual um elemento desta
+     * página seria promovido caso necessário.
      * @param enderecoPaginaFilha Endereço da página a ser carregada.
      * 
-     * @return pair<Pagina *, bool> Um par onde o primeiro elemento será um ponteiro
-     * para a página onde foi promovido o elemento após a duplicação da página pai
-     * (caso aconteça).
+     * @return pair<Pagina *, bool> Considerando que a página pai irá receber um
+     * elemento promovido, que ela esteja cheia e não o possa receber, retorna um
+     * par onde o primeiro elemento será um ponteiro para a página que receber o
+     * elemento promovido (após a duplicação da página pai) e o segundo elemento é
+     * um booleano que indica se a promoção foi na página pai ou em sua irmã. Caso
+     * a página pai não esteja cheia ou não vá receber um elemento, retorna um par
+     * onde o primeiro elemento é um nullptr e o segundo false.
      */
     pair<Pagina *, bool> inserir(
         TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado,
-        file_pointer_type enderecoPaginaFilha)
+        int indiceDePromocao, file_pointer_type enderecoPaginaFilha)
     {
         pair<Pagina *, bool> infoPai(nullptr, false);
 
@@ -243,30 +272,32 @@ protected:
             // Checa se não há ponteiro de descida. Caso não, a página é uma folha.
             if (paginaFilha->ponteiros[indiceDeInsercao] == constantes::ptrNuloPagina)
             {
-                // Checa se a inserção na página falhou. Acontece quando ela está cheia.
-                if (!paginaFilha->inserir(chave, dado, indiceDeInsercao))
+                // Checa se a inserção teve sucesso
+                if (paginaFilha->inserir(chave, dado, indiceDeInsercao))
                 {
-                    tratarPaginaCheia(chave, dado, infoPai);
-                    // atualiza as páginas no arquivo
-                    colocarNoArquivo(paginaPai);
-                    colocarNoArquivo(paginaIrma);
+                    paginaFilha->colocarNoArquivo(arquivo);
                 }
 
-                colocarNoArquivo(paginaFilha);
+                else // Inserção na página falhou, acontece quando ela está cheia.
+                {
+                    tratarPaginaCheia(chave, dado, indiceDePromocao, infoPai);
+                }
             }
             
             else // A página não é uma folha, continuar descendo
             {
                 paginaPai = paginaFilha;
 
+                // retorna informações sobre a promoção de elementos para esta página
                 infoPai = inserir(
-                    chave, dado, paginaFilha->ponteiros[indiceDeInsercao]);
+                    chave, dado, indiceDeInsercao, paginaFilha->ponteiros[indiceDeInsercao]);
 
                 // Checa se esta página precisa promover algum elemento que tenha
                 // sido adicionado nela pelas suas filhas
                 if (infoPai.first != nullptr)
                 {
-                    // olhar aqui
+                    Pagina *paginaDeInsercao = infoPai.first;
+                    bool inseriuNaPaginaFilha = infoPai.second;
                 }
             }
         }
@@ -325,7 +356,7 @@ public:
         file_pointer_type endereco;
         arquivo >> endereco; // Carrega o endereço da raiz
 
-        inserir(chave, dado, endereco);
+        inserir(chave, dado, 0, endereco);
 
         return true;
     }

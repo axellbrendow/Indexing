@@ -71,7 +71,7 @@ public:
 
     // ------------------------- Construtores
 
-    PaginaB() : numeroDeElementos(0) { }
+    PaginaB() : numeroDeElementos(0), endereco(constantes::ptrNuloPagina) { }
 
     /**
      * @brief Constrói uma nova página com a ordem informada.
@@ -90,7 +90,8 @@ public:
         maximoDeBytesParaAChave(maximoDeBytesParaAChave),
         maximoDeBytesParaODado(maximoDeBytesParaODado),
         numeroDeChavesPorPagina(ordemDaArvore - 1),
-        ordemDaArvore(ordemDaArvore)
+        ordemDaArvore(ordemDaArvore),
+        endereco(constantes::ptrNuloPagina)
     {
         chaves.reserve(numeroDeChavesPorPagina);
         dados.reserve(numeroDeChavesPorPagina);
@@ -347,28 +348,34 @@ public:
      * @param exPaginaCheia Ponteiro para a página que estava cheia e provocou a
      * duplicação.
      * @param novaPagina Ponteiro para a nova página que foi criada na duplicação.
-     * @param promoverElementoDoInicio Caso seja true, promove o primeiro elemento
-     * desta página. Caso contrário, promove o último.
+     * @param promoverElementoDoFim Caso seja true, promove o último elemento
+     * desta página. Caso contrário, promove o primeiro.
+     * @param arquivo Arquivo onde as páginas serão colocadas.
      */
     void promoverElementoPara(Pagina* paginaDestino, int indice, Pagina* exPaginaCheia,
-        Pagina* novaPagina, bool promoverElementoDoInicio)
+        Pagina* novaPagina, bool promoverElementoDoFim, fstream& arquivo)
     {
-        if (promoverElementoDoInicio) // Checa se a página nova será afetada na promoção
-        {
-            novaPagina->ponteiros.erase(novaPagina->ponteiros.begin());
-
-            transferirElementoPara(paginaDestino, indice, 0);
-        }
-
-        else // Ex página cheia será afetada na promoção
+        // Checa se a ex página cheia será afetada na promoção
+        if (promoverElementoDoFim)
         {
             exPaginaCheia->ponteiros.erase(
                 exPaginaCheia->ponteiros.begin() + exPaginaCheia->numeroDeElementos);
 
             transferirElementoPara(paginaDestino, indice, numeroDeElementos - 1);
         }
-        
+
+        else // A página nova será afetada na promoção
+        {
+            novaPagina->ponteiros.erase(novaPagina->ponteiros.begin());
+
+            transferirElementoPara(paginaDestino, indice, 0);
+        }
+
         numeroDeElementos--;
+
+        // atualiza as páginas no arquivo
+        exPaginaCheia->colocarNoArquivo(arquivo);
+        novaPagina->colocarNoArquivo(arquivo);
 
         // Quando um elemento é promovido, o ponteiro da esquerda dele deve apontar
         // para a página que estava cheia (a que provocou a duplicação).
@@ -376,6 +383,7 @@ public:
         // duplicação).
         paginaDestino->ponteiros[indice] = exPaginaCheia->endereco;
         paginaDestino->ponteiros[indice + 1] = novaPagina->endereco;
+        paginaDestino->colocarNoArquivo(arquivo);
     }
 
     /**
@@ -420,6 +428,36 @@ public:
 
         numeroDeElementos -= quantidadeRemovida;
         paginaDestino->numeroDeElementos += quantidadeRemovida;
+    }
+
+    /**
+     * @brief Atualiza a página no arquivo caso ela já tenha um endereço. Caso
+     * contrário, adiciona-a ao final do arquivo.
+     * 
+     * @param arquiv Arquivo onde a página deve ser colocada.
+     * 
+     * @return file_pointer_type constantes::ptrNuloPagina caso haja algum erro.
+     * Caso contrário, retorna o endereço no qual a página foi colocada.
+     */
+    file_pointer_type colocarNoArquivo(fstream &arquivo)
+    {
+        if (endereco != constantes::ptrNuloPagina)
+        {
+            arquivo.seekp(endereco);
+        }
+
+        else
+        {
+            arquivo.seekp(0, fstream::end);
+        }
+
+        if (!arquivo.fail())
+        {
+            endereco = arquivo.tellp();
+            arquivo << this;
+        }
+
+        return endereco;
     }
 
     /**
