@@ -146,9 +146,9 @@ Membros públicos</h2></td></tr>
 <tr class="memitem:a778385010bd675c0b47c88bba45620a8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a778385010bd675c0b47c88bba45620a8">transferirElementoPara</a> (<a class="el" href="class_pagina_b.html#a0abe8feb25bb6cbd273f1663eab1d324">Pagina</a> *paginaDestino, int indiceNoDestino, int indiceLocal)</td></tr>
 <tr class="memdesc:a778385010bd675c0b47c88bba45620a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pega o par (chave, dado) no indiceLocal e a insere no indiceNoDestino da paginaDestino. Após isso, remove o par e o seu desta página.  <a href="#a778385010bd675c0b47c88bba45620a8">Mais...</a><br /></td></tr>
 <tr class="separator:a778385010bd675c0b47c88bba45620a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9c0109a7915699e0dd942b34c0e131ba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a9c0109a7915699e0dd942b34c0e131ba">promoverElementoPara</a> (<a class="el" href="class_pagina_b.html#a0abe8feb25bb6cbd273f1663eab1d324">Pagina</a> *paginaDestino, int indice, <a class="el" href="class_pagina_b.html#a0abe8feb25bb6cbd273f1663eab1d324">Pagina</a> *exPaginaCheia, <a class="el" href="class_pagina_b.html#a0abe8feb25bb6cbd273f1663eab1d324">Pagina</a> *novaPagina, bool promoverElementoDoInicio)</td></tr>
-<tr class="memdesc:a9c0109a7915699e0dd942b34c0e131ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Caso a inserção do par (chave, dado) tenha acontecido na nova página, o primeiro elemento dela deve ser promovido (o mais à esquerda). Caso a inserção tenha acontecido na página que estava cheia, o último elemento dela deve ser promovido (o mais à direita).  <a href="#a9c0109a7915699e0dd942b34c0e131ba">Mais...</a><br /></td></tr>
-<tr class="separator:a9c0109a7915699e0dd942b34c0e131ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71a8be6fc88db595d69b4265fddee146"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a71a8be6fc88db595d69b4265fddee146">promoverElementoPara</a> (<a class="el" href="class_pagina_b.html#a0abe8feb25bb6cbd273f1663eab1d324">Pagina</a> *paginaDestino, int indice, <a class="el" href="class_pagina_b.html#a0abe8feb25bb6cbd273f1663eab1d324">Pagina</a> *exPaginaCheia, <a class="el" href="class_pagina_b.html#a0abe8feb25bb6cbd273f1663eab1d324">Pagina</a> *novaPagina, bool promoverElementoDoFim, fstream &amp;arquivo)</td></tr>
+<tr class="memdesc:a71a8be6fc88db595d69b4265fddee146"><td class="mdescLeft">&#160;</td><td class="mdescRight">Caso a inserção do par (chave, dado) tenha acontecido na nova página, o primeiro elemento dela deve ser promovido (o mais à esquerda). Caso a inserção tenha acontecido na página que estava cheia, o último elemento dela deve ser promovido (o mais à direita).  <a href="#a71a8be6fc88db595d69b4265fddee146">Mais...</a><br /></td></tr>
+<tr class="separator:a71a8be6fc88db595d69b4265fddee146"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a090a787bfc1c970f5d2a31e5af9cc3c7"><td class="memTemplParams" colspan="2">template&lt;typename ContainerFonte , typename ContainerDestino &gt; </td></tr>
 <tr class="memitem:a090a787bfc1c970f5d2a31e5af9cc3c7"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a090a787bfc1c970f5d2a31e5af9cc3c7">transferirMetadePara</a> (ContainerDestino &amp;containerDestino, ContainerFonte &amp;containerFonte, int quantidade)</td></tr>
 <tr class="memdesc:a090a787bfc1c970f5d2a31e5af9cc3c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfere a quantidade de dados informada do containerFonte, da direita para a esquerda, para o containerDestino.  <a href="#a090a787bfc1c970f5d2a31e5af9cc3c7">Mais...</a><br /></td></tr>
@@ -156,6 +156,9 @@ Membros públicos</h2></td></tr>
 <tr class="memitem:a0f8fbdde743e0a551c3b6a5076efdc7d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a0f8fbdde743e0a551c3b6a5076efdc7d">transferirMetadePara</a> (<a class="el" href="class_pagina_b.html#a0abe8feb25bb6cbd273f1663eab1d324">Pagina</a> *paginaDestino)</td></tr>
 <tr class="memdesc:a0f8fbdde743e0a551c3b6a5076efdc7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfere metade das chaves, dos dados e dos ponteiros (com 1 a mais) para outra página. Esses dados são pegos da direita para a esquerda.  <a href="#a0f8fbdde743e0a551c3b6a5076efdc7d">Mais...</a><br /></td></tr>
 <tr class="separator:a0f8fbdde743e0a551c3b6a5076efdc7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d0e4f456708e97b82b515018e27c203"><td class="memItemLeft" align="right" valign="top"><a class="el" href="tipos_8hpp.html#a060c8d79366d67ac97d23bac085fb4f7">file_pointer_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a4d0e4f456708e97b82b515018e27c203">colocarNoArquivo</a> (fstream &amp;arquivo)</td></tr>
+<tr class="memdesc:a4d0e4f456708e97b82b515018e27c203"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atualiza a página no arquivo caso ela já tenha um endereço. Caso contrário, adiciona-a ao final do arquivo.  <a href="#a4d0e4f456708e97b82b515018e27c203">Mais...</a><br /></td></tr>
+<tr class="separator:a4d0e4f456708e97b82b515018e27c203"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad8be3782caae0659cc89cd0118c1723b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#ad8be3782caae0659cc89cd0118c1723b">print</a> (string delimitadorEntreOsItens=&quot; &quot;, ostream &amp;ostream=cout)</td></tr>
 <tr class="memdesc:ad8be3782caae0659cc89cd0118c1723b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Imprime, na output stream recebida, cada elemento da página gerando o seguinte formato:  <a href="#ad8be3782caae0659cc89cd0118c1723b">Mais...</a><br /></td></tr>
 <tr class="separator:ad8be3782caae0659cc89cd0118c1723b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -448,6 +451,43 @@ template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
 <dl class="section return"><dt>Retorna</dt><dd>true Caso a página esteja cheia. </dd>
 <dd>
 false Caso a página não esteja cheia. </dd></dl>
+
+</div>
+</div>
+<a id="a4d0e4f456708e97b82b515018e27c203"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d0e4f456708e97b82b515018e27c203">&#9670;&nbsp;</a></span>colocarNoArquivo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="tipos_8hpp.html#a060c8d79366d67ac97d23bac085fb4f7">file_pointer_type</a> <a class="el" href="class_pagina_b.html">PaginaB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::colocarNoArquivo </td>
+          <td>(</td>
+          <td class="paramtype">fstream &amp;&#160;</td>
+          <td class="paramname"><em>arquivo</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Atualiza a página no arquivo caso ela já tenha um endereço. Caso contrário, adiciona-a ao final do arquivo. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">arquiv</td><td>Arquivo onde a página deve ser colocada.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Retorna</dt><dd>file_pointer_type constantes::ptrNuloPagina caso haja algum erro. Caso contrário, retorna o endereço no qual a página foi colocada. </dd></dl>
 
 </div>
 </div>
@@ -849,8 +889,8 @@ template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
 
 </div>
 </div>
-<a id="a9c0109a7915699e0dd942b34c0e131ba"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9c0109a7915699e0dd942b34c0e131ba">&#9670;&nbsp;</a></span>promoverElementoPara()</h2>
+<a id="a71a8be6fc88db595d69b4265fddee146"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a71a8be6fc88db595d69b4265fddee146">&#9670;&nbsp;</a></span>promoverElementoPara()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -888,7 +928,13 @@ template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>promoverElementoDoInicio</em>&#160;</td>
+          <td class="paramname"><em>promoverElementoDoFim</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">fstream &amp;&#160;</td>
+          <td class="paramname"><em>arquivo</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -910,7 +956,8 @@ template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
     <tr><td class="paramname">indice</td><td>Índice de inserção na página destino. </td></tr>
     <tr><td class="paramname">exPaginaCheia</td><td>Ponteiro para a página que estava cheia e provocou a duplicação. </td></tr>
     <tr><td class="paramname">novaPagina</td><td>Ponteiro para a nova página que foi criada na duplicação. </td></tr>
-    <tr><td class="paramname">promoverElementoDoInicio</td><td>Caso seja true, promove o primeiro elemento desta página. Caso contrário, promove o último. </td></tr>
+    <tr><td class="paramname">promoverElementoDoFim</td><td>Caso seja true, promove o último elemento desta página. Caso contrário, promove o primeiro. </td></tr>
+    <tr><td class="paramname">arquivo</td><td>Arquivo onde as páginas serão colocadas. </td></tr>
   </table>
   </dd>
 </dl>

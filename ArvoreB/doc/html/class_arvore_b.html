@@ -127,12 +127,15 @@ Atributos Públicos</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Membros protegidos</h2></td></tr>
-<tr class="memitem:a782d88f982d7c3e06ef6ebecb717e5a9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#a782d88f982d7c3e06ef6ebecb717e5a9">tratarPaginaCheia</a> (TIPO_DAS_CHAVES &amp;chave, TIPO_DOS_DADOS &amp;dado, pair&lt; <a class="el" href="class_arvore_b.html#a33a9cc9c13f102525a84a634d277a764">Pagina</a> *, bool &gt; &amp;infoPai)</td></tr>
-<tr class="memdesc:a782d88f982d7c3e06ef6ebecb717e5a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Duplica a página filha gerando a página irmã, insere a chave e o dado em alguma delas e promove o elemento de acordo com a inserção feita. Caso necessário, duplica a página pai também para que o elemento seja promovido.  <a href="#a782d88f982d7c3e06ef6ebecb717e5a9">Mais...</a><br /></td></tr>
-<tr class="separator:a782d88f982d7c3e06ef6ebecb717e5a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a736528a2d9a078e1d3d2130ecddd072a"><td class="memItemLeft" align="right" valign="top">pair&lt; <a class="el" href="class_arvore_b.html#a33a9cc9c13f102525a84a634d277a764">Pagina</a> *, bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#a736528a2d9a078e1d3d2130ecddd072a">inserir</a> (TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado, <a class="el" href="tipos_8hpp.html#a060c8d79366d67ac97d23bac085fb4f7">file_pointer_type</a> enderecoPaginaFilha)</td></tr>
-<tr class="memdesc:a736528a2d9a078e1d3d2130ecddd072a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insere o par (chave, dado) na árvore.  <a href="#a736528a2d9a078e1d3d2130ecddd072a">Mais...</a><br /></td></tr>
-<tr class="separator:a736528a2d9a078e1d3d2130ecddd072a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac800723b06b9d64dec4b89603aa0dbc0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#ac800723b06b9d64dec4b89603aa0dbc0">promoverOParQueEstiverSobrando</a> (int indiceDePromocao, <a class="el" href="class_arvore_b.html#a33a9cc9c13f102525a84a634d277a764">Pagina</a> *paginaDeInsercao, bool inseriuNaPaginaFilha, pair&lt; <a class="el" href="class_arvore_b.html#a33a9cc9c13f102525a84a634d277a764">Pagina</a> *, bool &gt; &amp;infoPai)</td></tr>
+<tr class="memdesc:ac800723b06b9d64dec4b89603aa0dbc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Promove o par (chave, dado) que estiver sobrando na paginaDeInsercao para a página pai. Caso a página pai esteja cheia, ela é duplicada para que o par possa ser promovido.  <a href="#ac800723b06b9d64dec4b89603aa0dbc0">Mais...</a><br /></td></tr>
+<tr class="separator:ac800723b06b9d64dec4b89603aa0dbc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08a9073b8ad32e1391c3ccb7b6d8474a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#a08a9073b8ad32e1391c3ccb7b6d8474a">tratarPaginaCheia</a> (TIPO_DAS_CHAVES &amp;chave, TIPO_DOS_DADOS &amp;dado, int indiceDePromocao, pair&lt; <a class="el" href="class_arvore_b.html#a33a9cc9c13f102525a84a634d277a764">Pagina</a> *, bool &gt; &amp;infoPai)</td></tr>
+<tr class="memdesc:a08a9073b8ad32e1391c3ccb7b6d8474a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Duplica a página filha gerando a página irmã, insere a chave e o dado em alguma delas e promove o elemento que estiver sobrando de acordo com a inserção feita. Caso necessário, duplica a página pai também para que o elemento seja promovido.  <a href="#a08a9073b8ad32e1391c3ccb7b6d8474a">Mais...</a><br /></td></tr>
+<tr class="separator:a08a9073b8ad32e1391c3ccb7b6d8474a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98daeb7a3d79f518d96af1259d76500c"><td class="memItemLeft" align="right" valign="top">pair&lt; <a class="el" href="class_arvore_b.html#a33a9cc9c13f102525a84a634d277a764">Pagina</a> *, bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#a98daeb7a3d79f518d96af1259d76500c">inserir</a> (TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado, int indiceDePromocao, <a class="el" href="tipos_8hpp.html#a060c8d79366d67ac97d23bac085fb4f7">file_pointer_type</a> enderecoPaginaFilha)</td></tr>
+<tr class="memdesc:a98daeb7a3d79f518d96af1259d76500c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insere o par (chave, dado) na árvore.  <a href="#a98daeb7a3d79f518d96af1259d76500c">Mais...</a><br /></td></tr>
+<tr class="separator:a98daeb7a3d79f518d96af1259d76500c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Atributos Protegidos</h2></td></tr>
@@ -378,8 +381,8 @@ template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
 
 </div>
 </div>
-<a id="a736528a2d9a078e1d3d2130ecddd072a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a736528a2d9a078e1d3d2130ecddd072a">&#9670;&nbsp;</a></span>inserir() <span class="overload">[1/2]</span></h2>
+<a id="a98daeb7a3d79f518d96af1259d76500c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98daeb7a3d79f518d96af1259d76500c">&#9670;&nbsp;</a></span>inserir() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -400,6 +403,12 @@ template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
           <td></td>
           <td class="paramtype">TIPO_DOS_DADOS&#160;</td>
           <td class="paramname"><em>dado</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>indiceDePromocao</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -425,11 +434,12 @@ template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
   <table class="params">
     <tr><td class="paramname">chave</td><td>Chave a ser inserida. </td></tr>
     <tr><td class="paramname">dado</td><td>Dado a ser inserido. </td></tr>
+    <tr><td class="paramname">indiceDePromocao</td><td>Índice na página pai para o qual um elemento desta página seria promovido caso necessário. </td></tr>
     <tr><td class="paramname">enderecoPaginaFilha</td><td>Endereço da página a ser carregada.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Retorna</dt><dd>pair&lt;Pagina *, bool&gt; Um par onde o primeiro elemento será um ponteiro para a página onde foi promovido o elemento após a duplicação da página pai (caso aconteça). </dd></dl>
+<dl class="section return"><dt>Retorna</dt><dd>pair&lt;Pagina *, bool&gt; Considerando que a página pai irá receber um elemento promovido, que ela esteja cheia e não o possa receber, retorna um par onde o primeiro elemento será um ponteiro para a página que receber o elemento promovido (após a duplicação da página pai) e o segundo elemento é um booleano que indica se a promoção foi na página pai ou em sua irmã. Caso a página pai não esteja cheia ou não vá receber um elemento, retorna um par onde o primeiro elemento é um nullptr e o segundo false. </dd></dl>
 
 </div>
 </div>
@@ -605,8 +615,70 @@ template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
 
 </div>
 </div>
-<a id="a782d88f982d7c3e06ef6ebecb717e5a9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a782d88f982d7c3e06ef6ebecb717e5a9">&#9670;&nbsp;</a></span>tratarPaginaCheia()</h2>
+<a id="ac800723b06b9d64dec4b89603aa0dbc0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac800723b06b9d64dec4b89603aa0dbc0">&#9670;&nbsp;</a></span>promoverOParQueEstiverSobrando()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_arvore_b.html">ArvoreB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::promoverOParQueEstiverSobrando </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>indiceDePromocao</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_arvore_b.html#a33a9cc9c13f102525a84a634d277a764">Pagina</a> *&#160;</td>
+          <td class="paramname"><em>paginaDeInsercao</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>inseriuNaPaginaFilha</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">pair&lt; <a class="el" href="class_arvore_b.html#a33a9cc9c13f102525a84a634d277a764">Pagina</a> *, bool &gt; &amp;&#160;</td>
+          <td class="paramname"><em>infoPai</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Promove o par (chave, dado) que estiver sobrando na paginaDeInsercao para a página pai. Caso a página pai esteja cheia, ela é duplicada para que o par possa ser promovido. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">chave</td><td>Chave do par. </td></tr>
+    <tr><td class="paramname">indiceDePromocao</td><td>Índice para onde o par (chave, dado) deve ser promovido na página pai. </td></tr>
+    <tr><td class="paramname">paginaDeInsercao</td><td>Ponteiro para a página que acabou de receber o elemento que causará a promoção. </td></tr>
+    <tr><td class="paramname">inseriuNaPaginaFilha</td><td>Deve ser true quando o elemento que causará a promoção tiver sido inserido na página filha (a que estava cheia antes de ser duplicada). E false quando o elemento tiver sido inserido na página irmã (a que foi gerada na duplicação). </td></tr>
+    <tr><td class="paramname">infoPai</td><td>Considerando que a página pai irá receber um elemento promovido, que ela esteja cheia e não o possa receber, esse parâmetro será preenchido com um par onde o primeiro elemento será um ponteiro para a página que receber o elemento promovido (após a duplicação da página pai) e o segundo elemento é um booleano que indica se a promoção foi na página pai ou em sua irmã. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a08a9073b8ad32e1391c3ccb7b6d8474a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08a9073b8ad32e1391c3ccb7b6d8474a">&#9670;&nbsp;</a></span>tratarPaginaCheia()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -631,6 +703,12 @@ template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>indiceDePromocao</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">pair&lt; <a class="el" href="class_arvore_b.html#a33a9cc9c13f102525a84a634d277a764">Pagina</a> *, bool &gt; &amp;&#160;</td>
           <td class="paramname"><em>infoPai</em>&#160;</td>
         </tr>
@@ -647,12 +725,13 @@ template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Duplica a página filha gerando a página irmã, insere a chave e o dado em alguma delas e promove o elemento de acordo com a inserção feita. Caso necessário, duplica a página pai também para que o elemento seja promovido. </p>
+<p>Duplica a página filha gerando a página irmã, insere a chave e o dado em alguma delas e promove o elemento que estiver sobrando de acordo com a inserção feita. Caso necessário, duplica a página pai também para que o elemento seja promovido. </p>
 <dl class="params"><dt>Parâmetros</dt><dd>
   <table class="params">
     <tr><td class="paramname">chave</td><td>Chave a ser inserida. </td></tr>
     <tr><td class="paramname">dado</td><td>Dado a ser inserido. </td></tr>
-    <tr><td class="paramname">infoPai</td><td>Um par onde o primeiro elemento será um ponteiro para a página onde foi promovido o elemento após a duplicação da página pai (caso aconteça). </td></tr>
+    <tr><td class="paramname">indiceDePromocao</td><td>Índice para onde o par (chave, dado) deve ser promovido na página pai. </td></tr>
+    <tr><td class="paramname">infoPai</td><td>Considerando que a página pai irá receber um elemento promovido, que ela esteja cheia e não o possa receber, esse parâmetro será preenchido com um par onde o primeiro elemento será um ponteiro para a página que receber o elemento promovido (após a duplicação da página pai) e o segundo elemento é um booleano que indica se a promoção foi na página pai ou em sua irmã. </td></tr>
   </table>
   </dd>
 </dl>
