@@ -52,6 +52,12 @@ public:
      */
     typedef struct Tripla<TIPO_DAS_CHAVES, TIPO_DOS_DADOS, file_pointer_type> Tripla;
 
+    // ------------------------- Campos
+
+    const int tamanhoCabecalhoAntesDoEnderecoDaRaiz = 0;
+    const int tamanhoCabecalho =
+        tamanhoCabecalhoAntesDoEnderecoDaRaiz + sizeof(file_pointer_type);
+
 private:
     // ------------------------- Métodos
     
@@ -102,7 +108,7 @@ private:
      * @brief Decide em qual página a chave deve ser inserida.
      * 
      * @param irma Página a ser criada.
-     * @param filha Página a ser "duplicada".
+     * @param filha Página a ser dividida.
      * @param chave Chave a ser inserida.
      * 
      * @return pair<Pagina *, bool> Um par onde o primeiro elemento é a página onde
@@ -122,17 +128,17 @@ private:
     /**
      * @brief Cria a página irmã e transfere metade da página filha para ela.
      * 
+     * @param filha Página a ser dividida.
      * @param irma Página a ser criada.
-     * @param filha Página a ser "duplicada".
      * @param chave Chave a ser inserida em alguma dessas páginas.
      * 
      * @return pair<Pagina*, bool> Um par onde o primeiro elemento é a página onde
      * a chave deve ser inserida e o segundo elemento é um booleano que indica se
      * a inserção deve ser na página filha.
      */
-    pair<Pagina *, bool> criar(Pagina *irma, Pagina *filha, TIPO_DAS_CHAVES &chave)
+    pair<Pagina *, bool> dividir(Pagina *filha, Pagina *irma, TIPO_DAS_CHAVES &chave)
     {
-        // Inicia o processo de duplicação da página
+        // Inicia o processo de divisão da página
         irma->limpar(); // Nova página
         filha->transferirMetadePara(irma);
 
@@ -159,8 +165,33 @@ protected:
     // ------------------------- Métodos
 
     /**
+     * @brief Checa se o arquivo tem tamanho suficiente para ter o cabeçalho
+     * da árvore e pelo menos uma página. Caso não, cria um cabeçalho e a raiz
+     * da árvore.
+     */
+    void iniciarArquivoCasoNecessario()
+    {
+        auto tamanho = obterTamanhoEmBytes(arquivo);
+        
+        // O arquivo precisa ter pelo menos o cabeçalho da árvore e uma página
+        if (tamanho < tamanhoCabecalho + paginaPai->obterTamanhoMaximoEmBytes())
+        {
+            // Limpa o arquivo e o reabre
+            arquivo = fstream(nomeDoArquivo, fstream::binary | fstream::out);
+            arquivo = fstream(nomeDoArquivo, fstream::binary | fstream::in | fstream::out);
+            
+            arquivo.seekp(0); // Coloca o ponteiro de put no início
+            
+            // Escreve o endereço da raiz. Ela ficará logo após o endereço dela.
+            arquivo << (file_pointer_type)(sizeof(file_pointer_type));
+            arquivo << paginaPai; // A página pai está vazia no momento
+            // olhar a escrita de valores numéricos
+        }
+    }
+
+    /**
      * @brief Promove o par (chave, dado) que estiver sobrando na paginaDeInsercao
-     * para a página pai. Caso a página pai esteja cheia, ela é duplicada para que
+     * para a página pai. Caso a página pai esteja cheia, ela é dividida para que
      * o par possa ser promovido.
      * 
      * @param chave Chave do par.
@@ -170,12 +201,12 @@ protected:
      * que causará a promoção.
      * @param inseriuNaPaginaFilha Deve ser true quando o elemento que causará a
      * promoção tiver sido inserido na página filha (a que estava cheia antes de ser
-     * duplicada). E false quando o elemento tiver sido inserido na página irmã
-     * (a que foi gerada na duplicação).
+     * dividida). E false quando o elemento tiver sido inserido na página irmã
+     * (a que foi gerada na divisão).
      * @param infoPai Considerando que a página pai irá receber um elemento
      * promovido, que ela esteja cheia e não o possa receber, esse parâmetro será
      * preenchido com um par onde o primeiro elemento será um ponteiro para a página
-     * que receber o elemento promovido (após a duplicação da página pai) e o segundo
+     * que receber o elemento promovido (após a divisão da página pai) e o segundo
      * elemento é um booleano que indica se a promoção foi na página pai ou em sua irmã.
      */
     void promoverOParQueEstiverSobrando(
@@ -185,14 +216,14 @@ protected:
         Pagina *paginaDestino = paginaPai;
         int indice = indiceDePromocao;
 
-        // Checa se é necessário duplicar a página pai antes de promover o par.
+        // Checa se é necessário dividir a página pai antes de promover o par.
         if (paginaPai->cheia())
         {
             // Pega a chave do par que será promovido
             TIPO_DAS_CHAVES& chave = inseriuNaPaginaFilha ?
                 paginaFilha->chaves.back() : paginaIrma->chaves[0];
 
-            infoPai = criar(paginaIrmaPai, paginaPai, chave);
+            infoPai = dividir(paginaPai, paginaIrmaPai, chave);
             // Pega a página que receberá o elemento promovido
             paginaDestino = infoPai.first;
             // Obtém o índice no qual o par deve ser promovido
@@ -223,14 +254,14 @@ protected:
      * @param infoPai Considerando que a página pai irá receber um elemento
      * promovido, que ela esteja cheia e não o possa receber, esse parâmetro será
      * preenchido com um par onde o primeiro elemento será um ponteiro para a página
-     * que receber o elemento promovido (após a duplicação da página pai) e o segundo
+     * que receber o elemento promovido (após a divisão da página pai) e o segundo
      * elemento é um booleano que indica se a promoção foi na página pai ou em sua irmã.
      */
     void tratarPaginaCheia(
         TIPO_DAS_CHAVES &chave, TIPO_DOS_DADOS &dado,
         int indiceDePromocao, pair<Pagina *, bool> &infoPai)
     {
-        auto info = criar(paginaIrma, paginaFilha, chave);
+        auto info = dividir(paginaFilha, paginaIrma, chave);
         Pagina *paginaDeInsercao = info.first;
         bool inserirNaPaginaFilha = info.second;
 
@@ -253,7 +284,7 @@ protected:
      * @return pair<Pagina *, bool> Considerando que a página pai irá receber um
      * elemento promovido, que ela esteja cheia e não o possa receber, retorna um
      * par onde o primeiro elemento será um ponteiro para a página que receber o
-     * elemento promovido (após a duplicação da página pai) e o segundo elemento é
+     * elemento promovido (após a divisão da página pai) e o segundo elemento é
      * um booleano que indica se a promoção foi na página pai ou em sua irmã. Caso
      * a página pai não esteja cheia ou não vá receber um elemento, retorna um par
      * onde o primeiro elemento é um nullptr e o segundo false.
@@ -306,11 +337,6 @@ protected:
     }
 
 public:
-    // ------------------------- Campos
-
-    const int tamanhoCabecalhoAntesDaRaiz = 0;
-    const int tamanhoCabecalho = tamanhoCabecalhoAntesDaRaiz + sizeof(file_pointer_type);
-
     // ------------------------- Construtores e destrutores
 
     ArvoreB(string nomeDoArquivo, int ordemDaArvore) :
@@ -327,6 +353,8 @@ public:
         obterTamanhoEmBytesDaChaveEDoDado<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>(
             maximoDeBytesParaAChave, maximoDeBytesParaODado
         );
+
+        iniciarArquivoCasoNecessario();
     }
 
     ~ArvoreB()
@@ -351,7 +379,7 @@ public:
     bool inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)
     {
         // Pula as coisas do cabeçalho do arquivo que vierem antes do endereço da raiz
-        arquivo.seekg(tamanhoCabecalhoAntesDaRaiz);
+        arquivo.seekg(tamanhoCabecalhoAntesDoEnderecoDaRaiz);
         
         file_pointer_type endereco;
         arquivo >> endereco; // Carrega o endereço da raiz

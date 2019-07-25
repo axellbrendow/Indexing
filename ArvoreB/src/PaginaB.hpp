@@ -97,7 +97,7 @@ public:
         dados.reserve(numeroDeChavesPorPagina);
         ponteiros.reserve(ordemDaArvore);
 
-        fill(ponteiros.begin(), ponteiros.end(), constantes::ptrNuloPagina);
+        ponteiros[0] = constantes::ptrNuloPagina;
     }
 
     /**
@@ -139,29 +139,31 @@ public:
             numeroDeChavesPorPagina * maximoDeBytesParaODado; // bytes para os dados
     }
 
-    virtual DataOutputStream& gerarDataOutputStream(DataOutputStream& out) override
+    virtual DataOutputStream &gerarDataOutputStream(DataOutputStream &out) override
     {
         // É necessário que a chave e o dado sejam tipos primitivos ou que
         // herdem a classe Serializavel e tenham um construtor sem parâmetros.
         TIPO_DAS_CHAVES chave;
         TIPO_DOS_DADOS dado;
+        file_pointer_type ponteiro = ponteiros[0];
 
-        out << numeroDeElementos << ponteiros.at(0);
+        out << numeroDeElementos << ponteiro;
 
         for (size_t i = 0; i < numeroDeElementos; i++)
         {
-            chave = chaves.at(i);
-            dado = dados.at(i);
+            chave = chaves[i];
+            dado = dados[i];
+            ponteiro = ponteiros[i + 1];
 
             out << chave;
             out << dado;
-            out << ponteiros.at(i + 1);
+            out << ponteiro;
         }
 
         return out;
     }
 
-    virtual void lerBytes(DataInputStream& input) override
+    virtual void lerBytes(DataInputStream &input) override
     {
         // É necessário que a chave e o dado sejam tipos primitivos ou que
         // herdem a classe Serializavel e tenham um construtor sem parâmetros.
@@ -171,7 +173,7 @@ public:
 
         input >> numeroDeElementos >> ponteiro;
         ponteiros[0] = ponteiro;
-        
+
         for (size_t i = 0; i < numeroDeElementos; i++)
         {
             input >> chave;
@@ -346,8 +348,8 @@ public:
      * @param paginaDestino Página destino.
      * @param indice Índice de inserção na página destino.
      * @param exPaginaCheia Ponteiro para a página que estava cheia e provocou a
-     * duplicação.
-     * @param novaPagina Ponteiro para a nova página que foi criada na duplicação.
+     * divisão.
+     * @param novaPagina Ponteiro para a nova página que foi criada na divisão.
      * @param promoverElementoDoFim Caso seja true, promove o último elemento
      * desta página. Caso contrário, promove o primeiro.
      * @param arquivo Arquivo onde as páginas serão colocadas.
@@ -358,8 +360,7 @@ public:
         // Checa se a ex página cheia será afetada na promoção
         if (promoverElementoDoFim)
         {
-            exPaginaCheia->ponteiros.erase(
-                exPaginaCheia->ponteiros.begin() + exPaginaCheia->numeroDeElementos);
+            exPaginaCheia->ponteiros.erase(exPaginaCheia->ponteiros.end() - 1);
 
             transferirElementoPara(paginaDestino, indice, numeroDeElementos - 1);
         }
@@ -378,9 +379,9 @@ public:
         novaPagina->colocarNoArquivo(arquivo);
 
         // Quando um elemento é promovido, o ponteiro da esquerda dele deve apontar
-        // para a página que estava cheia (a que provocou a duplicação).
+        // para a página que estava cheia (a que provocou a divisão).
         // Já o ponteiro da direita deve apontar para a nova página (gerada pela
-        // duplicação).
+        // divisão).
         paginaDestino->ponteiros[indice] = exPaginaCheia->endereco;
         paginaDestino->ponteiros[indice + 1] = novaPagina->endereco;
         paginaDestino->colocarNoArquivo(arquivo);
@@ -424,7 +425,14 @@ public:
         
         transferirMetadePara(paginaDestino->chaves, chaves, quantidadeRemovida);
         transferirMetadePara(paginaDestino->dados, dados, quantidadeRemovida);
-        transferirMetadePara(paginaDestino->ponteiros, ponteiros, quantidadeRemovida + 1);
+        transferirMetadePara(paginaDestino->ponteiros, ponteiros, quantidadeRemovida);
+
+        // Pega o último ponteiro desta página e cria uma cópia dele no início
+        // da página de destino
+        paginaDestino->ponteiros.insert(
+            paginaDestino->ponteiros.begin(),
+            ponteiros.back()
+        );
 
         numeroDeElementos -= quantidadeRemovida;
         paginaDestino->numeroDeElementos += quantidadeRemovida;
@@ -465,14 +473,23 @@ public:
      * seguinte formato:
      * 
      * <p>
-     * 1º ponteiro <delimitadorEntreOsItens> 1º chave <delimitadorEntreOsItens>
-     * 1º dado <delimitadorEntreOsItens> 2º ponteiro <delimitadorEntreOsItens> ...
+     * Supondo que:
+     * delimitadorAposOsPonteiros = " (",
+     * delimitadorAntesDosPonteiros = ") " e
+     * delimitadorEntreAChaveEODado = ", ",
+     * 
+     * a saída é: 1º ponteiro (1º chave, 1º dado) 2º ponteiro (...
      * </p>
      * 
-     * @param delimitadorEntreOsItens Delimitador entre cada elemento da página.
+     * @param delimitadorAposOsPonteiros Delimitador entre um ponteiro e uma chave.
+     * @param delimitadorAntesDosPonteiros Delimitador entre um dado e um ponteiro.
+     * @param delimitadorEntreAChaveEODado Delimitador entre uma chave e um dado.
      * @param ostream Fluxo de saída onde a página será impressa.
      */
-    void print(string delimitadorEntreOsItens = " ", ostream& ostream = cout)
+    void print(string delimitadorAposOsPonteiros = " (",
+               string delimitadorAntesDosPonteiros = ") ",
+               string delimitadorEntreAChaveEODado = ", ",
+               ostream &ostream = cout)
     {
         if (!vazia())
         {
@@ -480,9 +497,9 @@ public:
 
             for (size_t i = 0; i < numeroDeElementos; i++)
             {
-                ostream << delimitadorEntreOsItens << chaves[i];
-                ostream << delimitadorEntreOsItens << dados[i];
-                ostream << delimitadorEntreOsItens << ponteiros[i + 1];
+                ostream << delimitadorAposOsPonteiros << chaves[i];
+                ostream << delimitadorEntreAChaveEODado << dados[i];
+                ostream << delimitadorAntesDosPonteiros << ponteiros[i + 1];
             }
 
             ostream << endl;

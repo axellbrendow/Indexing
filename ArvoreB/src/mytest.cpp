@@ -120,7 +120,7 @@ int main()
 ////
     ArvoreB<int, Student> arvore(fileName, 4);
 
-    arvore.inserir(0, one);
+    // arvore.inserir(0, one);
 
 	return 0;
 }

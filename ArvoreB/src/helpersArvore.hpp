@@ -12,6 +12,21 @@
 
 using namespace std;
 
+/**
+ * @brief Navega até o fim do arquivo e obtém a localização do ponteiro de get
+ * por meio da função tellg().
+ * 
+ * @param arquivo Arquivo a ser processado.
+ * 
+ * @return size_t Tamanho do arquivo em bytes.
+ */
+size_t obterTamanhoEmBytes(fstream& arquivo)
+{
+    arquivo.seekg(0, fstream::end);
+
+    return arquivo.tellg();
+}
+
 // Especialização para classes abstratas
 // https://stackoverflow.com/questions/24936862/c-template-specialization-for-subclasses-with-abstract-base-class
 template<typename TIPO, bool = is_base_of<Serializavel, TIPO>::value>
