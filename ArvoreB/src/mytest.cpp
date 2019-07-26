@@ -126,8 +126,16 @@ int main()
     // pagina.print();
 ////
     ArvoreB<int, Student> arvore(fileName, 4);
-    
+
     arvore.inserir(0, one);
+    // arvore.inserir(1, one);
+    // arvore.inserir(2, one);
+    // arvore.inserir(3, one);
+
     cout << *arvore.paginaFilha;
+    // cout << *arvore.paginaIrma;
+    // cout << *arvore.paginaPai;
+    // arvore.printTeste();
+
     return 0;
 }

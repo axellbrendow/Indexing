@@ -154,10 +154,10 @@ protected:
     int numeroDeChavesPorPagina;
     int ordemDaArvore;
 
-    Pagina *paginaPai;
+    public: Pagina *paginaPai;
     Pagina *paginaIrmaPai;
-    public: Pagina *paginaFilha;
-    protected: Pagina *paginaIrma;
+    Pagina *paginaFilha;
+    Pagina *paginaIrma;
     
     // ------------------------- Métodos
 
@@ -276,6 +276,7 @@ protected:
      * @param indiceDePromocao Índice na página pai para o qual um elemento desta
      * página seria promovido caso necessário.
      * @param enderecoPaginaFilha Endereço da página a ser carregada.
+     * @param enderecoPaginaPai Endereço da página pai.
      * 
      * @return pair<Pagina *, bool> Considerando que a página pai irá receber um
      * elemento promovido, que ela esteja cheia e não o possa receber, retorna um
@@ -287,7 +288,8 @@ protected:
      */
     pair<Pagina *, bool> inserir(
         TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado,
-        int indiceDePromocao, file_pointer_type enderecoPaginaFilha)
+        int indiceDePromocao, file_pointer_type enderecoPaginaFilha,
+        file_pointer_type enderecoPaginaPai)
     {
         pair<Pagina *, bool> infoPai(nullptr, false);
 
@@ -317,7 +319,8 @@ protected:
 
                 // retorna informações sobre a promoção de elementos para esta página
                 infoPai = inserir(
-                    chave, dado, indiceDeInsercao, paginaFilha->ponteiros[indiceDeInsercao]);
+                    chave, dado, indiceDeInsercao,
+                    paginaFilha->ponteiros[indiceDeInsercao], enderecoPaginaFilha);
 
                 // Checa se esta página precisa promover algum elemento que tenha
                 // sido adicionado nela pelas suas filhas
@@ -325,6 +328,16 @@ protected:
                 {
                     Pagina *paginaDeInsercao = infoPai.first;
                     bool inseriuNaPaginaFilha = infoPai.second;
+
+                    // As páginas que eram pais, na volta da recursividade, são filhas
+                    paginaFilha = paginaPai;
+                    paginaIrma = paginaIrmaPai;
+                    carregar(paginaPai, enderecoPaginaPai);
+                    
+                    promoverOParQueEstiverSobrando(
+                        indiceDePromocao, paginaDeInsercao,
+                        inseriuNaPaginaFilha, infoPai
+                    );
                 }
             }
         }
@@ -385,7 +398,7 @@ public:
      */
     bool inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)
     {
-        inserir(chave, dado, 0, lerEnderecoDaRaiz());
+        inserir(chave, dado, 0, lerEnderecoDaRaiz(), constantes::ptrNuloPagina);
 
         return true;
     }
