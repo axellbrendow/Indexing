@@ -317,7 +317,8 @@ protected:
             {
                 paginaPai = paginaFilha;
 
-                // retorna informações sobre a promoção de elementos para esta página
+                // O inserir retorna informações sobre a promoção de elementos para
+                // esta página
                 infoPai = inserir(
                     chave, dado, indiceDeInsercao,
                     paginaFilha->ponteiros[indiceDeInsercao], enderecoPaginaFilha);
@@ -333,7 +334,7 @@ protected:
                     paginaFilha = paginaPai;
                     paginaIrma = paginaIrmaPai;
                     carregar(paginaPai, enderecoPaginaPai);
-                    
+
                     promoverOParQueEstiverSobrando(
                         indiceDePromocao, paginaDeInsercao,
                         inseriuNaPaginaFilha, infoPai

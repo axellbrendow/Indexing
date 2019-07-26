@@ -1,6 +1,3 @@
-Finalmente a primeira inserção na raiz funciona :)
+Arruma um bug no gerarDataOutputStream da PaginaB
 
-1 - Cria sobrecargas no operador << para escrever e ler tipos primitivos de arquivo tratando-os como bytes e não como texto.
-2 - Conserta bug na leitura dos bytes de uma página. Era necessário usar vector.push_back(dado) invés de vector[indice] = dado.
-3 - Melhora e deixa mais flexível a forma de imprimir uma página. Agora é possível decidir o delimitador entre um ponteiro e uma chave, uma chave e um dado e um dado e um ponteiro.
-4 - Conserta bug com os endereços das páginas no arquivo. Como o tipo era size_t, os ponteiros com valor -1 ficavam na verdade com o valor máximo do unsigned long, que é positivo.
+1 - O g++ estava escolhendo o overload errado para o operador << na hora de serializar o dado da PaginaB, daí tive que mudar algumas variáveis para referências. Pelo menos até agora a serialização voltou a estar correta.

@@ -92,7 +92,7 @@ public:
         dados.reserve(numeroDeChavesPorPagina);
         ponteiros.reserve(ordemDaArvore);
 
-        ponteiros.push_back(constantes::ptrNuloPagina);
+        ponteiros.push_back(constantes::ptrNuloPagina); // olhar aqui
     }
 
     /**
@@ -138,16 +138,16 @@ public:
     {
         // É necessário que a chave e o dado sejam tipos primitivos ou que
         // herdem a classe Serializavel e tenham um construtor sem parâmetros.
-        TIPO_DAS_CHAVES chave;
-        TIPO_DOS_DADOS dado;
+        TIPO_DAS_CHAVES& chave = chaves[0];
+        TIPO_DOS_DADOS& dado = dados[0];
         file_pointer_type ponteiro = ponteiros[0];
 
         out << numeroDeElementos << ponteiro;
 
         for (size_t i = 0; i < numeroDeElementos; i++)
         {
-            chave = chaves[i];
-            dado = dados[i];
+            chave = move(chaves[i]);
+            dado = move(dados[i]);
             ponteiro = ponteiros[i + 1];
 
             out << chave;
@@ -172,7 +172,7 @@ public:
         for (size_t i = 0; i < numeroDeElementos; i++)
         {
             input >> chave;
-            input >> dado;
+            input >> dado; // olhar aqui, link para template errado
             input >> ponteiro;
 
             chaves.push_back(chave);

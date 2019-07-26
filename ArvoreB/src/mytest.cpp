@@ -52,9 +52,9 @@ public:
         input >> nome >> idade;
     }
 
-    Student& imprimir()
+    Student &imprimir(ostream &ostream = cout)
     {
-        cout << "{ nome: " << nome << ", idade: " << idade << " }";
+        ostream << "{ nome: " << nome << ", idade: " << idade << " }";
 
         return *this;
     }
@@ -71,7 +71,7 @@ public:
 
 ostream& operator<<(ostream& ostream, Student& student)
 {
-    student.imprimir();
+    student.imprimir(ostream);
 
     return ostream;
 }
@@ -80,7 +80,7 @@ int main()
 {
     string fileName("TesteArvore.txt");
 	Student one("axell", 19);
-    // one.imprimir();
+    // one.imprimirVetor();
     
     // // Apenas para criar ou zerar o arquivo
     // fstream(fileName, fstream::out | fstream::trunc).close();
@@ -126,9 +126,9 @@ int main()
     // pagina.print();
 ////
     ArvoreB<int, Student> arvore(fileName, 4);
-
+    
     arvore.inserir(0, one);
-    // arvore.inserir(1, one);
+    arvore.inserir(1, one);
     // arvore.inserir(2, one);
     // arvore.inserir(3, one);
 

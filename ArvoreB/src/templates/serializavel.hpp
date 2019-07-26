@@ -136,6 +136,18 @@ DataOutputStream& operator<<(DataOutputStream& dataOutputStream, Serializavel& v
     return dataOutputStream << &variavel;
 }
 
+DataInputStream &operator>>(DataInputStream &dataInputStream, Serializavel *variavel)
+{
+    variavel->lerBytes(dataInputStream);
+
+    return dataInputStream;
+}
+
+DataInputStream &operator>>(DataInputStream &dataInputStream, Serializavel &variavel)
+{
+    return dataInputStream >> &variavel;
+}
+
 // ------------------------- Operadores
 
 // ------------------------- OutputStream e serializáveis

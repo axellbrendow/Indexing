@@ -203,7 +203,7 @@ public:
 
 // ------------------------- Operadores
 
-template<typename tipo>
+template<typename tipo, typename = enable_if_t<is_fundamental<tipo>::value>>
 DataOutputStream& operator<<(DataOutputStream& dataOutputStream, tipo variavel)
 {
     return dataOutputStream.escrever(variavel);

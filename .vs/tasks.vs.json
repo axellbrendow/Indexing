@@ -1,0 +1,10 @@
+{
+  "version": "0.2.1",
+  "tasks": [
+    {
+      "taskLabel": "task-mytest",
+      "appliesTo": "ArvoreB/src/mytest.cpp",
+      "type": "launch"
+    }
+  ]
+}
