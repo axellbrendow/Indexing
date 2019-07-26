@@ -54,7 +54,7 @@ public:
 
     Student& imprimir()
     {
-        cout << "nome = " << nome << ", idade = " << idade << endl;
+        cout << "{ nome: " << nome << ", idade: " << idade << " }";
 
         return *this;
     }
@@ -69,9 +69,16 @@ public:
     }
 };
 
+ostream& operator<<(ostream& ostream, Student& student)
+{
+    student.imprimir();
+
+    return ostream;
+}
+
 int main()
 {
-    string fileName("fifthgrade.ros");
+    string fileName("TesteArvore.txt");
 	Student one("axell", 19);
     // one.imprimir();
     
@@ -119,8 +126,8 @@ int main()
     // pagina.print();
 ////
     ArvoreB<int, Student> arvore(fileName, 4);
-
-    // arvore.inserir(0, one);
-
-	return 0;
+    
+    arvore.inserir(0, one);
+    cout << *arvore.paginaFilha;
+    return 0;
 }

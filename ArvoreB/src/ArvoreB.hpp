@@ -47,11 +47,6 @@ public:
      */
     typedef PaginaB<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> Pagina;
 
-    /**
-     * @brief Padroniza o tipo da tripla (chave, dado, ponteiro).
-     */
-    typedef struct Tripla<TIPO_DAS_CHAVES, TIPO_DOS_DADOS, file_pointer_type> Tripla;
-
     // ------------------------- Campos
 
     const int tamanhoCabecalhoAntesDoEnderecoDaRaiz = 0;
@@ -89,7 +84,7 @@ private:
 
         arquivo.seekg(endereco);
         arquivo >> pagina; // Carrega a página
-
+        
         if (arquivo.fail())
         {
             sucesso = false;
@@ -100,7 +95,9 @@ private:
 
             throw length_error("[ArvoreB] Não foi possível ler a página do arquivo.");
         }
-
+        
+        pagina->setEndereco(endereco);
+        
         return sucesso;
     }
 
@@ -159,9 +156,9 @@ protected:
 
     Pagina *paginaPai;
     Pagina *paginaIrmaPai;
-    Pagina *paginaFilha;
-    Pagina *paginaIrma;
-
+    public: Pagina *paginaFilha;
+    protected: Pagina *paginaIrma;
+    
     // ------------------------- Métodos
 
     /**
@@ -181,11 +178,10 @@ protected:
             arquivo = fstream(nomeDoArquivo, fstream::binary | fstream::in | fstream::out);
             
             arquivo.seekp(0); // Coloca o ponteiro de put no início
-            
+
             // Escreve o endereço da raiz. Ela ficará logo após o endereço dela.
             arquivo << (file_pointer_type)(sizeof(file_pointer_type));
             arquivo << paginaPai; // A página pai está vazia no momento
-            // olhar a escrita de valores numéricos
         }
     }
 
@@ -336,6 +332,17 @@ protected:
         return infoPai;
     }
 
+    file_pointer_type lerEnderecoDaRaiz()
+    {
+        // Pula as coisas do cabeçalho do arquivo que vierem antes do endereço da raiz
+        arquivo.seekg(tamanhoCabecalhoAntesDoEnderecoDaRaiz);
+
+        file_pointer_type endereco;
+        arquivo >> endereco; // Carrega o endereço da raiz
+
+        return endereco;
+    }
+
 public:
     // ------------------------- Construtores e destrutores
 
@@ -378,13 +385,7 @@ public:
      */
     bool inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)
     {
-        // Pula as coisas do cabeçalho do arquivo que vierem antes do endereço da raiz
-        arquivo.seekg(tamanhoCabecalhoAntesDoEnderecoDaRaiz);
-        
-        file_pointer_type endereco;
-        arquivo >> endereco; // Carrega o endereço da raiz
-
-        inserir(chave, dado, 0, endereco);
+        inserir(chave, dado, 0, lerEnderecoDaRaiz());
 
         return true;
     }
@@ -488,4 +489,27 @@ public:
      * A saída é similar à do comando "tree /f" do windows.
      */
     void print();
+
+    void printTeste(Pagina *paginaAuxiliar, file_pointer_type endereco)
+    {
+        if (carregar(paginaAuxiliar, endereco))
+        {
+            cout << *paginaAuxiliar;
+
+            for (auto &&i : paginaAuxiliar->ponteiros)
+            {
+                if (i != constantes::ptrNuloPagina)
+                {
+                    printTeste(paginaAuxiliar, i);
+                }
+            }
+        }
+    }
+
+    void printTeste()
+    {
+        Pagina pagina;
+
+        printTeste(&pagina, lerEnderecoDaRaiz());
+    }
 };

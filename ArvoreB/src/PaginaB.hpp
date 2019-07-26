@@ -36,7 +36,7 @@ namespace constantes
  * seja um tipo primitivo ou então que a sua classe/struct herde de Serializavel e
  * tenha um construtor sem parâmetros.</b>
  */
-template<typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS>
+template <typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS>
 class PaginaB : public Serializavel
 {
 protected:
@@ -58,20 +58,15 @@ public:
      */
     typedef PaginaB<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> Pagina;
 
-    /**
-     * @brief Padroniza o tipo do par (chave, dado).
-     */
-    typedef struct Tripla<TIPO_DAS_CHAVES, TIPO_DOS_DADOS, file_pointer_type> Tripla;
-
     // ------------------------- Campos
-    
+
     vector<TIPO_DAS_CHAVES> chaves;
     vector<TIPO_DOS_DADOS> dados;
     vector<file_pointer_type> ponteiros;
 
     // ------------------------- Construtores
 
-    PaginaB() : numeroDeElementos(0), endereco(constantes::ptrNuloPagina) { }
+    PaginaB() : numeroDeElementos(0), endereco(constantes::ptrNuloPagina) {}
 
     /**
      * @brief Constrói uma nova página com a ordem informada.
@@ -83,21 +78,21 @@ public:
      * nos registros.
      */
     PaginaB(int ordemDaArvore,
-        int maximoDeBytesParaAChave,
-        int maximoDeBytesParaODado) :
+            int maximoDeBytesParaAChave,
+            int maximoDeBytesParaODado) :
 
-        numeroDeElementos(0),
-        maximoDeBytesParaAChave(maximoDeBytesParaAChave),
-        maximoDeBytesParaODado(maximoDeBytesParaODado),
-        numeroDeChavesPorPagina(ordemDaArvore - 1),
-        ordemDaArvore(ordemDaArvore),
-        endereco(constantes::ptrNuloPagina)
+            numeroDeElementos(0),
+            maximoDeBytesParaAChave(maximoDeBytesParaAChave),
+            maximoDeBytesParaODado(maximoDeBytesParaODado),
+            numeroDeChavesPorPagina(ordemDaArvore - 1),
+            ordemDaArvore(ordemDaArvore),
+            endereco(constantes::ptrNuloPagina)
     {
         chaves.reserve(numeroDeChavesPorPagina);
         dados.reserve(numeroDeChavesPorPagina);
         ponteiros.reserve(ordemDaArvore);
 
-        ponteiros[0] = constantes::ptrNuloPagina;
+        ponteiros.push_back(constantes::ptrNuloPagina);
     }
 
     /**
@@ -123,7 +118,7 @@ public:
      * @param maximoDeBytesParaODado Quantidade máxima de bytes que o dado pode gastar
      * nos registros.
      */
-    PaginaB(DataInputStream& bytes, int ordemDaArvore) : PaginaB(ordemDaArvore)
+    PaginaB(DataInputStream &bytes, int ordemDaArvore) : PaginaB(ordemDaArvore)
     {
         lerBytes(bytes);
     }
@@ -133,10 +128,10 @@ public:
     virtual int obterTamanhoMaximoEmBytes() override
     {
         // bytes para guardar a quantidade de elementos na página
-        return sizeof( decltype(numeroDeElementos) ) + // falta link aqui
-            ordemDaArvore * sizeof(file_pointer_type) + // bytes para os ponteiros
-            numeroDeChavesPorPagina * maximoDeBytesParaAChave + // bytes para as chaves
-            numeroDeChavesPorPagina * maximoDeBytesParaODado; // bytes para os dados
+        return sizeof(decltype(numeroDeElementos)) + // falta link aqui
+               ordemDaArvore * sizeof(file_pointer_type) + // bytes para os ponteiros
+               numeroDeChavesPorPagina * maximoDeBytesParaAChave + // bytes para as chaves
+               numeroDeChavesPorPagina * maximoDeBytesParaODado; // bytes para os dados
     }
 
     virtual DataOutputStream &gerarDataOutputStream(DataOutputStream &out) override
@@ -172,7 +167,7 @@ public:
         file_pointer_type ponteiro;
 
         input >> numeroDeElementos >> ponteiro;
-        ponteiros[0] = ponteiro;
+        ponteiros.push_back(ponteiro);
 
         for (size_t i = 0; i < numeroDeElementos; i++)
         {
@@ -180,9 +175,9 @@ public:
             input >> dado;
             input >> ponteiro;
 
-            chaves[i] = chave;
-            dados[i] = dado;
-            ponteiros[i + 1] = ponteiro;
+            chaves.push_back(chave);
+            dados.push_back(dado);
+            ponteiros.push_back(ponteiro);
         }
     }
 
@@ -190,7 +185,7 @@ public:
 
     file_pointer_type setEndereco(file_pointer_type endereco)
     {
-        if (endereco > -1)
+        if (endereco > (file_pointer_type) -1)
         {
             this->endereco = endereco;
         }
@@ -282,7 +277,7 @@ public:
      * @return false Caso a página esteja cheia.
      */
     bool inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado, int indiceDeInsercao,
-        file_pointer_type ponteiro = constantes::ptrNuloPagina)
+                 file_pointer_type ponteiro = constantes::ptrNuloPagina)
     {
         bool sucesso = !cheia(); // Só é possível inserir se a página não estiver cheia
 
@@ -297,7 +292,7 @@ public:
 
         return sucesso;
     }
-    
+
     /**
      * @brief Insere o par (chave, dado) na página de forma ordenada.
      * 
@@ -311,7 +306,7 @@ public:
     {
         int indiceDeInsercao = obterIndiceDeDescida(chave);
 
-        if (inserir(chave, dado, indiceDeInsercao))
+        if (!inserir(chave, dado, indiceDeInsercao))
         {
             indiceDeInsercao = -1;
         }
@@ -327,11 +322,11 @@ public:
      * @param indiceNoDestino Índice de inserção na página destino.
      * @param indiceLocal Índice do par (chave, dado) nesta página.
      */
-    void transferirElementoPara(Pagina* paginaDestino, int indiceNoDestino, int indiceLocal)
+    void transferirElementoPara(Pagina *paginaDestino, int indiceNoDestino, int indiceLocal)
     {
         paginaDestino->inserir(
             chaves[indiceLocal], dados[indiceLocal],
-            indiceNoDestino/* , ponteiros[indiceLocal + 1] */
+            indiceNoDestino /* , ponteiros[indiceLocal + 1] */
         );
 
         chaves.erase(chaves.begin() + indiceLocal);
@@ -354,8 +349,8 @@ public:
      * desta página. Caso contrário, promove o primeiro.
      * @param arquivo Arquivo onde as páginas serão colocadas.
      */
-    void promoverElementoPara(Pagina* paginaDestino, int indice, Pagina* exPaginaCheia,
-        Pagina* novaPagina, bool promoverElementoDoFim, fstream& arquivo)
+    void promoverElementoPara(Pagina *paginaDestino, int indice, Pagina *exPaginaCheia,
+        Pagina *novaPagina, bool promoverElementoDoFim, fstream &arquivo)
     {
         // Checa se a ex página cheia será afetada na promoção
         if (promoverElementoDoFim)
@@ -395,10 +390,10 @@ public:
      * @param containerFonte Fonte.
      * @param quantidade Quantidade de dados.
      */
-    template<typename ContainerFonte, typename ContainerDestino>
+    template <typename ContainerFonte, typename ContainerDestino>
     void transferirMetadePara(
-        ContainerDestino& containerDestino,
-        ContainerFonte& containerFonte, int quantidade)
+        ContainerDestino &containerDestino,
+        ContainerFonte &containerFonte, int quantidade)
     {
         auto inicio = containerFonte.end() - quantidade;
         auto fim = containerFonte.end();
@@ -407,8 +402,7 @@ public:
             containerDestino.begin(),
             // move_iterator é usado para mover os elementos invés de copiá-los
             make_move_iterator(inicio),
-            make_move_iterator(fim)
-        );
+            make_move_iterator(fim));
 
         containerFonte.erase(inicio, fim);
     }
@@ -419,10 +413,10 @@ public:
      * 
      * @param paginaDestino Página destino.
      */
-    void transferirMetadePara(Pagina* paginaDestino)
+    void transferirMetadePara(Pagina *paginaDestino)
     {
         int quantidadeRemovida = numeroDeElementos / 2;
-        
+
         transferirMetadePara(paginaDestino->chaves, chaves, quantidadeRemovida);
         transferirMetadePara(paginaDestino->dados, dados, quantidadeRemovida);
         transferirMetadePara(paginaDestino->ponteiros, ponteiros, quantidadeRemovida);
@@ -431,8 +425,7 @@ public:
         // da página de destino
         paginaDestino->ponteiros.insert(
             paginaDestino->ponteiros.begin(),
-            ponteiros.back()
-        );
+            ponteiros.back());
 
         numeroDeElementos -= quantidadeRemovida;
         paginaDestino->numeroDeElementos += quantidadeRemovida;
@@ -481,25 +474,25 @@ public:
      * a saída é: 1º ponteiro (1º chave, 1º dado) 2º ponteiro (...
      * </p>
      * 
+     * @param ostream Fluxo de saída onde a página será impressa.
      * @param delimitadorAposOsPonteiros Delimitador entre um ponteiro e uma chave.
      * @param delimitadorAntesDosPonteiros Delimitador entre um dado e um ponteiro.
      * @param delimitadorEntreAChaveEODado Delimitador entre uma chave e um dado.
-     * @param ostream Fluxo de saída onde a página será impressa.
      */
-    void print(string delimitadorAposOsPonteiros = " (",
+    void print(ostream &ostream = cout,
+               string delimitadorAposOsPonteiros = " (",
                string delimitadorAntesDosPonteiros = ") ",
-               string delimitadorEntreAChaveEODado = ", ",
-               ostream &ostream = cout)
+               string delimitadorEntreAChaveEODado = ", ")
     {
         if (!vazia())
         {
-            ostream << ponteiros[0];
+            ostream << (long) ponteiros[0];
 
             for (size_t i = 0; i < numeroDeElementos; i++)
             {
                 ostream << delimitadorAposOsPonteiros << chaves[i];
                 ostream << delimitadorEntreAChaveEODado << dados[i];
-                ostream << delimitadorAntesDosPonteiros << ponteiros[i + 1];
+                ostream << delimitadorAntesDosPonteiros << (long) ponteiros[i + 1];
             }
 
             ostream << endl;
@@ -507,19 +500,19 @@ public:
     }
 };
 
-template<typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS>
-ostream& operator<<(ostream& ostream, PaginaB<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>& pagina)
+template <typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS>
+ostream &operator<<(ostream &ostream, PaginaB<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> &pagina)
 {
-    pagina.print(" ", ostream);
+    pagina.print(ostream);
 
     return ostream;
 }
 
-template<typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS>
-fstream& operator>>(fstream& fstream, PaginaB<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>& pagina)
+template <typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS>
+fstream &operator>>(fstream &fstream, PaginaB<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> &pagina)
 {
     pagina->setEndereco(fstream.tellg());
-    Serializavel& serializavel = pagina;
+    Serializavel &serializavel = pagina;
 
     return fstream >> serializavel;
 }

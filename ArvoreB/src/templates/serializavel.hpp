@@ -194,3 +194,56 @@ fstream& operator>>(fstream& fstream, Serializavel& serializavel)
 {
     return fstream >> &serializavel;
 }
+
+// ------------------------- Escrita e leitura de primitivos em FileStreams
+
+/**
+ * @brief Cria sobrecargas sobre o operador << em fstreams e tipos primitivos.
+ * O motivo dessa sobrecarga é fazer com que os tipos primitivos sejam escritos
+ * no modo binário de fato e não de texto.
+ * 
+ * @tparam tipo Tipo a ser avaliado.
+ * @tparam enable_if_t<is_fundamental<tipo>::value> Condição que checa se o tipo é
+ * primitivo ou não. Caso seja, o template compila normalmente. Caso não, toda essa
+ * expressão é substituída por nada literalmente e esse overload fica inválido.
+ * @param fstream Arquivo onde o tipo primitivo será escrito.
+ * @param variavel Variável com o tipo primitivo.
+ * 
+ * @return fstream& Uma referência para o próprio arquivo recebido.
+ * 
+ * @see http://www.cplusplus.com/reference/type_traits/enable_if/
+ * @see https://www.fluentcpp.com/2018/05/15/make-sfinae-pretty-1-what-value-sfinae-brings-to-code/
+ */
+template <typename tipo, typename = enable_if_t<is_fundamental<tipo>::value>>
+fstream &operator<<(fstream &fstream, tipo variavel)
+{
+    fstream.write(reinterpret_cast<char *>(&variavel), sizeof(tipo));
+
+    return fstream;
+}
+
+/**
+ * @brief Cria sobrecargas sobre o operador >> em fstreams e tipos primitivos.
+ * O motivo dessa sobrecarga é fazer com que os tipos primitivos sejam lidos no
+ * modo binário de fato e não de texto.
+ * 
+ * @tparam tipo Tipo a ser avaliado.
+ * @tparam enable_if_t<is_fundamental<tipo>::value> Condição que checa se o tipo é
+ * primitivo ou não. Caso seja, o template compila normalmente. Caso não, toda essa
+ * expressão é substituída por nada literalmente e esse overload fica inválido.
+ * @param fstream Arquivo de onde o tipo primitivo será lido.
+ * @param variavel Variável destino do tipo primitivo.
+ * 
+ * @return fstream& Uma referência para o próprio arquivo recebido.
+ * 
+ * @see http://www.cplusplus.com/reference/type_traits/enable_if/
+ * @see https://www.fluentcpp.com/2018/05/15/make-sfinae-pretty-1-what-value-sfinae-brings-to-code/
+ */
+template <typename tipo, typename = enable_if_t<is_fundamental<tipo>::value>>
+fstream &operator>>(fstream &fstream, tipo& variavel)
+{
+    // Pega um ponteiro para a variável e insere os bytes do arquivo diretamente nela.
+    fstream.read(reinterpret_cast<char*>(&variavel), sizeof(tipo));
+
+    return fstream;
+}

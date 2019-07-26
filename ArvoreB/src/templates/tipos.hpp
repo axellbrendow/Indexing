@@ -23,7 +23,7 @@ typedef int str_size_type;
  * @brief Criado apenas para padronizar o tipo usado para declarar ponteiros que
  * guardam o endereço de entidades e/ou registros dentro de um arquivo.
  */
-typedef size_t file_pointer_type;
+typedef long file_pointer_type;
 
 /**
  * @brief Em C++, usamos unsigned char para lidar com bytes. As vezes usa-se char também.
@@ -55,27 +55,3 @@ typedef vector<tipo_byte> vetor_de_bytes;
  * @see http://www.cplusplus.com/reference/iterator/
  */
 typedef vetor_de_bytes::iterator iterador;
-
-/**
- * @brief A struct Tripla extende a std::pair adicionando o campo third e uma flag
- * status para indicar o estado em que a tripla esteja.
- * 
- * @tparam Tipo1 Tipo do primeiro elemento.
- * @tparam Tipo2 Tipo do segundo elemento.
- * @tparam Tipo3 Tipo do terceiro elemento.
- */
-template<typename Tipo1, typename Tipo2, typename Tipo3>
-struct Tripla : public pair<Tipo1, Tipo2>
-{
-public:
-    typedef Tipo3 third_type;
-
-    Tipo3 third;
-    int status;
-
-    Tripla(Tipo1& first, Tipo2& second, Tipo3& third, int status = 0) : pair<Tipo1, Tipo2>(first, second)
-    {
-        this->third = third;
-        this->status = status;
-    }
-};
