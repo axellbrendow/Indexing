@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['status',['status',['../struct_tripla.html#ad47025b4740134d66db15a7f4c196886',1,'Tripla']]]
+  ['tamanhocabecalho',['tamanhoCabecalho',['../class_arvore_b.html#a3c370347662dd9392e185199ceead539',1,'ArvoreB']]],
+  ['tamanhocabecalhoantesdoenderecodaraiz',['tamanhoCabecalhoAntesDoEnderecoDaRaiz',['../class_arvore_b.html#aac0ccb481392e774f99983ca8cf2fadb',1,'ArvoreB']]]
 ];

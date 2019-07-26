@@ -113,6 +113,14 @@ Funções</h2></td></tr>
 <tr class="separator:ac4a49193ed3432c3f6bcdb7c4f34b20d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae1d7aed8ba150846e3f2524d8f4246b8"><td class="memItemLeft" align="right" valign="top">fstream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serializavel_8hpp.html#ae1d7aed8ba150846e3f2524d8f4246b8">operator&gt;&gt;</a> (fstream &amp;fstream, <a class="el" href="class_serializavel.html">Serializavel</a> &amp;serializavel)</td></tr>
 <tr class="separator:ae1d7aed8ba150846e3f2524d8f4246b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab197579cd2645e597de9f53b0a2ab351"><td class="memTemplParams" colspan="2">template&lt;typename tipo , typename  = enable_if_t&lt;is_fundamental&lt;tipo&gt;::value&gt;&gt; </td></tr>
+<tr class="memitem:ab197579cd2645e597de9f53b0a2ab351"><td class="memTemplItemLeft" align="right" valign="top">fstream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="serializavel_8hpp.html#ab197579cd2645e597de9f53b0a2ab351">operator&lt;&lt;</a> (fstream &amp;fstream, tipo variavel)</td></tr>
+<tr class="memdesc:ab197579cd2645e597de9f53b0a2ab351"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cria sobrecargas sobre o operador &lt;&lt; em fstreams e tipos primitivos. O motivo dessa sobrecarga é fazer com que os tipos primitivos sejam escritos no modo binário de fato e não de texto.  <a href="#ab197579cd2645e597de9f53b0a2ab351">Mais...</a><br /></td></tr>
+<tr class="separator:ab197579cd2645e597de9f53b0a2ab351"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8bb6fa4be19a75fd0f62b4a51d6c95e7"><td class="memTemplParams" colspan="2">template&lt;typename tipo , typename  = enable_if_t&lt;is_fundamental&lt;tipo&gt;::value&gt;&gt; </td></tr>
+<tr class="memitem:a8bb6fa4be19a75fd0f62b4a51d6c95e7"><td class="memTemplItemLeft" align="right" valign="top">fstream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="serializavel_8hpp.html#a8bb6fa4be19a75fd0f62b4a51d6c95e7">operator&gt;&gt;</a> (fstream &amp;fstream, tipo &amp;variavel)</td></tr>
+<tr class="memdesc:a8bb6fa4be19a75fd0f62b4a51d6c95e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cria sobrecargas sobre o operador &gt;&gt; em fstreams e tipos primitivos. O motivo dessa sobrecarga é fazer com que os tipos primitivos sejam lidos no modo binário de fato e não de texto.  <a href="#a8bb6fa4be19a75fd0f62b4a51d6c95e7">Mais...</a><br /></td></tr>
+<tr class="separator:a8bb6fa4be19a75fd0f62b4a51d6c95e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Descrição detalhada</h2>
 <div class="textblock"><p>Arquivo destinado a guardar classes úteis para a serialização de objetos. </p>
@@ -120,7 +128,7 @@ Funções</h2></td></tr>
 <dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2019 Axell Brendow Batista Moreira </dd></dl>
 </div><h2 class="groupheader">Documentação das funções</h2>
 <a id="addc9258d9bd4e0a9cbcb39b8d41c537e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#addc9258d9bd4e0a9cbcb39b8d41c537e">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[1/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#addc9258d9bd4e0a9cbcb39b8d41c537e">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[1/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -148,7 +156,7 @@ Funções</h2></td></tr>
 </div>
 </div>
 <a id="a472d54ecf85666e9e24f7c3d01df0227"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a472d54ecf85666e9e24f7c3d01df0227">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[2/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a472d54ecf85666e9e24f7c3d01df0227">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[2/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -176,7 +184,7 @@ Funções</h2></td></tr>
 </div>
 </div>
 <a id="a1a275fe6a5ad96e77305dc1122af568d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1a275fe6a5ad96e77305dc1122af568d">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[3/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a275fe6a5ad96e77305dc1122af568d">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[3/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -204,7 +212,7 @@ Funções</h2></td></tr>
 </div>
 </div>
 <a id="a4ec01dd62a95e6f6167561131214b152"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4ec01dd62a95e6f6167561131214b152">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[4/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ec01dd62a95e6f6167561131214b152">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[4/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -232,7 +240,7 @@ Funções</h2></td></tr>
 </div>
 </div>
 <a id="adb5d2f9ca9c5ec241e43ce24b390ad26"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adb5d2f9ca9c5ec241e43ce24b390ad26">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[5/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#adb5d2f9ca9c5ec241e43ce24b390ad26">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[5/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -260,7 +268,7 @@ Funções</h2></td></tr>
 </div>
 </div>
 <a id="a0706d6c1c1d5bb89b67ffea12ec5f6c2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0706d6c1c1d5bb89b67ffea12ec5f6c2">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[6/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0706d6c1c1d5bb89b67ffea12ec5f6c2">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[6/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -287,8 +295,58 @@ Funções</h2></td></tr>
 
 </div>
 </div>
+<a id="ab197579cd2645e597de9f53b0a2ab351"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab197579cd2645e597de9f53b0a2ab351">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[7/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename tipo , typename  = enable_if_t&lt;is_fundamental&lt;tipo&gt;::value&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">fstream&amp; operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">fstream &amp;&#160;</td>
+          <td class="paramname"><em>fstream</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">tipo&#160;</td>
+          <td class="paramname"><em>variavel</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Cria sobrecargas sobre o operador &lt;&lt; em fstreams e tipos primitivos. O motivo dessa sobrecarga é fazer com que os tipos primitivos sejam escritos no modo binário de fato e não de texto. </p>
+<dl class="tparams"><dt>Parâmetros de template</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">tipo</td><td>Tipo a ser avaliado. </td></tr>
+    <tr><td class="paramname">enable_if_t&lt;is_fundamental&lt;tipo&gt;::value&gt;</td><td>Condição que checa se o tipo é primitivo ou não. Caso seja, o template compila normalmente. Caso não, toda essa expressão é substituída por nada literalmente e esse overload fica inválido. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fstream</td><td>Arquivo onde o tipo primitivo será escrito. </td></tr>
+    <tr><td class="paramname">variavel</td><td>Variável com o tipo primitivo.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Retorna</dt><dd>fstream&amp; Uma referência para o próprio arquivo recebido.</dd></dl>
+<dl class="section see"><dt>Veja também</dt><dd><a href="http://www.cplusplus.com/reference/type_traits/enable_if/">http://www.cplusplus.com/reference/type_traits/enable_if/</a> </dd>
+<dd>
+<a href="https://www.fluentcpp.com/2018/05/15/make-sfinae-pretty-1-what-value-sfinae-brings-to-code/">https://www.fluentcpp.com/2018/05/15/make-sfinae-pretty-1-what-value-sfinae-brings-to-code/</a> </dd></dl>
+
+</div>
+</div>
 <a id="ac4a49193ed3432c3f6bcdb7c4f34b20d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac4a49193ed3432c3f6bcdb7c4f34b20d">&#9670;&nbsp;</a></span>operator&gt;&gt;() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac4a49193ed3432c3f6bcdb7c4f34b20d">&#9670;&nbsp;</a></span>operator&gt;&gt;() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -316,7 +374,7 @@ Funções</h2></td></tr>
 </div>
 </div>
 <a id="ae1d7aed8ba150846e3f2524d8f4246b8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae1d7aed8ba150846e3f2524d8f4246b8">&#9670;&nbsp;</a></span>operator&gt;&gt;() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae1d7aed8ba150846e3f2524d8f4246b8">&#9670;&nbsp;</a></span>operator&gt;&gt;() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -340,6 +398,56 @@ Funções</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8bb6fa4be19a75fd0f62b4a51d6c95e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8bb6fa4be19a75fd0f62b4a51d6c95e7">&#9670;&nbsp;</a></span>operator&gt;&gt;() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename tipo , typename  = enable_if_t&lt;is_fundamental&lt;tipo&gt;::value&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">fstream&amp; operator&gt;&gt; </td>
+          <td>(</td>
+          <td class="paramtype">fstream &amp;&#160;</td>
+          <td class="paramname"><em>fstream</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">tipo &amp;&#160;</td>
+          <td class="paramname"><em>variavel</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Cria sobrecargas sobre o operador &gt;&gt; em fstreams e tipos primitivos. O motivo dessa sobrecarga é fazer com que os tipos primitivos sejam lidos no modo binário de fato e não de texto. </p>
+<dl class="tparams"><dt>Parâmetros de template</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">tipo</td><td>Tipo a ser avaliado. </td></tr>
+    <tr><td class="paramname">enable_if_t&lt;is_fundamental&lt;tipo&gt;::value&gt;</td><td>Condição que checa se o tipo é primitivo ou não. Caso seja, o template compila normalmente. Caso não, toda essa expressão é substituída por nada literalmente e esse overload fica inválido. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fstream</td><td>Arquivo de onde o tipo primitivo será lido. </td></tr>
+    <tr><td class="paramname">variavel</td><td>Variável destino do tipo primitivo.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Retorna</dt><dd>fstream&amp; Uma referência para o próprio arquivo recebido.</dd></dl>
+<dl class="section see"><dt>Veja também</dt><dd><a href="http://www.cplusplus.com/reference/type_traits/enable_if/">http://www.cplusplus.com/reference/type_traits/enable_if/</a> </dd>
+<dd>
+<a href="https://www.fluentcpp.com/2018/05/15/make-sfinae-pretty-1-what-value-sfinae-brings-to-code/">https://www.fluentcpp.com/2018/05/15/make-sfinae-pretty-1-what-value-sfinae-brings-to-code/</a> </dd></dl>
 
 </div>
 </div>
