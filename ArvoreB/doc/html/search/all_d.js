@@ -9,8 +9,8 @@ var searchData=
   ['paginapai',['paginaPai',['../class_arvore_b.html#a69c40d03753b2596a165b177d69482b5',1,'ArvoreB']]],
   ['pesquisar',['pesquisar',['../class_arvore_b.html#a235973399b5bf70340495c84e26b2450',1,'ArvoreB']]],
   ['ponteiros',['ponteiros',['../class_pagina_b.html#a8e3379b22ff2c6cc29b1bf0a4314eda1',1,'PaginaB']]],
-  ['print',['print',['../class_arvore_b.html#adad9da0658fe6b399b79c36252dc823c',1,'ArvoreB::print()'],['../class_pagina_b.html#a76d3386b3e8517a8928870bf8f05bb2f',1,'PaginaB::print()']]],
-  ['printHorizontal',['printHorizontal',['../class_arvore_b.html#af26d05b6c8b8cb83ced06692fe692e2c',1,'ArvoreB::printHorizontal(Pagina *paginaAuxiliar, file_pointer_type endereco)'],['../class_arvore_b.html#a15112fcb08e3634862d45ab40bc88766',1,'ArvoreB::printHorizontal()']]],
+  ['print',['print',['../class_arvore_b.html#adad9da0658fe6b399b79c36252dc823c',1,'ArvoreB::print()'],['../class_pagina_b.html#a6e5ed12b44afa70ddbac28bdc0ee11b2',1,'PaginaB::print()']]],
+  ['printhorizontal',['printHorizontal',['../class_arvore_b.html#acd291950c83f384bc06fd57e6751a70b',1,'ArvoreB::printHorizontal(Pagina *paginaAuxiliar, file_pointer_type endereco)'],['../class_arvore_b.html#ab81e3a319a9c13b99b02e987db06ed1d',1,'ArvoreB::printHorizontal()']]],
   ['promoverelementopara',['promoverElementoPara',['../class_pagina_b.html#a71a8be6fc88db595d69b4265fddee146',1,'PaginaB']]],
   ['promoveroparqueestiversobrando',['promoverOParQueEstiverSobrando',['../class_arvore_b.html#ac800723b06b9d64dec4b89603aa0dbc0',1,'ArvoreB']]]
 ];

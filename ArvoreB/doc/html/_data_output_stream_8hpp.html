@@ -89,9 +89,9 @@ Componentes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Funções</h2></td></tr>
-<tr class="memitem:a9c38819da8e127887f2121faff880e1f"><td class="memTemplParams" colspan="2">template&lt;typename tipo &gt; </td></tr>
-<tr class="memitem:a9c38819da8e127887f2121faff880e1f"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="class_data_output_stream.html">DataOutputStream</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_data_output_stream_8hpp.html#a9c38819da8e127887f2121faff880e1f">operator&lt;&lt;</a> (<a class="el" href="class_data_output_stream.html">DataOutputStream</a> &amp;dataOutputStream, tipo variavel)</td></tr>
-<tr class="separator:a9c38819da8e127887f2121faff880e1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9353ea063de2a9d483de7a3c9f232e54"><td class="memTemplParams" colspan="2">template&lt;typename tipo , typename  = enable_if_t&lt;is_fundamental&lt;tipo&gt;::value&gt;&gt; </td></tr>
+<tr class="memitem:a9353ea063de2a9d483de7a3c9f232e54"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="class_data_output_stream.html">DataOutputStream</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_data_output_stream_8hpp.html#a9353ea063de2a9d483de7a3c9f232e54">operator&lt;&lt;</a> (<a class="el" href="class_data_output_stream.html">DataOutputStream</a> &amp;dataOutputStream, tipo variavel)</td></tr>
+<tr class="separator:a9353ea063de2a9d483de7a3c9f232e54"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acfb8d21640bf7ad1fed206cefc41ed0f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_data_output_stream.html">DataOutputStream</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_data_output_stream_8hpp.html#acfb8d21640bf7ad1fed206cefc41ed0f">operator&lt;&lt;</a> (<a class="el" href="class_data_output_stream.html">DataOutputStream</a> &amp;dataOutputStream, string &amp;variavel)</td></tr>
 <tr class="separator:acfb8d21640bf7ad1fed206cefc41ed0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1b38194774857493383f6a35c283ecdd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_data_output_stream.html">DataOutputStream</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_data_output_stream_8hpp.html#a1b38194774857493383f6a35c283ecdd">operator&lt;&lt;</a> (<a class="el" href="class_data_output_stream.html">DataOutputStream</a> &amp;dataOutputStream, const char *variavel)</td></tr>
@@ -108,13 +108,13 @@ Funções</h2></td></tr>
 <dl class="section author"><dt>Autor</dt><dd>Axell Brendow ( <a href="https://github.com/axell-brendow">https://github.com/axell-brendow</a> ) </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2019 Axell Brendow Batista Moreira </dd></dl>
 </div><h2 class="groupheader">Documentação das funções</h2>
-<a id="a9c38819da8e127887f2121faff880e1f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9c38819da8e127887f2121faff880e1f">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[1/6]</span></h2>
+<a id="a9353ea063de2a9d483de7a3c9f232e54"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9353ea063de2a9d483de7a3c9f232e54">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[1/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename tipo &gt; </div>
+template&lt;typename tipo , typename  = enable_if_t&lt;is_fundamental&lt;tipo&gt;::value&gt;&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="class_data_output_stream.html">DataOutputStream</a>&amp; operator&lt;&lt; </td>
@@ -135,6 +135,9 @@ template&lt;typename tipo &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="section see"><dt>Veja também</dt><dd><a href="http://www.cplusplus.com/reference/type_traits/enable_if/">http://www.cplusplus.com/reference/type_traits/enable_if/</a> </dd>
+<dd>
+<a href="https://www.fluentcpp.com/2018/05/15/make-sfinae-pretty-1-what-value-sfinae-brings-to-code/">https://www.fluentcpp.com/2018/05/15/make-sfinae-pretty-1-what-value-sfinae-brings-to-code/</a> </dd></dl>
 
 </div>
 </div>

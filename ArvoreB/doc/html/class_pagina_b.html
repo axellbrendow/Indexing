@@ -156,9 +156,9 @@ Membros públicos</h2></td></tr>
 <tr class="memitem:a4d0e4f456708e97b82b515018e27c203"><td class="memItemLeft" align="right" valign="top"><a class="el" href="tipos_8hpp.html#a060c8d79366d67ac97d23bac085fb4f7">file_pointer_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a4d0e4f456708e97b82b515018e27c203">colocarNoArquivo</a> (fstream &amp;arquivo)</td></tr>
 <tr class="memdesc:a4d0e4f456708e97b82b515018e27c203"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atualiza a página no arquivo caso ela já tenha um endereço. Caso contrário, adiciona-a ao final do arquivo.  <a href="#a4d0e4f456708e97b82b515018e27c203">Mais...</a><br /></td></tr>
 <tr class="separator:a4d0e4f456708e97b82b515018e27c203"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a76d3386b3e8517a8928870bf8f05bb2f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a76d3386b3e8517a8928870bf8f05bb2f">print</a> (ostream &amp;ostream=cout, string delimitadorAposOsPonteiros=&quot; (&quot;, string delimitadorAntesDosPonteiros=&quot;) &quot;, string delimitadorEntreAChaveEODado=&quot;, &quot;)</td></tr>
-<tr class="memdesc:a76d3386b3e8517a8928870bf8f05bb2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Imprime, na output stream recebida, cada elemento da página gerando o seguinte formato:  <a href="#a76d3386b3e8517a8928870bf8f05bb2f">Mais...</a><br /></td></tr>
-<tr class="separator:a76d3386b3e8517a8928870bf8f05bb2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e5ed12b44afa70ddbac28bdc0ee11b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a6e5ed12b44afa70ddbac28bdc0ee11b2">print</a> (ostream &amp;ostream=cout, bool mostrarOsDados=false, string delimitadorAposOsPonteiros=&quot; (&quot;, string delimitadorAntesDosPonteiros=&quot;) &quot;, string delimitadorEntreAChaveEODado=&quot;, &quot;)</td></tr>
+<tr class="memdesc:a6e5ed12b44afa70ddbac28bdc0ee11b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Imprime, na output stream recebida, cada elemento da página gerando o seguinte formato:  <a href="#a6e5ed12b44afa70ddbac28bdc0ee11b2">Mais...</a><br /></td></tr>
+<tr class="separator:a6e5ed12b44afa70ddbac28bdc0ee11b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_serializavel"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_serializavel')"><img src="closed.png" alt="-"/>&#160;Membros públicos herdados de <a class="el" href="class_serializavel.html">Serializavel</a></td></tr>
 <tr class="memitem:a56d1629ec045b7cc79f5d1e5c4092dcf inherit pub_methods_class_serializavel"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_serializavel.html#a56d1629ec045b7cc79f5d1e5c4092dcf">lerBytes</a> (char *buffer, int tamanho)</td></tr>
 <tr class="memdesc:a56d1629ec045b7cc79f5d1e5c4092dcf inherit pub_methods_class_serializavel"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lê e interpreta o buffer restaurando o objeto da entidade.  <a href="class_serializavel.html#a56d1629ec045b7cc79f5d1e5c4092dcf">Mais...</a><br /></td></tr>
@@ -205,7 +205,7 @@ Atributos Protegidos</h2></td></tr>
 class PaginaB&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;</h3>
 
 <p>Classe com as características da página da árvore B. </p>
-<p>Caso for usar o método <a class="el" href="class_pagina_b.html#a76d3386b3e8517a8928870bf8f05bb2f" title="Imprime, na output stream recebida, cada elemento da página gerando o seguinte formato:">print()</a> dá classe, é necessário que a chave e o dado sejam tipos primitivos ou então o operador &lt;&lt; deve ser sobrecarregado para que seja possível inserir esses itens num ostream (output stream).</p>
+<p>Caso for usar o método <a class="el" href="class_pagina_b.html#a6e5ed12b44afa70ddbac28bdc0ee11b2" title="Imprime, na output stream recebida, cada elemento da página gerando o seguinte formato:">print()</a> dá classe, é necessário que a chave e o dado sejam tipos primitivos ou então o operador &lt;&lt; deve ser sobrecarregado para que seja possível inserir esses itens num ostream (output stream).</p>
 <dl class="section see"><dt>Veja também</dt><dd><a href="https://docs.microsoft.com/pt-br/cpp/standard-library/overloading-the-output-operator-for-your-own-classes?view=vs-2019">Sobrecarregando o operador &lt;&lt;</a></dd></dl>
 <dl class="tparams"><dt>Parâmetros de template</dt><dd>
   <table class="tparams">
@@ -820,8 +820,8 @@ template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
 
 </div>
 </div>
-<a id="a76d3386b3e8517a8928870bf8f05bb2f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a76d3386b3e8517a8928870bf8f05bb2f">&#9670;&nbsp;</a></span>print()</h2>
+<a id="a6e5ed12b44afa70ddbac28bdc0ee11b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e5ed12b44afa70ddbac28bdc0ee11b2">&#9670;&nbsp;</a></span>print()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -836,6 +836,12 @@ template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
           <td>(</td>
           <td class="paramtype">ostream &amp;&#160;</td>
           <td class="paramname"><em>ostream</em> = <code>cout</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>mostrarOsDados</em> = <code>false</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -871,9 +877,11 @@ template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
 <p>Imprime, na output stream recebida, cada elemento da página gerando o seguinte formato: </p>
 <p>Supondo que: delimitadorAposOsPonteiros = " (", delimitadorAntesDosPonteiros = ") " e delimitadorEntreAChaveEODado = ", ",</p>
 <p>a saída é: 1º ponteiro (1º chave, 1º dado) 2º ponteiro (... </p>
+<p>É possível desabilitar a impressão dos dados por meio do parâmetro <code>mostrarOsDados</code>.</p>
 <dl class="params"><dt>Parâmetros</dt><dd>
   <table class="params">
     <tr><td class="paramname">ostream</td><td>Fluxo de saída onde a página será impressa. </td></tr>
+    <tr><td class="paramname">mostrarOsDados</td><td>Caso seja true, mostra os dados ligados às chaves. </td></tr>
     <tr><td class="paramname">delimitadorAposOsPonteiros</td><td>Delimitador entre um ponteiro e uma chave. </td></tr>
     <tr><td class="paramname">delimitadorAntesDosPonteiros</td><td>Delimitador entre um dado e um ponteiro. </td></tr>
     <tr><td class="paramname">delimitadorEntreAChaveEODado</td><td>Delimitador entre uma chave e um dado. </td></tr>

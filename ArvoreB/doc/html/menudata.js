@@ -79,6 +79,9 @@ var menudata={children:[
 {text:"s",url:"globals.html#index_s"},
 {text:"t",url:"globals.html#index_t"},
 {text:"v",url:"globals.html#index_v"}]},
-{text:"Funções",url:"globals_func.html"},
+{text:"Funções",url:"globals_func.html",children:[
+{text:"d",url:"globals_func.html#index_d"},
+{text:"m",url:"globals_func.html#index_m"},
+{text:"o",url:"globals_func.html#index_o"}]},
 {text:"Definições de tipos",url:"globals_type.html"},
 {text:"Macros",url:"globals_defs.html"}]}]}]}
