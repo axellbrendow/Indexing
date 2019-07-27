@@ -170,7 +170,7 @@ protected:
     int numeroDeChavesPorPagina;
     int ordemDaArvore;
 
-    public: Pagina *paginaPai;
+    Pagina *paginaPai;
     Pagina *paginaIrmaPai;
     Pagina *paginaFilha;
     Pagina *paginaIrma;
@@ -327,6 +327,11 @@ protected:
         // Checa se a página foi carregada
         if (carregar(paginaFilha, enderecoPaginaFilha))
         {
+            // Checa se não existe um endereço para a página pai. Quando ele
+            // não existir é porque a recursividade voltou à raiz.
+            bool voltouParaARaiz =
+                enderecoPaginaPai == constantes::ptrNuloPagina;
+
             int indiceDeInsercao = paginaFilha->obterIndiceDeDescida(chave);
 
             // Checa se não há ponteiro de descida. Caso não, a página é uma folha.
@@ -341,6 +346,8 @@ protected:
                 else // Inserção na página falhou, acontece quando ela está cheia.
                 {
                     tratarPaginaCheia(chave, dado, indiceDePromocao, infoPai);
+
+                    if (voltouParaARaiz) trocarRaizPor(paginaPai);
                 }
             }
             
@@ -365,18 +372,12 @@ protected:
                     paginaFilha = paginaPai;
                     paginaIrma = paginaIrmaPai;
 
-                    // Checa se não existe um endereço para a página pai. Quando ele
-                    // não existir é porque a recursividade voltou à raiz.
-                    bool voltouParaARaiz =
-                        enderecoPaginaPai == constantes::ptrNuloPagina;
-
                     if (voltouParaARaiz) paginaPai->limpar();
                     else carregar(paginaPai, enderecoPaginaPai);
 
                     promoverOParQueEstiverSobrando(
                         indiceDePromocao, paginaDeInsercao,
-                        inseriuNaPaginaFilha, infoPai
-                    );
+                        inseriuNaPaginaFilha, infoPai);
 
                     if (voltouParaARaiz) trocarRaizPor(paginaPai);
                 }
@@ -544,28 +545,27 @@ public:
      */
     void print();
 
-    void printTeste(Pagina *paginaAuxiliar, file_pointer_type endereco)
+    void printHorizontal(Pagina *paginaAuxiliar, file_pointer_type endereco)
     {
         if (carregar(paginaAuxiliar, endereco))
         {
-            cout << *paginaAuxiliar;
+            cout << endl << *paginaAuxiliar;
 
-            for (auto &&i : paginaAuxiliar->ponteiros)
+            auto ponteiros = paginaAuxiliar->ponteiros;
+
+            for (auto &&i : ponteiros)
             {
                 if (i != constantes::ptrNuloPagina)
                 {
-                    printTeste(paginaAuxiliar, i);
+                    printHorizontal(paginaAuxiliar, i);
                 }
             }
         }
     }
 
-    void printTeste()
+    void printHorizontal()
     {
-        Pagina *pagina = new Pagina(ordemDaArvore);
-
-        printTeste(pagina, lerEnderecoDaRaiz());
-
-        delete pagina;
+        cout << "Raiz:" << endl;
+        printHorizontal(paginaIrmaPai, lerEnderecoDaRaiz());
     }
 };

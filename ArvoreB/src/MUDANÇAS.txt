@@ -1,5 +1,6 @@
-Conserta bugs
+Conserto de bugs e melhora na UX
 
-1 - Agora, o template mais genérico de overload do operador >> em cima de DataInputStreams passa a aceitar apenas tipos primitivos, deixando que outros overloads cuidem de casos mais complexos.
-2 - Havia um problema na leitura dos dados dos DataInputStreams pois caso o usuário não consumisse todo o espaço que ele reservou para os seus dados por meio da função obterTamanhoMaximoEmBytes(), a leitura dos outros dados seguintes ficava embaraçada com a leitura não terminada dos dados anteriores.
-3 - Antes de carregar uma página de um arquivo, limpa o objeto página da classe ArvoreB para que ele possa hospedar os dados vindos do arquivo. Além disso, ao carregar uma página de um arquivo, já define o campo endereço dela como o endereço de onde ela está sendo tirada do arquivo.
+1 - Agora a impressão das páginas mostra primeiro o endereço da página numa linha e em baixo a página em si.
+2 - Deixa o print das páginas mais flexível possibilitando printar apenas as chaves dos registros ignorando os dados.
+3 - Conserta um bug nas inserções quando a árvore ainda tem apenas a raiz como página.
+4 - Conserta um bug no print da árvore em si. Uma página era carregada para um campo interno da classe e no meio da recursividade era substituída pelas outras páginas e na hora da volta da recursividade tudo ficava embaraçado.

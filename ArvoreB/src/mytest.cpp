@@ -79,63 +79,22 @@ ostream& operator<<(ostream& ostream, Student& student)
 int main()
 {
     string fileName("TesteArvore.txt");
-	Student one("axell", 19);
-    // one.imprimirVetor();
+	Student one("você", 18);
     
-    // // Apenas para criar ou zerar o arquivo
-    // fstream(fileName, fstream::out | fstream::trunc).close();
-	// fstream stream(fileName, fstream::binary | fstream::in | fstream::out);
-
-    // // https://programmingdimension.wordpress.com/2015/04/30/seekg-tellg-seekp-tellp/
-    // stream.seekp(0);
-    // stream << one;
-
-    // one.nome = "batista";
-    // one.idade = 20;
-    // stream << one;
-    
-    // Student two;
-    // two.imprimir();
-    
-    // stream.seekg(0);
-    // stream >> two;
-    // stream >> two;
-
-    // two.imprimir();
-////
-    // vector<int> vetorIntDaPagina{
-    //     3, // Número de elementos
-    //     0, // Primeiro ponteiro
-    //     10, 20, 1, // (chave, dado, ponteiro)
-    //     11, 21, 2, // (chave, dado, ponteiro)
-    //     12, 22, 3 // (chave, dado, ponteiro)
-    // };
-    
-    // vector<tipo_byte> vetorDaPagina;
-
-    // vetorDaPagina.insert(
-    //     vetorDaPagina.begin(),
-    //     reinterpret_cast<tipo_byte*>(vetorIntDaPagina.begin().base()),
-    //     reinterpret_cast<tipo_byte*>(vetorIntDaPagina.end().base())
-    // );
-
-    // DataInputStream input(vetorDaPagina);
-
-    // PaginaB<int, int> pagina(input, 4);
-
-    // pagina.print();
-////
     ArvoreB<int, Student> arvore(fileName, 4);
     
-    arvore.inserir(0, one);
-    arvore.inserir(1, one);
-    // arvore.inserir(2, one);
-    // arvore.inserir(3, one);
+    arvore.inserir(4, one);
+    arvore.inserir(12, one);
+    arvore.inserir(50, one);
+    arvore.inserir(200, one);
+    arvore.inserir(400, one);
+    // arvore.inserir(600, one);
+    // arvore.inserir(1000, one);
+    // arvore.inserir(1500, one);
+    // arvore.inserir(2000, one);
+    // arvore.inserir(3000, one);
 
-    // cout << *arvore.paginaFilha;
-    // cout << *arvore.paginaIrma;
-    // cout << *arvore.paginaPai;
-    arvore.printTeste();
+    arvore.printHorizontal();
 
     return 0;
 }

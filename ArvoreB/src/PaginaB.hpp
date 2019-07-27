@@ -474,25 +474,43 @@ public:
      * a saída é: 1º ponteiro (1º chave, 1º dado) 2º ponteiro (...
      * </p>
      * 
+     * É possível desabilitar a impressão dos dados por meio do parâmetro
+     * @p mostrarOsDados.
+     * 
      * @param ostream Fluxo de saída onde a página será impressa.
+     * @param mostrarOsDados Caso seja true, mostra os dados ligados às chaves.
      * @param delimitadorAposOsPonteiros Delimitador entre um ponteiro e uma chave.
      * @param delimitadorAntesDosPonteiros Delimitador entre um dado e um ponteiro.
      * @param delimitadorEntreAChaveEODado Delimitador entre uma chave e um dado.
      */
     void print(ostream &ostream = cout,
+               bool mostrarOsDados = false,
                string delimitadorAposOsPonteiros = " (",
                string delimitadorAntesDosPonteiros = ") ",
                string delimitadorEntreAChaveEODado = ", ")
     {
         if (!vazia())
         {
+            ostream << "Endereço: " << (long) endereco << endl;
             ostream << (long) ponteiros[0];
 
-            for (size_t i = 0; i < numeroDeElementos; i++)
+            if (mostrarOsDados)
             {
-                ostream << delimitadorAposOsPonteiros << chaves[i];
-                ostream << delimitadorEntreAChaveEODado << dados[i];
-                ostream << delimitadorAntesDosPonteiros << (long) ponteiros[i + 1];
+                for (size_t i = 0; i < numeroDeElementos; i++)
+                {
+                    ostream << delimitadorAposOsPonteiros << chaves[i];
+                    ostream << delimitadorEntreAChaveEODado << dados[i];
+                    ostream << delimitadorAntesDosPonteiros << (long)ponteiros[i + 1];
+                }
+            }
+
+            else
+            {
+                for (size_t i = 0; i < numeroDeElementos; i++)
+                {
+                    ostream << delimitadorAposOsPonteiros << chaves[i];
+                    ostream << delimitadorAntesDosPonteiros << (long)ponteiros[i + 1];
+                }
             }
 
             ostream << endl;

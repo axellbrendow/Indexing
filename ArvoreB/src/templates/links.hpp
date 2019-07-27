@@ -30,4 +30,19 @@
  * lvalue, rvalue, xvalue, glvalue, prvalue:<br>
  * 
  * https://pt.stackoverflow.com/questions/6373/o-que-s%C3%A3o-os-rvalues-lvalues-xvalues-glvalues-e-prvalues
+ * 
+ * Assembly registers:<br>
+ * 
+ * https://www.tutorialspoint.com/assembly_programming/assembly_registers
+ * https://wiki.skullsecurity.org/Registers
+ * 
+ * eax -> extended accumulator registers pair (general-purpose)
+ * ebx -> extended base registers pair (general-purpose)
+ * ecx -> extended count registers pair (general-purpose)
+ * edx -> extended data registers pair (general-purpose)
+ * esi -> extended source index
+ * edi -> extended destination index
+ * ebp -> extended begging pointer (esp when function is called)
+ * esp -> extended stack pointer (32-bit)
+ * rsp -> register stack pointer (64-bit)
  */
