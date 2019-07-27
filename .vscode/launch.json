@@ -8,7 +8,7 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/ArvoreB/src/a.exe",
+            "program": "\"${workspaceFolder}/ArvoreB/src/mytest.exe\"",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/ArvoreB/src",

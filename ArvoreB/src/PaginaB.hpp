@@ -172,8 +172,8 @@ public:
         for (size_t i = 0; i < numeroDeElementos; i++)
         {
             input >> chave;
-            input >> dado; // olhar aqui, link para template errado
-            input >> ponteiro;
+            input >> dado;
+            input >> ponteiro; // é necessário pular todo o dado e toda a chave para que o ponteiro seja lido corretamente
 
             chaves.push_back(chave);
             dados.push_back(dado);
@@ -260,7 +260,7 @@ public:
     {
         // lower_bound (pesquisa binária) -> http://www.cplusplus.com/reference/algorithm/lower_bound/
         auto iteradorDeInsercao =
-            lower_bound(chaves.begin(), chaves.begin() + chaves.size(), chave);
+            lower_bound(chaves.begin(), chaves.end(), chave);
 
         return iteradorDeInsercao - chaves.begin();
     }
@@ -509,10 +509,17 @@ ostream &operator<<(ostream &ostream, PaginaB<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> &
 }
 
 template <typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS>
-fstream &operator>>(fstream &fstream, PaginaB<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> &pagina)
+fstream &operator>>(fstream &fstream, PaginaB<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> *pagina)
 {
+    pagina->limpar();
     pagina->setEndereco(fstream.tellg());
-    Serializavel &serializavel = pagina;
+    Serializavel *serializavel = pagina;
 
     return fstream >> serializavel;
+}
+
+template <typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS>
+fstream &operator>>(fstream &fstream, PaginaB<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> &pagina)
+{
+    fstream >> &pagina;
 }

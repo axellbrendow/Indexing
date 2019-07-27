@@ -278,8 +278,12 @@ public:
 
 // ------------------------- Operadores
 
-template<typename tipo>
-DataInputStream& operator>>(DataInputStream& dataInputStream, tipo& variavel)
+/**
+ * @see http://www.cplusplus.com/reference/type_traits/enable_if/
+ * @see https://www.fluentcpp.com/2018/05/15/make-sfinae-pretty-1-what-value-sfinae-brings-to-code/
+ */
+template <typename tipo, typename = enable_if_t<is_fundamental<tipo>::value>>
+DataInputStream &operator>>(DataInputStream &dataInputStream, tipo &variavel)
 {
     variavel = dataInputStream.ler<tipo>();
 
@@ -303,7 +307,8 @@ ostream& operator<<(ostream& ostream, DataInputStream& in)
         // que ela sempre escreve o que for solicitado em cout e logo em seguida escreve
         // um delimitador. No caso será uma vírgula.
         // Ex.:
-        // ostream_iterator<int> myiter(cout, ","); // declara um iterador sobre cout
+        // declara um iterador sobre cout: (necessita #include <iterator>)
+        // ostream_iterator<int> myiter(cout, ",");
         // *myiter = 100 // imprime "100," em cout
         copy(in.begin(), in.end() - 1, ostream_iterator<int>(cout, ","));
         cout << (int)* in.end();

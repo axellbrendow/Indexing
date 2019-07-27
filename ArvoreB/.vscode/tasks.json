@@ -2,6 +2,14 @@
     "tasks": [
         {
             "type": "shell",
+            "label": "Deletar arquivo árvore",
+            "command": "rm",
+            "args": [
+                "${fileDirname}\\TesteArvore.txt"
+            ],
+        },
+        {
+            "type": "shell",
             "label": "g++.exe build active file",
             "command": "C:/cygwin64/bin/g++.exe",
             "args": [

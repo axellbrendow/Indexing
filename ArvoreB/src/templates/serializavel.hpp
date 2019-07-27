@@ -138,8 +138,27 @@ DataOutputStream& operator<<(DataOutputStream& dataOutputStream, Serializavel& v
 
 DataInputStream &operator>>(DataInputStream &dataInputStream, Serializavel *variavel)
 {
+    int tamanhoEmBytes = variavel->obterTamanhoMaximoEmBytes();
+    auto cursorAntes = dataInputStream.obterCursor();
+
     variavel->lerBytes(dataInputStream);
 
+    auto diferenca = dataInputStream.obterCursor() - cursorAntes;
+
+    // Checa se a entidade não consumiu todos os bytes a que tem direito
+    if (diferenca < tamanhoEmBytes)
+    {
+        dataInputStream.moverCursor(tamanhoEmBytes - diferenca);
+    }
+
+    else if (diferenca > tamanhoEmBytes)
+    {
+        cerr << "[Serializavel]: Algumas de suas entidades leu mais bytes ("
+            << diferenca << ") do que o tamanho máximo estipulado por ela mesma ("
+            << tamanhoEmBytes << ")." << endl << "Este é o vetor de bytes que ela"
+            << " ficou:" << endl << variavel << endl;
+    }
+    
     return dataInputStream;
 }
 

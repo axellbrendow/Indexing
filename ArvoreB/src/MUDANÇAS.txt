@@ -1,3 +1,5 @@
-Arruma um bug no gerarDataOutputStream da PaginaB
+Conserta bugs
 
-1 - O g++ estava escolhendo o overload errado para o operador << na hora de serializar o dado da PaginaB, daí tive que mudar algumas variáveis para referências. Pelo menos até agora a serialização voltou a estar correta.
+1 - Agora, o template mais genérico de overload do operador >> em cima de DataInputStreams passa a aceitar apenas tipos primitivos, deixando que outros overloads cuidem de casos mais complexos.
+2 - Havia um problema na leitura dos dados dos DataInputStreams pois caso o usuário não consumisse todo o espaço que ele reservou para os seus dados por meio da função obterTamanhoMaximoEmBytes(), a leitura dos outros dados seguintes ficava embaraçada com a leitura não terminada dos dados anteriores.
+3 - Antes de carregar uma página de um arquivo, limpa o objeto página da classe ArvoreB para que ele possa hospedar os dados vindos do arquivo. Além disso, ao carregar uma página de um arquivo, já define o campo endereço dela como o endereço de onde ela está sendo tirada do arquivo.
