@@ -132,10 +132,10 @@ int main()
     // arvore.inserir(2, one);
     // arvore.inserir(3, one);
 
-    cout << *arvore.paginaFilha;
+    // cout << *arvore.paginaFilha;
     // cout << *arvore.paginaIrma;
     // cout << *arvore.paginaPai;
-    // arvore.printTeste();
+    arvore.printTeste();
 
     return 0;
 }

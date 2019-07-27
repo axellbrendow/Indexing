@@ -202,6 +202,21 @@ protected:
     }
 
     /**
+     * @brief Obtém o endereço da página recebida por meio da propriedade endereço
+     * e o escreve no cabeçalho da árvore como o endereço da nova raiz.
+     * 
+     * @param novaRaiz Página com um endereço definido.
+     */
+    void trocarRaizPor(Pagina* novaRaiz)
+    {
+        if (novaRaiz->obterEndereco() != constantes::ptrNuloPagina)
+        {
+            arquivo.seekp(tamanhoCabecalhoAntesDoEnderecoDaRaiz);
+            arquivo << novaRaiz->obterEndereco();
+        }
+    }
+
+    /**
      * @brief Promove o par (chave, dado) que estiver sobrando na paginaDeInsercao
      * para a página pai. Caso a página pai esteja cheia, ela é dividida para que
      * o par possa ser promovido.
@@ -349,12 +364,21 @@ protected:
                     // As páginas que eram pais, na volta da recursividade, são filhas
                     paginaFilha = paginaPai;
                     paginaIrma = paginaIrmaPai;
-                    carregar(paginaPai, enderecoPaginaPai);
+
+                    // Checa se não existe um endereço para a página pai. Quando ele
+                    // não existir é porque a recursividade voltou à raiz.
+                    bool voltouParaARaiz =
+                        enderecoPaginaPai == constantes::ptrNuloPagina;
+
+                    if (voltouParaARaiz) paginaPai->limpar();
+                    else carregar(paginaPai, enderecoPaginaPai);
 
                     promoverOParQueEstiverSobrando(
                         indiceDePromocao, paginaDeInsercao,
                         inseriuNaPaginaFilha, infoPai
                     );
+
+                    if (voltouParaARaiz) trocarRaizPor(paginaPai);
                 }
             }
         }
@@ -538,8 +562,10 @@ public:
 
     void printTeste()
     {
-        Pagina pagina;
+        Pagina *pagina = new Pagina(ordemDaArvore);
 
-        printTeste(&pagina, lerEnderecoDaRaiz());
+        printTeste(pagina, lerEnderecoDaRaiz());
+
+        delete pagina;
     }
 };
