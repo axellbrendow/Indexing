@@ -45,4 +45,16 @@
  * ebp -> extended begging pointer (esp when function is called)
  * esp -> extended stack pointer (32-bit)
  * rsp -> register stack pointer (64-bit)
+ * 
+ * GDB Segmentation Fault:<br>
+ * 
+ * https://stackoverflow.com/questions/9809810/gdb-corrupted-stack-frame-how-to-debug
+ * 
+ * 32-bit
+ * (gdb) set $pc = *(void **)$esp
+ * (gdb) set $esp = $esp + 4
+ * 
+ * 64-bit
+ * (gdb) set $pc = *(void **)$rsp
+ * (gdb) set $rsp = $rsp + 8
  */

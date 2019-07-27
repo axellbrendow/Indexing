@@ -1,6 +1,4 @@
-Conserto de bugs e melhora na UX
+Conserta de bug e melhora no DataOutputStream
 
-1 - Agora a impressão das páginas mostra primeiro o endereço da página numa linha e em baixo a página em si.
-2 - Deixa o print das páginas mais flexível possibilitando printar apenas as chaves dos registros ignorando os dados.
-3 - Conserta um bug nas inserções quando a árvore ainda tem apenas a raiz como página.
-4 - Conserta um bug no print da árvore em si. Uma página era carregada para um campo interno da classe e no meio da recursividade era substituída pelas outras páginas e na hora da volta da recursividade tudo ficava embaraçado.
+1 - Agora, o DataOutputStream aceita a escrita de tipos primitivos por ponteiro.
+2 - Conserta um bug no construtor da árvore para que o arquivo dela seja de fato limpado por meio de truncamento quando ele não tiver tamanho suficiente para representar uma árvore.

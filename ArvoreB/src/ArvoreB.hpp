@@ -190,7 +190,7 @@ protected:
         if (tamanho < tamanhoCabecalho + paginaPai->obterTamanhoMaximoEmBytes())
         {
             // Limpa o arquivo e o reabre
-            arquivo = fstream(nomeDoArquivo, fstream::binary | fstream::out);
+            arquivo = fstream(nomeDoArquivo, fstream::binary | fstream::trunc);
             arquivo = fstream(nomeDoArquivo, fstream::binary | fstream::in | fstream::out);
             
             arquivo.seekp(0); // Coloca o ponteiro de put no início

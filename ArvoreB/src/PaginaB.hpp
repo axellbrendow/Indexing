@@ -136,18 +136,16 @@ public:
 
     virtual DataOutputStream &gerarDataOutputStream(DataOutputStream &out) override
     {
-        // É necessário que a chave e o dado sejam tipos primitivos ou que
-        // herdem a classe Serializavel e tenham um construtor sem parâmetros.
-        TIPO_DAS_CHAVES& chave = chaves[0];
-        TIPO_DOS_DADOS& dado = dados[0];
+        TIPO_DAS_CHAVES *chave;
+        TIPO_DOS_DADOS *dado;
         file_pointer_type ponteiro = ponteiros[0];
 
         out << numeroDeElementos << ponteiro;
 
         for (size_t i = 0; i < numeroDeElementos; i++)
         {
-            chave = move(chaves[i]);
-            dado = move(dados[i]);
+            chave = &chaves[i];
+            dado = &dados[i];
             ponteiro = ponteiros[i + 1];
 
             out << chave;
@@ -500,7 +498,7 @@ public:
                 {
                     ostream << delimitadorAposOsPonteiros << chaves[i];
                     ostream << delimitadorEntreAChaveEODado << dados[i];
-                    ostream << delimitadorAntesDosPonteiros << (long)ponteiros[i + 1];
+                    ostream << delimitadorAntesDosPonteiros << (long) ponteiros[i + 1];
                 }
             }
 
@@ -509,7 +507,7 @@ public:
                 for (size_t i = 0; i < numeroDeElementos; i++)
                 {
                     ostream << delimitadorAposOsPonteiros << chaves[i];
-                    ostream << delimitadorAntesDosPonteiros << (long)ponteiros[i + 1];
+                    ostream << delimitadorAntesDosPonteiros << (long) ponteiros[i + 1];
                 }
             }
 

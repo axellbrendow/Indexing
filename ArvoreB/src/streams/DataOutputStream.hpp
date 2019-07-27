@@ -207,10 +207,16 @@ public:
  * @see http://www.cplusplus.com/reference/type_traits/enable_if/
  * @see https://www.fluentcpp.com/2018/05/15/make-sfinae-pretty-1-what-value-sfinae-brings-to-code/
  */
+template <typename tipo, typename = enable_if_t<is_fundamental<tipo>::value>>
+DataOutputStream &operator<<(DataOutputStream &dataOutputStream, tipo* variavel)
+{
+    return dataOutputStream.escreverPorPonteiro(variavel);
+}
+
 template<typename tipo, typename = enable_if_t<is_fundamental<tipo>::value>>
 DataOutputStream& operator<<(DataOutputStream& dataOutputStream, tipo variavel)
 {
-    return dataOutputStream.escrever(variavel);
+    return dataOutputStream << &variavel;
 }
 
 DataOutputStream& operator<<(DataOutputStream& dataOutputStream, string& variavel)
