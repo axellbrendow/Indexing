@@ -11,5 +11,6 @@ var searchData=
   ['debugiterar',['debugIterar',['../debug_8hpp.html#aa642a885c3749fad70810b48289ac250',1,'debug.hpp']]],
   ['debugprintar',['debugPrintar',['../debug_8hpp.html#ab627ecbf5242fad1c458c94c7022e0e3',1,'debugPrintar(tipo value):&#160;debug.hpp'],['../debug_8hpp.html#ad7fa09b5eb9fb9fcf59747ece70db5bf',1,'debugPrintar(tipo value, OutrosTipos... outrosTipos):&#160;debug.hpp']]],
   ['debugv',['DEBUGV',['../debug_8hpp.html#a400b7dfdb0ac4c9cc82ef6a0ad6e7c8b',1,'debug.hpp']]],
-  ['derived',['Derived',['../class_derived.html',1,'']]]
+  ['derived',['Derived',['../class_derived.html',1,'']]],
+  ['dividir',['dividir',['../class_arvore_b.html#a4429b5cf0f990a664c1bcffd043ff2c9',1,'ArvoreB']]]
 ];

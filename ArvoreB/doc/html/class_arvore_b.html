@@ -128,6 +128,17 @@ Atributos Públicos</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Membros protegidos</h2></td></tr>
+<tr class="memitem:a6a084b253ae7124cf12385cdc623deed"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#a6a084b253ae7124cf12385cdc623deed">abrirArquivo</a> (string nome)</td></tr>
+<tr class="separator:a6a084b253ae7124cf12385cdc623deed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc82e9970c2163ee01b0ed1b8da5f047"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#abc82e9970c2163ee01b0ed1b8da5f047">carregar</a> (<a class="el" href="class_arvore_b.html#a33a9cc9c13f102525a84a634d277a764">Pagina</a> *pagina, <a class="el" href="tipos_8hpp.html#a060c8d79366d67ac97d23bac085fb4f7">file_pointer_type</a> endereco)</td></tr>
+<tr class="memdesc:abc82e9970c2163ee01b0ed1b8da5f047"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vai para o endereço informado e tenta carregar a página.  <a href="#abc82e9970c2163ee01b0ed1b8da5f047">Mais...</a><br /></td></tr>
+<tr class="separator:abc82e9970c2163ee01b0ed1b8da5f047"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa006c039eabffcf6414119514659dca6"><td class="memItemLeft" align="right" valign="top">pair&lt; <a class="el" href="class_arvore_b.html#a33a9cc9c13f102525a84a634d277a764">Pagina</a> *, bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#aa006c039eabffcf6414119514659dca6">obterPaginaDeInsercao</a> (<a class="el" href="class_arvore_b.html#a33a9cc9c13f102525a84a634d277a764">Pagina</a> *irma, <a class="el" href="class_arvore_b.html#a33a9cc9c13f102525a84a634d277a764">Pagina</a> *filha, TIPO_DAS_CHAVES &amp;chave)</td></tr>
+<tr class="memdesc:aa006c039eabffcf6414119514659dca6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decide em qual página a chave deve ser inserida.  <a href="#aa006c039eabffcf6414119514659dca6">Mais...</a><br /></td></tr>
+<tr class="separator:aa006c039eabffcf6414119514659dca6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4429b5cf0f990a664c1bcffd043ff2c9"><td class="memItemLeft" align="right" valign="top">pair&lt; <a class="el" href="class_arvore_b.html#a33a9cc9c13f102525a84a634d277a764">Pagina</a> *, bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#a4429b5cf0f990a664c1bcffd043ff2c9">dividir</a> (<a class="el" href="class_arvore_b.html#a33a9cc9c13f102525a84a634d277a764">Pagina</a> *filha, <a class="el" href="class_arvore_b.html#a33a9cc9c13f102525a84a634d277a764">Pagina</a> *irma, TIPO_DAS_CHAVES &amp;chave)</td></tr>
+<tr class="memdesc:a4429b5cf0f990a664c1bcffd043ff2c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cria a página irmã e transfere metade da página filha para ela.  <a href="#a4429b5cf0f990a664c1bcffd043ff2c9">Mais...</a><br /></td></tr>
+<tr class="separator:a4429b5cf0f990a664c1bcffd043ff2c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0eede998ff79c04830c20dc1a4fbe2b6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#a0eede998ff79c04830c20dc1a4fbe2b6">iniciarArquivoCasoNecessario</a> ()</td></tr>
 <tr class="memdesc:a0eede998ff79c04830c20dc1a4fbe2b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checa se o arquivo tem tamanho suficiente para ter o cabeçalho da árvore e pelo menos uma página. Caso não, cria um cabeçalho e a raiz da árvore.  <a href="#a0eede998ff79c04830c20dc1a4fbe2b6">Mais...</a><br /></td></tr>
 <tr class="separator:a0eede998ff79c04830c20dc1a4fbe2b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -170,6 +181,14 @@ Atributos Protegidos</h2></td></tr>
 <tr class="separator:aa98e9ec1082105f52097b62d6a3b6b9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adf2ae4f82535c961f015ca65b2836ea1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_arvore_b.html#a33a9cc9c13f102525a84a634d277a764">Pagina</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#adf2ae4f82535c961f015ca65b2836ea1">paginaIrma</a></td></tr>
 <tr class="separator:adf2ae4f82535c961f015ca65b2836ea1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1dcadbb5afc190a30737e6deef7201f7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_arvore_b.html#a33a9cc9c13f102525a84a634d277a764">Pagina</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#a1dcadbb5afc190a30737e6deef7201f7">paginaPaiCopia</a></td></tr>
+<tr class="separator:a1dcadbb5afc190a30737e6deef7201f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9dae55c76085414b6aa9877943d10f71"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_arvore_b.html#a33a9cc9c13f102525a84a634d277a764">Pagina</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#a9dae55c76085414b6aa9877943d10f71">paginaIrmaPaiCopia</a></td></tr>
+<tr class="separator:a9dae55c76085414b6aa9877943d10f71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f7be964f45409f6355c2bbe55d7c7e6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_arvore_b.html#a33a9cc9c13f102525a84a634d277a764">Pagina</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#a0f7be964f45409f6355c2bbe55d7c7e6">paginaFilhaCopia</a></td></tr>
+<tr class="separator:a0f7be964f45409f6355c2bbe55d7c7e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade10f3cb801f859db0cc2cda1afe2b7f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_arvore_b.html#a33a9cc9c13f102525a84a634d277a764">Pagina</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#ade10f3cb801f859db0cc2cda1afe2b7f">paginaIrmaCopia</a></td></tr>
+<tr class="separator:ade10f3cb801f859db0cc2cda1afe2b7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Descrição detalhada</h2>
 <div class="textblock"><h3>template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt;<br />
@@ -271,6 +290,139 @@ template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Documentação dos métodos</h2>
+<a id="a6a084b253ae7124cf12385cdc623deed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a084b253ae7124cf12385cdc623deed">&#9670;&nbsp;</a></span>abrirArquivo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_arvore_b.html">ArvoreB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::abrirArquivo </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>nome</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="abc82e9970c2163ee01b0ed1b8da5f047"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc82e9970c2163ee01b0ed1b8da5f047">&#9670;&nbsp;</a></span>carregar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_arvore_b.html">ArvoreB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::carregar </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_arvore_b.html#a33a9cc9c13f102525a84a634d277a764">Pagina</a> *&#160;</td>
+          <td class="paramname"><em>pagina</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="tipos_8hpp.html#a060c8d79366d67ac97d23bac085fb4f7">file_pointer_type</a>&#160;</td>
+          <td class="paramname"><em>endereco</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Vai para o endereço informado e tenta carregar a página. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pagina</td><td>Página a ser carregada. </td></tr>
+    <tr><td class="paramname">endereco</td><td>Endereço da página.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Retorna</dt><dd>true Caso não haja erros. </dd>
+<dd>
+false Caso haja erros. </dd></dl>
+
+</div>
+</div>
+<a id="a4429b5cf0f990a664c1bcffd043ff2c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4429b5cf0f990a664c1bcffd043ff2c9">&#9670;&nbsp;</a></span>dividir()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">pair&lt;<a class="el" href="class_arvore_b.html#a33a9cc9c13f102525a84a634d277a764">Pagina</a> *, bool&gt; <a class="el" href="class_arvore_b.html">ArvoreB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::dividir </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_arvore_b.html#a33a9cc9c13f102525a84a634d277a764">Pagina</a> *&#160;</td>
+          <td class="paramname"><em>filha</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_arvore_b.html#a33a9cc9c13f102525a84a634d277a764">Pagina</a> *&#160;</td>
+          <td class="paramname"><em>irma</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TIPO_DAS_CHAVES &amp;&#160;</td>
+          <td class="paramname"><em>chave</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Cria a página irmã e transfere metade da página filha para ela. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filha</td><td>Página a ser dividida. </td></tr>
+    <tr><td class="paramname">irma</td><td>Página a ser criada. </td></tr>
+    <tr><td class="paramname">chave</td><td>Chave a ser inserida em alguma dessas páginas.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Retorna</dt><dd>pair&lt;Pagina*, bool&gt; Um par onde o primeiro elemento é a página onde a chave deve ser inserida e o segundo elemento é um booleano que indica se a inserção deve ser na página filha. </dd></dl>
+
+</div>
+</div>
 <a id="a7426cc32f204237a504c5f0b47381856"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7426cc32f204237a504c5f0b47381856">&#9670;&nbsp;</a></span>excluir() <span class="overload">[1/2]</span></h2>
 
@@ -615,6 +767,61 @@ template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Retorna</dt><dd>vector&lt;TIPO_DOS_DADOS&gt; Vetor com cada dado correspondente à chave. </dd></dl>
+
+</div>
+</div>
+<a id="aa006c039eabffcf6414119514659dca6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa006c039eabffcf6414119514659dca6">&#9670;&nbsp;</a></span>obterPaginaDeInsercao()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">pair&lt;<a class="el" href="class_arvore_b.html#a33a9cc9c13f102525a84a634d277a764">Pagina</a> *, bool&gt; <a class="el" href="class_arvore_b.html">ArvoreB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::obterPaginaDeInsercao </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_arvore_b.html#a33a9cc9c13f102525a84a634d277a764">Pagina</a> *&#160;</td>
+          <td class="paramname"><em>irma</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_arvore_b.html#a33a9cc9c13f102525a84a634d277a764">Pagina</a> *&#160;</td>
+          <td class="paramname"><em>filha</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TIPO_DAS_CHAVES &amp;&#160;</td>
+          <td class="paramname"><em>chave</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Decide em qual página a chave deve ser inserida. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">irma</td><td>Página a ser criada. </td></tr>
+    <tr><td class="paramname">filha</td><td>Página a ser dividida. </td></tr>
+    <tr><td class="paramname">chave</td><td>Chave a ser inserida.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Retorna</dt><dd>pair&lt;Pagina *, bool&gt; Um par onde o primeiro elemento é a página onde a chave deve ser inserida e o segundo elemento é um booleano que indica se a inserção deve ser feita na página filha. </dd></dl>
 
 </div>
 </div>
@@ -1086,6 +1293,30 @@ template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
 
 </div>
 </div>
+<a id="a0f7be964f45409f6355c2bbe55d7c7e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f7be964f45409f6355c2bbe55d7c7e6">&#9670;&nbsp;</a></span>paginaFilhaCopia</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_arvore_b.html#a33a9cc9c13f102525a84a634d277a764">Pagina</a>* <a class="el" href="class_arvore_b.html">ArvoreB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::paginaFilhaCopia</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="adf2ae4f82535c961f015ca65b2836ea1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adf2ae4f82535c961f015ca65b2836ea1">&#9670;&nbsp;</a></span>paginaIrma</h2>
 
@@ -1099,6 +1330,30 @@ template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="class_arvore_b.html#a33a9cc9c13f102525a84a634d277a764">Pagina</a>* <a class="el" href="class_arvore_b.html">ArvoreB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::paginaIrma</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ade10f3cb801f859db0cc2cda1afe2b7f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade10f3cb801f859db0cc2cda1afe2b7f">&#9670;&nbsp;</a></span>paginaIrmaCopia</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_arvore_b.html#a33a9cc9c13f102525a84a634d277a764">Pagina</a>* <a class="el" href="class_arvore_b.html">ArvoreB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::paginaIrmaCopia</td>
         </tr>
       </table>
   </td>
@@ -1134,6 +1389,30 @@ template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
 
 </div>
 </div>
+<a id="a9dae55c76085414b6aa9877943d10f71"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9dae55c76085414b6aa9877943d10f71">&#9670;&nbsp;</a></span>paginaIrmaPaiCopia</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_arvore_b.html#a33a9cc9c13f102525a84a634d277a764">Pagina</a>* <a class="el" href="class_arvore_b.html">ArvoreB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::paginaIrmaPaiCopia</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a69c40d03753b2596a165b177d69482b5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a69c40d03753b2596a165b177d69482b5">&#9670;&nbsp;</a></span>paginaPai</h2>
 
@@ -1147,6 +1426,30 @@ template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="class_arvore_b.html#a33a9cc9c13f102525a84a634d277a764">Pagina</a>* <a class="el" href="class_arvore_b.html">ArvoreB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::paginaPai</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1dcadbb5afc190a30737e6deef7201f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1dcadbb5afc190a30737e6deef7201f7">&#9670;&nbsp;</a></span>paginaPaiCopia</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_arvore_b.html#a33a9cc9c13f102525a84a634d277a764">Pagina</a>* <a class="el" href="class_arvore_b.html">ArvoreB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::paginaPaiCopia</td>
         </tr>
       </table>
   </td>
