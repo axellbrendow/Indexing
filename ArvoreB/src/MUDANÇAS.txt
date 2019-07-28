@@ -1,4 +1,5 @@
-Conserta de bug e melhora no DataOutputStream
+Conserto de bugs
 
-1 - Agora, o DataOutputStream aceita a escrita de tipos primitivos por ponteiro.
-2 - Conserta um bug no construtor da árvore para que o arquivo dela seja de fato limpado por meio de truncamento quando ele não tiver tamanho suficiente para representar uma árvore.
+1 - Arruma um bug difícil de descobrir. Os ponteiros para as páginas estavam sendo iniciados no construtor com o new, porém, ao longo da inserção de registros nas páginas, os ponteiros iam apontando para outras lugares e isso fazia com que o endereço em que o delete devia ser usado se perdesse.
+2 - Arruma um bug na inserção de registros em páginas que estão abaixo da raiz. Como na descida da árvore o ponteiro paginaFilha é atribuído ao ponteiro paginaPai e na próxima página (abaixo) o ponteiro paginaFilha é carregado com uma nova página, os dois ponteiros acabavam apontando para o mesmo lugar, daí uma página promovia um elemento para ela mesma.
+3 - O bug 3 leva ao conserto de outro bug futuro. Havia também uma atribuição de ponteiros irresponsável na volta da recursividade.

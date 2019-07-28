@@ -71,9 +71,30 @@ public:
     const int tamanhoCabecalho =
         tamanhoCabecalhoAntesDoEnderecoDaRaiz + sizeof(file_pointer_type);
 
-private:
+protected:
+    // ------------------------- Campos
+
+    string erro;
+    string nomeDoArquivo;
+    fstream arquivo;
+
+    int maximoDeBytesParaAChave;
+    int maximoDeBytesParaODado;
+    int numeroDeChavesPorPagina;
+    int ordemDaArvore;
+
+    Pagina *paginaPai;
+    Pagina *paginaIrmaPai;
+    Pagina *paginaFilha;
+    Pagina *paginaIrma;
+
+    Pagina *paginaPaiCopia;
+    Pagina *paginaIrmaPaiCopia;
+    Pagina *paginaFilhaCopia;
+    Pagina *paginaIrmaCopia;
+
     // ------------------------- Métodos
-    
+
     void abrirArquivo(string nome)
     {
         arquivo = fstream(nome, fstream::binary | fstream::in | fstream::out);
@@ -96,24 +117,25 @@ private:
      * @return true Caso não haja erros.
      * @return false Caso haja erros.
      */
-    bool carregar(Pagina* pagina, file_pointer_type endereco)
+    bool carregar(Pagina *pagina, file_pointer_type endereco)
     {
         bool sucesso = true;
 
         arquivo.seekg(endereco);
         arquivo >> pagina; // Carrega a página
-        
+
         if (arquivo.fail())
         {
             sucesso = false;
 
             // cerr é a saída padrão de erros. Em alguns caso pode ser igual a cout.
             cerr << "[ArvoreB] Não foi possível ler a página do arquivo."
-                << endl << "Exceção lançada" << endl;
+                 << endl
+                 << "Exceção lançada" << endl;
 
             throw length_error("[ArvoreB] Não foi possível ler a página do arquivo.");
         }
-        
+
         return sucesso;
     }
 
@@ -157,25 +179,6 @@ private:
 
         return obterPaginaDeInsercao(irma, filha, chave);
     }
-
-protected:
-    // ------------------------- Campos
-
-    string erro;
-    string nomeDoArquivo;
-    fstream arquivo;
-
-    int maximoDeBytesParaAChave;
-    int maximoDeBytesParaODado;
-    int numeroDeChavesPorPagina;
-    int ordemDaArvore;
-
-    Pagina *paginaPai;
-    Pagina *paginaIrmaPai;
-    Pagina *paginaFilha;
-    Pagina *paginaIrma;
-    
-    // ------------------------- Métodos
 
     /**
      * @brief Checa se o arquivo tem tamanho suficiente para ter o cabeçalho
@@ -333,9 +336,11 @@ protected:
                 enderecoPaginaPai == constantes::ptrNuloPagina;
 
             int indiceDeInsercao = paginaFilha->obterIndiceDeDescida(chave);
+            file_pointer_type ponteiroDeDescida =
+                paginaFilha->ponteiros[indiceDeInsercao];
 
             // Checa se não há ponteiro de descida. Caso não, a página é uma folha.
-            if (paginaFilha->ponteiros[indiceDeInsercao] == constantes::ptrNuloPagina)
+            if (ponteiroDeDescida == constantes::ptrNuloPagina)
             {
                 // Checa se a inserção teve sucesso
                 if (paginaFilha->inserir(chave, dado, indiceDeInsercao))
@@ -353,13 +358,16 @@ protected:
             
             else // A página não é uma folha, continuar descendo
             {
-                paginaPai = paginaFilha;
+                // O swap é necessário pois cada um desses ponteiros aponta para um
+                // objeto página concreto e a referência para este objeto não pode
+                // ser perdida
+                swap(paginaFilha, paginaPai); // A página filha passar a ser pai
 
                 // O inserir retorna informações sobre a promoção de elementos para
                 // esta página
                 infoPai = inserir(
                     chave, dado, indiceDeInsercao,
-                    paginaFilha->ponteiros[indiceDeInsercao], enderecoPaginaFilha);
+                    ponteiroDeDescida, enderecoPaginaFilha);
 
                 // Checa se esta página precisa promover algum elemento que tenha
                 // sido adicionado nela pelas suas filhas
@@ -369,10 +377,15 @@ protected:
                     bool inseriuNaPaginaFilha = infoPai.second;
 
                     // As páginas que eram pais, na volta da recursividade, são filhas
-                    paginaFilha = paginaPai;
-                    paginaIrma = paginaIrmaPai;
+                    swap(paginaPai, paginaFilha);
+                    swap(paginaIrmaPai, paginaIrma);
 
-                    if (voltouParaARaiz) paginaPai->limpar();
+                    if (voltouParaARaiz)
+                    {
+                        paginaPai->limpar();
+                        paginaPai->ponteiros.push_back(constantes::ptrNuloPagina);
+                    }
+                    
                     else carregar(paginaPai, enderecoPaginaPai);
 
                     promoverOParQueEstiverSobrando(
@@ -408,7 +421,11 @@ public:
         paginaPai(new Pagina(ordemDaArvore) ),
         paginaIrmaPai(new Pagina(ordemDaArvore) ),
         paginaFilha(new Pagina(ordemDaArvore) ),
-        paginaIrma(new Pagina(ordemDaArvore) )
+        paginaIrma(new Pagina(ordemDaArvore) ),
+        paginaPaiCopia(paginaPai), // Faz as cópias para poder usar o delete depois
+        paginaIrmaPaiCopia(paginaIrmaPai),
+        paginaFilhaCopia(paginaFilha),
+        paginaIrmaCopia(paginaIrma)
     {
         abrirArquivo(nomeDoArquivo);
 
@@ -421,10 +438,10 @@ public:
 
     ~ArvoreB()
     {
-        delete paginaPai;
-        delete paginaIrmaPai;
-        delete paginaFilha;
-        delete paginaIrma;
+        delete paginaPaiCopia;
+        delete paginaIrmaPaiCopia;
+        delete paginaFilhaCopia;
+        delete paginaIrmaCopia;
     }
 
     // ------------------------- Métodos

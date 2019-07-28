@@ -88,13 +88,13 @@ int main()
     arvore.inserir(3000, one);
     arvore.inserir(200, one);
     arvore.inserir(400, one);
-    // arvore.inserir(1500, one);
-    // arvore.inserir(4, one);
-    // arvore.inserir(12, one);
-    // arvore.inserir(50, one);
-    // arvore.inserir(600, one);
+    arvore.inserir(1500, one);
+    arvore.inserir(600, one);
+    arvore.inserir(50, one);
+    arvore.inserir(12, one);
+    arvore.inserir(4, one);
 
-    // arvore.printHorizontal();
+    arvore.printHorizontal();
 
     return 0;
 }

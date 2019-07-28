@@ -57,4 +57,8 @@
  * 64-bit
  * (gdb) set $pc = *(void **)$rsp
  * (gdb) set $rsp = $rsp + 8
+ * 
+ * Os ponteiros brutos irão sumir do C++ !!! ¯\_(ツ)_/¯<br>
+ * 
+ * https://www.modernescpp.com/index.php/no-new-new
  */

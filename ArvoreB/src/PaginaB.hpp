@@ -347,7 +347,8 @@ public:
      * desta página. Caso contrário, promove o primeiro.
      * @param arquivo Arquivo onde as páginas serão colocadas.
      */
-    void promoverElementoPara(Pagina *paginaDestino, int indice, Pagina *exPaginaCheia,
+    void promoverElementoPara(
+        Pagina *paginaDestino, int indice, Pagina *exPaginaCheia,
         Pagina *novaPagina, bool promoverElementoDoFim, fstream &arquivo)
     {
         // Checa se a ex página cheia será afetada na promoção

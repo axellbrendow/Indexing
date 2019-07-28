@@ -2,11 +2,9 @@
     "tasks": [
         {
             "type": "shell",
-            "label": "Deletar arquivo árvore",
-            "command": "rm",
-            "args": [
-                "TesteArvore.txt"
-            ]
+            "label": "Deletar arquivos",
+            "command": "rm ./TesteArvore.txt; rm *.exe; rm *.stackdump",
+            "args": []
         },
         {
             "type": "shell",
@@ -20,7 +18,11 @@
             ],
             "options": {
                 "cwd": "C:/cygwin64/bin"
-            }
+            },
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "Deletar arquivos"
+            ]
         }
     ],
     "version": "2.0.0"
