@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['base',['Base',['../class_base.html',1,'']]]
+  ['datainputstream',['DataInputStream',['../class_data_input_stream.html',1,'']]],
+  ['dataoutputstream',['DataOutputStream',['../class_data_output_stream.html',1,'']]]
 ];

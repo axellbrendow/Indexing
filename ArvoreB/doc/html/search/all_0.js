@@ -6,5 +6,6 @@ var searchData=
   ['arquivo',['arquivo',['../class_arvore_b.html#abd84c668f8f8a20b86e38fbe6b8a099d',1,'ArvoreB']]],
   ['arvoreb',['ArvoreB',['../class_arvore_b.html',1,'ArvoreB&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;'],['../class_arvore_b.html#a44c83826f7d230150d66a80f20b61a77',1,'ArvoreB::ArvoreB()']]],
   ['arvoreb_2ehpp',['ArvoreB.hpp',['../_arvore_b_8hpp.html',1,'']]],
+  ['atribuirerro',['atribuirErro',['../class_arvore_b.html#a61e51f732c49a390e720262368e1a808',1,'ArvoreB']]],
   ['atualizarcursores',['atualizarCursores',['../class_data_input_stream.html#a0404053a3d88668572007eee787515c5',1,'DataInputStream']]]
 ];

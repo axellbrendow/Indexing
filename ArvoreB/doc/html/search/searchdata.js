@@ -1,13 +1,12 @@
 var indexSectionsWithContent =
 {
   0: "abcdefghilmnoprstv~",
-  1: "abdmps",
+  1: "admps",
   2: "c",
-  3: "acdhlmpst",
+  3: "adhlmpst",
   4: "abcdegilmoprstv~",
   5: "acdeimnopt",
-  6: "fipstv",
-  7: "d"
+  6: "fipstv"
 };
 
 var indexSectionNames =
@@ -18,8 +17,7 @@ var indexSectionNames =
   3: "files",
   4: "functions",
   5: "variables",
-  6: "typedefs",
-  7: "defines"
+  6: "typedefs"
 };
 
 var indexSectionLabels =
@@ -30,7 +28,6 @@ var indexSectionLabels =
   3: "Ficheiros",
   4: "Funções",
   5: "Variáveis",
-  6: "Definições de tipos",
-  7: "Macros"
+  6: "Definições de tipos"
 };
 

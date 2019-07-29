@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['datainputstream',['DataInputStream',['../class_data_input_stream.html',1,'']]],
-  ['dataoutputstream',['DataOutputStream',['../class_data_output_stream.html',1,'']]],
-  ['derived',['Derived',['../class_derived.html',1,'']]]
+  ['medidor',['Medidor',['../struct_medidor.html',1,'']]],
+  ['medidor_3c_20tipo_2c_20true_20_3e',['Medidor&lt; TIPO, true &gt;',['../struct_medidor_3_01_t_i_p_o_00_01true_01_4.html',1,'']]]
 ];

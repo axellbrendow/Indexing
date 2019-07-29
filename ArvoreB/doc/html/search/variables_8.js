@@ -8,5 +8,5 @@ var searchData=
   ['paginairmapaicopia',['paginaIrmaPaiCopia',['../class_arvore_b.html#a9dae55c76085414b6aa9877943d10f71',1,'ArvoreB']]],
   ['paginapai',['paginaPai',['../class_arvore_b.html#a69c40d03753b2596a165b177d69482b5',1,'ArvoreB']]],
   ['paginapaicopia',['paginaPaiCopia',['../class_arvore_b.html#a1dcadbb5afc190a30737e6deef7201f7',1,'ArvoreB']]],
-  ['ponteiros',['ponteiros',['../class_pagina_b.html#a8e3379b22ff2c6cc29b1bf0a4314eda1',1,'PaginaB']]]
+  ['ponteiros',['ponteiros',['../class_pagina_b.html#a38d0db49ffd87109820e3792a89db84b',1,'PaginaB']]]
 ];

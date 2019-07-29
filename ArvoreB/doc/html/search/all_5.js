@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['file_5fpointer_5ftype',['file_pointer_type',['../tipos_8hpp.html#a060c8d79366d67ac97d23bac085fb4f7',1,'tipos.hpp']]]
+  ['file_5fptr_5ftype',['file_ptr_type',['../tipos_8hpp.html#ab29579b2e0823b94933bba3153b61f55',1,'tipos.hpp']]]
 ];
