@@ -490,7 +490,7 @@ public:
     {
         if (!vazia())
         {
-            ostream << "Endereço: " << (long) endereco << endl;
+            ostream << "Endereco: " << (long) endereco << endl;
             ostream << (long) ponteiros[0];
 
             if (mostrarOsDados)

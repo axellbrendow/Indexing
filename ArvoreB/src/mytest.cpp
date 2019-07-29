@@ -79,7 +79,7 @@ ostream& operator<<(ostream& ostream, Student& student)
 int main()
 {
     string fileName("TesteArvore.txt");
-	Student one("você", 18);
+	Student one("voce", 18);
     
     ArvoreB<int, Student> arvore(fileName, 4);
 

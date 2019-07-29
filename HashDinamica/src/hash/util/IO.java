@@ -1,3 +1,5 @@
+/* See the project's root for license information. */
+
 package hash.util;
 
 import java.io.FileNotFoundException;
