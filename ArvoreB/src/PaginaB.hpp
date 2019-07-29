@@ -17,15 +17,15 @@ using namespace std;
 
 namespace constantes
 {
-    static const file_pointer_type ptrNuloPagina = -1;
+    static const file_ptr_type ptrNuloPagina = -1;
 }
 
 /**
  * @brief Classe com as características da página da árvore B.
  * 
- * <p>Caso for usar o método print() dá classe, é necessário que a chave e o dado
+ * <p>Caso for usar o método mostrar() dá classe, é necessário que a chave e o dado
  * sejam tipos primitivos ou então o operador << deve ser sobrecarregado para que
- * seja possível inserir esses itens num ostream (output stream).</p>
+ * seja possível inserir a chave e/ou o dado num ostream (output stream).</p>
  * 
  * @see [Sobrecarregando o operador <<](https://docs.microsoft.com/pt-br/cpp/standard-library/overloading-the-output-operator-for-your-own-classes?view=vs-2019)
  * 
@@ -47,7 +47,7 @@ protected:
     int maximoDeBytesParaODado;
     int numeroDeChavesPorPagina;
     int ordemDaArvore;
-    file_pointer_type endereco;
+    file_ptr_type endereco;
 
 public:
     // ------------------------- Typedefs
@@ -62,7 +62,7 @@ public:
 
     vector<TIPO_DAS_CHAVES> chaves;
     vector<TIPO_DOS_DADOS> dados;
-    vector<file_pointer_type> ponteiros;
+    vector<file_ptr_type> ponteiros;
 
     // ------------------------- Construtores
 
@@ -92,7 +92,7 @@ public:
         dados.reserve(numeroDeChavesPorPagina);
         ponteiros.reserve(ordemDaArvore);
 
-        ponteiros.push_back(constantes::ptrNuloPagina); // olhar aqui
+        ponteiros.push_back(constantes::ptrNuloPagina);
     }
 
     /**
@@ -129,7 +129,7 @@ public:
     {
         // bytes para guardar a quantidade de elementos na página
         return sizeof(decltype(numeroDeElementos)) + // falta link aqui
-               ordemDaArvore * sizeof(file_pointer_type) + // bytes para os ponteiros
+               ordemDaArvore * sizeof(file_ptr_type) + // bytes para os ponteiros
                numeroDeChavesPorPagina * maximoDeBytesParaAChave + // bytes para as chaves
                numeroDeChavesPorPagina * maximoDeBytesParaODado; // bytes para os dados
     }
@@ -138,7 +138,7 @@ public:
     {
         TIPO_DAS_CHAVES *chave;
         TIPO_DOS_DADOS *dado;
-        file_pointer_type ponteiro = ponteiros[0];
+        file_ptr_type ponteiro = ponteiros[0];
 
         out << numeroDeElementos << ponteiro;
 
@@ -162,7 +162,7 @@ public:
         // herdem a classe Serializavel e tenham um construtor sem parâmetros.
         TIPO_DAS_CHAVES chave;
         TIPO_DOS_DADOS dado;
-        file_pointer_type ponteiro;
+        file_ptr_type ponteiro;
 
         input >> numeroDeElementos >> ponteiro;
         ponteiros.push_back(ponteiro);
@@ -181,9 +181,9 @@ public:
 
     // ------------------------- Métodos
 
-    file_pointer_type setEndereco(file_pointer_type endereco)
+    file_ptr_type setEndereco(file_ptr_type endereco)
     {
-        if (endereco > (file_pointer_type) -1)
+        if (endereco > (file_ptr_type) -1)
         {
             this->endereco = endereco;
         }
@@ -203,9 +203,9 @@ public:
     /**
      * @brief Obtém o endereço da página no arquivo.
      * 
-     * @return file_pointer_type Endereço da página no arquivo.
+     * @return file_ptr_type Endereço da página no arquivo.
      */
-    file_pointer_type obterEndereco()
+    file_ptr_type obterEndereco()
     {
         return endereco;
     }
@@ -275,7 +275,7 @@ public:
      * @return false Caso a página esteja cheia.
      */
     bool inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado, int indiceDeInsercao,
-                 file_pointer_type ponteiro = constantes::ptrNuloPagina)
+                 file_ptr_type ponteiro = constantes::ptrNuloPagina)
     {
         bool sucesso = !cheia(); // Só é possível inserir se a página não estiver cheia
 
@@ -436,10 +436,10 @@ public:
      * 
      * @param arquiv Arquivo onde a página deve ser colocada.
      * 
-     * @return file_pointer_type constantes::ptrNuloPagina caso haja algum erro.
+     * @return file_ptr_type constantes::ptrNuloPagina caso haja algum erro.
      * Caso contrário, retorna o endereço no qual a página foi colocada.
      */
-    file_pointer_type colocarNoArquivo(fstream &arquivo)
+    file_ptr_type colocarNoArquivo(fstream &arquivo)
     {
         if (endereco != constantes::ptrNuloPagina)
         {
@@ -466,8 +466,8 @@ public:
      * 
      * <p>
      * Supondo que:
-     * delimitadorAposOsPonteiros = " (",
-     * delimitadorAntesDosPonteiros = ") " e
+     * delimitadorEntreOPonteiroEAChave = " (",
+     * delimitadorEntreODadoEOPonteiro = ") " e
      * delimitadorEntreAChaveEODado = ", ",
      * 
      * a saída é: 1º ponteiro (1º chave, 1º dado) 2º ponteiro (...
@@ -478,14 +478,14 @@ public:
      * 
      * @param ostream Fluxo de saída onde a página será impressa.
      * @param mostrarOsDados Caso seja true, mostra os dados ligados às chaves.
-     * @param delimitadorAposOsPonteiros Delimitador entre um ponteiro e uma chave.
-     * @param delimitadorAntesDosPonteiros Delimitador entre um dado e um ponteiro.
+     * @param delimitadorEntreOPonteiroEAChave Delimitador entre um ponteiro e uma chave.
+     * @param delimitadorEntreODadoEOPonteiro Delimitador entre um dado e um ponteiro.
      * @param delimitadorEntreAChaveEODado Delimitador entre uma chave e um dado.
      */
-    void print(ostream &ostream = cout,
+    void mostrar(ostream &ostream = cout,
                bool mostrarOsDados = false,
-               string delimitadorAposOsPonteiros = " (",
-               string delimitadorAntesDosPonteiros = ") ",
+               string delimitadorEntreOPonteiroEAChave = " (",
+               string delimitadorEntreODadoEOPonteiro = ") ",
                string delimitadorEntreAChaveEODado = ", ")
     {
         if (!vazia())
@@ -497,9 +497,9 @@ public:
             {
                 for (size_t i = 0; i < numeroDeElementos; i++)
                 {
-                    ostream << delimitadorAposOsPonteiros << chaves[i];
+                    ostream << delimitadorEntreOPonteiroEAChave << chaves[i];
                     ostream << delimitadorEntreAChaveEODado << dados[i];
-                    ostream << delimitadorAntesDosPonteiros << (long) ponteiros[i + 1];
+                    ostream << delimitadorEntreODadoEOPonteiro << (long) ponteiros[i + 1];
                 }
             }
 
@@ -507,8 +507,8 @@ public:
             {
                 for (size_t i = 0; i < numeroDeElementos; i++)
                 {
-                    ostream << delimitadorAposOsPonteiros << chaves[i];
-                    ostream << delimitadorAntesDosPonteiros << (long) ponteiros[i + 1];
+                    ostream << delimitadorEntreOPonteiroEAChave << chaves[i];
+                    ostream << delimitadorEntreODadoEOPonteiro << (long) ponteiros[i + 1];
                 }
             }
 
@@ -520,7 +520,7 @@ public:
 template <typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS>
 ostream &operator<<(ostream &ostream, PaginaB<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> &pagina)
 {
-    pagina.print(ostream);
+    pagina.mostrar(ostream);
 
     return ostream;
 }

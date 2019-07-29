@@ -1,5 +1,8 @@
-Conserto de bugs
+Cria novos métodos na árvore
 
-1 - Arruma um bug difícil de descobrir. Os ponteiros para as páginas estavam sendo iniciados no construtor com o new, porém, ao longo da inserção de registros nas páginas, os ponteiros iam apontando para outras lugares e isso fazia com que o endereço em que o delete devia ser usado se perdesse.
-2 - Arruma um bug na inserção de registros em páginas que estão abaixo da raiz. Como na descida da árvore o ponteiro paginaFilha é atribuído ao ponteiro paginaPai e na próxima página (abaixo) o ponteiro paginaFilha é carregado com uma nova página, os dois ponteiros acabavam apontando para o mesmo lugar, daí uma página promovia um elemento para ela mesma.
-3 - O bug 3 leva ao conserto de outro bug futuro. Havia também uma atribuição de ponteiros irresponsável na volta da recursividade.
+1 - Cria um método para obtenção do rastro do percurso de descida na árvore em busca de uma chave. Retorna um par com duas listas, uma contém os endereços das páginas visitadas e a outra os índices do ponteiros acessados para descer de uma página para a outra.
+2 - Cria o método pesquisar.
+3 - Transforma o método inserir em iterativo.
+4 - Cria um mecanismo simples de gerenciamento de erros.
+5 - Muda o nome dos métodos de print para mostrar e já melhora eles no sentido de flexibilidade do formato da saída.
+6 - Remove o arquivo com funções para debug.

@@ -27,12 +27,12 @@
 #pragma once
 
 #include "templates/tipos.hpp"
-#include "templates/debug.hpp"
 #include "helpersArvore.hpp"
 #include "PaginaB.hpp"
 
 #include <iostream>
 #include <fstream>
+#include <list>
 
 using namespace std;
 
@@ -40,9 +40,9 @@ using namespace std;
  * @brief Classe da árvore B, uma estrutura eficiente para indexamento de registros
  * em disco.
  * 
- * <p>Caso for usar o método print() dá classe, é necessário que a chave e o dado
+ * <p>Caso for usar o método mostrar() dá classe, é necessário que a chave e o dado
  * sejam tipos primitivos ou então o operador << deve ser sobrecarregado para que
- * seja possível inserir esses itens num ostream (output stream).</p>
+ * seja possível inserir a chave e/ou o dado num ostream (output stream).</p>
  * 
  * @see [Sobrecarregando o operador <<](https://docs.microsoft.com/pt-br/cpp/standard-library/overloading-the-output-operator-for-your-own-classes?view=vs-2019)
  * 
@@ -69,12 +69,12 @@ public:
 
     const int tamanhoCabecalhoAntesDoEnderecoDaRaiz = 0;
     const int tamanhoCabecalho =
-        tamanhoCabecalhoAntesDoEnderecoDaRaiz + sizeof(file_pointer_type);
+        tamanhoCabecalhoAntesDoEnderecoDaRaiz + sizeof(file_ptr_type);
 
 protected:
     // ------------------------- Campos
 
-    string erro;
+    string msgErro;
     string nomeDoArquivo;
     fstream arquivo;
 
@@ -94,6 +94,27 @@ protected:
     Pagina *paginaIrmaCopia;
 
     // ------------------------- Métodos
+
+    void atribuirErro(string msgErro)
+    {
+        this->msgErro = "[ArvoreB]: ";
+        this->msgErro.append(msgErro);
+    }
+
+    void limparErro()
+    {
+        msgErro = "";
+    }
+
+    void mostrarErro()
+    {
+        cout << msgErro << endl;
+    }
+
+    bool erro()
+    {
+        return msgErro.empty();
+    }
 
     void abrirArquivo(string nome)
     {
@@ -117,7 +138,7 @@ protected:
      * @return true Caso não haja erros.
      * @return false Caso haja erros.
      */
-    bool carregar(Pagina *pagina, file_pointer_type endereco)
+    bool carregar(Pagina *pagina, file_ptr_type endereco)
     {
         bool sucesso = true;
 
@@ -130,13 +151,116 @@ protected:
 
             // cerr é a saída padrão de erros. Em alguns caso pode ser igual a cout.
             cerr << "[ArvoreB] Não foi possível ler a página do arquivo."
-                 << endl
-                 << "Exceção lançada" << endl;
+                 << endl << "Exceção lançada" << endl;
 
             throw length_error("[ArvoreB] Não foi possível ler a página do arquivo.");
         }
 
         return sucesso;
+    }
+
+    /**
+     * @brief Checa se o arquivo tem tamanho suficiente para ter o cabeçalho
+     * da árvore e pelo menos uma página. Caso não, cria um cabeçalho e a raiz
+     * da árvore.
+     */
+    void iniciarArquivoCasoNecessario()
+    {
+        auto tamanho = obterTamanhoEmBytes(arquivo);
+        
+        // O arquivo precisa ter pelo menos o cabeçalho da árvore e uma página
+        if (tamanho < tamanhoCabecalho + paginaPai->obterTamanhoMaximoEmBytes())
+        {
+            // Limpa o arquivo e o reabre
+            arquivo = fstream(nomeDoArquivo, fstream::binary | fstream::trunc);
+            arquivo = fstream(nomeDoArquivo, fstream::binary | fstream::in | fstream::out);
+            
+            arquivo.seekp(0); // Coloca o ponteiro de put no início
+
+            // Escreve o endereço da raiz. Ela ficará logo após o endereço dela.
+            arquivo << (file_ptr_type)(sizeof(file_ptr_type));
+            arquivo << paginaPai; // A página pai está vazia no momento
+        }
+    }
+
+    /**
+     * @brief Procura o primeiro registro com a chave informada.
+     * 
+     * @param chave Chave a ser procurada.
+     * @param indiceDeDescida Índice do ponteiro na página pai que levou a esta página.
+     * @param enderecoPaginaFilha Endereço da página a ser carregada.
+     * @param parDoCaminho Par onde o primeiro elemento será uma lista com todos os
+     * endereços de todas as páginas pelas quais a recursividade passar e o segundo
+     * elemento será uma lista com todos os índices dos ponteiros que a recursividade
+     * acessar para descer de uma página para a outra.
+     * @param irAteAFolha Indica se a pesquisa não deve parar caso a chave seja
+     * encontrada em páginas que não sejam folhas.
+     */
+    void obterCaminhoDeDescida(
+        TIPO_DAS_CHAVES &chave,
+        int indiceDeDescida,
+        file_ptr_type enderecoPaginaFilha,
+        pair< list<file_ptr_type>, list<int> > &parDoCaminho,
+        bool irAteAFolha = false)
+    {
+        list<file_ptr_type> &caminho = parDoCaminho.first;
+        list<int> &indices = parDoCaminho.second;
+
+        // Empilha o endereço da página que vai ser carregada e o índice do
+        // ponteiro na página pai que nos trouxe a ela
+        caminho.push_back(enderecoPaginaFilha);
+        indices.push_back(indiceDeDescida);
+
+        // Checa se a página foi carregada
+        if (carregar(paginaFilha, enderecoPaginaFilha))
+        {
+            int indiceDeDescida = paginaFilha->obterIndiceDeDescida(chave);
+            file_ptr_type ponteiroDeDescida = paginaFilha->ponteiros[indiceDeDescida];
+
+            // Checa se há ponteiro de descida e se a pesquisa deve ir
+            // obrigatoriamente até uma folha ou se a chave não foi encontrada.
+            if (ponteiroDeDescida != constantes::ptrNuloPagina &&
+                (irAteAFolha || paginaFilha->chaves[indiceDeDescida] != chave))
+            {
+                // A página filha passa a ser pai. O swap é necessário pois cada
+                // um desses ponteiros aponta para um objeto página concreto e a
+                // referência para este objeto não pode ser perdida.
+                swap(paginaFilha, paginaPai);
+
+                obterCaminhoDeDescida(
+                    chave, indiceDeDescida, ponteiroDeDescida,
+                    parDoCaminho, irAteAFolha);
+            }
+        }
+    }
+
+    /**
+     * @brief Procura o primeiro registro com a chave informada.
+     * 
+     * @param chave Chave a ser procurada.
+     * @param indiceDeDescida Índice do ponteiro na página pai que levou a esta página.
+     * @param enderecoPaginaFilha Endereço da página a ser carregada.
+     * @param irAteAFolha Indica se a pesquisa não deve parar caso a chave seja
+     * encontrada em páginas que não sejam folhas.
+     * 
+     * @return pair< list<file_ptr_type>, list<int> > Um par onde o primeiro
+     * elemento será uma lista com todos os endereços de todas as páginas pelas quais
+     * a recursividade passar e o segundo elemento será uma lista com todos os índices
+     * dos ponteiros que a recursividade acessar para descer de uma página para a
+     * outra.
+     */
+    pair< list<file_ptr_type>, list<int> > obterCaminhoDeDescida(
+        TIPO_DAS_CHAVES &chave,
+        int indiceDeDescida,
+        file_ptr_type enderecoPaginaFilha,
+        bool irAteAFolha = false)
+    {
+        pair< list<file_ptr_type>, list<int> > parDoCaminho;
+
+        obterCaminhoDeDescida(
+            chave, indiceDeDescida, enderecoPaginaFilha, parDoCaminho, irAteAFolha);
+
+        return parDoCaminho;
     }
 
     /**
@@ -178,30 +302,6 @@ protected:
         filha->transferirMetadePara(irma);
 
         return obterPaginaDeInsercao(irma, filha, chave);
-    }
-
-    /**
-     * @brief Checa se o arquivo tem tamanho suficiente para ter o cabeçalho
-     * da árvore e pelo menos uma página. Caso não, cria um cabeçalho e a raiz
-     * da árvore.
-     */
-    void iniciarArquivoCasoNecessario()
-    {
-        auto tamanho = obterTamanhoEmBytes(arquivo);
-        
-        // O arquivo precisa ter pelo menos o cabeçalho da árvore e uma página
-        if (tamanho < tamanhoCabecalho + paginaPai->obterTamanhoMaximoEmBytes())
-        {
-            // Limpa o arquivo e o reabre
-            arquivo = fstream(nomeDoArquivo, fstream::binary | fstream::trunc);
-            arquivo = fstream(nomeDoArquivo, fstream::binary | fstream::in | fstream::out);
-            
-            arquivo.seekp(0); // Coloca o ponteiro de put no início
-
-            // Escreve o endereço da raiz. Ela ficará logo após o endereço dela.
-            arquivo << (file_pointer_type)(sizeof(file_pointer_type));
-            arquivo << paginaPai; // A página pai está vazia no momento
-        }
     }
 
     /**
@@ -260,6 +360,8 @@ protected:
             indice = paginaDestino->obterIndiceDeDescida(chave);
         }
 
+        else infoPai.first = nullptr;
+
         paginaDeInsercao->promoverElementoPara(
             paginaDestino, indice, // Promove para o índice
             paginaFilha,  // Página que estava cheia
@@ -307,76 +409,56 @@ protected:
      * 
      * @param chave Chave a ser inserida.
      * @param dado Dado a ser inserido.
-     * @param indiceDePromocao Índice na página pai para o qual um elemento desta
-     * página seria promovido caso necessário.
-     * @param enderecoPaginaFilha Endereço da página a ser carregada.
-     * @param enderecoPaginaPai Endereço da página pai.
-     * 
-     * @return pair<Pagina *, bool> Considerando que a página pai irá receber um
-     * elemento promovido, que ela esteja cheia e não o possa receber, retorna um
-     * par onde o primeiro elemento será um ponteiro para a página que receber o
-     * elemento promovido (após a divisão da página pai) e o segundo elemento é
-     * um booleano que indica se a promoção foi na página pai ou em sua irmã. Caso
-     * a página pai não esteja cheia ou não vá receber um elemento, retorna um par
-     * onde o primeiro elemento é um nullptr e o segundo false.
+     * @param pilhaDeEnderecos Uma pilha com todos os endereços de todas as páginas
+     * pelas quais a recursividade passou até o momento.
+     * @param pilhaDeIndices Uma pilha com todos os índices dos ponteiros que a
+     * recursividade tenha acessado para descer de uma página para a outra.
      */
-    pair<Pagina *, bool> inserir(
-        TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado,
-        int indiceDePromocao, file_pointer_type enderecoPaginaFilha,
-        file_pointer_type enderecoPaginaPai)
+    void inserir(TIPO_DAS_CHAVES &chave, TIPO_DOS_DADOS &dado,
+        list<file_ptr_type>& pilhaDeEnderecos,
+        list<int>& pilhaDeIndices)
     {
-        pair<Pagina *, bool> infoPai(nullptr, false);
+        // Após a função obterCaminhoDeDescida(), paginaFilha aponta para a última
+        // página carregada na descida da árvore (alguma folha).
+        int indiceDeInsercao = paginaFilha->obterIndiceDeDescida(chave);
 
-        // Checa se a página foi carregada
-        if (carregar(paginaFilha, enderecoPaginaFilha))
+        // Checa se a inserção teve sucesso
+        if (paginaFilha->inserir(chave, dado, indiceDeInsercao))
+            paginaFilha->colocarNoArquivo(arquivo);
+
+        else // Inserção na página falhou, acontece quando ela está cheia.
         {
-            // Checa se não existe um endereço para a página pai. Quando ele
-            // não existir é porque a recursividade voltou à raiz.
-            bool voltouParaARaiz =
-                enderecoPaginaPai == constantes::ptrNuloPagina;
+            pilhaDeEnderecos.pop_back(); // O último endereço pode ser descartado
+            bool voltouParaARaiz = pilhaDeEnderecos.empty();
+            int indiceDePromocao = pilhaDeIndices.back();
 
-            int indiceDeInsercao = paginaFilha->obterIndiceDeDescida(chave);
-            file_pointer_type ponteiroDeDescida =
-                paginaFilha->ponteiros[indiceDeInsercao];
+            pair<Pagina *, bool> infoPai(nullptr, false);
+            tratarPaginaCheia(chave, dado, indiceDePromocao, infoPai);
 
-            // Checa se não há ponteiro de descida. Caso não, a página é uma folha.
-            if (ponteiroDeDescida == constantes::ptrNuloPagina)
+            if (voltouParaARaiz) trocarRaizPor(paginaPai);
+
+            else // Inicia o processo de subida na árvore
             {
-                // Checa se a inserção teve sucesso
-                if (paginaFilha->inserir(chave, dado, indiceDeInsercao))
+                // Quando uma página que é filha da atual promove um elemento para
+                // a atual ou para a irmã da atual, a variável paginaDeInsercao vai
+                // ter um ponteiro para a página que receber o elemento promovido.
+                Pagina *paginaDeInsercao = infoPai.first;
+                bool inseriuNaPaginaAtual;
+                file_ptr_type enderecoPaginaPai;
+
+                // Checa se houve alguma promoção para a página atual
+                while (paginaDeInsercao != nullptr)
                 {
-                    paginaFilha->colocarNoArquivo(arquivo);
-                }
+                    pilhaDeEnderecos.pop_back();
+                    voltouParaARaiz = pilhaDeEnderecos.empty();
+                    enderecoPaginaPai = voltouParaARaiz ?
+                        constantes::ptrNuloPagina : pilhaDeEnderecos.back();
 
-                else // Inserção na página falhou, acontece quando ela está cheia.
-                {
-                    tratarPaginaCheia(chave, dado, indiceDePromocao, infoPai);
+                    pilhaDeIndices.pop_back();
+                    indiceDePromocao = pilhaDeIndices.back();
+                    inseriuNaPaginaAtual = infoPai.second;
 
-                    if (voltouParaARaiz) trocarRaizPor(paginaPai);
-                }
-            }
-            
-            else // A página não é uma folha, continuar descendo
-            {
-                // O swap é necessário pois cada um desses ponteiros aponta para um
-                // objeto página concreto e a referência para este objeto não pode
-                // ser perdida
-                swap(paginaFilha, paginaPai); // A página filha passar a ser pai
-
-                // O inserir retorna informações sobre a promoção de elementos para
-                // esta página
-                infoPai = inserir(
-                    chave, dado, indiceDeInsercao,
-                    ponteiroDeDescida, enderecoPaginaFilha);
-
-                // Checa se esta página precisa promover algum elemento que tenha
-                // sido adicionado nela pelas suas filhas
-                if (infoPai.first != nullptr)
-                {
-                    Pagina *paginaDeInsercao = infoPai.first;
-                    bool inseriuNaPaginaFilha = infoPai.second;
-
-                    // As páginas que eram pais, na volta da recursividade, são filhas
+                    // As páginas que eram pais, na subida da árvore, são filhas
                     swap(paginaPai, paginaFilha);
                     swap(paginaIrmaPai, paginaIrma);
 
@@ -385,27 +467,27 @@ protected:
                         paginaPai->limpar();
                         paginaPai->ponteiros.push_back(constantes::ptrNuloPagina);
                     }
-                    
+
                     else carregar(paginaPai, enderecoPaginaPai);
 
                     promoverOParQueEstiverSobrando(
                         indiceDePromocao, paginaDeInsercao,
-                        inseriuNaPaginaFilha, infoPai);
+                        inseriuNaPaginaAtual, infoPai);
 
                     if (voltouParaARaiz) trocarRaizPor(paginaPai);
+
+                    paginaDeInsercao = infoPai.first;
                 }
             }
         }
-
-        return infoPai;
     }
 
-    file_pointer_type lerEnderecoDaRaiz()
+    file_ptr_type lerEnderecoDaRaiz()
     {
         // Pula as coisas do cabeçalho do arquivo que vierem antes do endereço da raiz
         arquivo.seekg(tamanhoCabecalhoAntesDoEnderecoDaRaiz);
 
-        file_pointer_type endereco;
+        file_ptr_type endereco;
         arquivo >> endereco; // Carrega o endereço da raiz
 
         return endereco;
@@ -447,86 +529,52 @@ public:
     // ------------------------- Métodos
 
     /**
-     * @brief Insere o par (chave, dado) na árvore.
+     * @brief Procura o primeiro registro com a chave informada e pega o dado
+     * correspondente a ela.
      * 
-     * @param chave Chave a ser inserida.
-     * @param dado Dado a ser inserido.
+     * @param chave Chave a ser procurada.
      * 
-     * @return true Caso tudo corra bem.
-     * @return false Caso um erro ocorra.
+     * @return TIPO_DOS_DADOS Caso tudo corra bem, retorna o dado correspondente
+     * à chave. Caso contrário, retorna
+     * 
+     * @code{.cpp}
+     * TIPO_DOS_DADOS() // Ex.: se os dados são inteiros, retorna int(), que é 0.
+     * @endcode
+     * 
+     * Em casos onde a chave não é encontrada, uma flag interna é ativada. Dessa
+     * forma, você pode usar qualquer um dos dois ifs abaixo para checar erros:
+     * 
+     * @code{.cpp}
+     * if (ArvoreB.pesquisar(chave) == TIPO_DOS_DADOS()) ArvoreB.mostrarErro();
+     * if (ArvoreB.erro()) ArvoreB.mostrarErro();
+     * @endcode
      */
-    bool inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)
+    TIPO_DOS_DADOS pesquisar(TIPO_DAS_CHAVES chave)
     {
-        inserir(chave, dado, 0, lerEnderecoDaRaiz(), constantes::ptrNuloPagina);
+        TIPO_DOS_DADOS dado;
 
-        return true;
+        // Faz todo o percurso de descida na árvore
+        obterCaminhoDeDescida(chave, 0, lerEnderecoDaRaiz());
+
+        // Obtém o índice onde a chave deveria estar na página.
+        // paginaFilha é a última página do percurso.
+        int indiceDaChave = paginaFilha->obterIndiceDeDescida(chave);
+
+        if (indiceDaChave == paginaFilha->obterNumeroDeElementos() ||
+            paginaFilha->chaves[indiceDaChave] != chave)
+        {
+            atribuirErro("A chave não foi encontrada");
+        }
+
+        else
+        {
+            limparErro();
+            dado = paginaFilha->dados[indiceDaChave];
+        }
+
+        return dado;
     }
 
-    /**
-     * @brief Remove o par (chave, dado) da árvore.
-     * 
-     * @param chave Chave a ser removida.
-     * @param dado Dado a ser removido.
-     * 
-     * @return true Caso tudo corra bem.
-     * @return false Caso um erro ocorra.
-     */
-    bool excluir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado);
-
-    /**
-     * @brief Exclui o primeiro registro que for encontrado com a chave informada.
-     * 
-     * @param chave Chave a ser procurada.
-     * 
-     * @return TIPO_DOS_DADOS Caso tudo corra bem, retorna o dado correspondente
-     * à chave. Caso contrário, retorna
-     * 
-     * @code{.cpp}
-     * TIPO_DOS_DADOS() // Ex.: se os dados são inteiros, retorna int(), que é 0.
-     * @endcode
-     * 
-     * Em casos de erro, uma flag interna é ativada. Dessa forma, você pode usar
-     * qualquer um dos dois ifs abaixo para checar erros:
-     * 
-     * @code{.cpp}
-     * if (ArvoreB.excluir(chave) == TIPO_DOS_DADOS()) ArvoreB.printError();
-     * if (ArvoreB.erro) ArvoreB.printError();
-     * @endcode
-     */
-    TIPO_DOS_DADOS excluir(TIPO_DAS_CHAVES chave);
-    
-    /**
-     * @brief Exclui todos os registros que forem encontrados com a chave informada.
-     * 
-     * @param chave Chave a ser procurada.
-     * 
-     * @return vector<TIPO_DOS_DADOS> Vetor com cada dado correspondente à chave.
-     */
-    vector<TIPO_DOS_DADOS> excluirRegistrosComAChave(TIPO_DAS_CHAVES chave);
-
-    /**
-     * @brief Procura o primeiro registro com a chave informada e pega o dado
-     * correspondente à ela.
-     * 
-     * @param chave Chave a ser procurada.
-     * 
-     * @return TIPO_DOS_DADOS Caso tudo corra bem, retorna o dado correspondente
-     * à chave. Caso contrário, retorna
-     * 
-     * @code{.cpp}
-     * TIPO_DOS_DADOS() // Ex.: se os dados são inteiros, retorna int(), que é 0.
-     * @endcode
-     * 
-     * Em casos de erro, uma flag interna é ativada. Dessa forma, você pode usar
-     * qualquer um dos dois ifs abaixo para checar erros:
-     * 
-     * @code{.cpp}
-     * if (ArvoreB.excluir(chave) == TIPO_DOS_DADOS()) ArvoreB.printError();
-     * if (ArvoreB.erro) ArvoreB.printError();
-     * @endcode
-     */
-    TIPO_DOS_DADOS pesquisar(TIPO_DAS_CHAVES chave);
-    
     /**
      * @brief Procura todos os registros que forem encontrados com a chave informada.
      * 
@@ -557,16 +605,91 @@ public:
         TIPO_DAS_CHAVES chaveMaior);
 
     /**
+     * @brief Insere o par (chave, dado) na árvore.
+     * 
+     * @param chave Chave a ser inserida.
+     * @param dado Dado a ser inserido.
+     * 
+     * @return true Caso tudo corra bem.
+     * @return false Caso um erro ocorra.
+     */
+    bool inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado) // olhar por valor ou referencia
+    {
+        // Faz todo o percurso de descida na árvore
+        auto parDoCaminho =
+            obterCaminhoDeDescida(chave, 0, lerEnderecoDaRaiz(), true);
+
+        auto& pilhaDeEnderecos = parDoCaminho.first;
+        auto& pilhaDeIndices = parDoCaminho.second;
+
+        inserir(chave, dado, pilhaDeEnderecos, pilhaDeIndices);
+
+        return true;
+    }
+
+    /**
+     * @brief Remove o par (chave, dado) da árvore.
+     * 
+     * @param chave Chave a ser removida.
+     * @param dado Dado a ser removido.
+     * 
+     * @return true Caso tudo corra bem.
+     * @return false Caso um erro ocorra.
+     */
+    bool excluir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado);
+
+    /**
+     * @brief Exclui o primeiro registro que for encontrado com a chave informada.
+     * 
+     * @param chave Chave a ser procurada.
+     * 
+     * @return TIPO_DOS_DADOS Caso tudo corra bem, retorna o dado correspondente
+     * à chave. Caso contrário, retorna
+     * 
+     * @code{.cpp}
+     * TIPO_DOS_DADOS() // Ex.: se os dados são inteiros, retorna int(), que é 0.
+     * @endcode
+     * 
+     * Em casos onde a chave não é encontrada, uma flag interna é ativada. Dessa
+     * forma, você pode usar qualquer um dos dois ifs abaixo para checar erros:
+     * 
+     * @code{.cpp}
+     * if (ArvoreB.excluir(chave) == TIPO_DOS_DADOS()) ArvoreB.mostrarErro();
+     * if (ArvoreB.erro()) ArvoreB.mostrarErro();
+     * @endcode
+     */
+    TIPO_DOS_DADOS excluir(TIPO_DAS_CHAVES chave);
+    
+    /**
+     * @brief Exclui todos os registros que forem encontrados com a chave informada.
+     * 
+     * @param chave Chave a ser procurada.
+     * 
+     * @return vector<TIPO_DOS_DADOS> Vetor com cada dado correspondente à chave.
+     */
+    vector<TIPO_DOS_DADOS> excluirRegistrosComAChave(TIPO_DAS_CHAVES chave);
+
+    /**
      * @brief Imprime, na saída padrão, uma representação vertical da árvore.
      * A saída é similar à do comando "tree /f" do windows.
      */
-    void print();
+    void mostrar();
 
-    void printHorizontal(Pagina *paginaAuxiliar, file_pointer_type endereco)
+    void mostrarCentral(
+        Pagina *paginaAuxiliar, file_ptr_type endereco,
+        bool mostrarOsDados,
+        string delimitadorEntreOPonteiroEAChave,
+        string delimitadorEntreODadoEOPonteiro,
+        string delimitadorEntreAChaveEODado)
     {
         if (carregar(paginaAuxiliar, endereco))
         {
-            cout << endl << *paginaAuxiliar;
+            cout << endl;
+            paginaAuxiliar->mostrar(
+                cout, mostrarOsDados,
+                delimitadorEntreOPonteiroEAChave,
+                delimitadorEntreODadoEOPonteiro,
+                delimitadorEntreAChaveEODado);
 
             auto ponteiros = paginaAuxiliar->ponteiros;
 
@@ -574,15 +697,28 @@ public:
             {
                 if (i != constantes::ptrNuloPagina)
                 {
-                    printHorizontal(paginaAuxiliar, i);
+                    mostrarCentral(
+                        paginaAuxiliar, i, mostrarOsDados,
+                        delimitadorEntreOPonteiroEAChave,
+                        delimitadorEntreODadoEOPonteiro,
+                        delimitadorEntreAChaveEODado);
                 }
             }
         }
     }
 
-    void printHorizontal()
+    void mostrarCentral(
+        bool mostrarOsDados = false,
+        string delimitadorEntreOPonteiroEAChave = " (",
+        string delimitadorEntreODadoEOPonteiro = ") ",
+        string delimitadorEntreAChaveEODado = ", ")
     {
         cout << "Raiz:" << endl;
-        printHorizontal(paginaIrmaPai, lerEnderecoDaRaiz());
+        mostrarCentral(
+            paginaIrmaPai, lerEnderecoDaRaiz(),
+            mostrarOsDados,
+            delimitadorEntreOPonteiroEAChave,
+            delimitadorEntreODadoEOPonteiro,
+            delimitadorEntreAChaveEODado);
     }
 };

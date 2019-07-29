@@ -92,9 +92,13 @@ int main()
     arvore.inserir(600, one);
     arvore.inserir(50, one);
     arvore.inserir(12, one);
+    one.nome = "x";
     arvore.inserir(4, one);
 
-    arvore.printHorizontal();
+    arvore.mostrarCentral();
+
+    Student &&me = arvore.pesquisar(4);
+    cout << me << endl;
 
     return 0;
 }

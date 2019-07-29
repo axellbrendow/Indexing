@@ -9,7 +9,6 @@
 #pragma once
 
 #include "tipos.hpp"
-#include "debug.hpp"
 #include "../streams/DataOutputStream.hpp"
 #include "../streams/DataInputStream.hpp"
 
