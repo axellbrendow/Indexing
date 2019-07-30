@@ -233,6 +233,18 @@ public:
     }
 
     /**
+     * @brief Checa se esta página é uma folha.
+     * 
+     * @return true Caso a página esteja vazia ou o primeiro ponteiro dela seja nulo.
+     * @return false Caso a página tenha algum elemento e o primeiro ponteiro não
+     * seja nulo.
+     */
+    bool eUmaFolha()
+    {
+        return vazia() || ponteiros[0] == constantes::ptrNuloPagina;
+    }
+
+    /**
      * @brief Zera a quantidade de elementos e limpa todos os vetores internos.
      */
     void limpar()
@@ -319,16 +331,21 @@ public:
      * @param paginaDestino Página destino.
      * @param indiceNoDestino Índice de inserção na página destino.
      * @param indiceLocal Índice do par (chave, dado) nesta página.
+     * @param excluirPonteiroDaEsquerda Indica se o ponteiro à esquerda do par
+     * deve ser excluído.
+     * @param excluirPonteiroDaDireita Indica se o ponteiro à direita do par
+     * deve ser excluído.
      */
-    void transferirElementoPara(Pagina *paginaDestino, int indiceNoDestino, int indiceLocal)
+    void transferirElementoPara(
+        Pagina *paginaDestino, int indiceNoDestino, int indiceLocal,
+        bool excluirPonteiroDaEsquerda = false, bool excluirPonteiroDaDireita = false)
     {
         paginaDestino->inserir(
             chaves[indiceLocal], dados[indiceLocal],
             indiceNoDestino /* , ponteiros[indiceLocal + 1] */
         );
 
-        chaves.erase(chaves.begin() + indiceLocal);
-        dados.erase(dados.begin() + indiceLocal);
+        excluir(indiceLocal, excluirPonteiroDaEsquerda, excluirPonteiroDaDireita);
         // ponteiros.erase(ponteiros.begin() + indiceLocal + 1);
     }
 
@@ -351,22 +368,11 @@ public:
         Pagina *paginaDestino, int indice, Pagina *exPaginaCheia,
         Pagina *novaPagina, bool promoverElementoDoFim, fstream &arquivo)
     {
-        // Checa se a ex página cheia será afetada na promoção
-        if (promoverElementoDoFim)
-        {
-            exPaginaCheia->ponteiros.erase(exPaginaCheia->ponteiros.end() - 1);
+        int indiceLocal = promoverElementoDoFim ? numeroDeElementos - 1 : 0;
 
-            transferirElementoPara(paginaDestino, indice, numeroDeElementos - 1);
-        }
-
-        else // A página nova será afetada na promoção
-        {
-            novaPagina->ponteiros.erase(novaPagina->ponteiros.begin());
-
-            transferirElementoPara(paginaDestino, indice, 0);
-        }
-
-        numeroDeElementos--;
+        transferirElementoPara(
+            paginaDestino, indice, indiceLocal,
+            !promoverElementoDoFim, promoverElementoDoFim);
 
         // atualiza as páginas no arquivo
         exPaginaCheia->colocarNoArquivo(arquivo);
@@ -458,6 +464,46 @@ public:
         }
 
         return endereco;
+    }
+
+    /**
+     * @brief Exclui o par (chave, dado) da página no índice informado. É possível
+     * excluir também o ponteiro à direita do par.
+     * 
+     * @param indiceDeExclusao Índice de exclusão.
+     * @param excluirPonteiroDaEsquerda Indica se o ponteiro à esquerda do par
+     * deve ser excluído.
+     * @param excluirPonteiroDaDireita Indica se o ponteiro à direita do par
+     * deve ser excluído.
+     * 
+     * @return true Caso tudo corra bem.
+     * @return false Caso a página esteja vazia ou o índice esteja fora do intervalo.
+     */
+    bool excluir(int indiceDeExclusao, bool excluirPonteiroDaEsquerda = false,
+        bool excluirPonteiroDaDireita = false)
+    {
+        // Só é possível excluir se a página não estiver vazia
+        bool sucesso = !vazia() && indiceDeExclusao < numeroDeElementos;
+
+        if (sucesso)
+        {
+            chaves.erase(chaves.begin() + indiceDeExclusao);
+            dados.erase(dados.begin() + indiceDeExclusao);
+
+            if (excluirPonteiroDaEsquerda)
+            {
+                ponteiros.erase(ponteiros.begin() + indiceDeExclusao);
+            }
+
+            if (excluirPonteiroDaDireita)
+            {
+                ponteiros.erase(ponteiros.begin() + indiceDeExclusao + 1);
+            }
+
+            numeroDeElementos--;
+        }
+
+        return sucesso;
     }
 
     /**

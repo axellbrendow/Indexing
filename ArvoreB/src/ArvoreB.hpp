@@ -264,6 +264,21 @@ protected:
     }
 
     /**
+     * @brief Obtém o endereço da página recebida por meio da propriedade endereço
+     * e o escreve no cabeçalho da árvore como o endereço da nova raiz.
+     * 
+     * @param novaRaiz Página com um endereço definido.
+     */
+    void trocarRaizPor(Pagina* novaRaiz)
+    {
+        if (novaRaiz->obterEndereco() != constantes::ptrNuloPagina)
+        {
+            arquivo.seekp(tamanhoCabecalhoAntesDoEnderecoDaRaiz);
+            arquivo << novaRaiz->obterEndereco();
+        }
+    }
+
+    /**
      * @brief Decide em qual página a chave deve ser inserida.
      * 
      * @param irma Página a ser criada.
@@ -285,6 +300,58 @@ protected:
     }
 
     /**
+     * @brief Exclui o primeiro registro que for encontrado com a chave informada.
+     * 
+     * @param chave Chave a ser procurada.
+     * @param pilhaDeEnderecos Uma pilha com todos os endereços de todas as páginas
+     * pelas quais a recursividade passou até o momento.
+     * @param pilhaDeIndices Uma pilha com todos os índices dos ponteiros que a
+     * recursividade tenha acessado para descer de uma página para a outra.
+     * 
+     * @return TIPO_DOS_DADOS Caso tudo corra bem, retorna o dado correspondente
+     * à chave. Caso contrário, retorna
+     * 
+     * @code{.cpp}
+     * TIPO_DOS_DADOS() // Ex.: se os dados são inteiros, retorna int(), que é 0.
+     * @endcode
+     * 
+     * Em casos onde a chave não é encontrada, uma flag interna é ativada. Dessa
+     * forma, você pode usar qualquer um dos dois ifs abaixo para checar erros:
+     * 
+     * @code{.cpp}
+     * if (ArvoreB.excluir(chave) == TIPO_DOS_DADOS()) ArvoreB.mostrarErro();
+     * if (ArvoreB.erro()) ArvoreB.mostrarErro();
+     * @endcode
+     */
+    TIPO_DOS_DADOS excluir(TIPO_DAS_CHAVES &chave,
+        list<file_ptr_type>& pilhaDeEnderecos,
+        list<int>& pilhaDeIndices)
+    {
+        TIPO_DOS_DADOS dadoExcluido;
+
+        // Após a função obterCaminhoDeDescida(), paginaFilha aponta para a última
+        // página carregada na descida da árvore (a página onde a chave for
+        // encontrada ou alguma folha).
+        int indiceDeDescida = paginaFilha->obterIndiceDeDescida(chave);
+
+        // Checa se a chave realmente foi encontrada
+        if (paginaFilha->chaves[indiceDeDescida] == chave)
+        {
+            if (paginaFilha->eUmaFolha())
+            {
+                if (paginaFilha->obterNumeroDeElementos() > numeroDeChavesPorPagina / 2)
+                {
+                    dadoExcluido = paginaFilha->dados[indiceDeDescida];
+                    paginaFilha->excluir(indiceDeDescida, false, true);
+                    paginaFilha->colocarNoArquivo(arquivo);
+                }
+            }
+        }
+
+        return dadoExcluido;
+    }
+
+    /**
      * @brief Cria a página irmã e transfere metade da página filha para ela.
      * 
      * @param filha Página a ser dividida.
@@ -302,21 +369,6 @@ protected:
         filha->transferirMetadePara(irma);
 
         return obterPaginaDeInsercao(irma, filha, chave);
-    }
-
-    /**
-     * @brief Obtém o endereço da página recebida por meio da propriedade endereço
-     * e o escreve no cabeçalho da árvore como o endereço da nova raiz.
-     * 
-     * @param novaRaiz Página com um endereço definido.
-     */
-    void trocarRaizPor(Pagina* novaRaiz)
-    {
-        if (novaRaiz->obterEndereco() != constantes::ptrNuloPagina)
-        {
-            arquivo.seekp(tamanhoCabecalhoAntesDoEnderecoDaRaiz);
-            arquivo << novaRaiz->obterEndereco();
-        }
     }
 
     /**
@@ -658,7 +710,15 @@ public:
      * if (ArvoreB.erro()) ArvoreB.mostrarErro();
      * @endcode
      */
-    TIPO_DOS_DADOS excluir(TIPO_DAS_CHAVES chave);
+    TIPO_DOS_DADOS excluir(TIPO_DAS_CHAVES chave)
+    {
+        // Faz todo o percurso de descida na árvore
+        auto parDoCaminho = obterCaminhoDeDescida(chave, 0, lerEnderecoDaRaiz());
+        auto& pilhaDeEnderecos = parDoCaminho.first;
+        auto& pilhaDeIndices = parDoCaminho.second;
+
+        return excluir(chave, pilhaDeEnderecos, pilhaDeIndices);
+    }
     
     /**
      * @brief Exclui todos os registros que forem encontrados com a chave informada.

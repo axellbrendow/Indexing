@@ -94,6 +94,7 @@ int main()
     arvore.inserir(12, one);
     one.nome = "x";
     arvore.inserir(4, one);
+    arvore.excluir(12);
 
     arvore.mostrarCentral();
 
