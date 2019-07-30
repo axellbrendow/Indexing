@@ -300,6 +300,49 @@ protected:
     }
 
     /**
+     * @brief Tenta pegar uma chave da página no endereço informado e colocar na
+     * paginaFilha.
+     * 
+     * @param enderecoDaPagina Endereço da página que perderá uma chave.
+     * @param indiceDeDescida Índice do ponteiro na página pai que foi usado para
+     * chegar na paginaFilha
+     * @param pegarChaveDoFim Indica se a chave a ser pega fica no fim da página
+     * do endereço informado ou no início.
+     * 
+     * @return true Caso a chave seja transferida com sucesso.
+     * @return false Caso a chave não seja transferida.
+     */
+    bool pegarChaveDaPagina(
+        file_ptr_type enderecoDaPagina, int indiceDeDescida, bool pegarChaveDoFim)
+    {
+        bool sucesso = false;
+
+        if (carregar(paginaIrma, enderecoDaPagina) &&
+            paginaIrma->tamanho() > numeroDeChavesPorPagina / 2)
+        {
+            int indiceDaChavePai =
+                pegarChaveDoFim ? indiceDeDescida - 1 : indiceDeDescida;
+
+            int indiceNaPaginaIrma = pegarChaveDoFim ? paginaIrma->tamanho() - 1 : 0;
+            int indiceNaPaginaFilha = pegarChaveDoFim ? 0 : paginaFilha->tamanho();
+
+            paginaPai->transferirElementoPara(
+                paginaFilha, indiceNaPaginaFilha, indiceDaChavePai);
+
+            paginaIrma->transferirElementoPara(
+                paginaPai, indiceDaChavePai, indiceNaPaginaIrma,
+                !pegarChaveDoFim, pegarChaveDoFim, false);
+
+            paginaPai->colocarNoArquivo(arquivo);
+            paginaIrma->colocarNoArquivo(arquivo);
+
+            sucesso = true;
+        }
+        
+        return sucesso;
+    }
+
+    /**
      * @brief Exclui o primeiro registro que for encontrado com a chave informada.
      * 
      * @param chave Chave a ser procurada.
@@ -332,19 +375,33 @@ protected:
         // Após a função obterCaminhoDeDescida(), paginaFilha aponta para a última
         // página carregada na descida da árvore (a página onde a chave for
         // encontrada ou alguma folha).
-        int indiceDeDescida = paginaFilha->obterIndiceDeDescida(chave);
+        int indiceDaChave = paginaFilha->obterIndiceDeDescida(chave);
 
         // Checa se a chave realmente foi encontrada
-        if (paginaFilha->chaves[indiceDeDescida] == chave)
+        if (paginaFilha->chaves[indiceDaChave] == chave)
         {
+            dadoExcluido = paginaFilha->dados[indiceDaChave];
+
             if (paginaFilha->eUmaFolha())
             {
-                if (paginaFilha->obterNumeroDeElementos() > numeroDeChavesPorPagina / 2)
+                paginaFilha->excluir(indiceDaChave, false, true);
+
+                if (paginaFilha->tamanho() + 1 <= numeroDeChavesPorPagina / 2)
                 {
-                    dadoExcluido = paginaFilha->dados[indiceDeDescida];
-                    paginaFilha->excluir(indiceDeDescida, false, true);
-                    paginaFilha->colocarNoArquivo(arquivo);
+                    // Obtém o índice do ponteiro na página pai que foi usado para
+                    // chegar na paginaFilha
+                    int indiceDeDescida = pilhaDeIndices.back();
+                    bool pegouEmprestado = indiceDeDescida > 0 &&
+                        pegarChaveDaPagina(paginaPai->ponteiros[indiceDeDescida - 1],
+                            indiceDeDescida, true);
+                    
+                    pegouEmprestado = pegouEmprestado ||
+                        indiceDeDescida < paginaPai->tamanho() &&
+                        pegarChaveDaPagina(paginaPai->ponteiros[indiceDeDescida + 1],
+                            indiceDeDescida, false);
                 }
+
+                paginaFilha->colocarNoArquivo(arquivo);
             }
         }
 
@@ -612,7 +669,7 @@ public:
         // paginaFilha é a última página do percurso.
         int indiceDaChave = paginaFilha->obterIndiceDeDescida(chave);
 
-        if (indiceDaChave == paginaFilha->obterNumeroDeElementos() ||
+        if (indiceDaChave == paginaFilha->tamanho() ||
             paginaFilha->chaves[indiceDaChave] != chave)
         {
             atribuirErro("A chave não foi encontrada");

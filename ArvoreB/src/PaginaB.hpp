@@ -42,7 +42,7 @@ class PaginaB : public Serializavel
 protected:
     // ------------------------- Campos
 
-    int numeroDeElementos;
+    int _tamanho;
     int maximoDeBytesParaAChave;
     int maximoDeBytesParaODado;
     int numeroDeChavesPorPagina;
@@ -66,7 +66,7 @@ public:
 
     // ------------------------- Construtores
 
-    PaginaB() : numeroDeElementos(0), endereco(constantes::ptrNuloPagina) {}
+    PaginaB() : _tamanho(0), endereco(constantes::ptrNuloPagina) {}
 
     /**
      * @brief Constrói uma nova página com a ordem informada.
@@ -81,7 +81,7 @@ public:
             int maximoDeBytesParaAChave,
             int maximoDeBytesParaODado) :
 
-            numeroDeElementos(0),
+            _tamanho(0),
             maximoDeBytesParaAChave(maximoDeBytesParaAChave),
             maximoDeBytesParaODado(maximoDeBytesParaODado),
             numeroDeChavesPorPagina(ordemDaArvore - 1),
@@ -128,7 +128,7 @@ public:
     virtual int obterTamanhoMaximoEmBytes() override
     {
         // bytes para guardar a quantidade de elementos na página
-        return sizeof(decltype(numeroDeElementos)) + // falta link aqui
+        return sizeof(decltype(_tamanho)) + // falta link aqui
                ordemDaArvore * sizeof(file_ptr_type) + // bytes para os ponteiros
                numeroDeChavesPorPagina * maximoDeBytesParaAChave + // bytes para as chaves
                numeroDeChavesPorPagina * maximoDeBytesParaODado; // bytes para os dados
@@ -140,9 +140,9 @@ public:
         TIPO_DOS_DADOS *dado;
         file_ptr_type ponteiro = ponteiros[0];
 
-        out << numeroDeElementos << ponteiro;
+        out << _tamanho << ponteiro;
 
-        for (size_t i = 0; i < numeroDeElementos; i++)
+        for (size_t i = 0; i < _tamanho; i++)
         {
             chave = &chaves[i];
             dado = &dados[i];
@@ -164,10 +164,10 @@ public:
         TIPO_DOS_DADOS dado;
         file_ptr_type ponteiro;
 
-        input >> numeroDeElementos >> ponteiro;
+        input >> _tamanho >> ponteiro;
         ponteiros.push_back(ponteiro);
 
-        for (size_t i = 0; i < numeroDeElementos; i++)
+        for (size_t i = 0; i < _tamanho; i++)
         {
             input >> chave;
             input >> dado;
@@ -195,9 +195,9 @@ public:
      * 
      * @return int O número de elementos da página.
      */
-    int obterNumeroDeElementos()
+    int tamanho()
     {
-        return numeroDeElementos;
+        return _tamanho;
     }
 
     /**
@@ -218,7 +218,7 @@ public:
      */
     bool vazia()
     {
-        return numeroDeElementos == 0;
+        return _tamanho == 0;
     }
 
     /**
@@ -229,7 +229,7 @@ public:
      */
     bool cheia()
     {
-        return numeroDeElementos == numeroDeChavesPorPagina;
+        return _tamanho == numeroDeChavesPorPagina;
     }
 
     /**
@@ -249,7 +249,7 @@ public:
      */
     void limpar()
     {
-        numeroDeElementos = 0;
+        _tamanho = 0;
         endereco = constantes::ptrNuloPagina;
 
         chaves.clear();
@@ -282,12 +282,15 @@ public:
      * @param dado Dado do par.
      * @param indiceDeInsercao Índice de inserção do par (chave, dado).
      * @param ponteiro Ponteiro à direita do par (chave, dado).
+     * @param inserirPonteiroADireita Indica se o ponteiro à direita do par
+     * realmente deve ser criado.
      * 
      * @return true Caso tudo corra bem.
      * @return false Caso a página esteja cheia.
      */
     bool inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado, int indiceDeInsercao,
-                 file_ptr_type ponteiro = constantes::ptrNuloPagina)
+                 file_ptr_type ponteiro = constantes::ptrNuloPagina,
+                 bool inserirPonteiroADireita = true)
     {
         bool sucesso = !cheia(); // Só é possível inserir se a página não estiver cheia
 
@@ -295,9 +298,13 @@ public:
         {
             chaves.insert(chaves.begin() + indiceDeInsercao, chave);
             dados.insert(dados.begin() + indiceDeInsercao, dado);
-            ponteiros.insert(ponteiros.begin() + indiceDeInsercao + 1, ponteiro);
 
-            numeroDeElementos++;
+            if (inserirPonteiroADireita)
+            {
+                ponteiros.insert(ponteiros.begin() + indiceDeInsercao + 1, ponteiro);
+            }
+            
+            _tamanho++;
         }
 
         return sucesso;
@@ -326,7 +333,7 @@ public:
 
     /**
      * @brief Pega o par (chave, dado) no indiceLocal e a insere no indiceNoDestino
-     * da paginaDestino. Após isso, remove o par e o seu desta página.
+     * da paginaDestino. Após isso, remove o par desta página.
      * 
      * @param paginaDestino Página destino.
      * @param indiceNoDestino Índice de inserção na página destino.
@@ -335,18 +342,21 @@ public:
      * deve ser excluído.
      * @param excluirPonteiroDaDireita Indica se o ponteiro à direita do par
      * deve ser excluído.
+     * @param inserirPonteiroADireita Indica se o ponteiro à direita do par
+     * realmente deve ser criado na paginaDestino.
      */
     void transferirElementoPara(
         Pagina *paginaDestino, int indiceNoDestino, int indiceLocal,
-        bool excluirPonteiroDaEsquerda = false, bool excluirPonteiroDaDireita = false)
+        bool excluirPonteiroDaEsquerda = false, bool excluirPonteiroDaDireita = false,
+        bool inserirPonteiroADireita = true)
     {
         paginaDestino->inserir(
             chaves[indiceLocal], dados[indiceLocal],
-            indiceNoDestino /* , ponteiros[indiceLocal + 1] */
+            indiceNoDestino, constantes::ptrNuloPagina,
+            inserirPonteiroADireita
         );
 
         excluir(indiceLocal, excluirPonteiroDaEsquerda, excluirPonteiroDaDireita);
-        // ponteiros.erase(ponteiros.begin() + indiceLocal + 1);
     }
 
     /**
@@ -368,7 +378,7 @@ public:
         Pagina *paginaDestino, int indice, Pagina *exPaginaCheia,
         Pagina *novaPagina, bool promoverElementoDoFim, fstream &arquivo)
     {
-        int indiceLocal = promoverElementoDoFim ? numeroDeElementos - 1 : 0;
+        int indiceLocal = promoverElementoDoFim ? _tamanho - 1 : 0;
 
         transferirElementoPara(
             paginaDestino, indice, indiceLocal,
@@ -420,7 +430,7 @@ public:
      */
     void transferirMetadePara(Pagina *paginaDestino)
     {
-        int quantidadeRemovida = numeroDeElementos / 2;
+        int quantidadeRemovida = _tamanho / 2;
 
         transferirMetadePara(paginaDestino->chaves, chaves, quantidadeRemovida);
         transferirMetadePara(paginaDestino->dados, dados, quantidadeRemovida);
@@ -432,8 +442,8 @@ public:
             paginaDestino->ponteiros.begin(),
             ponteiros.back());
 
-        numeroDeElementos -= quantidadeRemovida;
-        paginaDestino->numeroDeElementos += quantidadeRemovida;
+        _tamanho -= quantidadeRemovida;
+        paginaDestino->_tamanho += quantidadeRemovida;
     }
 
     /**
@@ -483,7 +493,7 @@ public:
         bool excluirPonteiroDaDireita = false)
     {
         // Só é possível excluir se a página não estiver vazia
-        bool sucesso = !vazia() && indiceDeExclusao < numeroDeElementos;
+        bool sucesso = !vazia() && indiceDeExclusao < _tamanho;
 
         if (sucesso)
         {
@@ -500,7 +510,7 @@ public:
                 ponteiros.erase(ponteiros.begin() + indiceDeExclusao + 1);
             }
 
-            numeroDeElementos--;
+            _tamanho--;
         }
 
         return sucesso;
@@ -541,7 +551,7 @@ public:
 
             if (mostrarOsDados)
             {
-                for (size_t i = 0; i < numeroDeElementos; i++)
+                for (size_t i = 0; i < _tamanho; i++)
                 {
                     ostream << delimitadorEntreOPonteiroEAChave << chaves[i];
                     ostream << delimitadorEntreAChaveEODado << dados[i];
@@ -551,7 +561,7 @@ public:
 
             else
             {
-                for (size_t i = 0; i < numeroDeElementos; i++)
+                for (size_t i = 0; i < _tamanho; i++)
                 {
                     ostream << delimitadorEntreOPonteiroEAChave << chaves[i];
                     ostream << delimitadorEntreODadoEOPonteiro << (long) ponteiros[i + 1];

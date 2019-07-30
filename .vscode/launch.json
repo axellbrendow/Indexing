@@ -8,13 +8,14 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "\"${workspaceFolder}/ArvoreB/src/mytest.exe\"",
+            "program": "${workspaceFolder}/ArvoreB/src/mytest.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/ArvoreB/src",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
+            //"miDebuggerPath": "C:/Users/1137910/gdb.exe",
             "miDebuggerPath": "C:\\cygwin64\\bin\\gdb.exe",
             "setupCommands": [
                 {
