@@ -128,6 +128,9 @@ Membros públicos</h2></td></tr>
 <tr class="memitem:a0766efe0d6c72cb06b8be90471de3cd6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a0766efe0d6c72cb06b8be90471de3cd6">cheia</a> ()</td></tr>
 <tr class="memdesc:a0766efe0d6c72cb06b8be90471de3cd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checa se a página está cheia.  <a href="#a0766efe0d6c72cb06b8be90471de3cd6">Mais...</a><br /></td></tr>
 <tr class="separator:a0766efe0d6c72cb06b8be90471de3cd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28ff4b1604263c0c39af9786d391096b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a28ff4b1604263c0c39af9786d391096b">eUmaFolha</a> ()</td></tr>
+<tr class="memdesc:a28ff4b1604263c0c39af9786d391096b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checa se esta página é uma folha.  <a href="#a28ff4b1604263c0c39af9786d391096b">Mais...</a><br /></td></tr>
+<tr class="separator:a28ff4b1604263c0c39af9786d391096b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0b071d3f038a3716fc3fcaa2b8f057c2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a0b071d3f038a3716fc3fcaa2b8f057c2">limpar</a> ()</td></tr>
 <tr class="memdesc:a0b071d3f038a3716fc3fcaa2b8f057c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zera a quantidade de elementos e limpa todos os vetores internos.  <a href="#a0b071d3f038a3716fc3fcaa2b8f057c2">Mais...</a><br /></td></tr>
 <tr class="separator:a0b071d3f038a3716fc3fcaa2b8f057c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -140,9 +143,9 @@ Membros públicos</h2></td></tr>
 <tr class="memitem:a65d0f139f16256a85da09312adfc52e0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a65d0f139f16256a85da09312adfc52e0">inserir</a> (TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)</td></tr>
 <tr class="memdesc:a65d0f139f16256a85da09312adfc52e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insere o par (chave, dado) na página de forma ordenada.  <a href="#a65d0f139f16256a85da09312adfc52e0">Mais...</a><br /></td></tr>
 <tr class="separator:a65d0f139f16256a85da09312adfc52e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a778385010bd675c0b47c88bba45620a8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a778385010bd675c0b47c88bba45620a8">transferirElementoPara</a> (<a class="el" href="class_pagina_b.html#a0abe8feb25bb6cbd273f1663eab1d324">Pagina</a> *paginaDestino, int indiceNoDestino, int indiceLocal)</td></tr>
-<tr class="memdesc:a778385010bd675c0b47c88bba45620a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pega o par (chave, dado) no indiceLocal e a insere no indiceNoDestino da paginaDestino. Após isso, remove o par e o seu desta página.  <a href="#a778385010bd675c0b47c88bba45620a8">Mais...</a><br /></td></tr>
-<tr class="separator:a778385010bd675c0b47c88bba45620a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d9cd8462a6ed2fc32719446cac6d2ca"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a5d9cd8462a6ed2fc32719446cac6d2ca">transferirElementoPara</a> (<a class="el" href="class_pagina_b.html#a0abe8feb25bb6cbd273f1663eab1d324">Pagina</a> *paginaDestino, int indiceNoDestino, int indiceLocal, bool excluirPonteiroDaEsquerda=false, bool excluirPonteiroDaDireita=false)</td></tr>
+<tr class="memdesc:a5d9cd8462a6ed2fc32719446cac6d2ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pega o par (chave, dado) no indiceLocal e a insere no indiceNoDestino da paginaDestino. Após isso, remove o par e o seu desta página.  <a href="#a5d9cd8462a6ed2fc32719446cac6d2ca">Mais...</a><br /></td></tr>
+<tr class="separator:a5d9cd8462a6ed2fc32719446cac6d2ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a71a8be6fc88db595d69b4265fddee146"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a71a8be6fc88db595d69b4265fddee146">promoverElementoPara</a> (<a class="el" href="class_pagina_b.html#a0abe8feb25bb6cbd273f1663eab1d324">Pagina</a> *paginaDestino, int indice, <a class="el" href="class_pagina_b.html#a0abe8feb25bb6cbd273f1663eab1d324">Pagina</a> *exPaginaCheia, <a class="el" href="class_pagina_b.html#a0abe8feb25bb6cbd273f1663eab1d324">Pagina</a> *novaPagina, bool promoverElementoDoFim, fstream &amp;arquivo)</td></tr>
 <tr class="memdesc:a71a8be6fc88db595d69b4265fddee146"><td class="mdescLeft">&#160;</td><td class="mdescRight">Caso a inserção do par (chave, dado) tenha acontecido na nova página, o primeiro elemento dela deve ser promovido (o mais à esquerda). Caso a inserção tenha acontecido na página que estava cheia, o último elemento dela deve ser promovido (o mais à direita).  <a href="#a71a8be6fc88db595d69b4265fddee146">Mais...</a><br /></td></tr>
 <tr class="separator:a71a8be6fc88db595d69b4265fddee146"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -156,6 +159,9 @@ Membros públicos</h2></td></tr>
 <tr class="memitem:a4e308d3f2905e6f0e925317b5b1b7e83"><td class="memItemLeft" align="right" valign="top"><a class="el" href="tipos_8hpp.html#ab29579b2e0823b94933bba3153b61f55">file_ptr_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a4e308d3f2905e6f0e925317b5b1b7e83">colocarNoArquivo</a> (fstream &amp;arquivo)</td></tr>
 <tr class="memdesc:a4e308d3f2905e6f0e925317b5b1b7e83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atualiza a página no arquivo caso ela já tenha um endereço. Caso contrário, adiciona-a ao final do arquivo.  <a href="#a4e308d3f2905e6f0e925317b5b1b7e83">Mais...</a><br /></td></tr>
 <tr class="separator:a4e308d3f2905e6f0e925317b5b1b7e83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb6188544b6842983afeaf8b9cbb0511"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#aeb6188544b6842983afeaf8b9cbb0511">excluir</a> (int indiceDeExclusao, bool excluirPonteiroDaEsquerda=false, bool excluirPonteiroDaDireita=false)</td></tr>
+<tr class="memdesc:aeb6188544b6842983afeaf8b9cbb0511"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exclui o par (chave, dado) da página no índice informado. É possível excluir também o ponteiro à direita do par.  <a href="#aeb6188544b6842983afeaf8b9cbb0511">Mais...</a><br /></td></tr>
+<tr class="separator:aeb6188544b6842983afeaf8b9cbb0511"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afb7c7a7f33736dfa299f083b11817151"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#afb7c7a7f33736dfa299f083b11817151">mostrar</a> (ostream &amp;ostream=cout, bool mostrarOsDados=false, string delimitadorEntreOPonteiroEAChave=&quot; (&quot;, string delimitadorEntreODadoEOPonteiro=&quot;) &quot;, string delimitadorEntreAChaveEODado=&quot;, &quot;)</td></tr>
 <tr class="memdesc:afb7c7a7f33736dfa299f083b11817151"><td class="mdescLeft">&#160;</td><td class="mdescRight">Imprime, na output stream recebida, cada elemento da página gerando o seguinte formato:  <a href="#afb7c7a7f33736dfa299f083b11817151">Mais...</a><br /></td></tr>
 <tr class="separator:afb7c7a7f33736dfa299f083b11817151"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -467,6 +473,95 @@ template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Retorna</dt><dd>file_ptr_type constantes::ptrNuloPagina caso haja algum erro. Caso contrário, retorna o endereço no qual a página foi colocada. </dd></dl>
+
+</div>
+</div>
+<a id="a28ff4b1604263c0c39af9786d391096b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a28ff4b1604263c0c39af9786d391096b">&#9670;&nbsp;</a></span>eUmaFolha()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_pagina_b.html">PaginaB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::eUmaFolha </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checa se esta página é uma folha. </p>
+<dl class="section return"><dt>Retorna</dt><dd>true Caso a página esteja vazia ou o primeiro ponteiro dela seja nulo. </dd>
+<dd>
+false Caso a página tenha algum elemento e o primeiro ponteiro não seja nulo. </dd></dl>
+
+</div>
+</div>
+<a id="aeb6188544b6842983afeaf8b9cbb0511"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb6188544b6842983afeaf8b9cbb0511">&#9670;&nbsp;</a></span>excluir()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_pagina_b.html">PaginaB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::excluir </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>indiceDeExclusao</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>excluirPonteiroDaEsquerda</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>excluirPonteiroDaDireita</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Exclui o par (chave, dado) da página no índice informado. É possível excluir também o ponteiro à direita do par. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">indiceDeExclusao</td><td>Índice de exclusão. </td></tr>
+    <tr><td class="paramname">excluirPonteiroDaEsquerda</td><td>Indica se o ponteiro à esquerda do par deve ser excluído. </td></tr>
+    <tr><td class="paramname">excluirPonteiroDaDireita</td><td>Indica se o ponteiro à direita do par deve ser excluído.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Retorna</dt><dd>true Caso tudo corra bem. </dd>
+<dd>
+false Caso a página esteja vazia ou o índice esteja fora do intervalo. </dd></dl>
 
 </div>
 </div>
@@ -994,8 +1089,8 @@ template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
 
 </div>
 </div>
-<a id="a778385010bd675c0b47c88bba45620a8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a778385010bd675c0b47c88bba45620a8">&#9670;&nbsp;</a></span>transferirElementoPara()</h2>
+<a id="a5d9cd8462a6ed2fc32719446cac6d2ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d9cd8462a6ed2fc32719446cac6d2ca">&#9670;&nbsp;</a></span>transferirElementoPara()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1021,7 +1116,19 @@ template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>indiceLocal</em>&#160;</td>
+          <td class="paramname"><em>indiceLocal</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>excluirPonteiroDaEsquerda</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>excluirPonteiroDaDireita</em> = <code>false</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1042,6 +1149,8 @@ template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
     <tr><td class="paramname">paginaDestino</td><td>Página destino. </td></tr>
     <tr><td class="paramname">indiceNoDestino</td><td>Índice de inserção na página destino. </td></tr>
     <tr><td class="paramname">indiceLocal</td><td>Índice do par (chave, dado) nesta página. </td></tr>
+    <tr><td class="paramname">excluirPonteiroDaEsquerda</td><td>Indica se o ponteiro à esquerda do par deve ser excluído. </td></tr>
+    <tr><td class="paramname">excluirPonteiroDaDireita</td><td>Indica se o ponteiro à direita do par deve ser excluído. </td></tr>
   </table>
   </dd>
 </dl>

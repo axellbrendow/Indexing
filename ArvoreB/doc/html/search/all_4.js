@@ -10,6 +10,7 @@ var searchData=
   ['escreverporponteiro',['escreverPorPonteiro',['../class_data_output_stream.html#ac0434adf332ec21850fd5af2b0e51a51',1,'DataOutputStream']]],
   ['escreverstring',['escreverString',['../class_data_output_stream.html#a28ce9f9f4f07d1b239a78d6238f71cb3',1,'DataOutputStream']]],
   ['estanofim',['estaNoFim',['../class_data_input_stream.html#ab22799197ee082fce520a4455759ce45',1,'DataInputStream']]],
-  ['excluir',['excluir',['../class_arvore_b.html#a7426cc32f204237a504c5f0b47381856',1,'ArvoreB::excluir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)'],['../class_arvore_b.html#aa0298f02f5882698733c138a589c8c81',1,'ArvoreB::excluir(TIPO_DAS_CHAVES chave)']]],
+  ['eumafolha',['eUmaFolha',['../class_pagina_b.html#a28ff4b1604263c0c39af9786d391096b',1,'PaginaB']]],
+  ['excluir',['excluir',['../class_arvore_b.html#aa1af41abd3aa0422bd8f0d1061ad324d',1,'ArvoreB::excluir(TIPO_DAS_CHAVES &amp;chave, list&lt; file_ptr_type &gt; &amp;pilhaDeEnderecos, list&lt; int &gt; &amp;pilhaDeIndices)'],['../class_arvore_b.html#a7426cc32f204237a504c5f0b47381856',1,'ArvoreB::excluir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)'],['../class_arvore_b.html#aa0298f02f5882698733c138a589c8c81',1,'ArvoreB::excluir(TIPO_DAS_CHAVES chave)'],['../class_pagina_b.html#aeb6188544b6842983afeaf8b9cbb0511',1,'PaginaB::excluir()']]],
   ['excluirregistroscomachave',['excluirRegistrosComAChave',['../class_arvore_b.html#a83152deaf79b3c4e6d73d8f8be483cef',1,'ArvoreB']]]
 ];
