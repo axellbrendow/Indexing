@@ -546,7 +546,7 @@ public:
     {
         if (!vazia())
         {
-            ostream << "Endereco: " << (long) endereco << endl;
+            ostream << "Arquivo[" << (long) endereco << "] = ";
             ostream << (long) ponteiros[0];
 
             if (mostrarOsDados)

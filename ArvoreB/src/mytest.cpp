@@ -95,7 +95,6 @@ int main()
     one.nome = "x";
     arvore.inserir(4, one);
     arvore.excluir(12);
-    arvore.inserir(300, one);
     arvore.excluir(4);
 
     arvore.mostrarCentral();

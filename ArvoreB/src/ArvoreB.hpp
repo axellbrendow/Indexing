@@ -343,6 +343,51 @@ protected:
     }
 
     /**
+     * @brief Funde a paginaFilha com uma de suas irmãs e também com a chave na
+     * página pai.
+     * 
+     * @param enderecoDaPagina Endereço da página a ser fundida com a paginaFilha.
+     * @param indiceDeDescida Índice do ponteiro na página pai que foi usado para
+     * chegar na paginaFilha
+     * @param fundirDireita Indica se a fusão da paginaFilha será com a sua irmã
+     * da direita.
+     * 
+     * @return true Caso a fusão ocorra com sucesso.
+     * @return false Caso a fusão não ocorra.
+     */
+    bool fundirCom(
+        file_ptr_type enderecoDaPagina, int indiceDeDescida, bool fundirDireita)
+    {
+        bool sucesso = false;
+
+        if (carregar(paginaIrma, enderecoDaPagina))
+        {
+            if (fundirDireita)
+            {
+                paginaPai->transferirElementoPara(
+                    paginaFilha, paginaFilha->tamanho(), indiceDeDescida, false, true);
+                    
+                paginaIrma->transferirTudoPara(paginaFilha);
+            }
+
+            else
+            {
+                paginaPai->transferirElementoPara(
+                    paginaIrma, paginaIrma->tamanho(), indiceDeDescida - 1, false, true);
+                    
+                paginaFilha->transferirTudoPara(paginaIrma);
+            }
+
+            paginaPai->colocarNoArquivo(arquivo);
+            paginaIrma->colocarNoArquivo(arquivo);
+
+            sucesso = true;
+        }
+        
+        return sucesso;
+    }
+
+    /**
      * @brief Exclui o primeiro registro que for encontrado com a chave informada.
      * 
      * @param chave Chave a ser procurada.
@@ -386,6 +431,7 @@ protected:
             {
                 paginaFilha->excluir(indiceDaChave, false, true);
 
+                // Checa se o tamanho da paginaFilha antes da remoção era <= a 50%
                 if (paginaFilha->tamanho() + 1 <= numeroDeChavesPorPagina / 2)
                 {
                     // Obtém o índice do ponteiro na página pai que foi usado para
@@ -399,6 +445,18 @@ protected:
                         indiceDeDescida < paginaPai->tamanho() &&
                         pegarChaveDaPagina(paginaPai->ponteiros[indiceDeDescida + 1],
                             indiceDeDescida, false);
+
+                    if (!pegouEmprestado) // Necessário fundir com alguém
+                    {
+                        bool fundiu = indiceDeDescida < paginaPai->tamanho() &&
+                            fundirCom(paginaPai->ponteiros[indiceDeDescida + 1],
+                                indiceDeDescida, true);
+                        
+                        fundiu = fundiu ||
+                            indiceDeDescida > 0 &&
+                            fundirCom(paginaPai->ponteiros[indiceDeDescida - 1],
+                                indiceDeDescida, false);
+                    }
                 }
 
                 paginaFilha->colocarNoArquivo(arquivo);
@@ -830,7 +888,7 @@ public:
         string delimitadorEntreODadoEOPonteiro = ") ",
         string delimitadorEntreAChaveEODado = ", ")
     {
-        cout << "Raiz:" << endl;
+        cout << "Raiz:";
         mostrarCentral(
             paginaIrmaPai, lerEnderecoDaRaiz(),
             mostrarOsDados,
