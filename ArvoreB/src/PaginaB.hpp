@@ -406,7 +406,7 @@ public:
      * @param quantidade Quantidade de dados.
      */
     template <typename ContainerFonte, typename ContainerDestino>
-    void transferirMetadePara(
+    void transferirPara(
         ContainerDestino &containerDestino,
         ContainerFonte &containerFonte, int quantidade)
     {
@@ -414,7 +414,7 @@ public:
         auto fim = containerFonte.end();
 
         containerDestino.insert( // move para o destino usando iteradores sobre a fonte
-            containerDestino.begin(),
+            containerDestino.end(),
             // move_iterator é usado para mover os elementos invés de copiá-los
             make_move_iterator(inicio),
             make_move_iterator(fim));
@@ -423,8 +423,25 @@ public:
     }
 
     /**
+     * @brief Transfere todas as chaves, dados e ponteiros para outra página.
+     * Esses dados são pegos da direita para a esquerda nesta página.
+     * 
+     * @param paginaDestino Página destino.
+     */
+    void transferirTudoPara(Pagina *paginaDestino)
+    {
+        transferirPara(paginaDestino->chaves, chaves, _tamanho);
+        transferirPara(paginaDestino->dados, dados, _tamanho);
+        transferirPara(paginaDestino->ponteiros, ponteiros, _tamanho + 1);
+
+        _tamanho -= _tamanho;
+        paginaDestino->_tamanho += _tamanho;
+    }
+
+    /**
      * @brief Transfere metade das chaves, dos dados e dos ponteiros (com 1 a mais)
-     * para outra página. Esses dados são pegos da direita para a esquerda.
+     * para outra página. Esses dados são pegos da direita para a esquerda nesta
+     * página.
      * 
      * @param paginaDestino Página destino.
      */
@@ -432,9 +449,9 @@ public:
     {
         int quantidadeRemovida = _tamanho / 2;
 
-        transferirMetadePara(paginaDestino->chaves, chaves, quantidadeRemovida);
-        transferirMetadePara(paginaDestino->dados, dados, quantidadeRemovida);
-        transferirMetadePara(paginaDestino->ponteiros, ponteiros, quantidadeRemovida);
+        transferirPara(paginaDestino->chaves, chaves, quantidadeRemovida);
+        transferirPara(paginaDestino->dados, dados, quantidadeRemovida);
+        transferirPara(paginaDestino->ponteiros, ponteiros, quantidadeRemovida);
 
         // Pega o último ponteiro desta página e cria uma cópia dele no início
         // da página de destino
