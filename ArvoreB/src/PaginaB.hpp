@@ -434,8 +434,8 @@ public:
         transferirPara(paginaDestino->dados, dados, _tamanho);
         transferirPara(paginaDestino->ponteiros, ponteiros, _tamanho + 1);
 
-        _tamanho -= _tamanho;
         paginaDestino->_tamanho += _tamanho;
+        _tamanho = 0;
     }
 
     /**
@@ -459,8 +459,8 @@ public:
             paginaDestino->ponteiros.begin(),
             ponteiros.back());
 
-        _tamanho -= quantidadeRemovida;
         paginaDestino->_tamanho += quantidadeRemovida;
+        _tamanho -= quantidadeRemovida;
     }
 
     /**
