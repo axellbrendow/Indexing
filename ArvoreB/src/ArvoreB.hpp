@@ -366,24 +366,6 @@ protected:
     }
 
     /**
-     * @brief Funde a paginaFilha uma de suas irmãs e com uma chave da página pai.
-     * 
-     * @param indiceDeDescida Índice do ponteiro na página pai que foi usado para
-     * chegar na paginaFilha.
-     */
-    void fundirPaginas(int indiceDeDescida)
-    {
-        bool fundiu = indiceDeDescida < paginaPai->tamanho() &&
-            fundirCom(paginaPai->ponteiros[indiceDeDescida + 1],
-                indiceDeDescida, true);
-        
-        fundiu = fundiu ||
-            indiceDeDescida > 0 &&
-            fundirCom(paginaPai->ponteiros[indiceDeDescida - 1],
-                indiceDeDescida, false);
-    }
-
-    /**
      * @brief Funde a paginaFilha com uma de suas irmãs e também com a chave na
      * página pai.
      * 
@@ -406,7 +388,7 @@ protected:
             if (fundirDireita)
             {
                 paginaPai->transferirElementoPara(
-                    paginaFilha, paginaFilha->tamanho(), indiceDeDescida, false, true);
+                    paginaFilha, paginaFilha->tamanho(), indiceDeDescida, false, true, false);
                     
                 paginaIrma->transferirTudoPara(paginaFilha);
             }
@@ -414,7 +396,7 @@ protected:
             else
             {
                 paginaPai->transferirElementoPara(
-                    paginaIrma, paginaIrma->tamanho(), indiceDeDescida - 1, false, true);
+                    paginaIrma, paginaIrma->tamanho(), indiceDeDescida - 1, false, true, false);
                     
                 paginaFilha->transferirTudoPara(paginaIrma);
             }
@@ -426,6 +408,24 @@ protected:
         }
         
         return sucesso;
+    }
+
+    /**
+     * @brief Funde a paginaFilha uma de suas irmãs e com uma chave da página pai.
+     * 
+     * @param indiceDeDescida Índice do ponteiro na página pai que foi usado para
+     * chegar na paginaFilha.
+     */
+    void fundirPaginas(int indiceDeDescida)
+    {
+        bool fundiu = indiceDeDescida < paginaPai->tamanho() &&
+            fundirCom(paginaPai->ponteiros[indiceDeDescida + 1],
+                indiceDeDescida, true);
+        
+        fundiu = fundiu ||
+            indiceDeDescida > 0 &&
+            fundirCom(paginaPai->ponteiros[indiceDeDescida - 1],
+                indiceDeDescida, false);
     }
 
     /**

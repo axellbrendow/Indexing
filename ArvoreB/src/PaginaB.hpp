@@ -398,20 +398,27 @@ public:
     }
 
     /**
-     * @brief Transfere a quantidade de dados informada do containerFonte, da direita
-     * para a esquerda, para o containerDestino.
+     * @brief Transfere a quantidade de dados informada do containerFonte para
+     * o containerDestino. A transferência pode ser feita começando a tirar
+     * elementos do final do containerFonte ou do início. Isso é controlado
+     * pelo parâmetro inicioParaOFim.
      * 
      * @param containerDestino Destino.
      * @param containerFonte Fonte.
      * @param quantidade Quantidade de dados.
+     * @param inicioParaOFim Indica se a transferência vai começar pelo início
+     * do containerFonte ou pelo fim.
      */
     template <typename ContainerFonte, typename ContainerDestino>
     void transferirPara(
         ContainerDestino &containerDestino,
-        ContainerFonte &containerFonte, int quantidade)
+        ContainerFonte &containerFonte,
+        int quantidade, bool inicioParaOFim = false)
     {
-        auto inicio = containerFonte.end() - quantidade;
-        auto fim = containerFonte.end();
+        auto inicio = inicioParaOFim ?
+            containerFonte.begin() : containerFonte.end() - quantidade;
+        auto fim = inicioParaOFim ?
+            inicio + quantidade : containerFonte.end();
 
         containerDestino.insert( // move para o destino usando iteradores sobre a fonte
             containerDestino.end(),
@@ -430,9 +437,9 @@ public:
      */
     void transferirTudoPara(Pagina *paginaDestino)
     {
-        transferirPara(paginaDestino->chaves, chaves, _tamanho);
-        transferirPara(paginaDestino->dados, dados, _tamanho);
-        transferirPara(paginaDestino->ponteiros, ponteiros, _tamanho + 1);
+        transferirPara(paginaDestino->chaves, chaves, _tamanho, true);
+        transferirPara(paginaDestino->dados, dados, _tamanho, true);
+        transferirPara(paginaDestino->ponteiros, ponteiros, _tamanho + 1, true);
 
         paginaDestino->_tamanho += _tamanho;
         _tamanho = 0;
