@@ -215,12 +215,13 @@ protected:
         if (carregar(paginaFilha, enderecoPaginaFilha))
         {
             int indiceDeDescida = paginaFilha->obterIndiceDeDescida(chave);
+            int indiceDaChave = indiceDeDescida == 0 ? 0 : indiceDeDescida - 1;
             file_ptr_type ponteiroDeDescida = paginaFilha->ponteiros[indiceDeDescida];
 
             // Checa se há ponteiro de descida e se a pesquisa deve ir
             // obrigatoriamente até uma folha ou se a chave não foi encontrada.
             if (ponteiroDeDescida != constantes::ptrNuloPagina &&
-                (irAteAFolha || paginaFilha->chaves[indiceDeDescida] != chave))
+                (irAteAFolha || paginaFilha->chaves[indiceDaChave] != chave))
             {
                 // A página filha passa a ser pai. O swap é necessário pois cada
                 // um desses ponteiros aponta para um objeto página concreto e a
