@@ -305,7 +305,7 @@ protected:
      * 
      * @param enderecoDaPagina Endereço da página que perderá uma chave.
      * @param indiceDeDescida Índice do ponteiro na página pai que foi usado para
-     * chegar na paginaFilha
+     * chegar na paginaFilha.
      * @param pegarChaveDoFim Indica se a chave a ser pega fica no fim da página
      * do endereço informado ou no início.
      * 
@@ -343,12 +343,53 @@ protected:
     }
 
     /**
+     * @brief Tenta pegar uma chave emprestada das páginas irmãs.
+     * 
+     * @param indiceDeDescida Índice do ponteiro na página pai que foi usado para
+     * chegar na paginaFilha.
+     * 
+     * @return true Caso uma chave tenha sido pega.
+     * @return false Caso as irmãs não puderem emprestar.
+     */
+    bool pegarChaveEmprestada(int indiceDeDescida)
+    {
+        bool pegouEmprestado = indiceDeDescida > 0 &&
+            pegarChaveDaPagina(paginaPai->ponteiros[indiceDeDescida - 1],
+                indiceDeDescida, true);
+        
+        pegouEmprestado = pegouEmprestado ||
+            indiceDeDescida < paginaPai->tamanho() &&
+            pegarChaveDaPagina(paginaPai->ponteiros[indiceDeDescida + 1],
+                indiceDeDescida, false);
+
+        return pegouEmprestado;
+    }
+
+    /**
+     * @brief Funde a paginaFilha uma de suas irmãs e com uma chave da página pai.
+     * 
+     * @param indiceDeDescida Índice do ponteiro na página pai que foi usado para
+     * chegar na paginaFilha.
+     */
+    void fundirPaginas(int indiceDeDescida)
+    {
+        bool fundiu = indiceDeDescida < paginaPai->tamanho() &&
+            fundirCom(paginaPai->ponteiros[indiceDeDescida + 1],
+                indiceDeDescida, true);
+        
+        fundiu = fundiu ||
+            indiceDeDescida > 0 &&
+            fundirCom(paginaPai->ponteiros[indiceDeDescida - 1],
+                indiceDeDescida, false);
+    }
+
+    /**
      * @brief Funde a paginaFilha com uma de suas irmãs e também com a chave na
      * página pai.
      * 
      * @param enderecoDaPagina Endereço da página a ser fundida com a paginaFilha.
      * @param indiceDeDescida Índice do ponteiro na página pai que foi usado para
-     * chegar na paginaFilha
+     * chegar na paginaFilha.
      * @param fundirDireita Indica se a fusão da paginaFilha será com a sua irmã
      * da direita.
      * 
@@ -412,14 +453,11 @@ protected:
      * @endcode
      */
     TIPO_DOS_DADOS excluir(TIPO_DAS_CHAVES &chave,
-        list<file_ptr_type>& pilhaDeEnderecos,
-        list<int>& pilhaDeIndices)
+        list<file_ptr_type>& pilhaDeEnderecos, list<int>& pilhaDeIndices)
     {
         TIPO_DOS_DADOS dadoExcluido;
-
-        // Após a função obterCaminhoDeDescida(), paginaFilha aponta para a última
-        // página carregada na descida da árvore (a página onde a chave for
-        // encontrada ou alguma folha).
+        // paginaFilha aponta para a última página carregada na descida da árvore
+        // (a página onde a chave foi encontrada ou alguma folha).
         int indiceDaChave = paginaFilha->obterIndiceDeDescida(chave);
 
         // Checa se a chave realmente foi encontrada
@@ -437,25 +475,23 @@ protected:
                     // Obtém o índice do ponteiro na página pai que foi usado para
                     // chegar na paginaFilha
                     int indiceDeDescida = pilhaDeIndices.back();
-                    bool pegouEmprestado = indiceDeDescida > 0 &&
-                        pegarChaveDaPagina(paginaPai->ponteiros[indiceDeDescida - 1],
-                            indiceDeDescida, true);
-                    
-                    pegouEmprestado = pegouEmprestado ||
-                        indiceDeDescida < paginaPai->tamanho() &&
-                        pegarChaveDaPagina(paginaPai->ponteiros[indiceDeDescida + 1],
-                            indiceDeDescida, false);
 
-                    if (!pegouEmprestado) // Necessário fundir com alguém
+                    if (!pegarChaveEmprestada(indiceDeDescida))
                     {
-                        bool fundiu = indiceDeDescida < paginaPai->tamanho() &&
-                            fundirCom(paginaPai->ponteiros[indiceDeDescida + 1],
-                                indiceDeDescida, true);
+                        fundirPaginas(indiceDeDescida);
+                        pilhaDeEnderecos.pop_back();
                         
-                        fundiu = fundiu ||
-                            indiceDeDescida > 0 &&
-                            fundirCom(paginaPai->ponteiros[indiceDeDescida - 1],
-                                indiceDeDescida, false);
+                        while (paginaPai->tamanho() < numeroDeChavesPorPagina / 2
+                            && pilhaDeEnderecos.size() > 1)
+                        {
+                            swap(paginaPai, paginaFilha);
+                            pilhaDeIndices.pop_back();
+                            pilhaDeEnderecos.pop_back();
+                            carregar(paginaPai, pilhaDeEnderecos.back());
+                            fundirPaginas(pilhaDeIndices.back());
+                        }
+
+                        if (pilhaDeEnderecos.size() == 1) trocarRaizPor(paginaFilha);
                     }
                 }
 

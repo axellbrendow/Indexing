@@ -1,0 +1,1 @@
+1 - As páginas que forem pais uma vez precisam ter seus ponteiros zerados caso a árvore tenha muitas exclusões.

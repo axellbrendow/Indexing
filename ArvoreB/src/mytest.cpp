@@ -96,6 +96,8 @@ int main()
     arvore.inserir(4, one);
     arvore.excluir(12);
     arvore.excluir(4);
+    arvore.excluir(600);
+    // arvore.excluir(400);
 
     arvore.mostrarCentral();
 
