@@ -492,7 +492,8 @@ protected:
                             fundirPaginas(pilhaDeIndices.back());
                         }
 
-                        if (pilhaDeEnderecos.size() == 1) trocarRaizPor(paginaFilha);
+                        if (pilhaDeEnderecos.size() == 1 && paginaPai->vazia())
+                            trocarRaizPor(paginaFilha);
                     }
                 }
 

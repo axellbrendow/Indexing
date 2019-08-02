@@ -98,6 +98,8 @@ int main()
     arvore.excluir(4);
     arvore.excluir(600);
     arvore.excluir(400);
+    arvore.excluir(50);
+    arvore.excluir(200);
 
     arvore.mostrarCentral();
 
