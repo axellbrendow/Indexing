@@ -389,7 +389,8 @@ protected:
             if (fundirDireita)
             {
                 paginaPai->transferirElementoPara(
-                    paginaFilha, paginaFilha->tamanho(), indiceDeDescida, false, true, false);
+                    paginaFilha, paginaFilha->tamanho(), indiceDeDescida,
+                    false, true, false);
                     
                 paginaIrma->transferirTudoPara(paginaFilha);
             }
@@ -397,7 +398,8 @@ protected:
             else
             {
                 paginaPai->transferirElementoPara(
-                    paginaIrma, paginaIrma->tamanho(), indiceDeDescida - 1, false, true, false);
+                    paginaIrma, paginaIrma->tamanho(), indiceDeDescida - 1,
+                    false, true, false);
                     
                 paginaFilha->transferirTudoPara(paginaIrma);
             }
@@ -412,7 +414,7 @@ protected:
     }
 
     /**
-     * @brief Funde a paginaFilha uma de suas irmãs e com uma chave da página pai.
+     * @brief Funde a paginaFilha com uma de suas irmãs e com uma chave da página pai.
      * 
      * @param indiceDeDescida Índice do ponteiro na página pai que foi usado para
      * chegar na paginaFilha.
@@ -429,6 +431,45 @@ protected:
                 indiceDeDescida, false);
     }
 
+    /**
+     * @brief Troca a chave no índice informado da paginaFilha pela sua antecessora.
+     * 
+     * @param indiceDaChave Índice da chave que será trocada pela sua antecessora.
+     * @param pilhaDeEnderecos Uma pilha com todos os endereços de todas as páginas
+     * pelas quais a recursividade passou até o momento.
+     * @param pilhaDeIndices Uma pilha com todos os índices dos ponteiros que a
+     * recursividade tenha acessado para descer de uma página para a outra.
+     */
+    void trocarChavePorAntecessora(int indiceDaChave,
+        list<file_ptr_type>& pilhaDeEnderecos, list<int>& pilhaDeIndices)
+    {
+        file_ptr_type enderecoFilha = paginaFilha->ponteiros[indiceDaChave];
+
+        swap(paginaPai, paginaFilha); // Guarda a página filha na página pai
+        carregar(paginaFilha, enderecoFilha);
+
+        pilhaDeEnderecos.push_back(enderecoFilha);
+        pilhaDeIndices.push_back(indiceDaChave);
+
+        while (!paginaFilha->eUmaFolha())
+        {
+            enderecoFilha = paginaFilha->ponteiros[paginaFilha->tamanho() + 1];
+            carregar(paginaFilha, enderecoFilha);
+
+            pilhaDeEnderecos.push_back(enderecoFilha);
+            pilhaDeIndices.push_back(paginaFilha->tamanho() + 1);
+        }
+
+        paginaFilha->swap(paginaFilha->tamanho() - 1, paginaPai, indiceDaChave);
+        // Salva as páginas cuja chaves foram trocadas
+        paginaPai->colocarNoArquivo(arquivo);
+        paginaFilha->colocarNoArquivo(arquivo);
+
+        pilhaDeEnderecos.pop_back(); // Retira o endereço da filha para recuperar a pai
+        carregar(paginaPai, pilhaDeEnderecos.back()); // Carrega a pai
+        pilhaDeEnderecos.push_back(enderecoFilha); // Volta com o endereço da filha
+    }
+    
     /**
      * @brief Exclui o primeiro registro que for encontrado com a chave informada.
      * 
@@ -498,6 +539,13 @@ protected:
                 }
 
                 paginaFilha->colocarNoArquivo(arquivo);
+            }
+
+            else
+            {
+                trocarChavePorAntecessora(
+                    indiceDaChave, pilhaDeEnderecos, pilhaDeIndices);
+                excluir(chave, pilhaDeEnderecos, pilhaDeIndices);
             }
         }
 

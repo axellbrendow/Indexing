@@ -100,6 +100,8 @@ int main()
     arvore.excluir(400);
     arvore.excluir(50);
     arvore.excluir(200);
+    arvore.excluir(2000);
+    arvore.excluir(1500);
 
     arvore.mostrarCentral();
 

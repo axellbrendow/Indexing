@@ -471,6 +471,22 @@ public:
     }
 
     /**
+     * @brief Troca o par (chave, dado) no indiceLocal com o par no indiceDestino.
+     * 
+     * @param indiceLocal Índice da chave e do dado nesta página.
+     * @param paginaDestino Página para onde o par deve ir.
+     * @param indiceDestino Índice para onde o par deve ir.
+     */
+    void swap(int indiceLocal, Pagina* paginaDestino, int indiceDestino)
+    {
+        iter_swap(chaves.begin() + indiceLocal,
+            paginaDestino->chaves.begin() + indiceDestino);
+
+        iter_swap(dados.begin() + indiceLocal,
+            paginaDestino->dados.begin() + indiceDestino);
+    }
+
+    /**
      * @brief Atualiza a página no arquivo caso ela já tenha um endereço. Caso
      * contrário, adiciona-a ao final do arquivo.
      * 
