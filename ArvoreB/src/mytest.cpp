@@ -103,7 +103,7 @@ int main()
     arvore.excluir(2000);
     arvore.excluir(1500);
 
-    arvore.mostrarCentral();
+    arvore.mostrarPre();
 
     Student &&me = arvore.pesquisar(4);
     cout << me << endl;

@@ -506,6 +506,7 @@ protected:
         if (paginaFilha->chaves[indiceDaChave] == chave)
         {
             dadoExcluido = paginaFilha->dados[indiceDaChave];
+            limparErro();
 
             if (paginaFilha->eUmaFolha())
             {
@@ -548,6 +549,8 @@ protected:
                 excluir(chave, pilhaDeEnderecos, pilhaDeIndices);
             }
         }
+
+        else atribuirErro("A chave não foi encontrada");
 
         return dadoExcluido;
     }
@@ -753,10 +756,10 @@ public:
         nomeDoArquivo(nomeDoArquivo),
         numeroDeChavesPorPagina(ordemDaArvore - 1),
         ordemDaArvore(ordemDaArvore),
-        paginaPai(new Pagina(ordemDaArvore) ),
-        paginaIrmaPai(new Pagina(ordemDaArvore) ),
-        paginaFilha(new Pagina(ordemDaArvore) ),
-        paginaIrma(new Pagina(ordemDaArvore) ),
+        paginaPai( new Pagina(ordemDaArvore) ),
+        paginaIrmaPai( new Pagina(ordemDaArvore) ),
+        paginaFilha( new Pagina(ordemDaArvore) ),
+        paginaIrma( new Pagina(ordemDaArvore) ),
         paginaPaiCopia(paginaPai), // Faz as cópias para poder usar o delete depois
         paginaIrmaPaiCopia(paginaIrmaPai),
         paginaFilhaCopia(paginaFilha),
@@ -829,15 +832,6 @@ public:
     }
 
     /**
-     * @brief Procura todos os registros que forem encontrados com a chave informada.
-     * 
-     * @param chave Chave a ser procurada.
-     * 
-     * @return vector<TIPO_DOS_DADOS> Vetor com cada dado correspondente à chave.
-     */
-    vector<TIPO_DOS_DADOS> listarDadosComAChave(TIPO_DAS_CHAVES chave);
-
-    /**
      * @brief Procura todos os registros que forem encontrados com a chave entre
      * as chaves informadas. Inclui as próprias chaves. O intervalo é
      * [chaveMenor, chaveMaior].
@@ -858,13 +852,19 @@ public:
         TIPO_DAS_CHAVES chaveMaior);
 
     /**
+     * @brief Procura todos os registros que forem encontrados com a chave informada.
+     * 
+     * @param chave Chave a ser procurada.
+     * 
+     * @return vector<TIPO_DOS_DADOS> Vetor com cada dado correspondente à chave.
+     */
+    vector<TIPO_DOS_DADOS> listarDadosComAChave(TIPO_DAS_CHAVES chave);
+
+    /**
      * @brief Insere o par (chave, dado) na árvore.
      * 
      * @param chave Chave a ser inserida.
      * @param dado Dado a ser inserido.
-     * 
-     * @return true Caso tudo corra bem.
-     * @return false Caso um erro ocorra.
      */
     bool inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado) // olhar por valor ou referencia
     {
@@ -876,8 +876,6 @@ public:
         auto& pilhaDeIndices = parDoCaminho.second;
 
         inserir(chave, dado, pilhaDeEnderecos, pilhaDeIndices);
-
-        return true;
     }
 
     /**
@@ -936,12 +934,12 @@ public:
      */
     void mostrar();
 
-    void mostrarCentral(
+    void mostrarPre(
         Pagina *paginaAuxiliar, file_ptr_type endereco,
         bool mostrarOsDados,
-        string delimitadorEntreOPonteiroEAChave,
-        string delimitadorEntreODadoEOPonteiro,
-        string delimitadorEntreAChaveEODado)
+        string delimitadorEntreOPonteiroEAChave = " (",
+        string delimitadorEntreODadoEOPonteiro = ") ",
+        string delimitadorEntreAChaveEODado = ", ")
     {
         if (carregar(paginaAuxiliar, endereco))
         {
@@ -958,7 +956,7 @@ public:
             {
                 if (i != constantes::ptrNuloPagina)
                 {
-                    mostrarCentral(
+                    mostrarPre(
                         paginaAuxiliar, i, mostrarOsDados,
                         delimitadorEntreOPonteiroEAChave,
                         delimitadorEntreODadoEOPonteiro,
@@ -968,14 +966,14 @@ public:
         }
     }
 
-    void mostrarCentral(
+    void mostrarPre(
         bool mostrarOsDados = false,
         string delimitadorEntreOPonteiroEAChave = " (",
         string delimitadorEntreODadoEOPonteiro = ") ",
         string delimitadorEntreAChaveEODado = ", ")
     {
         cout << "Raiz:";
-        mostrarCentral(
+        mostrarPre(
             paginaIrmaPai, lerEnderecoDaRaiz(),
             mostrarOsDados,
             delimitadorEntreOPonteiroEAChave,

@@ -1,8 +1,1 @@
-Cria novos métodos na árvore
-
-1 - Cria um método para obtenção do rastro do percurso de descida na árvore em busca de uma chave. Retorna um par com duas listas, uma contém os endereços das páginas visitadas e a outra os índices do ponteiros acessados para descer de uma página para a outra.
-2 - Cria o método pesquisar.
-3 - Transforma o método inserir em iterativo.
-4 - Cria um mecanismo simples de gerenciamento de erros.
-5 - Muda o nome dos métodos de print para mostrar e já melhora eles no sentido de flexibilidade do formato da saída.
-6 - Remove o arquivo com funções para debug.
+Implementa a flag de erro na função de exclusão
