@@ -1,5 +1,11 @@
+# Compila e gera o executável debugável
+g++ ./mytest.cpp -g -o mytest.exe
+
+# Faz o debug
+gdb ./mytest.exe
+
+# Remove arquivos desnecessários
 rm *.exe
-rm *.stackdump
 rm ./TesteArvore.txt
-g++ ./mytest.cpp -g
-gdb ./a.exe
+rm *.stackdump
+rm *.o
