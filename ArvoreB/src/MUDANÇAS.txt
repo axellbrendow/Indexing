@@ -1,1 +1,6 @@
-Implementa a flag de erro na função de exclusão
+Adiciona novas features
+
+1 - Cria a função para pesquisa por intervalo de chaves.
+2 - Adiciona um lançamento de exceção caso o endereço da raiz não possa ser lido.
+3 - Implementa a função para pesquisar todos os dados ligados a uma chave.
+4 - Implementa a função que mostra a árvore de forma similar ao comando "tree /f" do Windows.

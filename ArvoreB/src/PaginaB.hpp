@@ -572,39 +572,47 @@ public:
      * É possível desabilitar a impressão dos dados por meio do parâmetro
      * @p mostrarOsDados.
      * 
+     * <p>Caso for usar o método mostrarPre() dá classe, é necessário que a chave e o dado
+     * sejam tipos primitivos ou então o operador << deve ser sobrecarregado para que
+     * seja possível inserir a chave e/ou o dado num ostream (output stream) como o cout.</p>
+     * 
+     * @see [Sobrecarregando o operador <<](https://docs.microsoft.com/pt-br/cpp/standard-library/overloading-the-output-operator-for-your-own-classes?view=vs-2019)
+     * 
      * @param ostream Fluxo de saída onde a página será impressa.
      * @param mostrarOsDados Caso seja true, mostra os dados ligados às chaves.
+     * @param mostrarOsPonteiros Caso seja true, mostra os ponteiros entre os pares.
+     * @param mostrarEndereco Caso seja true, mostra o endereço da página no arquivo.
      * @param delimitadorEntreOPonteiroEAChave Delimitador entre um ponteiro e uma chave.
      * @param delimitadorEntreODadoEOPonteiro Delimitador entre um dado e um ponteiro.
      * @param delimitadorEntreAChaveEODado Delimitador entre uma chave e um dado.
      */
     void mostrar(ostream &ostream = cout,
                bool mostrarOsDados = false,
+               bool mostrarOsPonteiros = true,
+               bool mostrarEndereco = true,
                string delimitadorEntreOPonteiroEAChave = " (",
                string delimitadorEntreODadoEOPonteiro = ") ",
                string delimitadorEntreAChaveEODado = ", ")
     {
         if (!vazia())
         {
-            ostream << "Arquivo[" << (long) endereco << "] = ";
-            ostream << (long) ponteiros[0];
+            if (mostrarEndereco) ostream << "Arquivo[" << (long) endereco << "] = ";
+            if (mostrarOsPonteiros) ostream << (long) ponteiros[0];
 
-            if (mostrarOsDados)
+            for (size_t i = 0; i < _tamanho; i++)
             {
-                for (size_t i = 0; i < _tamanho; i++)
+                ostream << delimitadorEntreOPonteiroEAChave << chaves[i];
+
+                if (mostrarOsDados)
                 {
-                    ostream << delimitadorEntreOPonteiroEAChave << chaves[i];
                     ostream << delimitadorEntreAChaveEODado << dados[i];
-                    ostream << delimitadorEntreODadoEOPonteiro << (long) ponteiros[i + 1];
                 }
-            }
 
-            else
-            {
-                for (size_t i = 0; i < _tamanho; i++)
+                ostream << delimitadorEntreODadoEOPonteiro;
+
+                if (mostrarOsPonteiros)
                 {
-                    ostream << delimitadorEntreOPonteiroEAChave << chaves[i];
-                    ostream << delimitadorEntreODadoEOPonteiro << (long) ponteiros[i + 1];
+                    ostream << (long) ponteiros[i + 1];
                 }
             }
 

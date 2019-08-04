@@ -40,12 +40,6 @@ using namespace std;
  * @brief Classe da árvore B, uma estrutura eficiente para indexamento de registros
  * em disco.
  * 
- * <p>Caso for usar o método mostrar() dá classe, é necessário que a chave e o dado
- * sejam tipos primitivos ou então o operador << deve ser sobrecarregado para que
- * seja possível inserir a chave e/ou o dado num ostream (output stream).</p>
- * 
- * @see [Sobrecarregando o operador <<](https://docs.microsoft.com/pt-br/cpp/standard-library/overloading-the-output-operator-for-your-own-classes?view=vs-2019)
- * 
  * @tparam TIPO_DAS_CHAVES Tipo da chave dos registros. <b>É necessário que a chave
  * seja um tipo primitivo ou então que a sua classe/struct herde de Serializavel e
  * tenha um construtor sem parâmetros.</b>
@@ -738,6 +732,64 @@ protected:
         }
     }
 
+    /**
+     * @brief Procura todos os registros que forem encontrados com a chave entre
+     * as chaves informadas (Incluindo as próprias chaves). O intervalo é
+     * [chaveMenor, chaveMaior].
+     * 
+     * <p><b>Caso o TIPO_DAS_CHAVES não seja primitivo, ele precisa interagir com os
+     * operadores < (menor) e <= (menor ou igual).</b></p>
+     * 
+     * @see [Relational Operators Overloading](https://www.tutorialspoint.com/cplusplus/relational_operators_overloading)
+     * 
+     * @param chaveMenor Valor do limite inferior.
+     * @param chaveMaior Valor do limite superior.
+     * @param dados Referência para um vetor onde os dados relacionados às chaves
+     * serão guardados.
+     * @param enderecoPaginaAtual Endereço da página atual na recursividade.
+     */
+    void listarDadosComAChaveEntre(
+        TIPO_DAS_CHAVES &chaveMenor,
+        TIPO_DAS_CHAVES &chaveMaior,
+        vector<TIPO_DOS_DADOS> &dados,
+        file_ptr_type enderecoPaginaAtual)
+    {
+        if (carregar(paginaFilha, enderecoPaginaAtual))
+        {
+            int indiceDeDescida = paginaFilha->obterIndiceDeDescida(chaveMenor);
+            int indiceFinal = 
+                upper_bound(paginaFilha->chaves.begin() + indiceDeDescida,
+                    paginaFilha->chaves.end(), chaveMaior)
+                    - paginaFilha->chaves.begin();
+
+            if (!paginaFilha->eUmaFolha())
+            {
+                listarDadosComAChaveEntre(
+                    chaveMenor, chaveMaior, dados,
+                    paginaFilha->ponteiros[indiceDeDescida]);
+
+                for (int i = indiceDeDescida; i < indiceFinal; i++)
+                {
+                    carregar(paginaFilha, enderecoPaginaAtual);
+
+                    dados.push_back(paginaFilha->dados[i]);
+                    
+                    listarDadosComAChaveEntre(
+                        chaveMenor, chaveMaior, dados,
+                        paginaFilha->ponteiros[i + 1]);
+                }
+            }
+
+            else
+            {
+                dados.insert(
+                    dados.end(),
+                    paginaFilha->dados.begin() + indiceDeDescida,
+                    paginaFilha->dados.begin() + indiceFinal);
+            }
+        }
+    }
+
     file_ptr_type lerEnderecoDaRaiz()
     {
         // Pula as coisas do cabeçalho do arquivo que vierem antes do endereço da raiz
@@ -745,6 +797,17 @@ protected:
 
         file_ptr_type endereco;
         arquivo >> endereco; // Carrega o endereço da raiz
+
+        if (arquivo.fail())
+        {
+            // cerr é a saída padrão de erros. Em alguns caso pode ser igual a cout.
+            cerr << "[ArvoreB] Não foi possível ler o endereço da raiz do arquivo."
+                 << endl
+                 << "Exceção lançada" << endl;
+
+            throw length_error(
+                "[ArvoreB] Não foi possível ler o endereço da raiz do arquivo.");
+        }
 
         return endereco;
     }
@@ -836,11 +899,10 @@ public:
      * as chaves informadas. Inclui as próprias chaves. O intervalo é
      * [chaveMenor, chaveMaior].
      * 
-     * <p><b>Caso TIPO_DAS_CHAVES e TIPO_DOS_DADOS forem primitivos, ignore o
-     * próximo parágrafo.</b></p>
+     * <p><b>Caso o TIPO_DAS_CHAVES não seja primitivo, ele precisa interagir com os
+     * operadores < (menor) e <= (menor ou igual).</b></p>
      * 
-     * <p><b>Esta função exige que TIPO_DAS_CHAVES e TIPO_DOS_DADOS sobrecarreguem
-     * os operadores <= (menor ou igual) e >= (maior ou igual).</b></p>
+     * @see [Relational Operators Overloading](https://www.tutorialspoint.com/cplusplus/relational_operators_overloading)
      * 
      * @param chaveMenor Valor do limite inferior.
      * @param chaveMaior Valor do limite superior.
@@ -849,7 +911,18 @@ public:
      */
     vector<TIPO_DOS_DADOS> listarDadosComAChaveEntre(
         TIPO_DAS_CHAVES chaveMenor,
-        TIPO_DAS_CHAVES chaveMaior);
+        TIPO_DAS_CHAVES chaveMaior)
+    {
+        vector<TIPO_DOS_DADOS> dados;
+
+        if (chaveMenor <= chaveMaior)
+        {
+            listarDadosComAChaveEntre(
+                chaveMenor, chaveMaior, dados, lerEnderecoDaRaiz());
+        }
+
+        return dados;
+    }
 
     /**
      * @brief Procura todos os registros que forem encontrados com a chave informada.
@@ -858,7 +931,10 @@ public:
      * 
      * @return vector<TIPO_DOS_DADOS> Vetor com cada dado correspondente à chave.
      */
-    vector<TIPO_DOS_DADOS> listarDadosComAChave(TIPO_DAS_CHAVES chave);
+    vector<TIPO_DOS_DADOS> listarDadosComAChave(TIPO_DAS_CHAVES chave)
+    {
+        return listarDadosComAChaveEntre(chave, chave);
+    }
 
     /**
      * @brief Insere o par (chave, dado) na árvore.
@@ -931,51 +1007,135 @@ public:
     /**
      * @brief Imprime, na saída padrão, uma representação vertical da árvore.
      * A saída é similar à do comando "tree /f" do windows.
+     * 
+     * @param endereco Endereço de onde a página deve ser carregada do arquivo.
+     * @param altura Altura atual na árvore.
      */
-    void mostrar();
-
-    void mostrarPre(
-        Pagina *paginaAuxiliar, file_ptr_type endereco,
-        bool mostrarOsDados,
-        string delimitadorEntreOPonteiroEAChave = " (",
-        string delimitadorEntreODadoEOPonteiro = ") ",
-        string delimitadorEntreAChaveEODado = ", ")
+    void mostrar(file_ptr_type endereco, int altura)
     {
-        if (carregar(paginaAuxiliar, endereco))
+        if (carregar(paginaFilha, endereco))
         {
-            cout << endl;
-            paginaAuxiliar->mostrar(
-                cout, mostrarOsDados,
-                delimitadorEntreOPonteiroEAChave,
-                delimitadorEntreODadoEOPonteiro,
-                delimitadorEntreAChaveEODado);
+            string identacao(altura * 4, ' ');
 
-            auto ponteiros = paginaAuxiliar->ponteiros;
-
-            for (auto &&i : ponteiros)
+            if (paginaFilha->eUmaFolha())
             {
-                if (i != constantes::ptrNuloPagina)
+                cout << identacao;
+                paginaFilha->mostrar(cout, false, false, false, "", " ");
+            }
+
+            else
+            {
+                if (!paginaFilha->ponteiros.empty())
                 {
-                    mostrarPre(
-                        paginaAuxiliar, i, mostrarOsDados,
-                        delimitadorEntreOPonteiroEAChave,
-                        delimitadorEntreODadoEOPonteiro,
-                        delimitadorEntreAChaveEODado);
+                    int i = paginaFilha->ponteiros.size() - 1;
+                    mostrar(paginaFilha->ponteiros[i], altura + 1);
+
+                    for (i--; i >= 0; i--)
+                    {
+                        carregar(paginaFilha, endereco);
+
+                        cout << identacao << paginaFilha->chaves[i] << endl;
+
+                        mostrar(paginaFilha->ponteiros[i], altura + 1);
+                    }
                 }
             }
         }
     }
 
+    /**
+     * @brief Imprime, na saída padrão, uma representação vertical da árvore.
+     * A saída é similar à do comando "tree /f" do windows.
+     */
+    void mostrar()
+    {
+        mostrar(lerEnderecoDaRaiz(), 0);
+    }
+    
+    /**
+     * @brief Mostra todas as páginas da árvore recursivamente em pré-ordem.
+     * 
+     * <p>Caso for usar o método mostrarPre() dá classe, é necessário que a chave e
+     * o dado sejam tipos primitivos ou então o operador << deve ser sobrecarregado
+     * para que seja possível inserir a chave e/ou o dado num ostream (output stream)
+     * como o cout.</p>
+     * 
+     * @see [Sobrecarregando o operador <<](https://docs.microsoft.com/pt-br/cpp/standard-library/overloading-the-output-operator-for-your-own-classes?view=vs-2019)
+     * 
+     * @param endereco Endereço de onde a página deve ser carregada do arquivo.
+     * @param mostrarOsDados Caso seja true, mostra os dados ligados às chaves.
+     * @param mostrarOsPonteiros Caso seja true, mostra os ponteiros entre os pares.
+     * @param mostrarEndereco Caso seja true, mostra o endereço da página no arquivo.
+     * @param delimitadorEntreOPonteiroEAChave Delimitador entre um ponteiro e uma chave.
+     * @param delimitadorEntreODadoEOPonteiro Delimitador entre um dado e um ponteiro.
+     * @param delimitadorEntreAChaveEODado Delimitador entre uma chave e um dado.
+     */
+    void mostrarPre(
+        file_ptr_type endereco,
+        bool mostrarOsDados = false,
+        bool mostrarOsPonteiros = true,
+        bool mostrarEndereco = true,
+        string delimitadorEntreOPonteiroEAChave = " (",
+        string delimitadorEntreODadoEOPonteiro = ") ",
+        string delimitadorEntreAChaveEODado = ", ")
+    {
+        if (carregar(paginaFilha, endereco))
+        {
+            cout << endl;
+            paginaFilha->mostrar(
+                cout, mostrarOsDados, mostrarOsPonteiros, mostrarEndereco,
+                delimitadorEntreOPonteiroEAChave,
+                delimitadorEntreODadoEOPonteiro,
+                delimitadorEntreAChaveEODado);
+
+            if (!paginaFilha->eUmaFolha())
+            {
+                auto ponteiros = paginaFilha->ponteiros;
+
+                for (auto &&i : ponteiros)
+                {
+                    if (i != constantes::ptrNuloPagina)
+                    {
+                        mostrarPre(
+                            i, mostrarOsDados, mostrarOsPonteiros, mostrarEndereco,
+                            delimitadorEntreOPonteiroEAChave,
+                            delimitadorEntreODadoEOPonteiro,
+                            delimitadorEntreAChaveEODado);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * @brief Mostra todas as páginas da árvore recursivamente em pré-ordem.
+     * 
+     * <p>Caso for usar o método mostrarPre() dá classe, é necessário que a chave e
+     * o dado sejam tipos primitivos ou então o operador << deve ser sobrecarregado
+     * para que seja possível inserir a chave e/ou o dado num ostream (output stream)
+     * como o cout.</p>
+     * 
+     * @see [Sobrecarregando o operador <<](https://docs.microsoft.com/pt-br/cpp/standard-library/overloading-the-output-operator-for-your-own-classes?view=vs-2019)
+     * 
+     * @param mostrarOsDados Caso seja true, mostra os dados ligados às chaves.
+     * @param mostrarOsPonteiros Caso seja true, mostra os ponteiros entre os pares.
+     * @param mostrarEndereco Caso seja true, mostra o endereço da página no arquivo.
+     * @param delimitadorEntreOPonteiroEAChave Delimitador entre um ponteiro e uma chave.
+     * @param delimitadorEntreODadoEOPonteiro Delimitador entre um dado e um ponteiro.
+     * @param delimitadorEntreAChaveEODado Delimitador entre uma chave e um dado.
+     */
     void mostrarPre(
         bool mostrarOsDados = false,
+        bool mostrarOsPonteiros = true,
+        bool mostrarEndereco = true,
         string delimitadorEntreOPonteiroEAChave = " (",
         string delimitadorEntreODadoEOPonteiro = ") ",
         string delimitadorEntreAChaveEODado = ", ")
     {
         cout << "Raiz:";
         mostrarPre(
-            paginaIrmaPai, lerEnderecoDaRaiz(),
-            mostrarOsDados,
+            lerEnderecoDaRaiz(),
+            mostrarOsDados, mostrarOsPonteiros, mostrarEndereco,
             delimitadorEntreOPonteiroEAChave,
             delimitadorEntreODadoEOPonteiro,
             delimitadorEntreAChaveEODado);
