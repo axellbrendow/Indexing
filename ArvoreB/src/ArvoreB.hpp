@@ -955,17 +955,6 @@ public:
     }
 
     /**
-     * @brief Remove o par (chave, dado) da árvore.
-     * 
-     * @param chave Chave a ser removida.
-     * @param dado Dado a ser removido.
-     * 
-     * @return true Caso tudo corra bem.
-     * @return false Caso um erro ocorra.
-     */
-    bool excluir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado);
-
-    /**
      * @brief Exclui o primeiro registro que for encontrado com a chave informada.
      * 
      * @param chave Chave a ser procurada.
@@ -994,19 +983,10 @@ public:
 
         return excluir(chave, pilhaDeEnderecos, pilhaDeIndices);
     }
-    
-    /**
-     * @brief Exclui todos os registros que forem encontrados com a chave informada.
-     * 
-     * @param chave Chave a ser procurada.
-     * 
-     * @return vector<TIPO_DOS_DADOS> Vetor com cada dado correspondente à chave.
-     */
-    vector<TIPO_DOS_DADOS> excluirRegistrosComAChave(TIPO_DAS_CHAVES chave);
 
     /**
      * @brief Imprime, na saída padrão, uma representação vertical da árvore.
-     * A saída é similar à do comando "tree /f" do windows.
+     * A saída é similar à do comando "tree /f" do Windows.
      * 
      * @param endereco Endereço de onde a página deve ser carregada do arquivo.
      * @param altura Altura atual na árvore.
@@ -1045,7 +1025,7 @@ public:
 
     /**
      * @brief Imprime, na saída padrão, uma representação vertical da árvore.
-     * A saída é similar à do comando "tree /f" do windows.
+     * A saída é similar à do comando "tree /f" do Windows.
      */
     void mostrar()
     {
