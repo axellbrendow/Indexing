@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['arquivo',['arquivo',['../class_arvore_b.html#abd84c668f8f8a20b86e38fbe6b8a099d',1,'ArvoreB']]]
+  ['_5ftamanho',['_tamanho',['../class_pagina_b.html#a9686a93548ab64b62bd3a358c53e42cf',1,'PaginaB']]]
 ];

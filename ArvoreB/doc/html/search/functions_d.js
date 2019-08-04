@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['throwestanofim',['throwEstaNoFim',['../class_data_input_stream.html#a85d5e2fb69db77bf45cfdd378983ba2f',1,'DataInputStream']]],
-  ['transferirelementopara',['transferirElementoPara',['../class_pagina_b.html#a5d9cd8462a6ed2fc32719446cac6d2ca',1,'PaginaB']]],
-  ['transferirmetadepara',['transferirMetadePara',['../class_pagina_b.html#a090a787bfc1c970f5d2a31e5af9cc3c7',1,'PaginaB::transferirMetadePara(ContainerDestino &amp;containerDestino, ContainerFonte &amp;containerFonte, int quantidade)'],['../class_pagina_b.html#a0f8fbdde743e0a551c3b6a5076efdc7d',1,'PaginaB::transferirMetadePara(Pagina *paginaDestino)']]],
-  ['tratarpaginacheia',['tratarPaginaCheia',['../class_arvore_b.html#a08a9073b8ad32e1391c3ccb7b6d8474a',1,'ArvoreB']]],
-  ['trocarraizpor',['trocarRaizPor',['../class_arvore_b.html#ab05e369d651fe3f5a2a8021b6462385e',1,'ArvoreB']]]
+  ['setendereco',['setEndereco',['../class_pagina_b.html#af718c9fd55f2cfc7b390fc1ca70d0a9c',1,'PaginaB']]],
+  ['size',['size',['../class_data_input_stream.html#afc43956257c9ce69f1fb59f1a0f94617',1,'DataInputStream::size()'],['../class_data_output_stream.html#a4eb1a87c45ba17c89b9bd0e27bf28f75',1,'DataOutputStream::size()']]],
+  ['student',['Student',['../class_student.html#aba589dc4bef909f6e10c26669729b944',1,'Student::Student(const char *nome, int idade)'],['../class_student.html#af83dc56c4753ce9df66af9ab59cda05f',1,'Student::Student(string nome, int idade)'],['../class_student.html#af9168cedbfa5565cf0b20c1a9d3f5c9d',1,'Student::Student()']]],
+  ['swap',['swap',['../class_pagina_b.html#ab837ad4a87977ed894dbf9d25e44f1cc',1,'PaginaB']]]
 ];

@@ -1,4 +1,12 @@
 var searchData=
 [
-  ['vazia',['vazia',['../class_pagina_b.html#a50c8736c454dbc27c767f8934f90542f',1,'PaginaB']]]
+  ['tamanho',['tamanho',['../class_pagina_b.html#ae13edbb6baf1cc073948a2d3fa02c0aa',1,'PaginaB']]],
+  ['throwestanofim',['throwEstaNoFim',['../class_data_input_stream.html#a85d5e2fb69db77bf45cfdd378983ba2f',1,'DataInputStream']]],
+  ['transferirelementopara',['transferirElementoPara',['../class_pagina_b.html#ae3f2af45f6304b9a025d448d469e2d45',1,'PaginaB']]],
+  ['transferirmetadepara',['transferirMetadePara',['../class_pagina_b.html#a0f8fbdde743e0a551c3b6a5076efdc7d',1,'PaginaB']]],
+  ['transferirpara',['transferirPara',['../class_pagina_b.html#ae4c0aa9ef28ac51124cb1b1249909bfb',1,'PaginaB']]],
+  ['transferirtudopara',['transferirTudoPara',['../class_pagina_b.html#a6fb64f4cd7a5b6ff5c56f58c9197b07d',1,'PaginaB']]],
+  ['tratarpaginacheia',['tratarPaginaCheia',['../class_arvore_b.html#a08a9073b8ad32e1391c3ccb7b6d8474a',1,'ArvoreB']]],
+  ['trocarchaveporantecessora',['trocarChavePorAntecessora',['../class_arvore_b.html#ae2053a36bee6a5975948f1685fbef248',1,'ArvoreB']]],
+  ['trocarraizpor',['trocarRaizPor',['../class_arvore_b.html#ab05e369d651fe3f5a2a8021b6462385e',1,'ArvoreB']]]
 ];
