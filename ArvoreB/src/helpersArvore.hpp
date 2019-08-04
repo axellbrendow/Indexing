@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "templates\serializavel.hpp"
+#include "templates/serializavel.hpp"
 
 using namespace std;
 
@@ -39,7 +39,7 @@ struct Medidor
         // https://stackoverflow.com/questions/580922/identifying-primitive-types-in-templates
         static_assert(
             is_fundamental<TIPO>::value,
-            "O tipo deve ser primitivo caso ele não herde de Serializavel."
+            "Os tipos da árvore devem ser primitivos caso não herdem de Serializavel."
         );
 
         return sizeof(TIPO);

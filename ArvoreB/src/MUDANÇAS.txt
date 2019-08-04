@@ -1,6 +1,3 @@
-Adiciona novas features
+Melhora um pouco a eficiência da árvore
 
-1 - Cria a função para pesquisa por intervalo de chaves.
-2 - Adiciona um lançamento de exceção caso o endereço da raiz não possa ser lido.
-3 - Implementa a função para pesquisar todos os dados ligados a uma chave.
-4 - Implementa a função que mostra a árvore de forma similar ao comando "tree /f" do Windows.
+1 - Cria duas versões de várias funções de tal forma que elas aceitem parâmetros por referência normal e por referência de valores expirados.

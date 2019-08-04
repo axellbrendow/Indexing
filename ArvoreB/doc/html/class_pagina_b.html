@@ -134,15 +134,15 @@ Membros públicos</h2></td></tr>
 <tr class="memitem:a0b071d3f038a3716fc3fcaa2b8f057c2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a0b071d3f038a3716fc3fcaa2b8f057c2">limpar</a> ()</td></tr>
 <tr class="memdesc:a0b071d3f038a3716fc3fcaa2b8f057c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zera a quantidade de elementos e limpa todos os vetores internos.  <a href="#a0b071d3f038a3716fc3fcaa2b8f057c2">Mais...</a><br /></td></tr>
 <tr class="separator:a0b071d3f038a3716fc3fcaa2b8f057c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a99d1f14d574e05a1055fdb6a9a0915b0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a99d1f14d574e05a1055fdb6a9a0915b0">obterIndiceDeDescida</a> (TIPO_DAS_CHAVES chave)</td></tr>
-<tr class="memdesc:a99d1f14d574e05a1055fdb6a9a0915b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcula qual é o índice em que a chave deve ser inserida ou então qual é o índice do ponteiro para descer na árvore.  <a href="#a99d1f14d574e05a1055fdb6a9a0915b0">Mais...</a><br /></td></tr>
-<tr class="separator:a99d1f14d574e05a1055fdb6a9a0915b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad3c0e761d5f30b882f9fd7fed6f8ebcd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#ad3c0e761d5f30b882f9fd7fed6f8ebcd">inserir</a> (TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado, int indiceDeInsercao, <a class="el" href="tipos_8hpp.html#ab29579b2e0823b94933bba3153b61f55">file_ptr_type</a> ponteiro=constantes::ptrNuloPagina, bool inserirPonteiroADireita=true)</td></tr>
-<tr class="memdesc:ad3c0e761d5f30b882f9fd7fed6f8ebcd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insere a tripla (chave, dado, ponteiro) na página no índice informado.  <a href="#ad3c0e761d5f30b882f9fd7fed6f8ebcd">Mais...</a><br /></td></tr>
-<tr class="separator:ad3c0e761d5f30b882f9fd7fed6f8ebcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a65d0f139f16256a85da09312adfc52e0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a65d0f139f16256a85da09312adfc52e0">inserir</a> (TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)</td></tr>
-<tr class="memdesc:a65d0f139f16256a85da09312adfc52e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insere o par (chave, dado) na página de forma ordenada.  <a href="#a65d0f139f16256a85da09312adfc52e0">Mais...</a><br /></td></tr>
-<tr class="separator:a65d0f139f16256a85da09312adfc52e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a836d61ba09fb91ad333b59698c61588c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a836d61ba09fb91ad333b59698c61588c">obterIndiceDeDescida</a> (TIPO_DAS_CHAVES &amp;chave)</td></tr>
+<tr class="memdesc:a836d61ba09fb91ad333b59698c61588c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcula qual é o índice em que a chave deve ser inserida ou então qual é o índice do ponteiro para descer na árvore.  <a href="#a836d61ba09fb91ad333b59698c61588c">Mais...</a><br /></td></tr>
+<tr class="separator:a836d61ba09fb91ad333b59698c61588c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ee40e74296a276d925eb9e08587df65"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a4ee40e74296a276d925eb9e08587df65">inserir</a> (TIPO_DAS_CHAVES &amp;chave, TIPO_DOS_DADOS &amp;dado, int indiceDeInsercao, <a class="el" href="tipos_8hpp.html#ab29579b2e0823b94933bba3153b61f55">file_ptr_type</a> ponteiro=constantes::ptrNuloPagina, bool inserirPonteiroADireita=true)</td></tr>
+<tr class="memdesc:a4ee40e74296a276d925eb9e08587df65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insere a tripla (chave, dado, ponteiro) na página no índice informado.  <a href="#a4ee40e74296a276d925eb9e08587df65">Mais...</a><br /></td></tr>
+<tr class="separator:a4ee40e74296a276d925eb9e08587df65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64707b66b5a7d79424195581957b868e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#a64707b66b5a7d79424195581957b868e">inserir</a> (TIPO_DAS_CHAVES &amp;chave, TIPO_DOS_DADOS &amp;dado)</td></tr>
+<tr class="memdesc:a64707b66b5a7d79424195581957b868e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insere o par (chave, dado) na página de forma ordenada.  <a href="#a64707b66b5a7d79424195581957b868e">Mais...</a><br /></td></tr>
+<tr class="separator:a64707b66b5a7d79424195581957b868e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae3f2af45f6304b9a025d448d469e2d45"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pagina_b.html#ae3f2af45f6304b9a025d448d469e2d45">transferirElementoPara</a> (<a class="el" href="class_pagina_b.html#a0abe8feb25bb6cbd273f1663eab1d324">Pagina</a> *paginaDestino, int indiceNoDestino, int indiceLocal, bool excluirPonteiroDaEsquerda=false, bool excluirPonteiroDaDireita=false, bool inserirPonteiroADireita=true)</td></tr>
 <tr class="memdesc:ae3f2af45f6304b9a025d448d469e2d45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pega o par (chave, dado) no indiceLocal e a insere no indiceNoDestino da paginaDestino. Após isso, remove o par desta página.  <a href="#ae3f2af45f6304b9a025d448d469e2d45">Mais...</a><br /></td></tr>
 <tr class="separator:ae3f2af45f6304b9a025d448d469e2d45"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -611,8 +611,8 @@ template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
 
 </div>
 </div>
-<a id="ad3c0e761d5f30b882f9fd7fed6f8ebcd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad3c0e761d5f30b882f9fd7fed6f8ebcd">&#9670;&nbsp;</a></span>inserir() <span class="overload">[1/2]</span></h2>
+<a id="a4ee40e74296a276d925eb9e08587df65"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ee40e74296a276d925eb9e08587df65">&#9670;&nbsp;</a></span>inserir() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -625,13 +625,13 @@ template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
         <tr>
           <td class="memname">bool <a class="el" href="class_pagina_b.html">PaginaB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::inserir </td>
           <td>(</td>
-          <td class="paramtype">TIPO_DAS_CHAVES&#160;</td>
+          <td class="paramtype">TIPO_DAS_CHAVES &amp;&#160;</td>
           <td class="paramname"><em>chave</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">TIPO_DOS_DADOS&#160;</td>
+          <td class="paramtype">TIPO_DOS_DADOS &amp;&#160;</td>
           <td class="paramname"><em>dado</em>, </td>
         </tr>
         <tr>
@@ -682,8 +682,8 @@ false Caso a página esteja cheia. </dd></dl>
 
 </div>
 </div>
-<a id="a65d0f139f16256a85da09312adfc52e0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a65d0f139f16256a85da09312adfc52e0">&#9670;&nbsp;</a></span>inserir() <span class="overload">[2/2]</span></h2>
+<a id="a64707b66b5a7d79424195581957b868e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a64707b66b5a7d79424195581957b868e">&#9670;&nbsp;</a></span>inserir() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -696,13 +696,13 @@ template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
         <tr>
           <td class="memname">int <a class="el" href="class_pagina_b.html">PaginaB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::inserir </td>
           <td>(</td>
-          <td class="paramtype">TIPO_DAS_CHAVES&#160;</td>
+          <td class="paramtype">TIPO_DAS_CHAVES &amp;&#160;</td>
           <td class="paramname"><em>chave</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">TIPO_DOS_DADOS&#160;</td>
+          <td class="paramtype">TIPO_DOS_DADOS &amp;&#160;</td>
           <td class="paramname"><em>dado</em>&#160;</td>
         </tr>
         <tr>
@@ -915,8 +915,8 @@ template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
 
 </div>
 </div>
-<a id="a99d1f14d574e05a1055fdb6a9a0915b0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a99d1f14d574e05a1055fdb6a9a0915b0">&#9670;&nbsp;</a></span>obterIndiceDeDescida()</h2>
+<a id="a836d61ba09fb91ad333b59698c61588c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a836d61ba09fb91ad333b59698c61588c">&#9670;&nbsp;</a></span>obterIndiceDeDescida()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -929,7 +929,7 @@ template&lt;typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS&gt; </div>
         <tr>
           <td class="memname">int <a class="el" href="class_pagina_b.html">PaginaB</a>&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;::obterIndiceDeDescida </td>
           <td>(</td>
-          <td class="paramtype">TIPO_DAS_CHAVES&#160;</td>
+          <td class="paramtype">TIPO_DAS_CHAVES &amp;&#160;</td>
           <td class="paramname"><em>chave</em></td><td>)</td>
           <td></td>
         </tr>

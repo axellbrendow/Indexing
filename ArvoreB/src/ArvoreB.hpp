@@ -674,7 +674,7 @@ protected:
 
         // Checa se a inserção teve sucesso
         if (paginaFilha->inserir(chave, dado, indiceDeInsercao))
-            paginaFilha->colocarNoArquivo(arquivo);
+            paginaFilha->colocarNoArquivo(arquivo); // Encerra salvando a página
 
         else // Inserção na página falhou, acontece quando ela está cheia.
         {
@@ -712,9 +712,9 @@ protected:
                     swap(paginaPai, paginaFilha);
                     swap(paginaIrmaPai, paginaIrma);
 
-                    if (voltouParaARaiz)
+                    if (voltouParaARaiz) // Já está na raiz e precisa-se promover
                     {
-                        paginaPai->limpar();
+                        paginaPai->limpar(); // Cria a nova raiz
                         paginaPai->ponteiros.push_back(constantes::ptrNuloPagina);
                     }
 
@@ -786,6 +786,100 @@ protected:
                     dados.end(),
                     paginaFilha->dados.begin() + indiceDeDescida,
                     paginaFilha->dados.begin() + indiceFinal);
+            }
+        }
+    }
+
+    /**
+     * @brief Imprime, na saída padrão, uma representação vertical da árvore.
+     * A saída é similar à do comando "tree /f" do Windows.
+     * 
+     * @param endereco Endereço de onde a página deve ser carregada do arquivo.
+     * @param altura Altura atual na árvore.
+     */
+    void mostrar(file_ptr_type endereco, int altura)
+    {
+        if (carregar(paginaFilha, endereco))
+        {
+            string identacao(altura * 4, ' ');
+
+            if (paginaFilha->eUmaFolha())
+            {
+                cout << identacao;
+                paginaFilha->mostrar(cout, false, false, false, "", " ");
+            }
+
+            else
+            {
+                if (!paginaFilha->ponteiros.empty())
+                {
+                    int i = paginaFilha->ponteiros.size() - 1;
+                    mostrar(paginaFilha->ponteiros[i], altura + 1);
+
+                    for (i--; i >= 0; i--)
+                    {
+                        carregar(paginaFilha, endereco);
+
+                        cout << identacao << paginaFilha->chaves[i] << endl;
+
+                        mostrar(paginaFilha->ponteiros[i], altura + 1);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * @brief Mostra todas as páginas da árvore recursivamente em pré-ordem.
+     * 
+     * <p>Caso for usar o método mostrarPre() dá classe, é necessário que a chave e
+     * o dado sejam tipos primitivos ou então o operador << deve ser sobrecarregado
+     * para que seja possível inserir a chave e/ou o dado num ostream (output stream)
+     * como o cout.</p>
+     * 
+     * @see [Sobrecarregando o operador <<](https://docs.microsoft.com/pt-br/cpp/standard-library/overloading-the-output-operator-for-your-own-classes?view=vs-2019)
+     * 
+     * @param endereco Endereço de onde a página deve ser carregada do arquivo.
+     * @param mostrarOsDados Caso seja true, mostra os dados ligados às chaves.
+     * @param mostrarOsPonteiros Caso seja true, mostra os ponteiros entre os pares.
+     * @param mostrarEndereco Caso seja true, mostra o endereço da página no arquivo.
+     * @param delimitadorEntreOPonteiroEAChave Delimitador entre um ponteiro e uma chave.
+     * @param delimitadorEntreODadoEOPonteiro Delimitador entre um dado e um ponteiro.
+     * @param delimitadorEntreAChaveEODado Delimitador entre uma chave e um dado.
+     */
+    void mostrarPre(
+        file_ptr_type endereco,
+        bool mostrarOsDados = false,
+        bool mostrarOsPonteiros = true,
+        bool mostrarEndereco = true,
+        string delimitadorEntreOPonteiroEAChave = " (",
+        string delimitadorEntreODadoEOPonteiro = ") ",
+        string delimitadorEntreAChaveEODado = ", ")
+    {
+        if (carregar(paginaFilha, endereco))
+        {
+            cout << endl;
+            paginaFilha->mostrar(
+                cout, mostrarOsDados, mostrarOsPonteiros, mostrarEndereco,
+                delimitadorEntreOPonteiroEAChave,
+                delimitadorEntreODadoEOPonteiro,
+                delimitadorEntreAChaveEODado);
+
+            if (!paginaFilha->eUmaFolha())
+            {
+                auto ponteiros = paginaFilha->ponteiros;
+
+                for (auto &&i : ponteiros)
+                {
+                    if (i != constantes::ptrNuloPagina)
+                    {
+                        mostrarPre(
+                            i, mostrarOsDados, mostrarOsPonteiros, mostrarEndereco,
+                            delimitadorEntreOPonteiroEAChave,
+                            delimitadorEntreODadoEOPonteiro,
+                            delimitadorEntreAChaveEODado);
+                    }
+                }
             }
         }
     }
@@ -868,7 +962,7 @@ public:
      * if (ArvoreB.erro()) ArvoreB.mostrarErro();
      * @endcode
      */
-    TIPO_DOS_DADOS pesquisar(TIPO_DAS_CHAVES chave)
+    TIPO_DOS_DADOS pesquisar(TIPO_DAS_CHAVES& chave)
     {
         TIPO_DOS_DADOS dado;
 
@@ -894,6 +988,11 @@ public:
         return dado;
     }
 
+    TIPO_DOS_DADOS pesquisar(TIPO_DAS_CHAVES&& chave)
+    {
+        return pesquisar(chave);
+    }
+
     /**
      * @brief Procura todos os registros que forem encontrados com a chave entre
      * as chaves informadas. Inclui as próprias chaves. O intervalo é
@@ -910,8 +1009,8 @@ public:
      * @return vector<TIPO_DOS_DADOS> Vetor com cada dado correspondente à chave.
      */
     vector<TIPO_DOS_DADOS> listarDadosComAChaveEntre(
-        TIPO_DAS_CHAVES chaveMenor,
-        TIPO_DAS_CHAVES chaveMaior)
+        TIPO_DAS_CHAVES& chaveMenor,
+        TIPO_DAS_CHAVES& chaveMaior)
     {
         vector<TIPO_DOS_DADOS> dados;
 
@@ -924,6 +1023,13 @@ public:
         return dados;
     }
 
+    vector<TIPO_DOS_DADOS> listarDadosComAChaveEntre(
+        TIPO_DAS_CHAVES&& chaveMenor,
+        TIPO_DAS_CHAVES&& chaveMaior)
+    {
+        return listarDadosComAChaveEntre(chaveMenor, chaveMaior);
+    }
+
     /**
      * @brief Procura todos os registros que forem encontrados com a chave informada.
      * 
@@ -931,9 +1037,14 @@ public:
      * 
      * @return vector<TIPO_DOS_DADOS> Vetor com cada dado correspondente à chave.
      */
-    vector<TIPO_DOS_DADOS> listarDadosComAChave(TIPO_DAS_CHAVES chave)
+    vector<TIPO_DOS_DADOS> listarDadosComAChave(TIPO_DAS_CHAVES& chave)
     {
         return listarDadosComAChaveEntre(chave, chave);
+    }
+
+    vector<TIPO_DOS_DADOS> listarDadosComAChave(TIPO_DAS_CHAVES&& chave)
+    {
+        return listarDadosComAChave(chave);
     }
 
     /**
@@ -942,7 +1053,7 @@ public:
      * @param chave Chave a ser inserida.
      * @param dado Dado a ser inserido.
      */
-    bool inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado) // olhar por valor ou referencia
+    void inserir(TIPO_DAS_CHAVES& chave, TIPO_DOS_DADOS& dado)
     {
         // Faz todo o percurso de descida na árvore
         auto parDoCaminho =
@@ -952,6 +1063,17 @@ public:
         auto& pilhaDeIndices = parDoCaminho.second;
 
         inserir(chave, dado, pilhaDeEnderecos, pilhaDeIndices);
+    }
+
+    /**
+     * @brief Insere o par (chave, dado) na árvore.
+     * 
+     * @param chave Chave a ser inserida.
+     * @param dado Dado a ser inserido.
+     */
+    void inserir(TIPO_DAS_CHAVES&& chave, TIPO_DOS_DADOS&& dado)
+    {
+        inserir(chave, dado);
     }
 
     /**
@@ -974,7 +1096,7 @@ public:
      * if (ArvoreB.erro()) ArvoreB.mostrarErro();
      * @endcode
      */
-    TIPO_DOS_DADOS excluir(TIPO_DAS_CHAVES chave)
+    TIPO_DOS_DADOS excluir(TIPO_DAS_CHAVES& chave)
     {
         // Faz todo o percurso de descida na árvore
         auto parDoCaminho = obterCaminhoDeDescida(chave, 0, lerEnderecoDaRaiz());
@@ -984,43 +1106,9 @@ public:
         return excluir(chave, pilhaDeEnderecos, pilhaDeIndices);
     }
 
-    /**
-     * @brief Imprime, na saída padrão, uma representação vertical da árvore.
-     * A saída é similar à do comando "tree /f" do Windows.
-     * 
-     * @param endereco Endereço de onde a página deve ser carregada do arquivo.
-     * @param altura Altura atual na árvore.
-     */
-    void mostrar(file_ptr_type endereco, int altura)
+    TIPO_DOS_DADOS excluir(TIPO_DAS_CHAVES&& chave)
     {
-        if (carregar(paginaFilha, endereco))
-        {
-            string identacao(altura * 4, ' ');
-
-            if (paginaFilha->eUmaFolha())
-            {
-                cout << identacao;
-                paginaFilha->mostrar(cout, false, false, false, "", " ");
-            }
-
-            else
-            {
-                if (!paginaFilha->ponteiros.empty())
-                {
-                    int i = paginaFilha->ponteiros.size() - 1;
-                    mostrar(paginaFilha->ponteiros[i], altura + 1);
-
-                    for (i--; i >= 0; i--)
-                    {
-                        carregar(paginaFilha, endereco);
-
-                        cout << identacao << paginaFilha->chaves[i] << endl;
-
-                        mostrar(paginaFilha->ponteiros[i], altura + 1);
-                    }
-                }
-            }
-        }
+        return excluir(chave);
     }
 
     /**
@@ -1030,61 +1118,6 @@ public:
     void mostrar()
     {
         mostrar(lerEnderecoDaRaiz(), 0);
-    }
-    
-    /**
-     * @brief Mostra todas as páginas da árvore recursivamente em pré-ordem.
-     * 
-     * <p>Caso for usar o método mostrarPre() dá classe, é necessário que a chave e
-     * o dado sejam tipos primitivos ou então o operador << deve ser sobrecarregado
-     * para que seja possível inserir a chave e/ou o dado num ostream (output stream)
-     * como o cout.</p>
-     * 
-     * @see [Sobrecarregando o operador <<](https://docs.microsoft.com/pt-br/cpp/standard-library/overloading-the-output-operator-for-your-own-classes?view=vs-2019)
-     * 
-     * @param endereco Endereço de onde a página deve ser carregada do arquivo.
-     * @param mostrarOsDados Caso seja true, mostra os dados ligados às chaves.
-     * @param mostrarOsPonteiros Caso seja true, mostra os ponteiros entre os pares.
-     * @param mostrarEndereco Caso seja true, mostra o endereço da página no arquivo.
-     * @param delimitadorEntreOPonteiroEAChave Delimitador entre um ponteiro e uma chave.
-     * @param delimitadorEntreODadoEOPonteiro Delimitador entre um dado e um ponteiro.
-     * @param delimitadorEntreAChaveEODado Delimitador entre uma chave e um dado.
-     */
-    void mostrarPre(
-        file_ptr_type endereco,
-        bool mostrarOsDados = false,
-        bool mostrarOsPonteiros = true,
-        bool mostrarEndereco = true,
-        string delimitadorEntreOPonteiroEAChave = " (",
-        string delimitadorEntreODadoEOPonteiro = ") ",
-        string delimitadorEntreAChaveEODado = ", ")
-    {
-        if (carregar(paginaFilha, endereco))
-        {
-            cout << endl;
-            paginaFilha->mostrar(
-                cout, mostrarOsDados, mostrarOsPonteiros, mostrarEndereco,
-                delimitadorEntreOPonteiroEAChave,
-                delimitadorEntreODadoEOPonteiro,
-                delimitadorEntreAChaveEODado);
-
-            if (!paginaFilha->eUmaFolha())
-            {
-                auto ponteiros = paginaFilha->ponteiros;
-
-                for (auto &&i : ponteiros)
-                {
-                    if (i != constantes::ptrNuloPagina)
-                    {
-                        mostrarPre(
-                            i, mostrarOsDados, mostrarOsPonteiros, mostrarEndereco,
-                            delimitadorEntreOPonteiroEAChave,
-                            delimitadorEntreODadoEOPonteiro,
-                            delimitadorEntreAChaveEODado);
-                    }
-                }
-            }
-        }
     }
 
     /**
@@ -1121,3 +1154,5 @@ public:
             delimitadorEntreAChaveEODado);
     }
 };
+
+// 364 linhas gastas em documentação

@@ -9,8 +9,6 @@
 //#pragma once
 
 #include "templates/serializavel.hpp"
-#include "streams/DataInputStream.hpp"
-#include "streams/DataOutputStream.hpp"
 #include "ArvoreB.hpp"
 
 #include <fstream>
@@ -105,15 +103,16 @@ int main()
 
     arvore.mostrar();
 
-    // auto dados = arvore.listarDadosComAChaveEntre(10, 200);
+    auto dados = arvore.listarDadosComAChaveEntre(10, 250);
+    cout << endl;
 
-    // for (auto &&i : dados)
-    // {
-    //     cout << i << endl;
-    // }
+    for (auto &&i : dados)
+    {
+        cout << i << endl;
+    }
     
-    // Student &&me = arvore.pesquisar(4);
-    // cout << me << endl;
+    Student &&me = arvore.pesquisar(4);
+    cout << endl << me << endl;
 
     return 0;
 }

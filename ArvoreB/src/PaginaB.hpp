@@ -266,7 +266,7 @@ public:
      * @return int Índice em que a chave deve ser inserida ou então
      * o índice do ponteiro para descer na árvore.
      */
-    int obterIndiceDeDescida(TIPO_DAS_CHAVES chave)
+    int obterIndiceDeDescida(TIPO_DAS_CHAVES& chave)
     {
         // lower_bound (pesquisa binária) -> http://www.cplusplus.com/reference/algorithm/lower_bound/
         auto iteradorDeInsercao =
@@ -288,7 +288,7 @@ public:
      * @return true Caso tudo corra bem.
      * @return false Caso a página esteja cheia.
      */
-    bool inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado, int indiceDeInsercao,
+    bool inserir(TIPO_DAS_CHAVES& chave, TIPO_DOS_DADOS& dado, int indiceDeInsercao,
                  file_ptr_type ponteiro = constantes::ptrNuloPagina,
                  bool inserirPonteiroADireita = true)
     {
@@ -319,7 +319,7 @@ public:
      * @return int -1 caso a inserção falhe (página cheia). Caso contrário,
      * o índice onde o par foi inserido.
      */
-    int inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)
+    int inserir(TIPO_DAS_CHAVES& chave, TIPO_DOS_DADOS& dado)
     {
         int indiceDeInsercao = obterIndiceDeDescida(chave);
 
