@@ -3,7 +3,7 @@ Implementação da Hash Dinâmica, estrutura de dados para indexamento, em Java.
 
 ### Como usar ?
 
-Encontre [aqui a documentação da hash](http://htmlpreview.github.io/?https://github.com/axell-brendow/Indexing/blob/master/HashDinamica/doc/index.html).
+Encontre [aqui a documentação da hash](http://htmlpreview.github.io/?https://raw.githubusercontent.com/axell-brendow/Indexing/master/HashDinamica/doc/overview-summary.html).
 
 Primeiro, [baixe o arquivo hash.jar](https://github.com/axell-brendow/Indexing/raw/master/HashDinamica/hash.jar).
 

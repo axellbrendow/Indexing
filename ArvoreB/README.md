@@ -3,7 +3,7 @@ Implementação da Árvore B, estrutura de dados para indexamento, em C++.
 
 ### Como usar ?
 
-Encontre [aqui a documentação da árvore B](http://htmlpreview.github.io/?https://github.com/axell-brendow/Indexing/blob/master/ArvoreB/doc/html/index.html).
+Encontre [aqui a documentação da árvore B](https://htmlpreview.github.io/?https://raw.githubusercontent.com/axell-brendow/Indexing/master/ArvoreB/doc/html/files.html).
 
 Já existe, no repositório, um arquivo .cpp com um código de teste:
 
