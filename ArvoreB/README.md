@@ -14,7 +14,7 @@ Todos os comandos usados:
 ```PowerShell
 pushd ~   # vai para a pasta do seu usuário
 
-git clone --depth=1 https://github.com/axell-brendow/Indexing.git   # baixa os arquivos
+git clone --depth=1 https://github.com/axell-brendow/Indexing.git
 
 mv ./Indexing/ArvoreB/src ./ArvoreB   # extrai o código da árvore B do repositório
 

@@ -72,4 +72,9 @@
  * 
  * -L library path
  * -l library name
+ * 
+ * Regular DLL Tutorial for Beginners:<br>
+ * 
+ * https://www.cygwin.com/cygwin-ug-net/dll.html
+ * https://www.codeproject.com/Articles/6351/Regular-DLL-Tutor-For-Beginners
  */
