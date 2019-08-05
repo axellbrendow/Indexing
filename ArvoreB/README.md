@@ -7,7 +7,7 @@ Encontre [aqui a documentação da árvore B](http://htmlpreview.github.io/?http
 
 Já existe, no repositório, um arquivo .cpp com um código de teste:
 
-![Exemplo de código com compilação e execução](http://i66.tinypic.com/10fp2k8.jpg)
+![Exemplo de código com compilação e execução](https://i.imgur.com/6mgqFkM.png)
 
 Comandos usados: (Estes comandos são compatíveis com Unix e Windows/PowerShell)
 
@@ -17,15 +17,19 @@ git clone --depth=1 https://github.com/axell-brendow/Indexing.git
 mv ./Indexing/ArvoreB/src ./ArvoreB
 mv ./Indexing/ArvoreB/test.cpp ./test.cpp
 
+rm -r ./Indexing 2>null; rm null
+
 g++ test.cpp -o test.exe
 ./test.exe
+
+ls
 
 ```
 
 Código de teste:
 
 ```Cpp
-#include "ArvoreB.hpp"
+#include "ArvoreB/ArvoreB.hpp"
 
 #include <iostream>
 #include <cstring>

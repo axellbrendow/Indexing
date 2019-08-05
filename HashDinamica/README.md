@@ -9,11 +9,11 @@ Primeiro, [baixe o arquivo hash.jar](https://github.com/axell-brendow/Indexing/r
 
 Os próximos passos estão descritos nas imagens a abaixo:
 
-![Exemplo de código com compilação e execução](http://i66.tinypic.com/10fp2k8.jpg)
+![Exemplo de código com compilação e execução](https://i.imgur.com/IJQ0zg0.png)
 
 Caso você não queira deixar o hash.jar na mesma pasta que a sua classe java, você pode seguir estes passos que são uma continuação da primeira imagem:
 
-![Compilação e execução com o .jar na pasta lib](http://i67.tinypic.com/2v1ofgj.jpg)
+![Compilação e execução com o .jar na pasta lib](https://i.imgur.com/JOUiL1l.png)
 
 Todos os comandos usados:
 
