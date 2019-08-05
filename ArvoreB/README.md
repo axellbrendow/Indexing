@@ -5,28 +5,20 @@ Implementação da Árvore B, estrutura de dados para indexamento, em C++.
 
 Encontre [aqui a documentação da árvore](http://htmlpreview.github.io/?https://github.com/axell-brendow/Indexing/blob/master/ArvoreB/doc/html/index.html).
 
-Primeiro, [baixe o arquivo arvoreb.dll](https://github.com/axell-brendow/Indexing/raw/master/ArvoreB/build/arvoreb.dll).
-
 Os próximos passos estão descritos nas imagens a abaixo:
 
 ![Exemplo de código com compilação e execução](http://i66.tinypic.com/10fp2k8.jpg)
-
-Caso você não queira deixar o hash.jar na mesma pasta que a sua classe java, você pode seguir estes passos que são uma continuação da primeira imagem:
-
-![Compilação e execução com o .jar na pasta lib](http://i67.tinypic.com/2v1ofgj.jpg)
 
 Todos os comandos usados:
 
 ```PowerShell
 pushd ~   # vai para a pasta do seu usuário
 
-git clone https://github.com/axell-brendow/Indexing.git   # baixa o repositório
+git clone --depth=1 https://github.com/axell-brendow/Indexing.git   # baixa os arquivos
 
-mv ./Indexing/ArvoreB/build ./build   # extrai o código da árvore B do repositório
+mv ./Indexing/ArvoreB/src ./ArvoreB   # extrai o código da árvore B do repositório
 
-rm -r ./Indexing   # deleta o repositório
-
-pushd ./build   # entra na pasta da árvore B
+pushd ./ArvoreB   # entra na pasta da árvore B
 
 cat ./test.cpp   # mostra o código de teste
 
@@ -38,34 +30,34 @@ g++ test.cpp -o test.exe   # compila o código
 
 Código de teste:
 
-```Java
-import java.io.File;
+```Cpp
+#include "ArvoreB.hpp"
 
-import hash.hashs.HashDinamicaStringInt;
+#include <iostream>
+#include <cstring>
 
-public class HashTest
+using namespace std;
+
+int main()
 {
-    public static void main(String[] args)
-    {
-        try
-        {
-            new File("diretorio.dir").delete();
-            new File("buckets.db").delete();
-
-            HashDinamicaStringInt hash = new HashDinamicaStringInt("diretorio.dir", "buckets.db", 2);
-
-            hash.inserir("a", 1);
-            hash.inserir("b", 2);
-            hash.inserir("c", 3);
+    string fileName("TesteArvore.txt");
     
-            System.out.println(hash);
-        }
-        
-        catch (SecurityException | NoSuchMethodException e)
-        {
-            e.printStackTrace();
-        }
-    }
+    ArvoreB<int, float> arvore(fileName, 4);
+
+    arvore.inserir(1000 , 1000.5);
+    arvore.inserir(2000 , 2000.5);
+    arvore.inserir(3000 , 3000.5);
+    arvore.inserir(200  , 200.5 );
+    arvore.inserir(400  , 400.5 );
+    arvore.inserir(1500 , 1500.5);
+    arvore.inserir(600  , 600.5 );
+    arvore.inserir(50   , 50.5  );
+    arvore.inserir(12   , 12.5  );
+    arvore.inserir(4    , 4.5   );
+
+    arvore.mostrar();
+
+    return 0;
 }
 
 ```

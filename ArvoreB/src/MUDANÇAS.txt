@@ -1,3 +1,0 @@
-Melhora um pouco a eficiência da árvore
-
-1 - Cria duas versões de várias funções de tal forma que elas aceitem parâmetros por referência normal e por referência de valores expirados.

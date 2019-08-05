@@ -1,4 +1,4 @@
-#include "ArvoreB/ArvoreB.hpp"
+#include "ArvoreB.hpp"
 
 #include <iostream>
 #include <cstring>
