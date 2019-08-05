@@ -14,15 +14,11 @@ Comandos usados: (Estes comandos são compatíveis com Unix e Windows/PowerShell
 ```PowerShell
 git clone --depth=1 https://github.com/axell-brendow/Indexing.git
 
-mv ./Indexing/ArvoreB/src ./ArvoreB; mv ./Indexing/ArvoreB/test.cpp ./test.cpp
+mv ./Indexing/ArvoreB/src ./ArvoreB
+mv ./Indexing/ArvoreB/test.cpp ./test.cpp
 
-pushd ./ArvoreB   # entra na pasta da árvore B
-
-cat ./test.cpp   # mostra o código de teste
-
-g++ test.cpp -o test.exe   # compila o código
-
-./test.exe   # executa
+g++ test.cpp -o test.exe
+./test.exe
 
 ```
 
