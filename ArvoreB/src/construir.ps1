@@ -15,7 +15,7 @@ g++ mytest.o -shared -o ArvoreB.dll
 
 # Compila o teste com a DLL e gera o executável
 ## g++ ../build/test.cpp -L ../build -l ../build/ArvoreB -o test.exe
-g++ test.cpp -L . -l ./ArvoreB -o test.exe
+g++ ../test.cpp -L . -l ./ArvoreB -o test.exe
 
 # Executa o teste
 ./test.exe

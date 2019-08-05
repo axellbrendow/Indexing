@@ -3,20 +3,18 @@ Implementação da Árvore B, estrutura de dados para indexamento, em C++.
 
 ### Como usar ?
 
-Encontre [aqui a documentação da árvore](http://htmlpreview.github.io/?https://github.com/axell-brendow/Indexing/blob/master/ArvoreB/doc/html/index.html).
+Encontre [aqui a documentação da árvore B](http://htmlpreview.github.io/?https://github.com/axell-brendow/Indexing/blob/master/ArvoreB/doc/html/index.html).
 
-Os próximos passos estão descritos nas imagens a abaixo:
+Já existe, no repositório, um arquivo .cpp com um código de teste:
 
 ![Exemplo de código com compilação e execução](http://i66.tinypic.com/10fp2k8.jpg)
 
-Todos os comandos usados:
+Comandos usados: (Estes comandos são compatíveis com Unix e Windows/PowerShell)
 
 ```PowerShell
-pushd ~   # vai para a pasta do seu usuário
-
 git clone --depth=1 https://github.com/axell-brendow/Indexing.git
 
-mv ./Indexing/ArvoreB/src ./ArvoreB   # extrai o código da árvore B do repositório
+mv ./Indexing/ArvoreB/src ./ArvoreB; mv ./Indexing/ArvoreB/test.cpp ./test.cpp
 
 pushd ./ArvoreB   # entra na pasta da árvore B
 
