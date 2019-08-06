@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.15"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ArvoreB: Código-Fonte de templates/tipos.hpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">ArvoreB
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Gerado por Doxygen 1.8.15 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Localizar');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Localizar');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_096b0de097b3e98f91191e9d894d4363.html">templates</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">tipos.hpp</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="tipos_8hpp.html">Ir para a documentação deste ficheiro.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#pragma once</span></div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div><div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div><div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">using namespace </span>std;</div><div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div><div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="tipos_8hpp.html#a14ad2ddcc295ee3feb1f46731116465e">   20</a></span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">int</span> <a class="code" href="tipos_8hpp.html#a14ad2ddcc295ee3feb1f46731116465e">str_size_type</a>;</div><div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div><div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="tipos_8hpp.html#ab29579b2e0823b94933bba3153b61f55">   26</a></span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">long</span> <a class="code" href="tipos_8hpp.html#ab29579b2e0823b94933bba3153b61f55">file_ptr_type</a>;</div><div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div><div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="tipos_8hpp.html#a6a251888af90f851a6e15a8887f86bc1">   33</a></span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code" href="tipos_8hpp.html#a6a251888af90f851a6e15a8887f86bc1">tipo_byte</a>;</div><div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div><div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="tipos_8hpp.html#a458b3a3073fa6d85d6d28dd922e183ca">   38</a></span>&#160;<span class="keyword">typedef</span> vector&lt;tipo_byte&gt; <a class="code" href="tipos_8hpp.html#a458b3a3073fa6d85d6d28dd922e183ca">vetor_de_bytes</a>;</div><div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div><div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="tipos_8hpp.html#a2d209fbc6f78d855bad43c238dc551f1">   57</a></span>&#160;<span class="keyword">typedef</span> vetor_de_bytes::iterator <a class="code" href="tipos_8hpp.html#a2d209fbc6f78d855bad43c238dc551f1">iterador</a>;</div><div class="ttc" id="tipos_8hpp_html_a2d209fbc6f78d855bad43c238dc551f1"><div class="ttname"><a href="tipos_8hpp.html#a2d209fbc6f78d855bad43c238dc551f1">iterador</a></div><div class="ttdeci">vetor_de_bytes::iterator iterador</div><div class="ttdoc">Tipo de iterador para vetores de bytes.</div><div class="ttdef"><b>Definition:</b> tipos.hpp:57</div></div>
+<div class="ttc" id="tipos_8hpp_html_ab29579b2e0823b94933bba3153b61f55"><div class="ttname"><a href="tipos_8hpp.html#ab29579b2e0823b94933bba3153b61f55">file_ptr_type</a></div><div class="ttdeci">long file_ptr_type</div><div class="ttdoc">Criado apenas para padronizar o tipo usado para declarar ponteiros que guardam o endereço de entidade...</div><div class="ttdef"><b>Definition:</b> tipos.hpp:26</div></div>
+<div class="ttc" id="tipos_8hpp_html_a6a251888af90f851a6e15a8887f86bc1"><div class="ttname"><a href="tipos_8hpp.html#a6a251888af90f851a6e15a8887f86bc1">tipo_byte</a></div><div class="ttdeci">unsigned char tipo_byte</div><div class="ttdoc">Em C++, usamos unsigned char para lidar com bytes. As vezes usa-se char também. De qualquer forma,...</div><div class="ttdef"><b>Definition:</b> tipos.hpp:33</div></div>
+<div class="ttc" id="tipos_8hpp_html_a14ad2ddcc295ee3feb1f46731116465e"><div class="ttname"><a href="tipos_8hpp.html#a14ad2ddcc295ee3feb1f46731116465e">str_size_type</a></div><div class="ttdeci">int str_size_type</div><div class="ttdoc">Criado apenas para padronizar o tipo usado para declarar variáveis que guardam tamanhos de strings.</div><div class="ttdef"><b>Definition:</b> tipos.hpp:20</div></div>
+<div class="ttc" id="tipos_8hpp_html_a458b3a3073fa6d85d6d28dd922e183ca"><div class="ttname"><a href="tipos_8hpp.html#a458b3a3073fa6d85d6d28dd922e183ca">vetor_de_bytes</a></div><div class="ttdeci">vector&lt; tipo_byte &gt; vetor_de_bytes</div><div class="ttdoc">Tipo destinado a ser usado para trabalhar com vetores de bytes.</div><div class="ttdef"><b>Definition:</b> tipos.hpp:38</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Gerado por &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.15
+</small></address>
+</body>
+</html>

@@ -1,0 +1,394 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.15"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ArvoreB: Referência à classe Serializavel</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">ArvoreB
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Gerado por Doxygen 1.8.15 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Localizar');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Localizar');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Membros públicos</a> &#124;
+<a href="class_serializavel-members.html">Mostrar lista completa dos membros</a>  </div>
+  <div class="headertitle">
+<div class="title">Referência à classe Serializavel<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>Classe abstrata que todo objeto serializável deve herdar.  
+ <a href="class_serializavel.html#details">Mais...</a></p>
+
+<p><code>#include &lt;<a class="el" href="serializavel_8hpp_source.html">serializavel.hpp</a>&gt;</code></p>
+<div class="dynheader">
+Diagrama de heranças da classe Serializavel</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="class_serializavel.png" usemap="#Serializavel_map" alt=""/>
+  <map id="Serializavel_map" name="Serializavel_map">
+<area href="class_pagina_b.html" title="Classe com as características da página da árvore B." alt="PaginaB&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;" shape="rect" coords="0,56,326,80"/>
+<area href="class_student.html" alt="Student" shape="rect" coords="336,56,662,80"/>
+  </map>
+</div></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Membros públicos</h2></td></tr>
+<tr class="memitem:a614b2c74539381172fecc6422e92837f"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_serializavel.html#a614b2c74539381172fecc6422e92837f">obterTamanhoMaximoEmBytes</a> ()=0</td></tr>
+<tr class="memdesc:a614b2c74539381172fecc6422e92837f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcula o tamanho máximo, em bytes, que a entidade pode gastar.  <a href="#a614b2c74539381172fecc6422e92837f">Mais...</a><br /></td></tr>
+<tr class="separator:a614b2c74539381172fecc6422e92837f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09a05fde1ad4696e10283e0cfa222dad"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_data_output_stream.html">DataOutputStream</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_serializavel.html#a09a05fde1ad4696e10283e0cfa222dad">gerarDataOutputStream</a> (<a class="el" href="class_data_output_stream.html">DataOutputStream</a> &amp;out)=0</td></tr>
+<tr class="memdesc:a09a05fde1ad4696e10283e0cfa222dad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insere os dados da entidade no <a class="el" href="class_data_output_stream.html">DataOutputStream</a> recebido e o retorna.  <a href="#a09a05fde1ad4696e10283e0cfa222dad">Mais...</a><br /></td></tr>
+<tr class="separator:a09a05fde1ad4696e10283e0cfa222dad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a664f80ee7111ae0b57f2b06b98026d65"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_serializavel.html#a664f80ee7111ae0b57f2b06b98026d65">lerBytes</a> (<a class="el" href="class_data_input_stream.html">DataInputStream</a> &amp;input)=0</td></tr>
+<tr class="memdesc:a664f80ee7111ae0b57f2b06b98026d65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lê e interpreta o vetor do input restaurando o objeto da entidade.  <a href="#a664f80ee7111ae0b57f2b06b98026d65">Mais...</a><br /></td></tr>
+<tr class="separator:a664f80ee7111ae0b57f2b06b98026d65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56d1629ec045b7cc79f5d1e5c4092dcf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_serializavel.html#a56d1629ec045b7cc79f5d1e5c4092dcf">lerBytes</a> (char *buffer, int tamanho)</td></tr>
+<tr class="memdesc:a56d1629ec045b7cc79f5d1e5c4092dcf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lê e interpreta o buffer restaurando o objeto da entidade.  <a href="#a56d1629ec045b7cc79f5d1e5c4092dcf">Mais...</a><br /></td></tr>
+<tr class="separator:a56d1629ec045b7cc79f5d1e5c4092dcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d434eb2836c2929c6eef69081092348"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_data_output_stream.html">DataOutputStream</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_serializavel.html#a3d434eb2836c2929c6eef69081092348">alocarDataOutputStream</a> ()</td></tr>
+<tr class="memdesc:a3d434eb2836c2929c6eef69081092348"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cria o <a class="el" href="class_data_output_stream.html">DataOutputStream</a> alocando <a class="el" href="class_serializavel.html#a614b2c74539381172fecc6422e92837f" title="Calcula o tamanho máximo, em bytes, que a entidade pode gastar.">obterTamanhoMaximoEmBytes()</a> para o seu vetor.  <a href="#a3d434eb2836c2929c6eef69081092348">Mais...</a><br /></td></tr>
+<tr class="separator:a3d434eb2836c2929c6eef69081092348"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc92082ca699d0e43ba35f41d071889b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_data_output_stream.html">DataOutputStream</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_serializavel.html#acc92082ca699d0e43ba35f41d071889b">gerarDataOutputStream</a> ()</td></tr>
+<tr class="memdesc:acc92082ca699d0e43ba35f41d071889b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gera o <a class="el" href="class_data_output_stream.html">DataOutputStream</a> com os dados da entidade. O vetor interno do <a class="el" href="class_data_output_stream.html">DataOutputStream</a> sempre terá um tamanho igual a <a class="el" href="class_serializavel.html#a614b2c74539381172fecc6422e92837f" title="Calcula o tamanho máximo, em bytes, que a entidade pode gastar.">obterTamanhoMaximoEmBytes()</a>.  <a href="#acc92082ca699d0e43ba35f41d071889b">Mais...</a><br /></td></tr>
+<tr class="separator:acc92082ca699d0e43ba35f41d071889b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec986f9cd1f8f6e638047e366d6e079a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_data_input_stream.html">DataInputStream</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_serializavel.html#aec986f9cd1f8f6e638047e366d6e079a">alocarDataInputStream</a> ()</td></tr>
+<tr class="memdesc:aec986f9cd1f8f6e638047e366d6e079a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cria o <a class="el" href="class_data_input_stream.html">DataInputStream</a> alocando <a class="el" href="class_serializavel.html#a614b2c74539381172fecc6422e92837f" title="Calcula o tamanho máximo, em bytes, que a entidade pode gastar.">obterTamanhoMaximoEmBytes()</a> para o seu vetor.  <a href="#aec986f9cd1f8f6e638047e366d6e079a">Mais...</a><br /></td></tr>
+<tr class="separator:aec986f9cd1f8f6e638047e366d6e079a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48ddae4eceed0f9c8ca6184a7bc08699"><td class="memItemLeft" align="right" valign="top"><a class="el" href="tipos_8hpp.html#a458b3a3073fa6d85d6d28dd922e183ca">vetor_de_bytes</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_serializavel.html#a48ddae4eceed0f9c8ca6184a7bc08699">gerarBytes</a> ()</td></tr>
+<tr class="memdesc:a48ddae4eceed0f9c8ca6184a7bc08699"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gera o vetor de bytes da entidade.  <a href="#a48ddae4eceed0f9c8ca6184a7bc08699">Mais...</a><br /></td></tr>
+<tr class="separator:a48ddae4eceed0f9c8ca6184a7bc08699"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Descrição detalhada</h2>
+<div class="textblock"><p>Classe abstrata que todo objeto serializável deve herdar. </p>
+<dl class="section see"><dt>Veja também</dt><dd><a href="https://www.tutorialspoint.com/cplusplus/cpp_interfaces">Interfaces C++</a> </dd>
+<dd>
+<a href="https://pt.wikipedia.org/wiki/Serializa%C3%A7%C3%A3o">Serialização - Wikipédia</a> </dd></dl>
+</div><h2 class="groupheader">Documentação dos métodos</h2>
+<a id="aec986f9cd1f8f6e638047e366d6e079a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aec986f9cd1f8f6e638047e366d6e079a">&#9670;&nbsp;</a></span>alocarDataInputStream()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_data_input_stream.html">DataInputStream</a> Serializavel::alocarDataInputStream </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Cria o <a class="el" href="class_data_input_stream.html">DataInputStream</a> alocando <a class="el" href="class_serializavel.html#a614b2c74539381172fecc6422e92837f" title="Calcula o tamanho máximo, em bytes, que a entidade pode gastar.">obterTamanhoMaximoEmBytes()</a> para o seu vetor. </p>
+<dl class="section return"><dt>Retorna</dt><dd><a class="el" href="class_data_input_stream.html">DataInputStream</a> Retorna o <a class="el" href="class_data_input_stream.html">DataInputStream</a> com <a class="el" href="class_serializavel.html#a614b2c74539381172fecc6422e92837f" title="Calcula o tamanho máximo, em bytes, que a entidade pode gastar.">obterTamanhoMaximoEmBytes()</a> de espaço alocado. </dd></dl>
+
+</div>
+</div>
+<a id="a3d434eb2836c2929c6eef69081092348"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d434eb2836c2929c6eef69081092348">&#9670;&nbsp;</a></span>alocarDataOutputStream()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_data_output_stream.html">DataOutputStream</a> Serializavel::alocarDataOutputStream </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Cria o <a class="el" href="class_data_output_stream.html">DataOutputStream</a> alocando <a class="el" href="class_serializavel.html#a614b2c74539381172fecc6422e92837f" title="Calcula o tamanho máximo, em bytes, que a entidade pode gastar.">obterTamanhoMaximoEmBytes()</a> para o seu vetor. </p>
+<dl class="section return"><dt>Retorna</dt><dd><a class="el" href="class_data_output_stream.html">DataOutputStream</a> Retorna o <a class="el" href="class_data_output_stream.html">DataOutputStream</a> com <a class="el" href="class_serializavel.html#a614b2c74539381172fecc6422e92837f" title="Calcula o tamanho máximo, em bytes, que a entidade pode gastar.">obterTamanhoMaximoEmBytes()</a> de espaço alocado. </dd></dl>
+
+</div>
+</div>
+<a id="a48ddae4eceed0f9c8ca6184a7bc08699"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48ddae4eceed0f9c8ca6184a7bc08699">&#9670;&nbsp;</a></span>gerarBytes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="tipos_8hpp.html#a458b3a3073fa6d85d6d28dd922e183ca">vetor_de_bytes</a> Serializavel::gerarBytes </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gera o vetor de bytes da entidade. </p>
+<dl class="section return"><dt>Retorna</dt><dd>vetor_de_bytes Retorna o vetor de bytes da entidade. </dd></dl>
+
+</div>
+</div>
+<a id="a09a05fde1ad4696e10283e0cfa222dad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09a05fde1ad4696e10283e0cfa222dad">&#9670;&nbsp;</a></span>gerarDataOutputStream() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="class_data_output_stream.html">DataOutputStream</a>&amp; Serializavel::gerarDataOutputStream </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_data_output_stream.html">DataOutputStream</a> &amp;&#160;</td>
+          <td class="paramname"><em>out</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Insere os dados da entidade no <a class="el" href="class_data_output_stream.html">DataOutputStream</a> recebido e o retorna. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">out</td><td>Um objeto <a class="el" href="class_data_output_stream.html">DataOutputStream</a> com espaço alocado para o tamanho máximo da entidade.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Retorna</dt><dd><a class="el" href="class_data_output_stream.html">DataOutputStream</a> Retorna o <a class="el" href="class_data_output_stream.html">DataOutputStream</a> contendo o vetor de bytes com os dados da entidade.</dd></dl>
+<dl class="section see"><dt>Veja também</dt><dd><a href="https://www.tutorialspoint.com/difference-between-a-virtual-function-and-a-pure-virtual-function-in-cplusplus">Funções virtuais</a> </dd></dl>
+
+<p>Implementado em <a class="el" href="class_pagina_b.html#a78da04cb567892e6857a5193d7097df2">PaginaB&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;</a> e <a class="el" href="class_student.html#afaec794402d75747eb8104571d4b02c5">Student</a>.</p>
+
+</div>
+</div>
+<a id="acc92082ca699d0e43ba35f41d071889b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc92082ca699d0e43ba35f41d071889b">&#9670;&nbsp;</a></span>gerarDataOutputStream() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_data_output_stream.html">DataOutputStream</a> Serializavel::gerarDataOutputStream </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gera o <a class="el" href="class_data_output_stream.html">DataOutputStream</a> com os dados da entidade. O vetor interno do <a class="el" href="class_data_output_stream.html">DataOutputStream</a> sempre terá um tamanho igual a <a class="el" href="class_serializavel.html#a614b2c74539381172fecc6422e92837f" title="Calcula o tamanho máximo, em bytes, que a entidade pode gastar.">obterTamanhoMaximoEmBytes()</a>. </p>
+<dl class="section return"><dt>Retorna</dt><dd><a class="el" href="class_data_output_stream.html">DataOutputStream</a> Retorna o <a class="el" href="class_data_output_stream.html">DataOutputStream</a> contendo o vetor de bytes com os dados da entidade. </dd></dl>
+
+</div>
+</div>
+<a id="a664f80ee7111ae0b57f2b06b98026d65"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a664f80ee7111ae0b57f2b06b98026d65">&#9670;&nbsp;</a></span>lerBytes() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void Serializavel::lerBytes </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_data_input_stream.html">DataInputStream</a> &amp;&#160;</td>
+          <td class="paramname"><em>input</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Lê e interpreta o vetor do input restaurando o objeto da entidade. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">input</td><td><a class="el" href="class_data_input_stream.html">DataInputStream</a> com o vetor de bytes da entidade.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>Veja também</dt><dd><a href="https://www.tutorialspoint.com/difference-between-a-virtual-function-and-a-pure-virtual-function-in-cplusplus">Funções virtuais</a> </dd></dl>
+
+<p>Implementado em <a class="el" href="class_pagina_b.html#a483d5e9d6b3d78e8b97ecbcb3b449559">PaginaB&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;</a> e <a class="el" href="class_student.html#a451dd9c2b28fafa28e5fde833b1f75d2">Student</a>.</p>
+
+</div>
+</div>
+<a id="a56d1629ec045b7cc79f5d1e5c4092dcf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a56d1629ec045b7cc79f5d1e5c4092dcf">&#9670;&nbsp;</a></span>lerBytes() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Serializavel::lerBytes </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>tamanho</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Lê e interpreta o buffer restaurando o objeto da entidade. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buffer</td><td>Vetor de bytes da entidade. </td></tr>
+    <tr><td class="paramname">tamanho</td><td>Quantidade de bytes no buffer. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a614b2c74539381172fecc6422e92837f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a614b2c74539381172fecc6422e92837f">&#9670;&nbsp;</a></span>obterTamanhoMaximoEmBytes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual int Serializavel::obterTamanhoMaximoEmBytes </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calcula o tamanho máximo, em bytes, que a entidade pode gastar. </p>
+<dl class="section return"><dt>Retorna</dt><dd>int Retorna o tamanho máximo, em bytes, que a entidade pode gastar.</dd></dl>
+<dl class="section see"><dt>Veja também</dt><dd><a href="https://www.tutorialspoint.com/difference-between-a-virtual-function-and-a-pure-virtual-function-in-cplusplus">Funções virtuais</a> </dd></dl>
+
+<p>Implementado em <a class="el" href="class_pagina_b.html#a1722112b0406cb7e50961dbc8183f7ca">PaginaB&lt; TIPO_DAS_CHAVES, TIPO_DOS_DADOS &gt;</a> e <a class="el" href="class_student.html#a352cca1faa94a9b6395eb305bab1f1ac">Student</a>.</p>
+
+</div>
+</div>
+<hr/>A documentação para esta classe foi gerada a partir do seguinte ficheiro:<ul>
+<li>templates/<a class="el" href="serializavel_8hpp_source.html">serializavel.hpp</a></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Gerado por &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.15
+</small></address>
+</body>
+</html>

@@ -249,7 +249,7 @@ public:
     /**
      * @brief Zera a quantidade de elementos e limpa todos os vetores internos.
      */
-    void limpar()
+    virtual void limpar()
     {
         _tamanho = 0;
         endereco = constantes::ptrNuloPagina;

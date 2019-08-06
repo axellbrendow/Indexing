@@ -46,19 +46,12 @@ using namespace std;
  * @tparam TIPO_DOS_DADOS Tipo do dado dos registros. <b>É necessário que o dado
  * seja um tipo primitivo ou então que a sua classe/struct herde de Serializavel e
  * tenha um construtor sem parâmetros.</b>
+ * @tparam Pagina Tipo das páginas da árvore B. <b>É necessário que este tipo seja
+ * serializável.</b>
  */
-template<typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS>
+template< typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS, typename Pagina = PaginaB<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> >
 class ArvoreB
 {
-public:
-    // ------------------------- Typedefs
-
-    /**
-     * @brief Padroniza o tipo da página da árvore. Typedefs dentro de classes ou
-     * structs são considerados como boa prática em C++.
-     */
-    typedef PaginaB<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> Pagina;
-
     // ------------------------- Campos
 
     const int tamanhoCabecalhoAntesDoEnderecoDaRaiz = 0;
@@ -116,6 +109,13 @@ protected:
             // Agora sim reabre o arquivo nos modos de leitura e escrita
             arquivo = fstream(nome, fstream::binary | fstream::in | fstream::out);
         }
+    }
+
+    size_t obterTamanhoDoArquivo()
+    {
+        arquivo.seekg(0, fstream::end);
+
+        return arquivo.tellg();
     }
 
     /**
