@@ -98,9 +98,9 @@ public:
     }
 
     void transferirElementoPara(
-        Pagina *paginaDestino, int indiceNoDestino, int indiceLocal,
+        PaginaHerdada *paginaDestino, int indiceNoDestino, int indiceLocal,
         bool excluirPonteiroDaEsquerda = false, bool excluirPonteiroDaDireita = false,
-        bool inserirPonteiroADireita = true)
+        bool inserirPonteiroADireita = true) override
     {
         paginaDestino->inserir(
             chaves[indiceLocal], dados[indiceLocal],
@@ -115,7 +115,7 @@ public:
                bool mostrarEndereco = true,
                string delimitadorEntreOPonteiroEAChave = " (",
                string delimitadorEntreODadoEOPonteiro = ") ",
-               string delimitadorEntreAChaveEODado = ", ")
+               string delimitadorEntreAChaveEODado = ", ") override
     {
         PaginaHerdada::mostrar(
             ostream, mostrarOsDados, mostrarOsPonteiros, mostrarEndereco,

@@ -63,21 +63,24 @@ protected:
     using ArvoreBHerdada::arquivo;
     using ArvoreBHerdada::atribuirErro;
     using ArvoreBHerdada::carregar;
-    using ArvoreBHerdada::excluir;
     using ArvoreBHerdada::lerEnderecoDaRaiz;
     using ArvoreBHerdada::limparErro;
-    using ArvoreBHerdada::listarDadosComAChaveEntre;
     using ArvoreBHerdada::obterCaminhoDeDescida;
     using ArvoreBHerdada::obterPaginaDeInsercao;
     using ArvoreBHerdada::obterTamanhoDoArquivo;
     using ArvoreBHerdada::ordemDaArvore;
+
+public:
+    // ------------------------- Campos e métodos herdados
+
+    using ArvoreBHerdada::excluir;
+    using ArvoreBHerdada::listarDadosComAChaveEntre;
     using ArvoreBHerdada::paginaFilha;
     using ArvoreBHerdada::paginaIrma;
     using ArvoreBHerdada::paginaIrmaPai;
     using ArvoreBHerdada::paginaPai;
     using ArvoreBHerdada::pesquisar;
 
-public:
     // ------------------------- Construtores e destrutores
 
     ArvoreBMais(string nomeDoArquivo, int ordemDaArvore) : ArvoreBHerdada(nomeDoArquivo, ordemDaArvore) {}
@@ -123,7 +126,7 @@ public:
     }
 
     bool fundirCom(
-        file_ptr_type enderecoDaPagina, int indiceDeDescida, bool fundirDireita)
+        file_ptr_type enderecoDaPagina, int indiceDeDescida, bool fundirDireita) override
     {
         bool sucesso = false;
 
@@ -158,7 +161,7 @@ public:
         return sucesso;
     }
 
-    TIPO_DOS_DADOS pesquisar(TIPO_DAS_CHAVES &chave)
+    TIPO_DOS_DADOS pesquisar(TIPO_DAS_CHAVES &chave) override
     {
         TIPO_DOS_DADOS dado;
 
@@ -184,12 +187,7 @@ public:
         return dado;
     }
 
-    TIPO_DOS_DADOS pesquisar(TIPO_DAS_CHAVES &&chave)
-    {
-        return pesquisar(chave);
-    }
-
-    TIPO_DOS_DADOS excluir(TIPO_DAS_CHAVES &chave)
+    TIPO_DOS_DADOS excluir(TIPO_DAS_CHAVES &chave) override
     {
         // Faz todo o percurso de descida na árvore
         auto parDoCaminho = obterCaminhoDeDescida(chave, 0, lerEnderecoDaRaiz(), true);
@@ -199,53 +197,45 @@ public:
         return excluir(chave, pilhaDeEnderecos, pilhaDeIndices);
     }
 
+    int obterDadosComAChaveEntre(
+        TIPO_DAS_CHAVES &chaveMenor,
+        TIPO_DAS_CHAVES &chaveMaior,
+        vector<TIPO_DOS_DADOS> &dados)
+    {
+            // Obtém o índice onde a chave deveria estar na página.
+        int indiceDaChave = paginaFilha->obterIndiceDeDescida(chaveMenor);
+        int indiceFinal = 
+            upper_bound(paginaFilha->chaves.begin() + indiceDaChave,
+                paginaFilha->chaves.end(), chaveMaior)
+                - paginaFilha->chaves.begin();
+
+        for (size_t i = indiceDaChave; i < indiceFinal; i++)
+        {
+            dados.push_back(paginaFilha->dados[i]);
+        }
+
+        return indiceFinal;
+    }
+
     vector<TIPO_DOS_DADOS> listarDadosComAChaveEntre(
         TIPO_DAS_CHAVES &chaveMenor,
-        TIPO_DAS_CHAVES &chaveMaior)
+        TIPO_DAS_CHAVES &chaveMaior) override
     {
         vector<TIPO_DOS_DADOS> dados;
 
         if (chaveMenor <= chaveMaior)
         {
             obterCaminhoDeDescida(chaveMenor, 0, lerEnderecoDaRaiz(), true);
-
-            // Obtém o índice onde a chave deveria estar na página.
-            int indiceDaChave = paginaFilha->obterIndiceDeDescida(chaveMenor);
-            int indiceFinal = 
-                upper_bound(paginaFilha->chaves.begin() + indiceDaChave,
-                    paginaFilha->chaves.end(), chaveMaior)
-                    - paginaFilha->chaves.begin();
-
-            for (size_t i = indiceDaChave; i < indiceFinal; i++)
-            {
-                dados.push_back(paginaFilha->dados[i]);
-            }
+            int indiceFinal = obterDadosComAChaveEntre(chaveMenor, chaveMaior, dados);
             
-            while (indiceFinal == ordemDaArvore &&
+            while (indiceFinal == paginaFilha->tamanho() &&
                 paginaFilha->ptrProximaPagina != constantes::ptrNuloPagina)
             {
                 carregar(paginaFilha, paginaFilha->ptrProximaPagina);
-                // Obtém o índice onde a chave deveria estar na página.
-                indiceDaChave = paginaFilha->obterIndiceDeDescida(chaveMenor);
-                indiceFinal =
-                    upper_bound(paginaFilha->chaves.begin() + indiceDaChave,
-                        paginaFilha->chaves.end(), chaveMaior)
-                        - paginaFilha->chaves.begin();
-
-                for (size_t i = indiceDaChave; i < indiceFinal; i++)
-                {
-                    dados.push_back(paginaFilha->dados[i]);
-                }
+                indiceFinal = obterDadosComAChaveEntre(chaveMenor, chaveMaior, dados);
             }
         }
 
         return dados;
-    }
-
-    vector<TIPO_DOS_DADOS> listarDadosComAChaveEntre(
-        TIPO_DAS_CHAVES &&chaveMenor,
-        TIPO_DAS_CHAVES &&chaveMaior)
-    {
-        return listarDadosComAChaveEntre(chaveMenor, chaveMaior);
     }
 };
