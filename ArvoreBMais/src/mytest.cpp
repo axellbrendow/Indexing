@@ -25,17 +25,17 @@ public:
      */
     using Serializavel::gerarDataOutputStream;
 
-    virtual int obterTamanhoMaximoEmBytes() override
+    int obterTamanhoMaximoEmBytes() override
     {
         return sizeof(str_size_type) + constantes::tamanhoMaximoStrings + sizeof(int);
     }
 
-    virtual DataOutputStream& gerarDataOutputStream(DataOutputStream& out) override
+    DataOutputStream& gerarDataOutputStream(DataOutputStream& out) override
     {
         return out << nome << idade;
     }
 
-    virtual void lerBytes(DataInputStream& input) override
+    void lerBytes(DataInputStream& input) override
     {
         input >> nome >> idade;
     }

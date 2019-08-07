@@ -347,7 +347,7 @@ public:
      * @param inserirPonteiroADireita Indica se o ponteiro à direita do par
      * realmente deve ser criado na paginaDestino.
      */
-    void transferirElementoPara(
+    virtual void transferirElementoPara(
         Pagina *paginaDestino, int indiceNoDestino, int indiceLocal,
         bool excluirPonteiroDaEsquerda = false, bool excluirPonteiroDaDireita = false,
         bool inserirPonteiroADireita = true)
