@@ -75,6 +75,7 @@ protected:
     using ArvoreBHerdada::paginaIrma;
     using ArvoreBHerdada::paginaIrmaPai;
     using ArvoreBHerdada::paginaPai;
+    using ArvoreBHerdada::pesquisar;
 
 public:
     // ------------------------- Construtores e destrutores
@@ -196,11 +197,6 @@ public:
         auto &pilhaDeIndices = parDoCaminho.second;
 
         return excluir(chave, pilhaDeEnderecos, pilhaDeIndices);
-    }
-
-    TIPO_DOS_DADOS excluir(TIPO_DAS_CHAVES &&chave)
-    {
-        return excluir(chave);
     }
 
     vector<TIPO_DOS_DADOS> listarDadosComAChaveEntre(
