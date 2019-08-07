@@ -334,8 +334,8 @@ public:
     }
 
     /**
-     * @brief Pega o par (chave, dado) no indiceLocal e a insere no indiceNoDestino
-     * da paginaDestino. Após isso, remove o par desta página.
+     * @brief Pega o par (chave, dado) no indiceLocal e o insere no indiceNoDestino
+     * da paginaDestino. Após isso, pode-se remover o par desta página.
      * 
      * @param paginaDestino Página destino.
      * @param indiceNoDestino Índice de inserção na página destino.

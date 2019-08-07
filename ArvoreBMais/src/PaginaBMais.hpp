@@ -17,7 +17,7 @@
 using namespace std;
 
 /**
- * @brief Classe com as características da página da árvore B.
+ * @brief Classe com as características da página da árvore B+.
  * 
  * <p>Caso for usar o método mostrar() dá classe, é necessário que a chave e o dado
  * sejam tipos primitivos ou então o operador << deve ser sobrecarregado para que
@@ -44,8 +44,12 @@ public:
      */
     typedef PaginaBMais<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> Pagina;
     typedef PaginaB<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> PaginaHerdada;
-    
+
     // ------------------------- Campos
+
+    using PaginaHerdada::chaves;
+    using PaginaHerdada::dados;
+    using PaginaHerdada::ponteiros;
 
     file_ptr_type ptrProximaPagina = constantes::ptrNuloPagina;
 
@@ -57,7 +61,7 @@ public:
 
     // ------------------------- Métodos herdados de Serializavel
 
-    virtual int obterTamanhoMaximoEmBytes() override
+    int obterTamanhoMaximoEmBytes() override
     {
         // Chamar uma função da herdada da ArvoreB:
         // https://stackoverflow.com/questions/672373/can-i-call-a-base-classs-virtual-function-if-im-overriding-it
@@ -65,7 +69,7 @@ public:
         return PaginaHerdada::obterTamanhoMaximoEmBytes() + sizeof(file_ptr_type);
     }
 
-    virtual DataOutputStream &gerarDataOutputStream(DataOutputStream &out) override
+    DataOutputStream &gerarDataOutputStream(DataOutputStream &out) override
     {
         // Chamar uma função da herdada da ArvoreB:
         // https://stackoverflow.com/questions/672373/can-i-call-a-base-classs-virtual-function-if-im-overriding-it
@@ -76,7 +80,7 @@ public:
         return out;
     }
 
-    virtual void lerBytes(DataInputStream &input) override
+    void lerBytes(DataInputStream &input) override
     {
         // Chamar uma função da herdada da ArvoreB:
         // https://stackoverflow.com/questions/672373/can-i-call-a-base-classs-virtual-function-if-im-overriding-it
@@ -87,16 +91,25 @@ public:
 
     // ------------------------- Métodos
 
-    /**
-     * @brief Zera a quantidade de elementos e limpa todos os vetores internos.
-     */
-    virtual void limpar() override
+    void limpar()
     {
         PaginaHerdada::limpar();
         ptrProximaPagina = constantes::ptrNuloPagina;
     }
 
-    virtual void mostrar(ostream &ostream = cout,
+    void transferirElementoPara(
+        Pagina *paginaDestino, int indiceNoDestino, int indiceLocal,
+        bool excluirPonteiroDaEsquerda = false, bool excluirPonteiroDaDireita = false,
+        bool inserirPonteiroADireita = true)
+    {
+        paginaDestino->inserir(
+            chaves[indiceLocal], dados[indiceLocal],
+            indiceNoDestino, constantes::ptrNuloPagina,
+            inserirPonteiroADireita
+        );
+    }
+
+    void mostrar(ostream &ostream = cout,
                bool mostrarOsDados = false,
                bool mostrarOsPonteiros = true,
                bool mostrarEndereco = true,

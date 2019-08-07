@@ -185,7 +185,7 @@ protected:
      * @param irAteAFolha Indica se a pesquisa não deve parar caso a chave seja
      * encontrada em páginas que não sejam folhas.
      */
-    void obterCaminhoDeDescida(
+    virtual void obterCaminhoDeDescida(
         TIPO_DAS_CHAVES &chave,
         int indiceDeDescida,
         file_ptr_type enderecoPaginaFilha,
@@ -951,7 +951,7 @@ public:
      * if (ArvoreB.erro()) ArvoreB.mostrarErro();
      * @endcode
      */
-    TIPO_DOS_DADOS pesquisar(TIPO_DAS_CHAVES& chave)
+    virtual TIPO_DOS_DADOS pesquisar(TIPO_DAS_CHAVES& chave)
     {
         TIPO_DOS_DADOS dado;
 
@@ -977,7 +977,7 @@ public:
         return dado;
     }
 
-    TIPO_DOS_DADOS pesquisar(TIPO_DAS_CHAVES&& chave)
+    virtual TIPO_DOS_DADOS pesquisar(TIPO_DAS_CHAVES&& chave)
     {
         return pesquisar(chave);
     }
@@ -997,7 +997,7 @@ public:
      * 
      * @return vector<TIPO_DOS_DADOS> Vetor com cada dado correspondente à chave.
      */
-    vector<TIPO_DOS_DADOS> listarDadosComAChaveEntre(
+    virtual vector<TIPO_DOS_DADOS> listarDadosComAChaveEntre(
         TIPO_DAS_CHAVES& chaveMenor,
         TIPO_DAS_CHAVES& chaveMaior)
     {
@@ -1012,7 +1012,7 @@ public:
         return dados;
     }
 
-    vector<TIPO_DOS_DADOS> listarDadosComAChaveEntre(
+    virtual vector<TIPO_DOS_DADOS> listarDadosComAChaveEntre(
         TIPO_DAS_CHAVES&& chaveMenor,
         TIPO_DAS_CHAVES&& chaveMaior)
     {
@@ -1085,7 +1085,7 @@ public:
      * if (ArvoreB.erro()) ArvoreB.mostrarErro();
      * @endcode
      */
-    TIPO_DOS_DADOS excluir(TIPO_DAS_CHAVES& chave)
+    virtual TIPO_DOS_DADOS excluir(TIPO_DAS_CHAVES& chave)
     {
         // Faz todo o percurso de descida na árvore
         auto parDoCaminho = obterCaminhoDeDescida(chave, 0, lerEnderecoDaRaiz());
@@ -1095,7 +1095,7 @@ public:
         return excluir(chave, pilhaDeEnderecos, pilhaDeIndices);
     }
 
-    TIPO_DOS_DADOS excluir(TIPO_DAS_CHAVES&& chave)
+    virtual TIPO_DOS_DADOS excluir(TIPO_DAS_CHAVES&& chave)
     {
         return excluir(chave);
     }
