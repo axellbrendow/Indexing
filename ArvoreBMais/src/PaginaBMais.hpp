@@ -43,17 +43,17 @@ public:
      * structs são considerados como boa prática em C++.
      */
     typedef PaginaBMais<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> Pagina;
-    typedef PaginaB<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> PaginaDerivada;
+    typedef PaginaB<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> PaginaHerdada;
     
     // ------------------------- Campos
 
-    file_ptr_type ptrProximaPagina;
+    file_ptr_type ptrProximaPagina = constantes::ptrNuloPagina;
 
     // ------------------------- Construtores
 
     // https://softwareengineering.stackexchange.com/questions/197893/why-are-constructors-not-inherited
     // Importa o construtor da classe ArvoreB
-    using PaginaDerivada::PaginaB;
+    using PaginaHerdada::PaginaB;
 
     // ------------------------- Métodos herdados de Serializavel
 
@@ -62,14 +62,14 @@ public:
         // Chamar uma função da herdada da ArvoreB:
         // https://stackoverflow.com/questions/672373/can-i-call-a-base-classs-virtual-function-if-im-overriding-it
         // adiciona o tamanho do ponteiro para a próxima página
-        return PaginaDerivada::obterTamanhoMaximoEmBytes() + sizeof(file_ptr_type);
+        return PaginaHerdada::obterTamanhoMaximoEmBytes() + sizeof(file_ptr_type);
     }
 
     virtual DataOutputStream &gerarDataOutputStream(DataOutputStream &out) override
     {
         // Chamar uma função da herdada da ArvoreB:
         // https://stackoverflow.com/questions/672373/can-i-call-a-base-classs-virtual-function-if-im-overriding-it
-        PaginaDerivada::gerarDataOutputStream(out);
+        PaginaHerdada::gerarDataOutputStream(out);
 
         out << ptrProximaPagina;
 
@@ -80,7 +80,7 @@ public:
     {
         // Chamar uma função da herdada da ArvoreB:
         // https://stackoverflow.com/questions/672373/can-i-call-a-base-classs-virtual-function-if-im-overriding-it
-        PaginaDerivada::lerBytes(input);
+        PaginaHerdada::lerBytes(input);
 
         input >> ptrProximaPagina;
     }
@@ -92,7 +92,24 @@ public:
      */
     virtual void limpar() override
     {
-        PaginaDerivada::limpar();
+        PaginaHerdada::limpar();
         ptrProximaPagina = constantes::ptrNuloPagina;
+    }
+
+    virtual void mostrar(ostream &ostream = cout,
+               bool mostrarOsDados = false,
+               bool mostrarOsPonteiros = true,
+               bool mostrarEndereco = true,
+               string delimitadorEntreOPonteiroEAChave = " (",
+               string delimitadorEntreODadoEOPonteiro = ") ",
+               string delimitadorEntreAChaveEODado = ", ")
+    {
+        PaginaHerdada::mostrar(
+            ostream, mostrarOsDados, mostrarOsPonteiros, mostrarEndereco,
+            delimitadorEntreOPonteiroEAChave,
+            delimitadorEntreODadoEOPonteiro,
+            delimitadorEntreAChaveEODado);
+
+        ostream << " -> " << (long) ptrProximaPagina << endl;
     }
 };

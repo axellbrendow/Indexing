@@ -368,7 +368,7 @@ protected:
      * @return true Caso a fusão ocorra com sucesso.
      * @return false Caso a fusão não ocorra.
      */
-    bool fundirCom(
+    virtual bool fundirCom(
         file_ptr_type enderecoDaPagina, int indiceDeDescida, bool fundirDireita)
     {
         bool sucesso = false;
@@ -555,7 +555,7 @@ protected:
      * a chave deve ser inserida e o segundo elemento é um booleano que indica se
      * a inserção deve ser na página filha.
      */
-    pair<Pagina *, bool> dividir(Pagina *filha, Pagina *irma, TIPO_DAS_CHAVES &chave)
+    virtual pair<Pagina *, bool> dividir(Pagina *filha, Pagina *irma, TIPO_DAS_CHAVES &chave)
     {
         // Inicia o processo de divisão da página
         irma->limpar(); // Nova página
@@ -584,7 +584,7 @@ protected:
      * que receber o elemento promovido (após a divisão da página pai) e o segundo
      * elemento é um booleano que indica se a promoção foi na página pai ou em sua irmã.
      */
-    void promoverOParQueEstiverSobrando(
+    virtual void promoverOParQueEstiverSobrando(
         int indiceDePromocao, Pagina *paginaDeInsercao,
         bool inseriuNaPaginaFilha, pair<Pagina *, bool> &infoPai)
     {
@@ -619,9 +619,9 @@ protected:
     }
 
     /**
-     * @brief Duplica a página filha gerando a página irmã, insere a chave e o dado
+     * @brief Divide a página filha gerando a página irmã, insere a chave e o dado
      * em alguma delas e promove o elemento que estiver sobrando de acordo com a
-     * inserção feita. Caso necessário, duplica a página pai também para que o
+     * inserção feita. Caso necessário, divide a página pai também para que o
      * elemento seja promovido.
      * 
      * @param chave Chave a ser inserida.
@@ -804,21 +804,18 @@ protected:
                 paginaFilha->mostrar(cout, false, false, false, "", " ");
             }
 
-            else
+            else if (!paginaFilha->ponteiros.empty())
             {
-                if (!paginaFilha->ponteiros.empty())
+                int i = paginaFilha->ponteiros.size() - 1;
+                mostrar(paginaFilha->ponteiros[i], altura + 1);
+
+                for (i--; i >= 0; i--)
                 {
-                    int i = paginaFilha->ponteiros.size() - 1;
+                    carregar(paginaFilha, endereco);
+
+                    cout << identacao << paginaFilha->chaves[i] << endl;
+
                     mostrar(paginaFilha->ponteiros[i], altura + 1);
-
-                    for (i--; i >= 0; i--)
-                    {
-                        carregar(paginaFilha, endereco);
-
-                        cout << identacao << paginaFilha->chaves[i] << endl;
-
-                        mostrar(paginaFilha->ponteiros[i], altura + 1);
-                    }
                 }
             }
         }
@@ -859,6 +856,7 @@ protected:
                 delimitadorEntreOPonteiroEAChave,
                 delimitadorEntreODadoEOPonteiro,
                 delimitadorEntreAChaveEODado);
+            cout << endl;
 
             if (!paginaFilha->eUmaFolha())
             {

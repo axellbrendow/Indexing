@@ -588,7 +588,7 @@ public:
      * @param delimitadorEntreODadoEOPonteiro Delimitador entre um dado e um ponteiro.
      * @param delimitadorEntreAChaveEODado Delimitador entre uma chave e um dado.
      */
-    void mostrar(ostream &ostream = cout,
+    virtual void mostrar(ostream &ostream = cout,
                bool mostrarOsDados = false,
                bool mostrarOsPonteiros = true,
                bool mostrarEndereco = true,
@@ -617,8 +617,6 @@ public:
                     ostream << (long) ponteiros[i + 1];
                 }
             }
-
-            ostream << endl;
         }
     }
 };
@@ -628,7 +626,7 @@ ostream &operator<<(ostream &ostream, PaginaB<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> &
 {
     pagina.mostrar(ostream);
 
-    return ostream;
+    return ostream << endl;
 }
 
 template <typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS>

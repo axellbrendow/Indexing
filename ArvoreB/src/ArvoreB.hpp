@@ -619,9 +619,9 @@ protected:
     }
 
     /**
-     * @brief Duplica a página filha gerando a página irmã, insere a chave e o dado
+     * @brief Divide a página filha gerando a página irmã, insere a chave e o dado
      * em alguma delas e promove o elemento que estiver sobrando de acordo com a
-     * inserção feita. Caso necessário, duplica a página pai também para que o
+     * inserção feita. Caso necessário, divide a página pai também para que o
      * elemento seja promovido.
      * 
      * @param chave Chave a ser inserida.

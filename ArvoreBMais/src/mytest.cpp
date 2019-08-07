@@ -90,6 +90,8 @@ int main()
     // arvore.excluir(2000);
     // arvore.excluir(1500);
 
+    arvore.mostrarPre();
+    cout << endl << "------------------------------" << endl << endl;
     arvore.mostrar();
 
     auto dados = arvore.listarDadosComAChaveEntre(10, 250);
