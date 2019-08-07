@@ -46,10 +46,13 @@ using namespace std;
  * @tparam TIPO_DOS_DADOS Tipo do dado dos registros. <b>É necessário que o dado
  * seja um tipo primitivo ou então que a sua classe/struct herde de Serializavel e
  * tenha um construtor sem parâmetros.</b>
- * @tparam Pagina Tipo das páginas da árvore B. <b>É necessário que este tipo seja
+ * @tparam Pagina Tipo das páginas da árvore B. <b>É necessário que esse tipo seja
  * serializável.</b>
  */
-template< typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS, typename Pagina = PaginaB<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> >
+template<
+    typename TIPO_DAS_CHAVES,
+    typename TIPO_DOS_DADOS,
+    typename Pagina = PaginaB<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> >
 class ArvoreB
 {
     // ------------------------- Campos
@@ -109,13 +112,6 @@ protected:
             // Agora sim reabre o arquivo nos modos de leitura e escrita
             arquivo = fstream(nome, fstream::binary | fstream::in | fstream::out);
         }
-    }
-
-    size_t obterTamanhoDoArquivo()
-    {
-        arquivo.seekg(0, fstream::end);
-
-        return arquivo.tellg();
     }
 
     /**
@@ -786,8 +782,9 @@ protected:
     }
 
     /**
-     * @brief Imprime, na saída padrão, uma representação vertical da árvore.
-     * A saída é similar à do comando "tree /f" do Windows.
+     * @brief Imprime, na saída padrão, uma representação da árvore rotacionada
+     * 90 graus com a raiz à esquerda. A saída é similar à do comando "tree /f"
+     * do Windows.
      * 
      * @param endereco Endereço de onde a página deve ser carregada do arquivo.
      * @param altura Altura atual na árvore.
@@ -802,6 +799,7 @@ protected:
             {
                 cout << identacao;
                 paginaFilha->mostrar(cout, false, false, false, "", " ");
+                cout << endl;
             }
 
             else if (!paginaFilha->ponteiros.empty())
@@ -1101,8 +1099,9 @@ public:
     }
 
     /**
-     * @brief Imprime, na saída padrão, uma representação vertical da árvore.
-     * A saída é similar à do comando "tree /f" do Windows.
+     * @brief Imprime, na saída padrão, uma representação da árvore rotacionada
+     * 90 graus com a raiz à esquerda. A saída é similar à do comando "tree /f"
+     * do Windows.
      */
     void mostrar()
     {

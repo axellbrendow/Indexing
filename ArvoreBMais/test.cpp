@@ -1,6 +1,4 @@
 #include "ArvoreBMais/ArvoreBMais.hpp"
-#include <iostream>
-#include <cstring>
 using namespace std;
 int main() {
     ArvoreBMais<int, float> arvore("TesteArvore.txt", 4);

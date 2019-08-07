@@ -47,18 +47,24 @@ using namespace std;
  * @tparam TIPO_DOS_DADOS Tipo do dado dos registros. <b>É necessário que o dado
  * seja um tipo primitivo ou então que a sua classe/struct herde de Serializavel e
  * tenha um construtor sem parâmetros.</b>
+ * @tparam Pagina Tipo das páginas da árvore B+. <b>É necessário que esse tipo seja
+ * serializável.</b>
  */
-template<typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS>
-class ArvoreBMais : public ArvoreB< TIPO_DAS_CHAVES, TIPO_DOS_DADOS, PaginaBMais<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> >
+template<
+    typename TIPO_DAS_CHAVES,
+    typename TIPO_DOS_DADOS,
+    typename Pagina = PaginaBMais<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> >
+class ArvoreBMais : public ArvoreB< TIPO_DAS_CHAVES, TIPO_DOS_DADOS, Pagina >
 {
 public:
     // ------------------------- Typedefs
 
-    typedef ArvoreB< TIPO_DAS_CHAVES, TIPO_DOS_DADOS, PaginaBMais<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> > ArvoreBHerdada;
-    typedef PaginaBMais<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> Pagina;
+    typedef ArvoreB< TIPO_DAS_CHAVES, TIPO_DOS_DADOS, Pagina > ArvoreBHerdada;
 
 protected:
     // ------------------------- Campos e métodos herdados
+    // Com o using, esses campos da árvore B herdada ficam diretamente
+    // acessíveis nesta classe
 
     using ArvoreBHerdada::arquivo;
     using ArvoreBHerdada::atribuirErro;
@@ -67,11 +73,12 @@ protected:
     using ArvoreBHerdada::limparErro;
     using ArvoreBHerdada::obterCaminhoDeDescida;
     using ArvoreBHerdada::obterPaginaDeInsercao;
-    using ArvoreBHerdada::obterTamanhoDoArquivo;
     using ArvoreBHerdada::ordemDaArvore;
 
 public:
     // ------------------------- Campos e métodos herdados
+    // Com o using, esses campos da árvore B herdada ficam diretamente
+    // acessíveis nesta classe
 
     using ArvoreBHerdada::excluir;
     using ArvoreBHerdada::listarDadosComAChaveEntre;
@@ -96,7 +103,7 @@ public:
      */
     void atualizarAposADivisao(Pagina *filha, Pagina *irma)
     {
-        irma->setEndereco( obterTamanhoDoArquivo() );
+        irma->setEndereco( obterTamanhoEmBytes(arquivo) );
         irma->ptrProximaPagina = filha->ptrProximaPagina;
         filha->ptrProximaPagina = irma->obterEndereco();
     }
@@ -202,7 +209,7 @@ public:
         TIPO_DAS_CHAVES &chaveMaior,
         vector<TIPO_DOS_DADOS> &dados)
     {
-            // Obtém o índice onde a chave deveria estar na página.
+        // Obtém o índice onde a chave deveria estar na página.
         int indiceDaChave = paginaFilha->obterIndiceDeDescida(chaveMenor);
         int indiceFinal = 
             upper_bound(paginaFilha->chaves.begin() + indiceDaChave,

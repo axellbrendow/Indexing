@@ -78,8 +78,8 @@ int main()
     arvore.inserir(1500, Student("1500", 18));
     arvore.inserir(600, Student("600", 18));
     arvore.inserir(50, Student("50", 18));
-    // arvore.inserir(12, Student("12", 18));
-    // arvore.inserir(4, Student("4", 18));
+    arvore.inserir(12, Student("12", 18));
+    arvore.inserir(4, Student("4", 18));
 
     // arvore.excluir(12);
     // arvore.excluir(4);
@@ -94,7 +94,7 @@ int main()
     cout << endl << "------------------------------" << endl << endl;
     arvore.mostrar();
 
-    auto dados = arvore.listarDadosComAChaveEntre(10, 250);
+    auto dados = arvore.listarDadosComAChaveEntre(10, 610);
     cout << endl;
 
     for (auto &&i : dados)

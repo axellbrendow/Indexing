@@ -46,19 +46,15 @@ using namespace std;
  * @tparam TIPO_DOS_DADOS Tipo do dado dos registros. <b>É necessário que o dado
  * seja um tipo primitivo ou então que a sua classe/struct herde de Serializavel e
  * tenha um construtor sem parâmetros.</b>
+ * @tparam Pagina Tipo das páginas da árvore B. <b>É necessário que esse tipo seja
+ * serializável.</b>
  */
-template<typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS>
+template<
+    typename TIPO_DAS_CHAVES,
+    typename TIPO_DOS_DADOS,
+    typename Pagina = PaginaB<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> >
 class ArvoreB
 {
-public:
-    // ------------------------- Typedefs
-
-    /**
-     * @brief Padroniza o tipo da página da árvore. Typedefs dentro de classes ou
-     * structs são considerados como boa prática em C++.
-     */
-    typedef PaginaB<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> Pagina;
-
     // ------------------------- Campos
 
     const int tamanhoCabecalhoAntesDoEnderecoDaRaiz = 0;
@@ -185,7 +181,7 @@ protected:
      * @param irAteAFolha Indica se a pesquisa não deve parar caso a chave seja
      * encontrada em páginas que não sejam folhas.
      */
-    void obterCaminhoDeDescida(
+    virtual void obterCaminhoDeDescida(
         TIPO_DAS_CHAVES &chave,
         int indiceDeDescida,
         file_ptr_type enderecoPaginaFilha,
@@ -368,7 +364,7 @@ protected:
      * @return true Caso a fusão ocorra com sucesso.
      * @return false Caso a fusão não ocorra.
      */
-    bool fundirCom(
+    virtual bool fundirCom(
         file_ptr_type enderecoDaPagina, int indiceDeDescida, bool fundirDireita)
     {
         bool sucesso = false;
@@ -555,7 +551,7 @@ protected:
      * a chave deve ser inserida e o segundo elemento é um booleano que indica se
      * a inserção deve ser na página filha.
      */
-    pair<Pagina *, bool> dividir(Pagina *filha, Pagina *irma, TIPO_DAS_CHAVES &chave)
+    virtual pair<Pagina *, bool> dividir(Pagina *filha, Pagina *irma, TIPO_DAS_CHAVES &chave)
     {
         // Inicia o processo de divisão da página
         irma->limpar(); // Nova página
@@ -584,7 +580,7 @@ protected:
      * que receber o elemento promovido (após a divisão da página pai) e o segundo
      * elemento é um booleano que indica se a promoção foi na página pai ou em sua irmã.
      */
-    void promoverOParQueEstiverSobrando(
+    virtual void promoverOParQueEstiverSobrando(
         int indiceDePromocao, Pagina *paginaDeInsercao,
         bool inseriuNaPaginaFilha, pair<Pagina *, bool> &infoPai)
     {
@@ -786,8 +782,9 @@ protected:
     }
 
     /**
-     * @brief Imprime, na saída padrão, uma representação vertical da árvore.
-     * A saída é similar à do comando "tree /f" do Windows.
+     * @brief Imprime, na saída padrão, uma representação da árvore rotacionada
+     * 90 graus com a raiz à esquerda. A saída é similar à do comando "tree /f"
+     * do Windows.
      * 
      * @param endereco Endereço de onde a página deve ser carregada do arquivo.
      * @param altura Altura atual na árvore.
@@ -802,23 +799,21 @@ protected:
             {
                 cout << identacao;
                 paginaFilha->mostrar(cout, false, false, false, "", " ");
+                cout << endl;
             }
 
-            else
+            else if (!paginaFilha->ponteiros.empty())
             {
-                if (!paginaFilha->ponteiros.empty())
+                int i = paginaFilha->ponteiros.size() - 1;
+                mostrar(paginaFilha->ponteiros[i], altura + 1);
+
+                for (i--; i >= 0; i--)
                 {
-                    int i = paginaFilha->ponteiros.size() - 1;
+                    carregar(paginaFilha, endereco);
+
+                    cout << identacao << paginaFilha->chaves[i] << endl;
+
                     mostrar(paginaFilha->ponteiros[i], altura + 1);
-
-                    for (i--; i >= 0; i--)
-                    {
-                        carregar(paginaFilha, endereco);
-
-                        cout << identacao << paginaFilha->chaves[i] << endl;
-
-                        mostrar(paginaFilha->ponteiros[i], altura + 1);
-                    }
                 }
             }
         }
@@ -859,6 +854,7 @@ protected:
                 delimitadorEntreOPonteiroEAChave,
                 delimitadorEntreODadoEOPonteiro,
                 delimitadorEntreAChaveEODado);
+            cout << endl;
 
             if (!paginaFilha->eUmaFolha())
             {
@@ -953,7 +949,7 @@ public:
      * if (ArvoreB.erro()) ArvoreB.mostrarErro();
      * @endcode
      */
-    TIPO_DOS_DADOS pesquisar(TIPO_DAS_CHAVES& chave)
+    virtual TIPO_DOS_DADOS pesquisar(TIPO_DAS_CHAVES& chave)
     {
         TIPO_DOS_DADOS dado;
 
@@ -979,7 +975,7 @@ public:
         return dado;
     }
 
-    TIPO_DOS_DADOS pesquisar(TIPO_DAS_CHAVES&& chave)
+    virtual TIPO_DOS_DADOS pesquisar(TIPO_DAS_CHAVES&& chave)
     {
         return pesquisar(chave);
     }
@@ -999,7 +995,7 @@ public:
      * 
      * @return vector<TIPO_DOS_DADOS> Vetor com cada dado correspondente à chave.
      */
-    vector<TIPO_DOS_DADOS> listarDadosComAChaveEntre(
+    virtual vector<TIPO_DOS_DADOS> listarDadosComAChaveEntre(
         TIPO_DAS_CHAVES& chaveMenor,
         TIPO_DAS_CHAVES& chaveMaior)
     {
@@ -1014,7 +1010,7 @@ public:
         return dados;
     }
 
-    vector<TIPO_DOS_DADOS> listarDadosComAChaveEntre(
+    virtual vector<TIPO_DOS_DADOS> listarDadosComAChaveEntre(
         TIPO_DAS_CHAVES&& chaveMenor,
         TIPO_DAS_CHAVES&& chaveMaior)
     {
@@ -1087,7 +1083,7 @@ public:
      * if (ArvoreB.erro()) ArvoreB.mostrarErro();
      * @endcode
      */
-    TIPO_DOS_DADOS excluir(TIPO_DAS_CHAVES& chave)
+    virtual TIPO_DOS_DADOS excluir(TIPO_DAS_CHAVES& chave)
     {
         // Faz todo o percurso de descida na árvore
         auto parDoCaminho = obterCaminhoDeDescida(chave, 0, lerEnderecoDaRaiz());
@@ -1097,14 +1093,15 @@ public:
         return excluir(chave, pilhaDeEnderecos, pilhaDeIndices);
     }
 
-    TIPO_DOS_DADOS excluir(TIPO_DAS_CHAVES&& chave)
+    virtual TIPO_DOS_DADOS excluir(TIPO_DAS_CHAVES&& chave)
     {
         return excluir(chave);
     }
 
     /**
-     * @brief Imprime, na saída padrão, uma representação vertical da árvore.
-     * A saída é similar à do comando "tree /f" do Windows.
+     * @brief Imprime, na saída padrão, uma representação da árvore rotacionada
+     * 90 graus com a raiz à esquerda. A saída é similar à do comando "tree /f"
+     * do Windows.
      */
     void mostrar()
     {

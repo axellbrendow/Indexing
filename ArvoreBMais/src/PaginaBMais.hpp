@@ -129,6 +129,6 @@ public:
             delimitadorEntreODadoEOPonteiro,
             delimitadorEntreAChaveEODado);
 
-        ostream << " -> " << (long) ptrProximaPagina << endl;
+        ostream << " -> " << (long) ptrProximaPagina;
     }
 };

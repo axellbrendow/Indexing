@@ -8,8 +8,8 @@ Faça um fork deste repositório na sua conta e execute os seguintes comandos:
 ```
 git clone https://github.com/SEU_USUARIO/Indexing.git
 cd Indexing
-git config user.name SEU_USUARIO
-git config user.email SEU_EMAIL
+git config user.name SEU_USUARIO_DO_GITHUB
+git config user.email SEU_EMAIL_DO_GITHUB
 git remote add upstream https://github.com/axell-brendow/Indexing.git
 ```
 

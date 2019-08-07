@@ -1,4 +1,4 @@
-# HashDinamica
+# Árvore B
 Implementação da Árvore B, estrutura de dados para indexamento, em C++.
 
 ### Como usar ?

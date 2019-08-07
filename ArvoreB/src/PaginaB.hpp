@@ -249,7 +249,7 @@ public:
     /**
      * @brief Zera a quantidade de elementos e limpa todos os vetores internos.
      */
-    void limpar()
+    virtual void limpar()
     {
         _tamanho = 0;
         endereco = constantes::ptrNuloPagina;
@@ -334,8 +334,8 @@ public:
     }
 
     /**
-     * @brief Pega o par (chave, dado) no indiceLocal e a insere no indiceNoDestino
-     * da paginaDestino. Após isso, remove o par desta página.
+     * @brief Pega o par (chave, dado) no indiceLocal e o insere no indiceNoDestino
+     * da paginaDestino. Após isso, pode-se remover o par desta página.
      * 
      * @param paginaDestino Página destino.
      * @param indiceNoDestino Índice de inserção na página destino.
@@ -347,7 +347,7 @@ public:
      * @param inserirPonteiroADireita Indica se o ponteiro à direita do par
      * realmente deve ser criado na paginaDestino.
      */
-    void transferirElementoPara(
+    virtual void transferirElementoPara(
         Pagina *paginaDestino, int indiceNoDestino, int indiceLocal,
         bool excluirPonteiroDaEsquerda = false, bool excluirPonteiroDaDireita = false,
         bool inserirPonteiroADireita = true)
@@ -588,7 +588,7 @@ public:
      * @param delimitadorEntreODadoEOPonteiro Delimitador entre um dado e um ponteiro.
      * @param delimitadorEntreAChaveEODado Delimitador entre uma chave e um dado.
      */
-    void mostrar(ostream &ostream = cout,
+    virtual void mostrar(ostream &ostream = cout,
                bool mostrarOsDados = false,
                bool mostrarOsPonteiros = true,
                bool mostrarEndereco = true,
@@ -617,8 +617,6 @@ public:
                     ostream << (long) ponteiros[i + 1];
                 }
             }
-
-            ostream << endl;
         }
     }
 };
@@ -628,7 +626,7 @@ ostream &operator<<(ostream &ostream, PaginaB<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> &
 {
     pagina.mostrar(ostream);
 
-    return ostream;
+    return ostream << endl;
 }
 
 template <typename TIPO_DAS_CHAVES, typename TIPO_DOS_DADOS>
