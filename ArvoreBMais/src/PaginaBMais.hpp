@@ -91,6 +91,9 @@ public:
 
     // ------------------------- Métodos
 
+    using PaginaHerdada::excluir;
+    using PaginaHerdada::eUmaFolha;
+
     void limpar()
     {
         PaginaHerdada::limpar();
@@ -107,6 +110,9 @@ public:
             indiceNoDestino, constantes::ptrNuloPagina,
             inserirPonteiroADireita
         );
+
+        if (!eUmaFolha())
+            excluir(indiceLocal, excluirPonteiroDaEsquerda, excluirPonteiroDaDireita);
     }
 
     void mostrar(ostream &ostream = cout,
