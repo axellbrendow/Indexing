@@ -286,6 +286,55 @@ protected:
     }
 
     /**
+     * @brief Procura o primeiro registro com a chave informada e pega o dado
+     * correspondente a ela.
+     * 
+     * @param chave Chave a ser procurada.
+     * @param irAteUmaFolha Indica se a pesquisa não deve parar caso a chave seja
+     * encontrada em páginas que não sejam folhas.
+     * 
+     * @return TIPO_DOS_DADOS Caso tudo corra bem, retorna o dado correspondente
+     * à chave. Caso contrário, retorna
+     * 
+     * @code{.cpp}
+     * TIPO_DOS_DADOS() // Ex.: se os dados são inteiros, retorna int(), que é 0.
+     * @endcode
+     * 
+     * Em casos onde a chave não é encontrada, uma flag interna é ativada. Dessa
+     * forma, você pode usar qualquer um dos dois ifs abaixo para checar erros:
+     * 
+     * @code{.cpp}
+     * if (ArvoreB.pesquisar(chave) == TIPO_DOS_DADOS()) ArvoreB.mostrarErro();
+     * if (ArvoreB.erro()) ArvoreB.mostrarErro();
+     * @endcode
+     */
+    TIPO_DOS_DADOS pesquisar(TIPO_DAS_CHAVES& chave, bool irAteUmaFolha)
+    {
+        TIPO_DOS_DADOS dado;
+
+        // Faz todo o percurso de descida na árvore
+        obterCaminhoDeDescida(chave, 0, lerEnderecoDaRaiz(), irAteUmaFolha);
+
+        // Obtém o índice onde a chave deveria estar na página.
+        // paginaFilha é a última página do percurso.
+        int indiceDaChave = paginaFilha->obterIndiceDeDescida(chave);
+
+        if (indiceDaChave == paginaFilha->tamanho() ||
+            paginaFilha->chaves[indiceDaChave] != chave)
+        {
+            atribuirErro("A chave não foi encontrada");
+        }
+
+        else
+        {
+            limparErro();
+            dado = paginaFilha->dados[indiceDaChave];
+        }
+
+        return dado;
+    }
+
+    /**
      * @brief Tenta pegar uma chave da página no endereço informado e colocar na
      * paginaFilha.
      * 
@@ -951,28 +1000,7 @@ public:
      */
     virtual TIPO_DOS_DADOS pesquisar(TIPO_DAS_CHAVES& chave)
     {
-        TIPO_DOS_DADOS dado;
-
-        // Faz todo o percurso de descida na árvore
-        obterCaminhoDeDescida(chave, 0, lerEnderecoDaRaiz());
-
-        // Obtém o índice onde a chave deveria estar na página.
-        // paginaFilha é a última página do percurso.
-        int indiceDaChave = paginaFilha->obterIndiceDeDescida(chave);
-
-        if (indiceDaChave == paginaFilha->tamanho() ||
-            paginaFilha->chaves[indiceDaChave] != chave)
-        {
-            atribuirErro("A chave não foi encontrada");
-        }
-
-        else
-        {
-            limparErro();
-            dado = paginaFilha->dados[indiceDaChave];
-        }
-
-        return dado;
+        return pesquisar(chave, false);
     }
 
     virtual TIPO_DOS_DADOS pesquisar(TIPO_DAS_CHAVES&& chave)
@@ -1142,5 +1170,3 @@ public:
             delimitadorEntreAChaveEODado);
     }
 };
-
-// 364 linhas gastas em documentação

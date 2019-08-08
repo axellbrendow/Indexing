@@ -16,7 +16,11 @@ int main()
     arvore.inserir(50   , 50.5  );
     arvore.inserir(12   , 12.5  );
     arvore.inserir(4    , 4.5   );
+
+    // Mostra a árvore rotacionada de lado
     arvore.mostrar();
+    // Mostra as páginas da árvore com chaves, dados e ponteiros
+    // A seta no final da página -> indica o ponteiro para a próxima
     arvore.mostrarPre();
 
     return 0;

@@ -1170,5 +1170,3 @@ public:
             delimitadorEntreAChaveEODado);
     }
 };
-
-// 364 linhas gastas em documentação
