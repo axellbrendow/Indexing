@@ -148,10 +148,10 @@ Membros protegidos</h2></td></tr>
 <tr class="memitem:a0eede998ff79c04830c20dc1a4fbe2b6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#a0eede998ff79c04830c20dc1a4fbe2b6">iniciarArquivoCasoNecessario</a> ()</td></tr>
 <tr class="memdesc:a0eede998ff79c04830c20dc1a4fbe2b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checa se o arquivo tem tamanho suficiente para ter o cabeçalho da árvore e pelo menos uma página. Caso não, cria um cabeçalho e a raiz da árvore.  <a href="#a0eede998ff79c04830c20dc1a4fbe2b6">Mais...</a><br /></td></tr>
 <tr class="separator:a0eede998ff79c04830c20dc1a4fbe2b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad7f91d482497b01b5342ea7ef8169523"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#ad7f91d482497b01b5342ea7ef8169523">obterCaminhoDeDescida</a> (TIPO_DAS_CHAVES &amp;chave, int indiceDeDescida, <a class="el" href="tipos_8hpp.html#ab29579b2e0823b94933bba3153b61f55">file_ptr_type</a> enderecoPaginaFilha, pair&lt; list&lt; <a class="el" href="tipos_8hpp.html#ab29579b2e0823b94933bba3153b61f55">file_ptr_type</a> &gt;, list&lt; int &gt; &gt; &amp;parDoCaminho, bool irAteAFolha=false)</td></tr>
+<tr class="memitem:ad7f91d482497b01b5342ea7ef8169523"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#ad7f91d482497b01b5342ea7ef8169523">obterCaminhoDeDescida</a> (TIPO_DAS_CHAVES &amp;chave, int indiceDeDescida, <a class="el" href="tipos_8hpp.html#ab29579b2e0823b94933bba3153b61f55">file_ptr_type</a> enderecoPaginaFilha, pair&lt; list&lt; <a class="el" href="tipos_8hpp.html#ab29579b2e0823b94933bba3153b61f55">file_ptr_type</a> &gt;, list&lt; int &gt; &gt; &amp;parDoCaminho, bool irAteUmaFolha=false)</td></tr>
 <tr class="memdesc:ad7f91d482497b01b5342ea7ef8169523"><td class="mdescLeft">&#160;</td><td class="mdescRight">Procura o primeiro registro com a chave informada.  <a href="#ad7f91d482497b01b5342ea7ef8169523">Mais...</a><br /></td></tr>
 <tr class="separator:ad7f91d482497b01b5342ea7ef8169523"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aea898f350edc32ce53d772977be624f1"><td class="memItemLeft" align="right" valign="top">pair&lt; list&lt; <a class="el" href="tipos_8hpp.html#ab29579b2e0823b94933bba3153b61f55">file_ptr_type</a> &gt;, list&lt; int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#aea898f350edc32ce53d772977be624f1">obterCaminhoDeDescida</a> (TIPO_DAS_CHAVES &amp;chave, int indiceDeDescida, <a class="el" href="tipos_8hpp.html#ab29579b2e0823b94933bba3153b61f55">file_ptr_type</a> enderecoPaginaFilha, bool irAteAFolha=false)</td></tr>
+<tr class="memitem:aea898f350edc32ce53d772977be624f1"><td class="memItemLeft" align="right" valign="top">pair&lt; list&lt; <a class="el" href="tipos_8hpp.html#ab29579b2e0823b94933bba3153b61f55">file_ptr_type</a> &gt;, list&lt; int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#aea898f350edc32ce53d772977be624f1">obterCaminhoDeDescida</a> (TIPO_DAS_CHAVES &amp;chave, int indiceDeDescida, <a class="el" href="tipos_8hpp.html#ab29579b2e0823b94933bba3153b61f55">file_ptr_type</a> enderecoPaginaFilha, bool irAteUmaFolha=false)</td></tr>
 <tr class="memdesc:aea898f350edc32ce53d772977be624f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Procura o primeiro registro com a chave informada.  <a href="#aea898f350edc32ce53d772977be624f1">Mais...</a><br /></td></tr>
 <tr class="separator:aea898f350edc32ce53d772977be624f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab05e369d651fe3f5a2a8021b6462385e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arvore_b.html#ab05e369d651fe3f5a2a8021b6462385e">trocarRaizPor</a> (<a class="el" href="class_arvore_b.html#a33a9cc9c13f102525a84a634d277a764">Pagina</a> *novaRaiz)</td></tr>
@@ -1493,7 +1493,7 @@ template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>irAteAFolha</em> = <code>false</code>&#160;</td>
+          <td class="paramname"><em>irAteUmaFolha</em> = <code>false</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1515,7 +1515,7 @@ template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
     <tr><td class="paramname">indiceDeDescida</td><td>Índice do ponteiro na página pai que levou a esta página. </td></tr>
     <tr><td class="paramname">enderecoPaginaFilha</td><td>Endereço da página a ser carregada. </td></tr>
     <tr><td class="paramname">parDoCaminho</td><td>Par onde o primeiro elemento será uma lista com todos os endereços de todas as páginas pelas quais a recursividade passar e o segundo elemento será uma lista com todos os índices dos ponteiros que a recursividade acessar para descer de uma página para a outra. </td></tr>
-    <tr><td class="paramname">irAteAFolha</td><td>Indica se a pesquisa não deve parar caso a chave seja encontrada em páginas que não sejam folhas. </td></tr>
+    <tr><td class="paramname">irAteUmaFolha</td><td>Indica se a pesquisa não deve parar caso a chave seja encontrada em páginas que não sejam folhas. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1555,7 +1555,7 @@ template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>irAteAFolha</em> = <code>false</code>&#160;</td>
+          <td class="paramname"><em>irAteUmaFolha</em> = <code>false</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1576,7 +1576,7 @@ template&lt;typename TIPO_DAS_CHAVES , typename TIPO_DOS_DADOS &gt; </div>
     <tr><td class="paramname">chave</td><td>Chave a ser procurada. </td></tr>
     <tr><td class="paramname">indiceDeDescida</td><td>Índice do ponteiro na página pai que levou a esta página. </td></tr>
     <tr><td class="paramname">enderecoPaginaFilha</td><td>Endereço da página a ser carregada. </td></tr>
-    <tr><td class="paramname">irAteAFolha</td><td>Indica se a pesquisa não deve parar caso a chave seja encontrada em páginas que não sejam folhas.</td></tr>
+    <tr><td class="paramname">irAteUmaFolha</td><td>Indica se a pesquisa não deve parar caso a chave seja encontrada em páginas que não sejam folhas.</td></tr>
   </table>
   </dd>
 </dl>

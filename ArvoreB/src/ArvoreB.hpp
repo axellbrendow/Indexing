@@ -178,7 +178,7 @@ protected:
      * endereços de todas as páginas pelas quais a recursividade passar e o segundo
      * elemento será uma lista com todos os índices dos ponteiros que a recursividade
      * acessar para descer de uma página para a outra.
-     * @param irAteAFolha Indica se a pesquisa não deve parar caso a chave seja
+     * @param irAteUmaFolha Indica se a pesquisa não deve parar caso a chave seja
      * encontrada em páginas que não sejam folhas.
      */
     virtual void obterCaminhoDeDescida(
@@ -186,7 +186,7 @@ protected:
         int indiceDeDescida,
         file_ptr_type enderecoPaginaFilha,
         pair< list<file_ptr_type>, list<int> > &parDoCaminho,
-        bool irAteAFolha = false)
+        bool irAteUmaFolha = false)
     {
         list<file_ptr_type> &caminho = parDoCaminho.first;
         list<int> &indices = parDoCaminho.second;
@@ -206,7 +206,7 @@ protected:
             // Checa se há ponteiro de descida e se a pesquisa deve ir
             // obrigatoriamente até uma folha ou se a chave não foi encontrada.
             if (ponteiroDeDescida != constantes::ptrNuloPagina &&
-                (irAteAFolha || paginaFilha->chaves[indiceDaChave] != chave))
+                (irAteUmaFolha || paginaFilha->chaves[indiceDaChave] != chave))
             {
                 // A página filha passa a ser pai. O swap é necessário pois cada
                 // um desses ponteiros aponta para um objeto página concreto e a
@@ -215,7 +215,7 @@ protected:
 
                 obterCaminhoDeDescida(
                     chave, indiceDeDescida, ponteiroDeDescida,
-                    parDoCaminho, irAteAFolha);
+                    parDoCaminho, irAteUmaFolha);
             }
         }
     }
@@ -226,7 +226,7 @@ protected:
      * @param chave Chave a ser procurada.
      * @param indiceDeDescida Índice do ponteiro na página pai que levou a esta página.
      * @param enderecoPaginaFilha Endereço da página a ser carregada.
-     * @param irAteAFolha Indica se a pesquisa não deve parar caso a chave seja
+     * @param irAteUmaFolha Indica se a pesquisa não deve parar caso a chave seja
      * encontrada em páginas que não sejam folhas.
      * 
      * @return pair< list<file_ptr_type>, list<int> > Um par onde o primeiro
@@ -239,12 +239,12 @@ protected:
         TIPO_DAS_CHAVES &chave,
         int indiceDeDescida,
         file_ptr_type enderecoPaginaFilha,
-        bool irAteAFolha = false)
+        bool irAteUmaFolha = false)
     {
         pair< list<file_ptr_type>, list<int> > parDoCaminho;
 
         obterCaminhoDeDescida(
-            chave, indiceDeDescida, enderecoPaginaFilha, parDoCaminho, irAteAFolha);
+            chave, indiceDeDescida, enderecoPaginaFilha, parDoCaminho, irAteUmaFolha);
 
         return parDoCaminho;
     }

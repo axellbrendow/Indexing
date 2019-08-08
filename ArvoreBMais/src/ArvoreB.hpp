@@ -178,7 +178,7 @@ protected:
      * endereços de todas as páginas pelas quais a recursividade passar e o segundo
      * elemento será uma lista com todos os índices dos ponteiros que a recursividade
      * acessar para descer de uma página para a outra.
-     * @param irAteAFolha Indica se a pesquisa não deve parar caso a chave seja
+     * @param irAteUmaFolha Indica se a pesquisa não deve parar caso a chave seja
      * encontrada em páginas que não sejam folhas.
      */
     virtual void obterCaminhoDeDescida(
@@ -186,7 +186,7 @@ protected:
         int indiceDeDescida,
         file_ptr_type enderecoPaginaFilha,
         pair< list<file_ptr_type>, list<int> > &parDoCaminho,
-        bool irAteAFolha = false)
+        bool irAteUmaFolha = false)
     {
         list<file_ptr_type> &caminho = parDoCaminho.first;
         list<int> &indices = parDoCaminho.second;
@@ -206,7 +206,7 @@ protected:
             // Checa se há ponteiro de descida e se a pesquisa deve ir
             // obrigatoriamente até uma folha ou se a chave não foi encontrada.
             if (ponteiroDeDescida != constantes::ptrNuloPagina &&
-                (irAteAFolha || paginaFilha->chaves[indiceDaChave] != chave))
+                (irAteUmaFolha || paginaFilha->chaves[indiceDaChave] != chave))
             {
                 // A página filha passa a ser pai. O swap é necessário pois cada
                 // um desses ponteiros aponta para um objeto página concreto e a
@@ -215,7 +215,7 @@ protected:
 
                 obterCaminhoDeDescida(
                     chave, indiceDeDescida, ponteiroDeDescida,
-                    parDoCaminho, irAteAFolha);
+                    parDoCaminho, irAteUmaFolha);
             }
         }
     }
@@ -226,7 +226,7 @@ protected:
      * @param chave Chave a ser procurada.
      * @param indiceDeDescida Índice do ponteiro na página pai que levou a esta página.
      * @param enderecoPaginaFilha Endereço da página a ser carregada.
-     * @param irAteAFolha Indica se a pesquisa não deve parar caso a chave seja
+     * @param irAteUmaFolha Indica se a pesquisa não deve parar caso a chave seja
      * encontrada em páginas que não sejam folhas.
      * 
      * @return pair< list<file_ptr_type>, list<int> > Um par onde o primeiro
@@ -239,12 +239,12 @@ protected:
         TIPO_DAS_CHAVES &chave,
         int indiceDeDescida,
         file_ptr_type enderecoPaginaFilha,
-        bool irAteAFolha = false)
+        bool irAteUmaFolha = false)
     {
         pair< list<file_ptr_type>, list<int> > parDoCaminho;
 
         obterCaminhoDeDescida(
-            chave, indiceDeDescida, enderecoPaginaFilha, parDoCaminho, irAteAFolha);
+            chave, indiceDeDescida, enderecoPaginaFilha, parDoCaminho, irAteUmaFolha);
 
         return parDoCaminho;
     }
@@ -283,6 +283,55 @@ protected:
         Pagina *paginaDeInsercao = inserirNaPaginaFilha ? filha : irma;
 
         return pair<Pagina *, bool>(paginaDeInsercao, inserirNaPaginaFilha);
+    }
+
+    /**
+     * @brief Procura o primeiro registro com a chave informada e pega o dado
+     * correspondente a ela.
+     * 
+     * @param chave Chave a ser procurada.
+     * @param irAteUmaFolha Indica se a pesquisa não deve parar caso a chave seja
+     * encontrada em páginas que não sejam folhas.
+     * 
+     * @return TIPO_DOS_DADOS Caso tudo corra bem, retorna o dado correspondente
+     * à chave. Caso contrário, retorna
+     * 
+     * @code{.cpp}
+     * TIPO_DOS_DADOS() // Ex.: se os dados são inteiros, retorna int(), que é 0.
+     * @endcode
+     * 
+     * Em casos onde a chave não é encontrada, uma flag interna é ativada. Dessa
+     * forma, você pode usar qualquer um dos dois ifs abaixo para checar erros:
+     * 
+     * @code{.cpp}
+     * if (ArvoreB.pesquisar(chave) == TIPO_DOS_DADOS()) ArvoreB.mostrarErro();
+     * if (ArvoreB.erro()) ArvoreB.mostrarErro();
+     * @endcode
+     */
+    TIPO_DOS_DADOS pesquisar(TIPO_DAS_CHAVES& chave, bool irAteUmaFolha)
+    {
+        TIPO_DOS_DADOS dado;
+
+        // Faz todo o percurso de descida na árvore
+        obterCaminhoDeDescida(chave, 0, lerEnderecoDaRaiz(), irAteUmaFolha);
+
+        // Obtém o índice onde a chave deveria estar na página.
+        // paginaFilha é a última página do percurso.
+        int indiceDaChave = paginaFilha->obterIndiceDeDescida(chave);
+
+        if (indiceDaChave == paginaFilha->tamanho() ||
+            paginaFilha->chaves[indiceDaChave] != chave)
+        {
+            atribuirErro("A chave não foi encontrada");
+        }
+
+        else
+        {
+            limparErro();
+            dado = paginaFilha->dados[indiceDaChave];
+        }
+
+        return dado;
     }
 
     /**
@@ -951,28 +1000,7 @@ public:
      */
     virtual TIPO_DOS_DADOS pesquisar(TIPO_DAS_CHAVES& chave)
     {
-        TIPO_DOS_DADOS dado;
-
-        // Faz todo o percurso de descida na árvore
-        obterCaminhoDeDescida(chave, 0, lerEnderecoDaRaiz());
-
-        // Obtém o índice onde a chave deveria estar na página.
-        // paginaFilha é a última página do percurso.
-        int indiceDaChave = paginaFilha->obterIndiceDeDescida(chave);
-
-        if (indiceDaChave == paginaFilha->tamanho() ||
-            paginaFilha->chaves[indiceDaChave] != chave)
-        {
-            atribuirErro("A chave não foi encontrada");
-        }
-
-        else
-        {
-            limparErro();
-            dado = paginaFilha->dados[indiceDaChave];
-        }
-
-        return dado;
+        return pesquisar(chave, false);
     }
 
     virtual TIPO_DOS_DADOS pesquisar(TIPO_DAS_CHAVES&& chave)

@@ -75,23 +75,6 @@ protected:
     using ArvoreBHerdada::obterPaginaDeInsercao;
     using ArvoreBHerdada::ordemDaArvore;
 
-public:
-    // ------------------------- Campos e métodos herdados
-    // Com o using, esses campos da árvore B herdada ficam diretamente
-    // acessíveis nesta classe
-
-    using ArvoreBHerdada::excluir;
-    using ArvoreBHerdada::listarDadosComAChaveEntre;
-    using ArvoreBHerdada::paginaFilha;
-    using ArvoreBHerdada::paginaIrma;
-    using ArvoreBHerdada::paginaIrmaPai;
-    using ArvoreBHerdada::paginaPai;
-    using ArvoreBHerdada::pesquisar;
-
-    // ------------------------- Construtores e destrutores
-
-    ArvoreBMais(string nomeDoArquivo, int ordemDaArvore) : ArvoreBHerdada(nomeDoArquivo, ordemDaArvore) {}
-
     // ------------------------- Métodos
 
     /**
@@ -168,42 +151,6 @@ public:
         return sucesso;
     }
 
-    TIPO_DOS_DADOS pesquisar(TIPO_DAS_CHAVES &chave) override
-    {
-        TIPO_DOS_DADOS dado;
-
-        // Faz todo o percurso de descida na árvore
-        obterCaminhoDeDescida(chave, 0, lerEnderecoDaRaiz(), true);
-
-        // Obtém o índice onde a chave deveria estar na página.
-        // paginaFilha é a última página do percurso.
-        int indiceDaChave = paginaFilha->obterIndiceDeDescida(chave);
-
-        if (indiceDaChave == paginaFilha->tamanho() ||
-            paginaFilha->chaves[indiceDaChave] != chave)
-        {
-            atribuirErro("A chave não foi encontrada");
-        }
-
-        else
-        {
-            limparErro();
-            dado = paginaFilha->dados[indiceDaChave];
-        }
-
-        return dado;
-    }
-
-    TIPO_DOS_DADOS excluir(TIPO_DAS_CHAVES &chave) override
-    {
-        // Faz todo o percurso de descida na árvore
-        auto parDoCaminho = obterCaminhoDeDescida(chave, 0, lerEnderecoDaRaiz(), true);
-        auto &pilhaDeEnderecos = parDoCaminho.first;
-        auto &pilhaDeIndices = parDoCaminho.second;
-
-        return excluir(chave, pilhaDeEnderecos, pilhaDeIndices);
-    }
-
     int obterDadosComAChaveEntre(
         TIPO_DAS_CHAVES &chaveMenor,
         TIPO_DAS_CHAVES &chaveMaior,
@@ -222,6 +169,40 @@ public:
         }
 
         return indiceFinal;
+    }
+
+public:
+    // ------------------------- Campos e métodos herdados
+    // Com o using, esses campos da árvore B herdada ficam diretamente
+    // acessíveis nesta classe
+
+    using ArvoreBHerdada::excluir;
+    using ArvoreBHerdada::listarDadosComAChaveEntre;
+    using ArvoreBHerdada::paginaFilha;
+    using ArvoreBHerdada::paginaIrma;
+    using ArvoreBHerdada::paginaIrmaPai;
+    using ArvoreBHerdada::paginaPai;
+    using ArvoreBHerdada::pesquisar;
+
+    // ------------------------- Construtores e destrutores
+
+    ArvoreBMais(string nomeDoArquivo, int ordemDaArvore) : ArvoreBHerdada(nomeDoArquivo, ordemDaArvore) {}
+
+    // ------------------------- Métodos
+
+    TIPO_DOS_DADOS pesquisar(TIPO_DAS_CHAVES &chave) override
+    {
+        return pesquisar(chave, true);
+    }
+
+    TIPO_DOS_DADOS excluir(TIPO_DAS_CHAVES &chave) override
+    {
+        // Faz todo o percurso de descida na árvore
+        auto parDoCaminho = obterCaminhoDeDescida(chave, 0, lerEnderecoDaRaiz(), true);
+        auto &pilhaDeEnderecos = parDoCaminho.first;
+        auto &pilhaDeIndices = parDoCaminho.second;
+
+        return excluir(chave, pilhaDeEnderecos, pilhaDeIndices);
     }
 
     vector<TIPO_DOS_DADOS> listarDadosComAChaveEntre(

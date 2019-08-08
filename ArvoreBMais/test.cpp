@@ -1,7 +1,11 @@
 #include "ArvoreBMais/ArvoreBMais.hpp"
+
 using namespace std;
-int main() {
+
+int main()
+{
     ArvoreBMais<int, float> arvore("TesteArvore.txt", 4);
+
     arvore.inserir(1000 , 1000.5);
     arvore.inserir(2000 , 2000.5);
     arvore.inserir(3000 , 3000.5);
@@ -13,5 +17,7 @@ int main() {
     arvore.inserir(12   , 12.5  );
     arvore.inserir(4    , 4.5   );
     arvore.mostrar();
+    arvore.mostrarPre();
+
     return 0;
 }
