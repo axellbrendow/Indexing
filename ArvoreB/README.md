@@ -7,7 +7,7 @@ Encontre [aqui a documentação da árvore B](https://htmlpreview.github.io/?htt
 
 Já existe, no repositório, um arquivo .cpp com um código de teste:
 
-![Exemplo de código com compilação e execução](https://i.imgur.com/6mgqFkM.png)
+![Exemplo de código com compilação e execução](https://i.imgur.com/mNlOCqA.png)
 
 Comandos usados: (Estes comandos são compatíveis com Linux e Windows/PowerShell)
 
@@ -50,7 +50,6 @@ int main()
     // Mostra a árvore rotacionada de lado
     arvore.mostrar();
     // Mostra as páginas da árvore com chaves, dados e ponteiros
-    // A seta no final da página -> indica o ponteiro para a próxima
     arvore.mostrarPre();
 
     return 0;

@@ -3,11 +3,11 @@ Implementação da Árvore B+, estrutura de dados para indexamento, em C++.
 
 ### Como usar ?
 
-Encontre [aqui a documentação da árvore B](https://htmlpreview.github.io/?https://raw.githubusercontent.com/axell-brendow/Indexing/master/ArvoreBMais/doc/html/files.html).
+Encontre [aqui a documentação da árvore B+](https://htmlpreview.github.io/?https://raw.githubusercontent.com/axell-brendow/Indexing/master/ArvoreBMais/doc/html/files.html).
 
 Já existe, no repositório, um arquivo .cpp com um código de teste:
 
-![Exemplo de código com compilação e execução](https://i.imgur.com/6mgqFkM.png)
+![Exemplo de código com compilação e execução](https://i.imgur.com/K7qP7Ix.png)
 
 Comandos usados: (Estes comandos são compatíveis com Unix e Windows/PowerShell)
 

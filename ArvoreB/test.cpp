@@ -20,7 +20,6 @@ int main()
     // Mostra a árvore rotacionada de lado
     arvore.mostrar();
     // Mostra as páginas da árvore com chaves, dados e ponteiros
-    // A seta no final da página -> indica o ponteiro para a próxima
     arvore.mostrarPre();
 
     return 0;
