@@ -9,7 +9,7 @@ Já existe, no repositório, um arquivo .cpp com um código de teste:
 
 ![Exemplo de código com compilação e execução](https://i.imgur.com/mNlOCqA.png)
 
-Comandos usados: (Estes comandos são compatíveis com Linux e Windows/PowerShell)
+Comandos usados: (Toda a sintaxe e os comandos usados são compatíveis com Linux e Windows/PowerShell)
 
 ```PowerShell
 mkdir meu_projeto > null; rm null   # Cria o diretório do projeto
