@@ -5,5 +5,5 @@ var searchData=
   ['datainputstream_2ehpp',['DataInputStream.hpp',['../_data_input_stream_8hpp.html',1,'']]],
   ['dataoutputstream',['DataOutputStream',['../class_data_output_stream.html',1,'DataOutputStream'],['../class_data_output_stream.html#a27d2b56afe5429f0cf59599f8d106930',1,'DataOutputStream::DataOutputStream(vetor_de_bytes vetor)'],['../class_data_output_stream.html#a776b60d3c628f2aee513007c0196ef8a',1,'DataOutputStream::DataOutputStream(int previsaoDaQuantidadeDeBytes)'],['../class_data_output_stream.html#ada6c337e1939ee49f7a687a63ee46cbc',1,'DataOutputStream::DataOutputStream()']]],
   ['dataoutputstream_2ehpp',['DataOutputStream.hpp',['../_data_output_stream_8hpp.html',1,'']]],
-  ['dividir',['dividir',['../class_arvore_b.html#a4429b5cf0f990a664c1bcffd043ff2c9',1,'ArvoreB']]]
+  ['dividir',['dividir',['../class_arvore_b.html#af6b2091498f4a4b3be1ddd21cb44dfa5',1,'ArvoreB::dividir()'],['../class_arvore_b_mais.html#a933407a0d5d9bfba24397c2378f74f9b',1,'ArvoreBMais::dividir()']]]
 ];

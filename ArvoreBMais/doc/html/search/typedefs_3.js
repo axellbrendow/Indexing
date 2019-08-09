@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['str_5fsize_5ftype',['str_size_type',['../tipos_8hpp.html#a14ad2ddcc295ee3feb1f46731116465e',1,'tipos.hpp']]]
+  ['pagina',['Pagina',['../class_pagina_b.html#a0abe8feb25bb6cbd273f1663eab1d324',1,'PaginaB::Pagina()'],['../class_pagina_b_mais.html#ad25aaedc89c143584c9eeb9b845039a2',1,'PaginaBMais::Pagina()']]],
+  ['paginaherdada',['PaginaHerdada',['../class_pagina_b_mais.html#a11e34a07cce59d7cbfbd6be83a72655e',1,'PaginaBMais']]]
 ];
