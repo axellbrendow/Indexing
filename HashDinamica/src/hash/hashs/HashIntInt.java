@@ -5,7 +5,7 @@ package hash.hashs;
 import java.util.ArrayList;
 import java.util.function.Function;
 
-import hash.HashDinamica;
+import hash.Hash;
 import hash.serializaveis.IntSerializavel;
 
 /**
@@ -14,7 +14,7 @@ import hash.serializaveis.IntSerializavel;
  * @author Axell Brendow ( https://github.com/axell-brendow )
  */
 
-public class HashDinamicaIntInt extends HashDinamica<IntSerializavel, IntSerializavel>
+public class HashIntInt extends Hash<IntSerializavel, IntSerializavel>
 {
 	/**
 	 * Cria um objeto que gerencia uma hash dinâmica.
@@ -29,7 +29,7 @@ public class HashDinamicaIntInt extends HashDinamica<IntSerializavel, IntSeriali
 	 * importando o tamanho deles. Não utilize geração de números aleatórios.
 	 */
 	
-	public HashDinamicaIntInt(
+	public HashIntInt(
 		String nomeDoArquivoDoDiretorio,
 		String nomeDoArquivoDosBuckets,
 		int numeroDeRegistrosPorBucket,
@@ -57,7 +57,7 @@ public class HashDinamicaIntInt extends HashDinamica<IntSerializavel, IntSeriali
 	 * não tenha sido criado ainda.
 	 */
 	
-	public HashDinamicaIntInt(
+	public HashIntInt(
 		String nomeDoArquivoDoDiretorio,
 		String nomeDoArquivoDosBuckets,
 		int numeroDeRegistrosPorBucket)
@@ -78,7 +78,7 @@ public class HashDinamicaIntInt extends HashDinamica<IntSerializavel, IntSeriali
 	 * Caso o arquivo não tenha sido criado ainda, ele será criado com este nome.
 	 */
 	
-	public HashDinamicaIntInt(
+	public HashIntInt(
 		String nomeDoArquivoDoDiretorio,
 		String nomeDoArquivoDosBuckets)
 	{

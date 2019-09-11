@@ -5,7 +5,7 @@ package hash.hashs;
 import java.util.ArrayList;
 import java.util.function.Function;
 
-import hash.HashDinamica;
+import hash.Hash;
 import hash.serializaveis.IntSerializavel;
 import hash.serializaveis.StringSerializavel;
 
@@ -15,7 +15,7 @@ import hash.serializaveis.StringSerializavel;
  * @author Axell Brendow ( https://github.com/axell-brendow )
  */
 
-public class HashDinamicaStringInt extends HashDinamica<StringSerializavel, IntSerializavel>
+public class HashStringInt extends Hash<StringSerializavel, IntSerializavel>
 {
 	protected short tamanhoMaximoEmBytesParaAsStrings;
 	
@@ -34,7 +34,7 @@ public class HashDinamicaStringInt extends HashDinamica<StringSerializavel, IntS
 	 * importando o tamanho deles. Não utilize geração de números aleatórios.
 	 */
 	
-	public HashDinamicaStringInt(
+	public HashStringInt(
 		String nomeDoArquivoDoDiretorio,
 		String nomeDoArquivoDosBuckets,
 		int numeroDeRegistrosPorBucket,
@@ -68,7 +68,7 @@ public class HashDinamicaStringInt extends HashDinamica<StringSerializavel, IntS
 	 * importando o tamanho deles. Não utilize geração de números aleatórios.
 	 */
 	
-	public HashDinamicaStringInt(
+	public HashStringInt(
 		String nomeDoArquivoDoDiretorio,
 		String nomeDoArquivoDosBuckets,
 		int numeroDeRegistrosPorBucket,
@@ -95,7 +95,7 @@ public class HashDinamicaStringInt extends HashDinamica<StringSerializavel, IntS
 	 * podem gastar.
 	 */
 	
-	public HashDinamicaStringInt(
+	public HashStringInt(
 		String nomeDoArquivoDoDiretorio,
 		String nomeDoArquivoDosBuckets,
 		int numeroDeRegistrosPorBucket,
@@ -144,7 +144,7 @@ public class HashDinamicaStringInt extends HashDinamica<StringSerializavel, IntS
 	 * não tenha sido criado ainda.
 	 */
 	
-	public HashDinamicaStringInt(
+	public HashStringInt(
 		String nomeDoArquivoDoDiretorio,
 		String nomeDoArquivoDosBuckets,
 		int numeroDeRegistrosPorBucket)
@@ -165,7 +165,7 @@ public class HashDinamicaStringInt extends HashDinamica<StringSerializavel, IntS
 	 * Caso o arquivo não tenha sido criado ainda, ele será criado com este nome.
 	 */
 	
-	public HashDinamicaStringInt(
+	public HashStringInt(
 		String nomeDoArquivoDoDiretorio,
 		String nomeDoArquivoDosBuckets)
 	{

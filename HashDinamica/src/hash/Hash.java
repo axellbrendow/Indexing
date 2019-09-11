@@ -17,7 +17,7 @@ import hash.util.IO;
  * @param <TIPO_DOS_DADOS> Classe do dado.
  */
 
-public class HashDinamica<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS extends SerializavelAbstract>
+public class Hash<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS extends SerializavelAbstract>
 {
 	public static final int PADRAO_NUMERO_DE_REGISTROS_POR_BUCKET = 21;
 	
@@ -49,7 +49,7 @@ public class HashDinamica<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS
 	 * importando o tamanho deles. Não utilize geração de números aleatórios.
 	 */
 	
-	public HashDinamica(
+	public Hash(
 		String nomeDoArquivoDoDiretorio,
 		String nomeDoArquivoDosBuckets,
 		int numeroDeRegistrosPorBucket,
