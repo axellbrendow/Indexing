@@ -15,21 +15,11 @@ public class Main
 	
 	public static void hashStringInt()
 	{
-		HashDinamicaStringInt hashDinamica = null;
-		
-		try
-		{
-			hashDinamica = new HashDinamicaStringInt(
-				NOME_DO_ARQUIVO_DO_DIRETORIO,
-				NOME_DO_ARQUIVO_DOS_BUCKETS,
-				4 // número de registros por bucket
-			);
-		}
-		
-		catch (NoSuchMethodException | SecurityException e1)
-		{
-			e1.printStackTrace();
-		}
+		HashDinamicaStringInt hashDinamica = new HashDinamicaStringInt(
+			NOME_DO_ARQUIVO_DO_DIRETORIO,
+			NOME_DO_ARQUIVO_DOS_BUCKETS,
+			4 // número de registros por bucket
+		);
 		
 		if (hashDinamica != null)
 		{
@@ -52,21 +42,11 @@ public class Main
 	
 	public static void hashIntInt()
 	{
-		HashDinamicaIntInt hashDinamica = null;
-		
-		try
-		{
-			hashDinamica = new HashDinamicaIntInt(
-				NOME_DO_ARQUIVO_DO_DIRETORIO,
-				NOME_DO_ARQUIVO_DOS_BUCKETS,
-				4 // número de registros por bucket
-			);
-		}
-		
-		catch (NoSuchMethodException | SecurityException e1)
-		{
-			e1.printStackTrace();
-		}
+		HashDinamicaIntInt hashDinamica = new HashDinamicaIntInt(
+			NOME_DO_ARQUIVO_DO_DIRETORIO,
+			NOME_DO_ARQUIVO_DOS_BUCKETS,
+			4 // número de registros por bucket
+		);
 		
 		if (hashDinamica != null)
 		{

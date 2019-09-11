@@ -2,7 +2,6 @@
 
 package hash;
 
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.function.Function;
 
@@ -41,9 +40,9 @@ public class HashDinamica<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS
 	 * não tenha sido criado ainda.
 	 * @param quantidadeMaximaDeBytesParaAChave Tamanho máximo que a chave pode gastar.
 	 * @param quantidadeMaximaDeBytesParaODado Tamanho máximo que o dado pode gastar.
-	 * @param construtorDaChave Construtor da chave. É necessário que a chave tenha um
+	 * @param classeDaChave Classe da chave. É necessário que a classe tenha um
 	 * construtor sem parâmetros.
-	 * @param construtorDoDado Construtor do dado. É necessário que o dado tenha um
+	 * @param classeDoDado Classe do dado. É necessário que a classe tenha um
 	 * construtor sem parâmetros.
 	 * @param funcaoHash Função de dispersão (hash) que será usada para as chaves. É
 	 * importante ressaltar que essa função só precisa gerar valores dispersos, não
@@ -56,8 +55,8 @@ public class HashDinamica<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS
 		int numeroDeRegistrosPorBucket,
 		short quantidadeMaximaDeBytesParaAChave,
 		short quantidadeMaximaDeBytesParaODado,
-		Constructor<TIPO_DAS_CHAVES> construtorDaChave,
-		Constructor<TIPO_DOS_DADOS> construtorDoDado,
+		Class<TIPO_DAS_CHAVES> classeDaChave,
+		Class<TIPO_DOS_DADOS> classeDoDado,
 		Function<TIPO_DAS_CHAVES, Integer> funcaoHash)
 	{
 		diretorio = new Diretorio<>(nomeDoArquivoDoDiretorio, funcaoHash);
@@ -67,8 +66,8 @@ public class HashDinamica<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS
 			numeroDeRegistrosPorBucket,
 			quantidadeMaximaDeBytesParaAChave,
 			quantidadeMaximaDeBytesParaODado,
-			construtorDaChave,
-			construtorDoDado);
+			classeDaChave,
+			classeDoDado);
 	}
 	
 	/**

@@ -4,7 +4,6 @@ package hash;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.BiFunction;
@@ -44,9 +43,9 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 	 * não tenha sido criado ainda.
 	 * @param quantidadeMaximaDeBytesParaAChave Tamanho máximo que a chave pode gastar.
 	 * @param quantidadeMaximaDeBytesParaODado Tamanho máximo que o dado pode gastar.
-	 * @param construtorDaChave Construtor da chave. É necessário que a chave tenha um
+	 * @param classeDaChave Classe da chave. É necessário que a classe tenha um
 	 * construtor sem parâmetros.
-	 * @param construtorDoDado Construtor do dado. É necessário que o dado tenha um
+	 * @param classeDoDado Classe do dado. É necessário que a classe tenha um
 	 * construtor sem parâmetros.
 	 */
 	
@@ -56,8 +55,8 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 		int numeroDeRegistrosPorBucket,
 		short quantidadeMaximaDeBytesParaAChave,
 		short quantidadeMaximaDeBytesParaODado,
-		Constructor<TIPO_DAS_CHAVES> construtorDaChave,
-		Constructor<TIPO_DOS_DADOS> construtorDoDado)
+		Class<TIPO_DAS_CHAVES> classeDaChave,
+		Class<TIPO_DOS_DADOS> classeDoDado)
 	{
 		this.bucket = bucket;
 		this.profundidadeLocal =
@@ -71,8 +70,8 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 				RegistroDoIndice.REGISTRO_DESATIVADO, null, null,
 				quantidadeMaximaDeBytesParaAChave,
 				quantidadeMaximaDeBytesParaODado,
-				construtorDaChave,
-				construtorDoDado
+				classeDaChave,
+				classeDoDado
 			);
 	}
 	
@@ -84,9 +83,9 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 	 * não tenha sido criado ainda.
 	 * @param quantidadeMaximaDeBytesParaAChave Tamanho máximo que a chave pode gastar.
 	 * @param quantidadeMaximaDeBytesParaODado Tamanho máximo que o dado pode gastar.
-	 * @param construtorDaChave Construtor da chave. É necessário que a chave tenha um
+	 * @param classeDaChave Classe da chave. É necessário que a classe tenha um
 	 * construtor sem parâmetros.
-	 * @param construtorDoDado Construtor do dado. É necessário que o dado tenha um
+	 * @param classeDoDado Classe do dado. É necessário que a classe tenha um
 	 * construtor sem parâmetros.
 	 */
 	
@@ -95,8 +94,8 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 		int numeroDeRegistrosPorBucket,
 		short quantidadeMaximaDeBytesParaAChave,
 		short quantidadeMaximaDeBytesParaODado,
-		Constructor<TIPO_DAS_CHAVES> construtorDaChave,
-		Constructor<TIPO_DOS_DADOS> construtorDoDado)
+		Class<TIPO_DAS_CHAVES> classeDaChave,
+		Class<TIPO_DOS_DADOS> classeDoDado)
 	{
 		this
 		(
@@ -105,8 +104,8 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 			numeroDeRegistrosPorBucket,
 			quantidadeMaximaDeBytesParaAChave,
 			quantidadeMaximaDeBytesParaODado,
-			construtorDaChave,
-			construtorDoDado
+			classeDaChave,
+			classeDoDado
 		);
 		
 		iniciarBucket();
@@ -120,9 +119,9 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 	 * não tenha sido criado ainda.
 	 * @param quantidadeMaximaDeBytesParaAChave Tamanho máximo que a chave pode gastar.
 	 * @param quantidadeMaximaDeBytesParaODado Tamanho máximo que o dado pode gastar.
-	 * @param construtorDaChave Construtor da chave. É necessário que a chave tenha um
+	 * @param classeDaChave Classe da chave. É necessário que a classe tenha um
 	 * construtor sem parâmetros.
-	 * @param construtorDoDado Construtor do dado. É necessário que o dado tenha um
+	 * @param classeDoDado Classe do dado. É necessário que a classe tenha um
 	 * construtor sem parâmetros.
 	 */
 	
@@ -130,16 +129,16 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 		int numeroDeRegistrosPorBucket,
 		short quantidadeMaximaDeBytesParaAChave,
 		short quantidadeMaximaDeBytesParaODado,
-		Constructor<TIPO_DAS_CHAVES> construtorDaChave,
-		Constructor<TIPO_DOS_DADOS> construtorDoDado)
+		Class<TIPO_DAS_CHAVES> classeDaChave,
+		Class<TIPO_DOS_DADOS> classeDoDado)
 	{
 		this(
 			PADRAO_PROFUNDIDADE_LOCAL,
 			numeroDeRegistrosPorBucket,
 			quantidadeMaximaDeBytesParaAChave,
 			quantidadeMaximaDeBytesParaODado,
-			construtorDaChave,
-			construtorDoDado);
+			classeDaChave,
+			classeDoDado);
 	}
 	
 	/**
@@ -557,8 +556,8 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 			numeroDeRegistrosPorBucket,
 			registroDoIndice.quantidadeMaximaDeBytesParaAChave,
 			registroDoIndice.quantidadeMaximaDeBytesParaODado,
-			registroDoIndice.construtorDaChave,
-			registroDoIndice.construtorDoDado
+			registroDoIndice.classeDaChave,
+			registroDoIndice.classeDoDado
 		);
 	}
 	
@@ -584,8 +583,8 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 				numeroDeRegistrosPorBucket,
 				registroDoIndice.quantidadeMaximaDeBytesParaAChave,
 				registroDoIndice.quantidadeMaximaDeBytesParaODado,
-				registroDoIndice.construtorDaChave,
-				registroDoIndice.construtorDoDado
+				registroDoIndice.classeDaChave,
+				registroDoIndice.classeDoDado
 			);
 	}
 	

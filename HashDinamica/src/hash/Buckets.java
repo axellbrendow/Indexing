@@ -4,7 +4,6 @@ package hash;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.function.BiFunction;
 
@@ -42,9 +41,9 @@ public class Buckets<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADO
 	 * não tenha sido criado ainda.
 	 * @param quantidadeMaximaDeBytesParaAChave Tamanho máximo que a chave pode gastar.
 	 * @param quantidadeMaximaDeBytesParaODado Tamanho máximo que o dado pode gastar.
-	 * @param construtorDaChave Construtor da chave. É necessário que a chave tenha um
+	 * @param classeDaChave Classe da chave. É necessário que a classe tenha um
 	 * construtor sem parâmetros.
-	 * @param construtorDoDado Construtor do dado. É necessário que o dado tenha um
+	 * @param classeDoDado Classe do dado. É necessário que a classe tenha um
 	 * construtor sem parâmetros.
 	 */
 	
@@ -53,8 +52,8 @@ public class Buckets<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADO
 		int numeroDeRegistrosPorBucket,
 		short quantidadeMaximaDeBytesParaAChave,
 		short quantidadeMaximaDeBytesParaODado,
-		Constructor<TIPO_DAS_CHAVES> construtorDaChave,
-		Constructor<TIPO_DOS_DADOS> construtorDoDado)
+		Class<TIPO_DAS_CHAVES> classeDaChave,
+		Class<TIPO_DOS_DADOS> classeDoDado)
 	{
 		if (quantidadeMaximaDeBytesParaAChave > 0 &&
 			quantidadeMaximaDeBytesParaODado > 0)
@@ -81,8 +80,8 @@ public class Buckets<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADO
 				numeroDeRegistrosPorBucket,
 				quantidadeMaximaDeBytesParaAChave,
 				quantidadeMaximaDeBytesParaODado,
-				construtorDaChave,
-				construtorDoDado);
+				classeDaChave,
+				classeDoDado);
 			
 			// cria o primeiro bucket no arquivo
 			criarBucket(Bucket.PADRAO_PROFUNDIDADE_LOCAL);

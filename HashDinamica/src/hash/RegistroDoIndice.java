@@ -32,6 +32,8 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO
 	protected TIPO_DOS_DADOS dado;
 	protected short quantidadeMaximaDeBytesParaAChave;
 	protected short quantidadeMaximaDeBytesParaODado;
+	protected Class<TIPO_DAS_CHAVES> classeDaChave;
+	protected Class<TIPO_DOS_DADOS> classeDoDado;
 	protected Constructor<TIPO_DAS_CHAVES> construtorDaChave;
 	protected Constructor<TIPO_DOS_DADOS> construtorDoDado;
 	
@@ -43,9 +45,9 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO
 	 * @param dado Dado que corresponde à chave.
 	 * @param quantidadeMaximaDeBytesParaAChave Tamanho máximo que a chave pode gastar.
 	 * @param quantidadeMaximaDeBytesParaODado Tamanho máximo que o dado pode gastar.
-	 * @param construtorDaChave Construtor da chave. É necessário que a chave tenha um
+	 * @param classeDaChave Construtor da chave. É necessário que a chave tenha um
 	 * construtor sem parâmetros.
-	 * @param construtorDoDado Construtor do dado. É necessário que o dado tenha um
+	 * @param classeDoDado Construtor do dado. É necessário que o dado tenha um
 	 * construtor sem parâmetros.
 	 */
 	
@@ -55,16 +57,27 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO
 		TIPO_DOS_DADOS dado,
 		short quantidadeMaximaDeBytesParaAChave,
 		short quantidadeMaximaDeBytesParaODado,
-		Constructor<TIPO_DAS_CHAVES> construtorDaChave,
-		Constructor<TIPO_DOS_DADOS> construtorDoDado)
+		Class<TIPO_DAS_CHAVES> classeDaChave,
+		Class<TIPO_DOS_DADOS> classeDoDado)
 	{
 		this.lapide = lapide;
 		this.chave = chave;
 		this.dado = dado;
 		this.quantidadeMaximaDeBytesParaAChave = quantidadeMaximaDeBytesParaAChave;
 		this.quantidadeMaximaDeBytesParaODado = quantidadeMaximaDeBytesParaODado;
-		this.construtorDaChave = construtorDaChave;
-		this.construtorDoDado = construtorDoDado;
+		this.classeDaChave = classeDaChave;
+		this.classeDoDado = classeDoDado;
+		
+		try
+		{
+			this.construtorDaChave = classeDaChave.getConstructor();
+			this.construtorDoDado = classeDoDado.getConstructor();
+		}
+		
+		catch (NoSuchMethodException | SecurityException e)
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	/**

@@ -32,9 +32,6 @@ public class HashDinamicaStringInt extends HashDinamica<StringSerializavel, IntS
 	 * @param funcaoHash Função de dispersão (hash) que será usada para as chaves. É
 	 * importante ressaltar que essa função só precisa gerar valores dispersos, não
 	 * importando o tamanho deles. Não utilize geração de números aleatórios.
-	 * 
-	 * @throws SecurityException 
-	 * @throws NoSuchMethodException 
 	 */
 	
 	public HashDinamicaStringInt(
@@ -42,7 +39,7 @@ public class HashDinamicaStringInt extends HashDinamica<StringSerializavel, IntS
 		String nomeDoArquivoDosBuckets,
 		int numeroDeRegistrosPorBucket,
 		short tamanhoMaximoEmBytesParaAsStrings,
-		Function<StringSerializavel, Integer> funcaoHash) throws NoSuchMethodException, SecurityException
+		Function<StringSerializavel, Integer> funcaoHash)
 	{
 		super(
 			nomeDoArquivoDoDiretorio,
@@ -50,8 +47,8 @@ public class HashDinamicaStringInt extends HashDinamica<StringSerializavel, IntS
 			numeroDeRegistrosPorBucket,
 			tamanhoMaximoEmBytesParaAsStrings,
 			(short) Integer.BYTES,
-			StringSerializavel.class.getConstructor(),
-			IntSerializavel.class.getConstructor(),
+			StringSerializavel.class,
+			IntSerializavel.class,
 			funcaoHash
 		);
 		
@@ -69,16 +66,13 @@ public class HashDinamicaStringInt extends HashDinamica<StringSerializavel, IntS
 	 * @param funcaoHash Função de dispersão (hash) que será usada para as chaves. É
 	 * importante ressaltar que essa função só precisa gerar valores dispersos, não
 	 * importando o tamanho deles. Não utilize geração de números aleatórios.
-	 * 
-	 * @throws SecurityException 
-	 * @throws NoSuchMethodException 
 	 */
 	
 	public HashDinamicaStringInt(
 		String nomeDoArquivoDoDiretorio,
 		String nomeDoArquivoDosBuckets,
 		int numeroDeRegistrosPorBucket,
-		Function<StringSerializavel, Integer> funcaoHash) throws NoSuchMethodException, SecurityException
+		Function<StringSerializavel, Integer> funcaoHash)
 	{
 		this(
 			nomeDoArquivoDoDiretorio,
@@ -99,16 +93,13 @@ public class HashDinamicaStringInt extends HashDinamica<StringSerializavel, IntS
 	 * não tenha sido criado ainda.
 	 * @param tamanhoMaximoEmBytesParaAsStrings Quantidade máxima em bytes que as strings
 	 * podem gastar.
-	 * 
-	 * @throws SecurityException 
-	 * @throws NoSuchMethodException 
 	 */
 	
 	public HashDinamicaStringInt(
 		String nomeDoArquivoDoDiretorio,
 		String nomeDoArquivoDosBuckets,
 		int numeroDeRegistrosPorBucket,
-		short tamanhoMaximoEmBytesParaAsStrings) throws NoSuchMethodException, SecurityException
+		short tamanhoMaximoEmBytesParaAsStrings)
 	{
 		this(
 			nomeDoArquivoDoDiretorio,
@@ -151,15 +142,12 @@ public class HashDinamicaStringInt extends HashDinamica<StringSerializavel, IntS
 	 * Caso o arquivo não tenha sido criado ainda, ele será criado com este nome.
 	 * @param numeroDeRegistrosPorBucket Numero de registros por bucket caso o arquivo
 	 * não tenha sido criado ainda.
-	 * 
-	 * @throws SecurityException 
-	 * @throws NoSuchMethodException 
 	 */
 	
 	public HashDinamicaStringInt(
 		String nomeDoArquivoDoDiretorio,
 		String nomeDoArquivoDosBuckets,
-		int numeroDeRegistrosPorBucket) throws NoSuchMethodException, SecurityException
+		int numeroDeRegistrosPorBucket)
 	{
 		this(
 			nomeDoArquivoDoDiretorio,
@@ -175,14 +163,11 @@ public class HashDinamicaStringInt extends HashDinamica<StringSerializavel, IntS
 	 * @param nomeDoArquivoDoDiretorio Nome do arquivo previamente usado para o diretório.
 	 * @param nomeDoArquivoDosBuckets Nome do arquivo previamente usado para os buckets.
 	 * Caso o arquivo não tenha sido criado ainda, ele será criado com este nome.
-	 * 
-	 * @throws SecurityException 
-	 * @throws NoSuchMethodException 
 	 */
 	
 	public HashDinamicaStringInt(
 		String nomeDoArquivoDoDiretorio,
-		String nomeDoArquivoDosBuckets) throws NoSuchMethodException, SecurityException
+		String nomeDoArquivoDosBuckets)
 	{
 		this(
 			nomeDoArquivoDoDiretorio,

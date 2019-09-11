@@ -28,16 +28,13 @@ public class HashDinamicaIntLong extends HashDinamica<IntSerializavel, LongSeria
 	 * @param funcaoHash Função de dispersão (hash) que será usada para as chaves. É
 	 * importante ressaltar que essa função só precisa gerar valores dispersos, não
 	 * importando o tamanho deles. Não utilize geração de números aleatórios.
-	 * 
-	 * @throws SecurityException 
-	 * @throws NoSuchMethodException 
 	 */
 	
 	public HashDinamicaIntLong(
 		String nomeDoArquivoDoDiretorio,
 		String nomeDoArquivoDosBuckets,
 		int numeroDeRegistrosPorBucket,
-		Function<IntSerializavel, Integer> funcaoHash) throws NoSuchMethodException, SecurityException
+		Function<IntSerializavel, Integer> funcaoHash)
 	{
 		super(
 			nomeDoArquivoDoDiretorio,
@@ -45,8 +42,8 @@ public class HashDinamicaIntLong extends HashDinamica<IntSerializavel, LongSeria
 			numeroDeRegistrosPorBucket,
 			(short) Integer.BYTES,
 			(short) Long.BYTES,
-			IntSerializavel.class.getConstructor(),
-			LongSerializavel.class.getConstructor(),
+			IntSerializavel.class,
+			LongSerializavel.class,
 			funcaoHash
 		);
 	}
@@ -59,15 +56,12 @@ public class HashDinamicaIntLong extends HashDinamica<IntSerializavel, LongSeria
 	 * Caso o arquivo não tenha sido criado ainda, ele será criado com este nome.
 	 * @param numeroDeRegistrosPorBucket Numero de registros por bucket caso o arquivo
 	 * não tenha sido criado ainda.
-	 * 
-	 * @throws SecurityException 
-	 * @throws NoSuchMethodException 
 	 */
 	
 	public HashDinamicaIntLong(
 		String nomeDoArquivoDoDiretorio,
 		String nomeDoArquivoDosBuckets,
-		int numeroDeRegistrosPorBucket) throws NoSuchMethodException, SecurityException
+		int numeroDeRegistrosPorBucket)
 	{
 		this(
 			nomeDoArquivoDoDiretorio,
@@ -83,14 +77,11 @@ public class HashDinamicaIntLong extends HashDinamica<IntSerializavel, LongSeria
 	 * @param nomeDoArquivoDoDiretorio Nome do arquivo previamente usado para o diretório.
 	 * @param nomeDoArquivoDosBuckets Nome do arquivo previamente usado para os buckets.
 	 * Caso o arquivo não tenha sido criado ainda, ele será criado com este nome.
-	 * 
-	 * @throws SecurityException 
-	 * @throws NoSuchMethodException 
 	 */
 	
 	public HashDinamicaIntLong(
 		String nomeDoArquivoDoDiretorio,
-		String nomeDoArquivoDosBuckets) throws NoSuchMethodException, SecurityException
+		String nomeDoArquivoDosBuckets)
 	{
 		this(
 			nomeDoArquivoDoDiretorio,
