@@ -63,7 +63,7 @@ public class test
 }
 ' | Out-File -Encoding default test.java  # Envia um código de teste para o arquivo test.java
 
-ls | select Name   # Coloque sua classe .java e a pasta hash do meu repositório juntas como abaixo:
+ls | select Name   # Coloque sua classe .java e a pasta Indexing/HashDinamica/src/hash do meu repositório juntas como abaixo:
 ls .\hash\hashs  # Apenas mostra as classes .java dentro da pasta ./hash/hashs
 
 javac -classpath "./hash/hashs/*;." test.java   <# Compile passando como classpath o caminho da pasta hash e o caminho do seu .java.

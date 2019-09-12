@@ -20,10 +20,8 @@ git add *
 git commit # Depois de apertar ENTER, escreva uma mensagem detalhada sobre sua mudança
 git push
 ```
-a
-Após isso, vá em seu repositório online, clique em "Pull Request" ou "Compare"
-![Exemplo dos botões](http://i66.tinypic.com/2rnzr7c.jpg "Exemplo dos botões") e
-então em "Create Pull Request", depois em clique em "Create Pull Request" novamente.
+
+Após isso, vá em seu repositório online, clique em "Pull Request" ou "Compare" e então em "Create Pull Request", depois em clique em "Create Pull Request" novamente.
 
 Aguarde até que sua contribuição seja avaliada.
 
