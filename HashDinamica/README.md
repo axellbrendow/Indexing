@@ -34,6 +34,10 @@ public class HashTest
 
 ### 1ª forma de usar, usando diretamente o código fonte:
 
+Os passos estão descritos na imagem abaixo:
+
+![Exemplo de código com compilação e execução do código fonte do repositório](https://i.imgur.com/wOOGINf.png)
+
 Todos os comandos usados (Windows/PowerShell):
 
 ```PowerShell
