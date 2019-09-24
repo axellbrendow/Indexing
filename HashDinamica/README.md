@@ -6,7 +6,14 @@ Implementação da Hash Dinâmica, estrutura de dados para indexamento, em Java.
 Encontre [aqui a documentação da hash](https://htmlpreview.github.io/?https://github.com/axell-brendow/Indexing/blob/master/HashDinamica/doc/index.html).
 
 
-Código de teste:
+### Usando a Hash com tipos primitivos
+
+Há algumas classes da hash prontas para uso com tipos primitivos:
+hash.hashs.HashIntInt
+hash.hashs.HashIntLong
+hash.hashs.HashStringInt
+
+No exemplo que irei dar, usarei string como chave e inteiro como dado:
 
 ```Java
 import java.io.File;
@@ -126,4 +133,57 @@ javac -classpath ".\lib\*;." test.java   <# Compile passando como classpath o ca
 No meu caso, o .java está no próprio diretório onde estou, por isso usei o . (ponto). Caso você esteja num sistema unix, troque o ; (ponto e vírgula) por : (dois pontos) no classpath. #>
 
 java -classpath ".\lib\*;." test   # Execute sua classe com o mesmo classpath de compilação
+```
+
+
+### Usando a Hash com tipos personalizados
+
+Para usar a Hash com uma classe sua, é preciso que ela herde a classe hash.serializaveis.SerializavelAbstract e implemente 4 métodos:
+
+- O primeiro deles, obterTamanhoMaximoEmBytes(), é um método os você dirá qual é o tamanho máximo que a sua classe pode gastar em bytes juntando todos os campos internos.
+- O segundo é o obterBytes() onde você deve gerar um byte[] com os bytes da sua entidade.
+- O terceiro é o lerBytes(byte[]) onde você receberá um byte[] e você deve lê-lo e ir atribuindo os campos internos da sua entidade.
+- O quarto é o toString() onde você deve gerar um representação textual do seu objeto. Esse método será utilizado para comparar se duas chaves ou dois dados são iguais.
+
+Código de teste:
+
+```Java
+import java.io.File;
+import hash.Hash;
+import hash.serializaveis.SerializavelAbstract;
+
+class Student extends SerializavelAbstract
+{
+    String nome;
+    int idade;
+
+    public Student(String nome, int idade)
+    {
+        this.nome = nome;
+        this.idade = idade;
+    }
+
+    public int obterTamanhoMaximoEmBytes()
+    {
+        return 
+    }
+}
+
+public class HashTest
+{
+    public static void main(String[] args)
+    {
+        new File("diretorio.dir").delete();
+        new File("buckets.db").delete();
+
+        Hash<Student> hash = new Hash<>("diretorio.dir", "buckets.db", 2);
+
+        hash.inserir("a", 1);
+        hash.inserir("b", 2);
+        hash.inserir("c", 3);
+
+        System.out.println(hash);
+    }
+}
+
 ```
