@@ -1,6 +1,6 @@
 import java.io.File;
 import hash.hashs.HashStringInt;
-public class test
+public class testSource
 {
     public static void main(String[] args)
     {

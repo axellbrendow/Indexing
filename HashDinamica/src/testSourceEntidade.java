@@ -83,7 +83,7 @@ class Student extends SerializavelAbstract
     }
 }
 
-public class test
+public class testSourceEntidade
 {
     public static void main(String[] args)
     {
