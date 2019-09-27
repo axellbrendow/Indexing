@@ -45,8 +45,6 @@ public class HashStringInt extends Hash<StringSerializavel, IntSerializavel>
 			nomeDoArquivoDoDiretorio,
 			nomeDoArquivoDosBuckets,
 			numeroDeRegistrosPorBucket,
-			tamanhoMaximoEmBytesParaAsStrings,
-			(short) Integer.BYTES,
 			StringSerializavel.class,
 			IntSerializavel.class,
 			funcaoHash

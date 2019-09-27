@@ -39,8 +39,6 @@ public class Buckets<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADO
 	 * Caso o arquivo não tenha sido criado ainda, ele será criado com este nome.
 	 * @param numeroDeRegistrosPorBucket Numero de registros por bucket caso o arquivo
 	 * não tenha sido criado ainda.
-	 * @param quantidadeMaximaDeBytesParaAChave Tamanho máximo que a chave pode gastar.
-	 * @param quantidadeMaximaDeBytesParaODado Tamanho máximo que o dado pode gastar.
 	 * @param classeDaChave Classe da chave. É necessário que a classe tenha um
 	 * construtor sem parâmetros.
 	 * @param classeDoDado Classe do dado. É necessário que a classe tenha um
@@ -50,42 +48,34 @@ public class Buckets<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADO
 	public Buckets(
 		String nomeDoArquivoDosBuckets,
 		int numeroDeRegistrosPorBucket,
-		short quantidadeMaximaDeBytesParaAChave,
-		short quantidadeMaximaDeBytesParaODado,
 		Class<TIPO_DAS_CHAVES> classeDaChave,
 		Class<TIPO_DOS_DADOS> classeDoDado)
 	{
-		if (quantidadeMaximaDeBytesParaAChave > 0 &&
-			quantidadeMaximaDeBytesParaODado > 0)
+		arquivoDosBuckets = IO.openFile(nomeDoArquivoDosBuckets, "rw");
+		this.numeroDeRegistrosPorBucket = lerNumeroDeRegistrosPorBucket(); // tenta recuperar do arquivo
+		
+		if (this.numeroDeRegistrosPorBucket < 1)
 		{
-			arquivoDosBuckets = IO.openFile(nomeDoArquivoDosBuckets, "rw");
-			this.numeroDeRegistrosPorBucket = lerNumeroDeRegistrosPorBucket(); // tenta recuperar do arquivo
-			
-			if (this.numeroDeRegistrosPorBucket < 1)
+			if (numeroDeRegistrosPorBucket < 1)
 			{
-				if (numeroDeRegistrosPorBucket < 1)
-				{
-					this.numeroDeRegistrosPorBucket = Bucket.PADRAO_NUMERO_DE_REGISTROS_POR_BUCKET;
-				}
-				
-				else
-				{
-					this.numeroDeRegistrosPorBucket = numeroDeRegistrosPorBucket;
-				}
+				this.numeroDeRegistrosPorBucket = Bucket.PADRAO_NUMERO_DE_REGISTROS_POR_BUCKET;
 			}
-
-			escreverNumeroDeRegistrosPorBucket(this.numeroDeRegistrosPorBucket);
 			
-			this.bucket = new Bucket<>(
-				numeroDeRegistrosPorBucket,
-				quantidadeMaximaDeBytesParaAChave,
-				quantidadeMaximaDeBytesParaODado,
-				classeDaChave,
-				classeDoDado);
-			
-			// cria o primeiro bucket no arquivo
-			criarBucket(Bucket.PADRAO_PROFUNDIDADE_LOCAL);
+			else
+			{
+				this.numeroDeRegistrosPorBucket = numeroDeRegistrosPorBucket;
+			}
 		}
+
+		escreverNumeroDeRegistrosPorBucket(this.numeroDeRegistrosPorBucket);
+		
+		this.bucket = new Bucket<>(
+			numeroDeRegistrosPorBucket,
+			classeDaChave,
+			classeDoDado);
+		
+		// cria o primeiro bucket no arquivo
+		criarBucket(Bucket.PADRAO_PROFUNDIDADE_LOCAL);
 	}
 	
 	/**

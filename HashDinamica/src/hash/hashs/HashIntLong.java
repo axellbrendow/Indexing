@@ -40,8 +40,6 @@ public class HashIntLong extends Hash<IntSerializavel, LongSerializavel>
 			nomeDoArquivoDoDiretorio,
 			nomeDoArquivoDosBuckets,
 			numeroDeRegistrosPorBucket,
-			(short) Integer.BYTES,
-			(short) Long.BYTES,
 			IntSerializavel.class,
 			LongSerializavel.class,
 			funcaoHash

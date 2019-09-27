@@ -31,15 +31,13 @@ public class Hash<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS e
 	private int numeroDeChamadas = 0;
 	
 	/**
-	 * Cria um objeto que gerencia uma hash dinâmica.
+	 * Cria uma HashDinamica.
 	 * 
 	 * @param nomeDoArquivoDoDiretorio Nome do arquivo previamente usado para o diretório.
 	 * @param nomeDoArquivoDosBuckets Nome do arquivo previamente usado para os buckets.
 	 * Caso o arquivo não tenha sido criado ainda, ele será criado com este nome.
 	 * @param numeroDeRegistrosPorBucket Numero de registros por bucket caso o arquivo
 	 * não tenha sido criado ainda.
-	 * @param quantidadeMaximaDeBytesParaAChave Tamanho máximo que a chave pode gastar.
-	 * @param quantidadeMaximaDeBytesParaODado Tamanho máximo que o dado pode gastar.
 	 * @param classeDaChave Classe da chave. É necessário que a classe tenha um
 	 * construtor sem parâmetros.
 	 * @param classeDoDado Classe do dado. É necessário que a classe tenha um
@@ -53,8 +51,6 @@ public class Hash<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS e
 		String nomeDoArquivoDoDiretorio,
 		String nomeDoArquivoDosBuckets,
 		int numeroDeRegistrosPorBucket,
-		short quantidadeMaximaDeBytesParaAChave,
-		short quantidadeMaximaDeBytesParaODado,
 		Class<TIPO_DAS_CHAVES> classeDaChave,
 		Class<TIPO_DOS_DADOS> classeDoDado,
 		Function<TIPO_DAS_CHAVES, Integer> funcaoHash)
@@ -64,10 +60,39 @@ public class Hash<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS e
 		buckets = new Buckets<>(
 			nomeDoArquivoDosBuckets,
 			numeroDeRegistrosPorBucket,
-			quantidadeMaximaDeBytesParaAChave,
-			quantidadeMaximaDeBytesParaODado,
 			classeDaChave,
 			classeDoDado);
+	}
+	
+	/**
+	 * Cria uma HashDinamica com capacidade de
+	 * {@link #PADRAO_NUMERO_DE_REGISTROS_POR_BUCKET} registros por bucket.
+	 * 
+	 * @param nomeDoArquivoDoDiretorio Nome do arquivo previamente usado para o diretório.
+	 * @param nomeDoArquivoDosBuckets Nome do arquivo previamente usado para os buckets.
+	 * Caso o arquivo não tenha sido criado ainda, ele será criado com este nome.
+	 * @param classeDaChave Classe da chave. É necessário que a classe tenha um
+	 * construtor sem parâmetros.
+	 * @param classeDoDado Classe do dado. É necessário que a classe tenha um
+	 * construtor sem parâmetros.
+	 * @param funcaoHash Função de dispersão (hash) que será usada para as chaves. É
+	 * importante ressaltar que essa função só precisa gerar valores dispersos, não
+	 * importando o tamanho deles. Não utilize geração de números aleatórios.
+	 */
+	
+	public Hash(
+		String nomeDoArquivoDoDiretorio,
+		String nomeDoArquivoDosBuckets,
+		Class<TIPO_DAS_CHAVES> classeDaChave,
+		Class<TIPO_DOS_DADOS> classeDoDado,
+		Function<TIPO_DAS_CHAVES, Integer> funcaoHash)
+	{
+		this(nomeDoArquivoDoDiretorio,
+			nomeDoArquivoDosBuckets,
+			PADRAO_NUMERO_DE_REGISTROS_POR_BUCKET,
+			classeDaChave,
+			classeDoDado,
+			funcaoHash);
 	}
 	
 	/**

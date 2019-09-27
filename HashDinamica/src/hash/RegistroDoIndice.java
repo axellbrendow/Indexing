@@ -45,8 +45,6 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO
 	 * @param lapide Lapide do registro.
 	 * @param chave Chave do registro.
 	 * @param dado Dado que corresponde à chave.
-	 * @param quantidadeMaximaDeBytesParaAChave Tamanho máximo que a chave pode gastar.
-	 * @param quantidadeMaximaDeBytesParaODado Tamanho máximo que o dado pode gastar.
 	 * @param classeDaChave Construtor da chave. É necessário que a chave tenha um
 	 * construtor sem parâmetros.
 	 * @param classeDoDado Construtor do dado. É necessário que o dado tenha um
@@ -57,16 +55,12 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO
 		char lapide,
 		TIPO_DAS_CHAVES chave,
 		TIPO_DOS_DADOS dado,
-		short quantidadeMaximaDeBytesParaAChave,
-		short quantidadeMaximaDeBytesParaODado,
 		Class<TIPO_DAS_CHAVES> classeDaChave,
 		Class<TIPO_DOS_DADOS> classeDoDado)
 	{
 		this.lapide = lapide;
 		this.chave = chave;
 		this.dado = dado;
-		this.quantidadeMaximaDeBytesParaAChave = quantidadeMaximaDeBytesParaAChave;
-		this.quantidadeMaximaDeBytesParaODado = quantidadeMaximaDeBytesParaODado;
 		this.classeDaChave = classeDaChave;
 		this.classeDoDado = classeDoDado;
 		
@@ -74,9 +68,15 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO
 		{
 			this.construtorDaChave = classeDaChave.getConstructor();
 			this.construtorDoDado = classeDoDado.getConstructor();
+			this.quantidadeMaximaDeBytesParaAChave =
+				(short) this.construtorDaChave.newInstance().obterTamanhoMaximoEmBytes();
+			this.quantidadeMaximaDeBytesParaODado =
+				(short) this.construtorDoDado.newInstance().obterTamanhoMaximoEmBytes();
 		}
 		
-		catch (NoSuchMethodException | SecurityException e)
+		catch (NoSuchMethodException | SecurityException          |
+			InstantiationException   | IllegalAccessException     |
+			IllegalArgumentException | InvocationTargetException e)
 		{
 			e.printStackTrace();
 		}

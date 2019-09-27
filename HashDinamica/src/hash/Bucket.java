@@ -43,8 +43,6 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 	 * @param profundidadeLocal Profundidade local inicial.
 	 * @param numeroDeRegistrosPorBucket Numero de registros por bucket caso o arquivo
 	 * não tenha sido criado ainda.
-	 * @param quantidadeMaximaDeBytesParaAChave Tamanho máximo que a chave pode gastar.
-	 * @param quantidadeMaximaDeBytesParaODado Tamanho máximo que o dado pode gastar.
 	 * @param classeDaChave Classe da chave. É necessário que a classe tenha um
 	 * construtor sem parâmetros.
 	 * @param classeDoDado Classe do dado. É necessário que a classe tenha um
@@ -55,8 +53,6 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 		byte[] bucket,
 		byte profundidadeLocal,
 		int numeroDeRegistrosPorBucket,
-		short quantidadeMaximaDeBytesParaAChave,
-		short quantidadeMaximaDeBytesParaODado,
 		Class<TIPO_DAS_CHAVES> classeDaChave,
 		Class<TIPO_DOS_DADOS> classeDoDado)
 	{
@@ -70,8 +66,6 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 		this.registroDoIndice =
 			new RegistroDoIndice<>(
 				RegistroDoIndice.REGISTRO_DESATIVADO, null, null,
-				quantidadeMaximaDeBytesParaAChave,
-				quantidadeMaximaDeBytesParaODado,
 				classeDaChave,
 				classeDoDado
 			);
@@ -83,8 +77,6 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 	 * @param profundidadeLocal Profundidade local inicial.
 	 * @param numeroDeRegistrosPorBucket Numero de registros por bucket caso o arquivo
 	 * não tenha sido criado ainda.
-	 * @param quantidadeMaximaDeBytesParaAChave Tamanho máximo que a chave pode gastar.
-	 * @param quantidadeMaximaDeBytesParaODado Tamanho máximo que o dado pode gastar.
 	 * @param classeDaChave Classe da chave. É necessário que a classe tenha um
 	 * construtor sem parâmetros.
 	 * @param classeDoDado Classe do dado. É necessário que a classe tenha um
@@ -94,8 +86,6 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 	public Bucket(
 		byte profundidadeLocal,
 		int numeroDeRegistrosPorBucket,
-		short quantidadeMaximaDeBytesParaAChave,
-		short quantidadeMaximaDeBytesParaODado,
 		Class<TIPO_DAS_CHAVES> classeDaChave,
 		Class<TIPO_DOS_DADOS> classeDoDado)
 	{
@@ -104,8 +94,6 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 			null,
 			profundidadeLocal,
 			numeroDeRegistrosPorBucket,
-			quantidadeMaximaDeBytesParaAChave,
-			quantidadeMaximaDeBytesParaODado,
 			classeDaChave,
 			classeDoDado
 		);
@@ -119,8 +107,6 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 	 * 
 	 * @param numeroDeRegistrosPorBucket Numero de registros por bucket caso o arquivo
 	 * não tenha sido criado ainda.
-	 * @param quantidadeMaximaDeBytesParaAChave Tamanho máximo que a chave pode gastar.
-	 * @param quantidadeMaximaDeBytesParaODado Tamanho máximo que o dado pode gastar.
 	 * @param classeDaChave Classe da chave. É necessário que a classe tenha um
 	 * construtor sem parâmetros.
 	 * @param classeDoDado Classe do dado. É necessário que a classe tenha um
@@ -129,16 +115,12 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 	
 	public Bucket(
 		int numeroDeRegistrosPorBucket,
-		short quantidadeMaximaDeBytesParaAChave,
-		short quantidadeMaximaDeBytesParaODado,
 		Class<TIPO_DAS_CHAVES> classeDaChave,
 		Class<TIPO_DOS_DADOS> classeDoDado)
 	{
 		this(
 			PADRAO_PROFUNDIDADE_LOCAL,
 			numeroDeRegistrosPorBucket,
-			quantidadeMaximaDeBytesParaAChave,
-			quantidadeMaximaDeBytesParaODado,
 			classeDaChave,
 			classeDoDado);
 	}
@@ -555,8 +537,6 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 		return new Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>(
 			profundidadeLocal,
 			numeroDeRegistrosPorBucket,
-			registroDoIndice.quantidadeMaximaDeBytesParaAChave,
-			registroDoIndice.quantidadeMaximaDeBytesParaODado,
 			registroDoIndice.classeDaChave,
 			registroDoIndice.classeDoDado
 		);
@@ -582,8 +562,6 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 				Arrays.copyOf(bucket, bucket.length),
 				profundidadeLocal,
 				numeroDeRegistrosPorBucket,
-				registroDoIndice.quantidadeMaximaDeBytesParaAChave,
-				registroDoIndice.quantidadeMaximaDeBytesParaODado,
 				registroDoIndice.classeDaChave,
 				registroDoIndice.classeDoDado
 			);

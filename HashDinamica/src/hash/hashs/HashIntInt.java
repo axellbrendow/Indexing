@@ -39,8 +39,6 @@ public class HashIntInt extends Hash<IntSerializavel, IntSerializavel>
 			nomeDoArquivoDoDiretorio,
 			nomeDoArquivoDosBuckets,
 			numeroDeRegistrosPorBucket,
-			(short) Integer.BYTES,
-			(short) Integer.BYTES,
 			IntSerializavel.class,
 			IntSerializavel.class,
 			funcaoHash
