@@ -3,8 +3,6 @@ import java.io.File;
 import hash.Hash;
 import hash.serializaveis.IntSerializavel;
 
-// classpath: "hash/Hash.java;hash/serializaveis/*;."
-
 public class testSourceEntidade
 {
     public static void main(String[] args)

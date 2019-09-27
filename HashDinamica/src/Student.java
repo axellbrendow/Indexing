@@ -27,7 +27,7 @@ public class Student extends SerializavelAbstract
     @Override
     public int obterTamanhoMaximoEmBytes()
     {
-        // Essa função deve calcular o quanto o id e o nome podem gastar em bytes.
+        // Essa função deve calcular o quanto o id e o name podem gastar em bytes.
         // Dentro da classe StringSerializavel, criei uma constante com o valor 300,
         // pois em casos mais simples, a sua string não gastará mais de 300 bytes.
         // Se a sua string for gastar mais de 300 bytes ou menos, fique a vontade
