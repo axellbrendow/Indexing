@@ -1,11 +1,9 @@
 /* See the project's root for license information. */
 
-package hash.serializaveis;
+package hash;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
-
-import hash.Serializavel;
 
 public class SerializavelHelper
 {

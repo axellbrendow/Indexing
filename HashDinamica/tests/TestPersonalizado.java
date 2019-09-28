@@ -3,7 +3,7 @@ import java.io.File;
 import hash.Hash;
 import hash.serializaveis.IntSerializavel;
 
-public class testSourceEntidade
+public class TestPersonalizado
 {
     public static void main(String[] args)
     {
@@ -15,7 +15,11 @@ public class testSourceEntidade
                 2, // Número de registros por bucket
                 IntSerializavel.class, // Classe da chave dos registros
                 Student.class, // Classe do dado dos registros
-                (chave) -> chave.valor); // Função hash das chaves
+                // Função hash das chaves, recebo uma cache e tenho que retornar um
+                // valor inteiro para ser o código hash dessa chave. Nesse caso, estou
+                // colocando o código hash de uma chave IntSerializavel como o próprio
+                // valor inteiro.
+                (chave) -> chave.valor);
 
         Student s0 = new Student(0, "A0");
         Student s1 = new Student(1, "A1");

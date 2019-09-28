@@ -13,8 +13,9 @@ hash.hashs.HashIntInt
 hash.hashs.HashIntLong
 hash.hashs.HashStringInt
 
-No exemplo que irei dar, usarei string como chave e inteiro como dado:
+Nos dois exemplos com tipos primitivos, usarei string como chave e inteiro como dado e o código abaixo:
 
+Arquivo Test.java
 ```Java
 import java.io.File;
 
@@ -39,100 +40,59 @@ public class HashTest
 
 ```
 
-### 1ª forma de usar, usando diretamente o código fonte:
+### 1ª forma de usar, compilar diretamente o código fonte:
 
 Os passos estão descritos na imagem abaixo:
 
-![Exemplo de código com compilação e execução do código fonte do repositório](https://i.imgur.com/wOOGINf.png)
+![Exemplo de código com compilação e execução do código fonte do repositório](https://i.imgur.com/2YaZVRo.jpg)
 
-Todos os comandos usados (Windows/PowerShell):
+Todos os comandos usados:
 
 ```PowerShell
-echo 'import java.io.File;
+ls  # Dentro da pasta Indexing/HashDinamica/tests já existem os arquivos de teste
 
-import hash.hashs.HashStringInt;
+javac Test.java -classpath "./hash/hashs/*;."  # Compile passando como classpath o caminho das classes que você estiver usando e o caminho do seu .java de teste. No meu caso, estou usando a classe hash.hashs.HashStringInt no código, então o classpath para ela pode ser ./hash/hashs/* que cobre todas as classes dentro dessa pasta. Já o caminho para o meu Test.java é a própria pasta onde estou, daí coloquei o ponto (.). Caso você esteja num sistema unix, troque o ; por : no classpath.
 
-public class test
-{
-    public static void main(String[] args)
-    {
-        new File("diretorio.dir").delete();
-        new File("buckets.db").delete();
+java Test -classpath "./hash/hashs/*;."  # Execute com o mesmo classpath
 
-        HashStringInt hash = new HashStringInt("diretorio.dir", "buckets.db", 2);
-
-        hash.inserir("a", 1);
-        hash.inserir("b", 2);
-        hash.inserir("c", 3);
-
-        System.out.println(hash);
-    }
-}
-' | Out-File -Encoding default test.java  # Envia um código de teste para o arquivo test.java
-
-ls | select Name   # Coloque sua classe .java e a pasta Indexing/HashDinamica/src/hash do meu repositório juntas como abaixo:
-ls .\hash\hashs  # Apenas mostra as classes .java dentro da pasta ./hash/hashs
-
-javac -classpath "./hash/hashs/*;." test.java   <# Compile passando como classpath o caminho da pasta hash e o caminho do seu .java.
-
-No meu caso, o .java está no próprio diretório onde estou, por isso usei o . (ponto). Caso você esteja num sistema unix, troque o ; (ponto e vírgula) por : (dois pontos) no classpath. #>
-
-java -classpath "./hash/hashs/*;." test   # Execute sua classe com o mesmo classpath de compilação
 ```
 
 
-### 2ª forma de usar, usando o arquivo hash.jar:
+### 2ª forma de usar, compilar usando o arquivo hash.jar:
 
 Primeiro, [baixe o arquivo hash.jar](https://github.com/axell-brendow/Indexing/raw/master/HashDinamica/hash.jar).
 
+A versão do Java usada para criar o arquivo hash.jar é menor ou igual a 10. Caso você tenha problemas ao usá-lo, recomendo compilar diretamente o código fonte como foi mostrado na 1ª forma.
+
 Os próximos passos estão descritos nas imagens a abaixo:
 
-![Exemplo de código com compilação e execução](https://i.imgur.com/VcqsxoW.png)
+![Exemplo de código com compilação e execução](https://i.imgur.com/07BIMQ3.jpg)
 
-Caso você não queira deixar o hash.jar na mesma pasta que a sua classe java, você pode seguir estes passos que são uma continuação da primeira imagem:
-
-![Compilação e execução com o .jar na pasta lib](https://i.imgur.com/WgV4c0J.png)
-
-Todos os comandos usados (Windows/PowerShell):
+Todos os comandos usados:
 
 ```PowerShell
-echo 'import java.io.File;
+ls  # Dentro da pasta Indexing/HashDinamica/tests já existem os arquivos de teste
 
-import hash.hashs.HashStringInt;
+javac -classpath hash.jar Test.java  # Compile passando como classpath o caminho de hash.jar e o do seu .java de teste. O caminho para o meu Test.java é a própria pasta onde estou, daí coloquei o ponto (.). Caso você esteja num sistema unix, troque o ; por : no classpath.
 
-public class test
-{
-    public static void main(String[] args)
-    {
-        new File("diretorio.dir").delete();
-        new File("buckets.db").delete();
+java -classpath hash.jar Test  # Execute com o mesmo classpath
 
-        HashStringInt hash = new HashStringInt("diretorio.dir", "buckets.db", 2);
+```
 
-        hash.inserir("a", 1);
-        hash.inserir("b", 2);
-        hash.inserir("c", 3);
+Caso você não queira deixar o hash.jar na mesma pasta que a sua classe java, você pode seguir estes passos:
 
-        System.out.println(hash);
-    }
-}
-' | Out-File -Encoding default test.java  # Envia um código de teste para o arquivo test.java
+![Compilação e execução com o .jar na pasta lib](https://i.imgur.com/4dT4fqX.jpg)
 
-ls | select Name   # Coloque sua classe .java e o arquivo hash.jar na mesma pasta como abaixo:
-javac -classpath hash.jar test.java   # Compile passando como classpath o caminho de hash.jar
+Todos os comandos usados:
 
-java -classpath hash.jar test   # Execute sua classe com o mesmo classpath de compilação
-ls | select Name   # Estado do diretório depois da compilação e execução
-mkdir lib > $null   # Cria a pasta lib
+```PowerShell
+ls  # Dentro da pasta Indexing/HashDinamica/tests já existem os arquivos de teste
+ls lib  # Exemplo com o hash.jar dentro da pasta lib
 
-mv .\hash.jar .\lib\hash.jar   # Move hash.jar para ela
+javac -classpath "./lib/*;." Test.java  # Compile passando como classpath o caminho de hash.jar e o do seu .java de teste. O caminho para o meu Test.java é a própria pasta onde estou, daí coloquei o ponto (.). Caso você esteja num sistema unix, troque o ; por : no classpath.
 
-tree /f   # Mostra a organização dos arquivos
-javac -classpath ".\lib\*;." test.java   <# Compile passando como classpath o caminho de hash.jar e o caminho do seu .java.
+java -classpath "./lib/*;." Test  # Execute com o mesmo classpath
 
-No meu caso, o .java está no próprio diretório onde estou, por isso usei o . (ponto). Caso você esteja num sistema unix, troque o ; (ponto e vírgula) por : (dois pontos) no classpath. #>
-
-java -classpath ".\lib\*;." test   # Execute sua classe com o mesmo classpath de compilação
 ```
 
 
@@ -147,14 +107,14 @@ Dessa forma, para cada tipo primitivo, float, int, long e para as strings, preci
 - LongSerializavel
 - StringSerializavel
 
-Analogamente, para usar a Hash com uma classe sua, é preciso que ela herde a classe hash.serializaveis.SerializavelAbstract e implemente 4 métodos que tornarão sua classe serializável:
+Analogamente, para usar a Hash com uma classe sua, é preciso que a classe implemente a interface hash.Serializavel e seus 4 métodos. Isso tornará sua classe serializável:
 
-- O primeiro deles, obterTamanhoMaximoEmBytes(), é um método os você dirá qual é o tamanho máximo que a sua classe pode gastar em bytes juntando todos os campos internos que você for salvar em arquivo.
+- O primeiro deles, obterTamanhoMaximoEmBytes(), é um método onde você dirá qual é o tamanho máximo que a sua classe pode gastar em bytes juntando todos os campos internos que você for salvar em arquivo.
 - O segundo é o obterBytes() onde você deve gerar um byte[] com os bytes da sua entidade.
 - O terceiro é o lerBytes(byte[]) onde você receberá um byte[] e você deve lê-lo decodificando-o e atribuindo os campos internos da sua entidade.
 - O quarto é o toString() onde você deve gerar um representação textual do seu objeto. Esse método é necessário para comparar se dois objetos da sua classe são iguais. Se dois objetos gerarem a mesma string, eles serão iguais.
 
-Por algumas limitações do Java e pela construção da Hash, a classe do seu objeto deve ser pública. Isso obriga também que ela tenha um arquivo .java só para ela. Irei dar um exemplo com a classe Student abaixo:
+Por algumas limitações do Java e por necessidades da Hash, a classe do seu objeto deve ser pública. Isso obriga também que ela tenha um arquivo .java só para ela. Irei dar um exemplo com a classe Student abaixo:
 
 Código de teste:
 
@@ -168,9 +128,9 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import hash.serializaveis.SerializavelAbstract;
+import hash.Serializavel;
 
-public class Student extends SerializavelAbstract
+public class Student implements Serializavel
 {
     int id;
     String name;
@@ -242,20 +202,20 @@ public class Student extends SerializavelAbstract
     @Override
     public String toString()
     {
-        return "{id: " + id + ", nome: " + name + "}";
+        return "{id: " + id + ", name: " + name + "}";
     }
 }
 
 ```
 
-Arquivo principal testSourceEntidade.java
+Arquivo principal TestPersonalizado.java
 ```Java
 import java.io.File;
 
 import hash.Hash;
 import hash.serializaveis.IntSerializavel;
 
-public class testSourceEntidade
+public class testPersonalizado
 {
     public static void main(String[] args)
     {
@@ -267,7 +227,11 @@ public class testSourceEntidade
                 2, // Número de registros por bucket
                 IntSerializavel.class, // Classe da chave dos registros
                 Student.class, // Classe do dado dos registros
-                (chave) -> chave.valor); // Função hash das chaves
+                // Função hash das chaves, recebo uma cache e tenho que retornar um
+                // valor inteiro para ser o código hash dessa chave. Nesse caso, estou
+                // colocando o código hash de uma chave IntSerializavel como o próprio
+                // valor inteiro.
+                (chave) -> chave.valor);
 
         Student s0 = new Student(0, "A0");
         Student s1 = new Student(1, "A1");
@@ -283,16 +247,17 @@ public class testSourceEntidade
 
 ```
 
-#### Rodando o código:
+Exemplo rodando:
 
-Todos os comandos usados (Windows/PowerShell):
+![Exemplo de código com compilação e execução com classe personalizada](https://i.imgur.com/em7HGhP.jpg)
+
+Todos os comandos usados:
 
 ```PowerShell
-ls | select Name   # Coloque sua classe .java e o arquivo hash.jar na mesma pasta como abaixo:
+ls  # Dentro da pasta Indexing/HashDinamica/tests já existem os arquivos de teste
 
-javac -classpath "hash/Hash.java;hash/serializaveis/*;." testSourceEntidade.java   <# Compile passando como classpath o caminho de hash.jar e o caminho do seu .java.
+javac TestPersonalizado.java -classpath "./hash/*;hash/serializaveis/*;."  # Compile passando como classpath o caminho das classes que você estiver usando e o caminho do seu .java de teste. No meu caso, estou usando a classe hash.hashs.HashStringInt no código, então o classpath para ela pode ser ./hash/hashs/* que cobre todas as classes dentro dessa pasta. Já o caminho para o meu TestPersonalizado.java é a própria pasta onde estou, daí coloquei o ponto (.). Caso você esteja num sistema unix, troque o ; por : no classpath.
 
-No meu caso, o .java está no próprio diretório onde estou, por isso usei o . (ponto). Caso você esteja num sistema unix, troque o ; (ponto e vírgula) por : (dois pontos) no classpath. #>
+java TestPersonalizado -classpath "./hash/*;hash/serializaveis/*;."  # Execute com o mesmo classpath
 
-java -classpath "hash/Hash.java;hash/serializaveis/*;." testSourceEntidade   # Execute sua classe com o mesmo classpath de compilação
 ```
