@@ -40,7 +40,7 @@ public class Test
 
 ```
 
-### 1ª forma de usar, compilar diretamente o código fonte:
+#### 1ª forma de usar, compilar diretamente o código fonte:
 
 Os passos estão descritos na imagem abaixo:
 
@@ -58,7 +58,7 @@ java Test -classpath "./hash/hashs/*;."  # Execute com o mesmo classpath
 ```
 
 
-### 2ª forma de usar, compilar usando o arquivo hash.jar:
+#### 2ª forma de usar, compilar usando o arquivo hash.jar:
 
 Primeiro, [baixe o arquivo hash.jar](https://github.com/axell-brendow/Indexing/raw/master/HashDinamica/hash.jar).
 
@@ -100,14 +100,14 @@ java -classpath "./lib/*;." Test  # Execute com o mesmo classpath
 
 Antes de tudo, a Hash trabalha com chaves e dados [serializáveis](https://www.devmedia.com.br/serializacao-de-objetos-em-java/23413), ou seja, a chave e o dado dos registros devem ser capazes de gerar seus próprios bytes e de informar qual é a quantidade máxima de bytes que podem gastar.
 
-Dessa forma, para cada tipo primitivo, float, int, long e para as strings, precisei criar classes que os tornam objetos serializáveis. Essas classes se encontram no pacote hash.serializaveis e são elas:
+Dessa forma, para cada tipo primitivo, float, int, long e para as strings, precisei criar uma classe que o torna um objeto serializáveis. Essas classes se encontram no pacote hash.serializável e são elas:
 
 - FloatSerializavel
 - IntSerializavel
 - LongSerializavel
 - StringSerializavel
 
-Analogamente, para usar a Hash com uma classe sua, é preciso que a classe implemente a interface hash.Serializavel e seus 4 métodos. Isso tornará sua classe serializável:
+Analogamente, para usar a Hash com uma classe sua, é preciso que a sua classe implemente a interface hash.Serializavel e seus 4 métodos. Isso tornará sua classe serializável:
 
 - O primeiro deles, obterTamanhoMaximoEmBytes(), é um método onde você dirá qual é o tamanho máximo que a sua classe pode gastar em bytes juntando todos os campos internos que você for salvar em arquivo.
 - O segundo é o obterBytes() onde você deve gerar um byte[] com os bytes da sua entidade.
@@ -227,7 +227,7 @@ public class testPersonalizado
                 2, // Número de registros por bucket
                 IntSerializavel.class, // Classe da chave dos registros
                 Student.class, // Classe do dado dos registros
-                // Função hash das chaves, recebo uma cache e tenho que retornar um
+                // Função hash das chaves. Recebo uma cache e tenho que retornar um
                 // valor inteiro para ser o código hash dessa chave. Nesse caso, estou
                 // colocando o código hash de uma chave IntSerializavel como o próprio
                 // valor inteiro.
