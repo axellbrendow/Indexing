@@ -63,7 +63,7 @@ Primeiro, [baixe o arquivo hash.jar](https://github.com/axell-brendow/Indexing/r
 
 Caso você use uma IDE, pesquise sobre "Add external jar <SUA_IDE>" para incluir a hash em seu projeto.
 
-A versão do Java usada para criar o arquivo hash.jar é menor ou igual a 10. Caso você tenha problemas ao usá-lo, recomendo compilar diretamente o código fonte como foi mostrado na 1ª forma.
+A versão do Java usada para criar o arquivo hash.jar é menor ou igual a 10. Caso você tenha problemas ao usá-lo, recomendo compilar diretamente o código fonte como foi mostrado na 1ª forma ou, caso você use uma IDE, basta copiar a pasta hash para a pasta src do seu projeto e dar um clean ou rebuild nele.
 
 Os próximos passos estão descritos nas imagens a abaixo:
 
