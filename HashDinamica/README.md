@@ -5,7 +5,6 @@ Implementação da Hash Dinâmica, estrutura de dados para indexamento, em Java.
 
 Encontre [aqui a documentação da hash](https://htmlpreview.github.io/?https://raw.githubusercontent.com/axell-brendow/Indexing/master/HashDinamica/doc/overview-summary.html).
 
-
 ### Usando a Hash com tipos primitivos
 
 Há algumas classes prontas para uso da hash com tipos primitivos:
@@ -61,6 +60,8 @@ java Test -classpath "./hash/hashs/*;."  # Execute com o mesmo classpath
 #### 2ª forma de usar, compilar usando o arquivo hash.jar:
 
 Primeiro, [baixe o arquivo hash.jar](https://github.com/axell-brendow/Indexing/raw/master/HashDinamica/hash.jar).
+
+Caso você use uma IDE, pesquise sobre "Add external jar <SUA_IDE>" para incluir a hash em seu projeto.
 
 A versão do Java usada para criar o arquivo hash.jar é menor ou igual a 10. Caso você tenha problemas ao usá-lo, recomendo compilar diretamente o código fonte como foi mostrado na 1ª forma.
 
