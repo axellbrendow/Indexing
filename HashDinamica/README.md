@@ -8,20 +8,20 @@ Encontre [aqui a documentação da hash](https://htmlpreview.github.io/?https://
 
 ### Usando a Hash com tipos primitivos
 
-Há algumas classes da hash prontas para uso com tipos primitivos:
-hash.hashs.HashIntInt
-hash.hashs.HashIntLong
-hash.hashs.HashStringInt
+Há algumas classes prontas para uso da hash com tipos primitivos:
 
-Nos dois exemplos com tipos primitivos, usarei string como chave e inteiro como dado e o código abaixo:
+- hash.hashs.HashIntInt
+- hash.hashs.HashIntLong
+- hash.hashs.HashStringInt
+
+Nos dois exemplos com tipos primitivos, usarei string como chave e inteiro como dado:
 
 Arquivo Test.java
 ```Java
 import java.io.File;
-
 import hash.hashs.HashStringInt;
 
-public class HashTest
+public class Test
 {
     public static void main(String[] args)
     {
