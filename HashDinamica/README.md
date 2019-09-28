@@ -101,7 +101,7 @@ java -classpath "./lib/*;." Test  # Execute com o mesmo classpath
 
 Antes de tudo, a Hash trabalha com chaves e dados [serializáveis](https://www.devmedia.com.br/serializacao-de-objetos-em-java/23413), ou seja, a chave e o dado dos registros devem ser capazes de gerar seus próprios bytes e de informar qual é a quantidade máxima de bytes que podem gastar.
 
-Dessa forma, para cada tipo primitivo, float, int, long e para as strings, precisei criar uma classe que o torna um objeto serializáveis. Essas classes se encontram no pacote hash.serializável e são elas:
+Dessa forma, para cada tipo primitivo, float, int, long e para as strings, precisei criar uma classe que os tornam objetos serializáveis. Essas classes se encontram no pacote hash.serializável e são elas:
 
 - FloatSerializavel
 - IntSerializavel
@@ -115,7 +115,7 @@ Analogamente, para usar a Hash com uma classe sua, é preciso que a sua classe i
 - O terceiro é o lerBytes(byte[]) onde você receberá um byte[] e você deve lê-lo decodificando-o e atribuindo os campos internos da sua entidade.
 - O quarto é o toString() onde você deve gerar um representação textual do seu objeto. Esse método é necessário para comparar se dois objetos da sua classe são iguais. Se dois objetos gerarem a mesma string, eles serão iguais.
 
-Por algumas limitações do Java e por necessidades da Hash, a classe do seu objeto deve ser pública. Isso obriga também que ela tenha um arquivo .java só para ela. Irei dar um exemplo com a classe Student abaixo:
+Por algumas limitações do Java e por necessidades da Hash, **a classe do seu objeto deve ter um construtor sem parâmetros e deve ser pública**. Isso obriga também que ela tenha um arquivo .java só para ela. Irei dar um exemplo com a classe Student abaixo:
 
 Código de teste:
 
@@ -142,7 +142,7 @@ public class Student implements Serializavel
         this.name = name;
     }
 
-    public Student()
+    public Student() // É OBRIGATÓRIO QUE SUA CLASSE TENHA UM CONSTRUTOR SEM PARÂMETROS
     {
         this(-1, "hello");
     }
@@ -216,7 +216,7 @@ import java.io.File;
 import hash.Hash;
 import hash.serializaveis.IntSerializavel;
 
-public class testPersonalizado
+public class TestPersonalizado
 {
     public static void main(String[] args)
     {
@@ -228,7 +228,7 @@ public class testPersonalizado
                 2, // Número de registros por bucket
                 IntSerializavel.class, // Classe da chave dos registros
                 Student.class, // Classe do dado dos registros
-                // Função hash das chaves. Recebo uma cache e tenho que retornar um
+                // Função hash das chaves, recebo uma cache e tenho que retornar um
                 // valor inteiro para ser o código hash dessa chave. Nesse caso, estou
                 // colocando o código hash de uma chave IntSerializavel como o próprio
                 // valor inteiro.

@@ -19,7 +19,7 @@ public class Student implements Serializavel
         this.name = name;
     }
 
-    public Student()
+    public Student() // É OBRIGATÓRIO QUE SUA CLASSE TENHA UM CONSTRUTOR SEM PARÂMETROS
     {
         this(-1, "hello");
     }
