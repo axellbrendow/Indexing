@@ -8,7 +8,9 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class LongSerializavel extends SerializavelAbstract
+import hash.Serializavel;
+
+public class LongSerializavel implements Serializavel
 {
 	public long valor;
 	

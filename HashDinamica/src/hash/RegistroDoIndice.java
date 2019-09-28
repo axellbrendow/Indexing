@@ -11,7 +11,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 
-import hash.serializaveis.SerializavelAbstract;
+import hash.Serializavel;
 
 /**
  * Classe utilitária para manusear os registros de indices em um bucket.
@@ -24,7 +24,7 @@ import hash.serializaveis.SerializavelAbstract;
  * @param <TIPO_DOS_DADOS> Classe do dado.
  */
 
-public class RegistroDoIndice<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS extends SerializavelAbstract> extends SerializavelAbstract
+public class RegistroDoIndice<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends Serializavel> implements Serializavel
 {
 	public static final char REGISTRO_ATIVADO = ' ';
 	public static final char REGISTRO_DESATIVADO = '*';

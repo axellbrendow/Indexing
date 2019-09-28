@@ -5,7 +5,7 @@ package hash;
 import java.util.ArrayList;
 import java.util.function.Function;
 
-import hash.serializaveis.SerializavelAbstract;
+import hash.Serializavel;
 import hash.util.IO;
 
 /**
@@ -17,7 +17,7 @@ import hash.util.IO;
  * @param <TIPO_DOS_DADOS> Classe do dado.
  */
 
-public class Hash<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS extends SerializavelAbstract>
+public class Hash<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends Serializavel>
 {
 	public static final int PADRAO_NUMERO_DE_REGISTROS_POR_BUCKET = 21;
 	

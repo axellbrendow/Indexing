@@ -8,7 +8,9 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class StringSerializavel extends SerializavelAbstract
+import hash.Serializavel;
+
+public class StringSerializavel implements Serializavel
 {
 	public static final int PADRAO_TAMANHO_MAXIMO_EM_BYTES = 300;
 	

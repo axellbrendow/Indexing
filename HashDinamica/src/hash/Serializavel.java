@@ -14,11 +14,9 @@ package hash;
 public interface Serializavel
 {
 	/**
-	 * Calcula a quantidade máxima de bytes que o
-	 * objeto pode gastar.
+	 * Calcula a quantidade máxima de bytes que o objeto pode gastar.
 	 * 
-	 * @return a quantidade máxima de bytes que o
-	 * objeto pode gastar.
+	 * @return a quantidade máxima de bytes que o objeto pode gastar.
 	 */
 	
 	int obterTamanhoMaximoEmBytes();
@@ -32,8 +30,7 @@ public interface Serializavel
 	byte[] obterBytes();
 	
 	/**
-	 * Lê os bytes do vetor atribuindo os campos internos da
-	 * entidade.
+	 * Lê os bytes do vetor atribuindo os campos internos da entidade.
 	 * 
 	 * @param bytes Vetor com os bytes do objeto.
 	 */

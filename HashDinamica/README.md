@@ -140,7 +140,12 @@ java -classpath ".\lib\*;." test   # Execute sua classe com o mesmo classpath de
 
 Antes de tudo, a Hash trabalha com chaves e dados [serializáveis](https://www.devmedia.com.br/serializacao-de-objetos-em-java/23413), ou seja, a chave e o dado dos registros devem ser capazes de gerar seus próprios bytes e de informar qual é a quantidade máxima de bytes que podem gastar.
 
-Dessa forma, para cada tipo primitivo, float, int, long e para as strings, precisei criar classes que os tornam objetos serializáveis. Essas classes se encontram no pacote hash.serializaveis e para construi-las basta passar o valor do primitivo em seus construtores.
+Dessa forma, para cada tipo primitivo, float, int, long e para as strings, precisei criar classes que os tornam objetos serializáveis. Essas classes se encontram no pacote hash.serializaveis e são elas:
+
+- FloatSerializavel
+- IntSerializavel
+- LongSerializavel
+- StringSerializavel
 
 Analogamente, para usar a Hash com uma classe sua, é preciso que ela herde a classe hash.serializaveis.SerializavelAbstract e implemente 4 métodos que tornarão sua classe serializável:
 

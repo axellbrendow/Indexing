@@ -7,7 +7,7 @@ import java.io.RandomAccessFile;
 
 import hash.Serializavel;
 
-public abstract class SerializavelAbstract implements Serializavel
+public class SerializavelHelper
 {
 	/**
 	 * Escreve os bytes do objeto na {@code correnteDeSaida}
@@ -16,11 +16,11 @@ public abstract class SerializavelAbstract implements Serializavel
 	 * @param correnteDeSaida Corrente de saída dos bytes.
 	 */
 	
-	public void escreverObjeto(RandomAccessFile correnteDeSaida)
+	public static void escreverObjeto(Serializavel serializavel, RandomAccessFile correnteDeSaida)
 	{
 		try
 		{
-			correnteDeSaida.write(obterBytes());
+			correnteDeSaida.write(serializavel.obterBytes());
 		}
 		
 		catch (IOException ioex)
@@ -36,15 +36,15 @@ public abstract class SerializavelAbstract implements Serializavel
 	 * @param correnteDeEntrada Corrente de entrada dos bytes.
 	 */
 	
-	public void lerObjeto(RandomAccessFile correnteDeEntrada)
+	public static void lerObjeto(Serializavel serializavel, RandomAccessFile correnteDeEntrada)
 	{
 		try
 		{
-			byte[] registro = new byte[obterTamanhoMaximoEmBytes()];
+			byte[] registro = new byte[serializavel.obterTamanhoMaximoEmBytes()];
 			
 			correnteDeEntrada.read(registro);
 			
-			lerBytes(registro);
+			serializavel.lerBytes(registro);
 		}
 		
 		catch (IOException ioex)
@@ -61,9 +61,9 @@ public abstract class SerializavelAbstract implements Serializavel
 	 * @param deslocamento Deslocamento em relação ao início.
 	 */
 	
-	public void escreverObjeto(byte[] correnteDeSaida, int deslocamento)
+	public static void escreverObjeto(Serializavel serializavel, byte[] correnteDeSaida, int deslocamento)
 	{
-		byte[] bytes = obterBytes();
+		byte[] bytes = serializavel.obterBytes();
 		
 		System.arraycopy(bytes, 0, correnteDeSaida, deslocamento, bytes.length);
 	}
@@ -76,7 +76,7 @@ public abstract class SerializavelAbstract implements Serializavel
 	 * @param deslocamento Deslocamento em relação ao início.
 	 */
 	
-	public void lerBytes(byte[] bytes, int deslocamento)
+	public static void lerBytes(Serializavel serializavel, byte[] bytes, int deslocamento)
 	{
 		if (bytes != null)
 		{
@@ -88,7 +88,7 @@ public abstract class SerializavelAbstract implements Serializavel
 				
 				System.arraycopy(bytes, deslocamento, bytesAproveitaveis, 0, restante);
 				
-				lerBytes(bytesAproveitaveis);
+				serializavel.lerBytes(bytesAproveitaveis);
 			}
 		}
 	}

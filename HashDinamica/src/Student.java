@@ -6,9 +6,9 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import hash.serializaveis.SerializavelAbstract;
+import hash.Serializavel;
 
-public class Student extends SerializavelAbstract
+public class Student implements Serializavel
 {
     int id;
     String name;

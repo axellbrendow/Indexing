@@ -7,7 +7,7 @@ import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.function.BiFunction;
 
-import hash.serializaveis.SerializavelAbstract;
+import hash.serializaveis.SerializavelHelper;
 import hash.util.IO;
 
 /**
@@ -19,7 +19,7 @@ import hash.util.IO;
  * @param <TIPO_DOS_DADOS> Classe do dado.
  */
 
-public class Buckets<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS extends SerializavelAbstract>
+public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends Serializavel>
 {
 	/**
 	 * O cabeçalho do arquivo dos buckets é a quantidade de registros por bucket (int).
@@ -199,7 +199,7 @@ public class Buckets<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADO
 		{
 			arquivoDosBuckets.seek(enderecoDoBucket);
 			
-			bucket.lerObjeto(arquivoDosBuckets);
+			SerializavelHelper.lerObjeto(bucket, arquivoDosBuckets);
 			
 			dados = bucket.listarDadosComAChave(chave);
 		}
@@ -231,7 +231,7 @@ public class Buckets<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADO
 		{
 			enderecoDoBucket = arquivoDosBuckets.length();
 			arquivoDosBuckets.seek(enderecoDoBucket);
-			bucket.escreverObjeto(arquivoDosBuckets);
+			SerializavelHelper.escreverObjeto(bucket, arquivoDosBuckets);
 		}
 		
 		catch (IOException e)
@@ -259,13 +259,13 @@ public class Buckets<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADO
 		try
 		{
 			arquivoDosBuckets.seek(enderecoDoBucket);
-			bucket.lerObjeto(arquivoDosBuckets);
+			SerializavelHelper.lerObjeto(bucket, arquivoDosBuckets);
 			
 			bucketExcluido = bucket.clone();
 			bucket = bucket.criarBucket(bucket.profundidadeLocal);
 			
 			arquivoDosBuckets.seek(enderecoDoBucket);
-			bucket.escreverObjeto(arquivoDosBuckets);
+			SerializavelHelper.escreverObjeto(bucket, arquivoDosBuckets);
 		}
 		
 		catch (IOException e)
@@ -319,8 +319,8 @@ public class Buckets<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADO
 			try
 			{
 				arquivoDosBuckets.seek(enderecoDoBucket);
-				
-				bucket.lerObjeto(arquivoDosBuckets);
+
+				SerializavelHelper.lerObjeto(bucket, arquivoDosBuckets);
 				
 				dado = pesquisarDadoPelaChave(chave, bucket);
 			}
@@ -377,8 +377,8 @@ public class Buckets<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADO
 			try
 			{
 				arquivoDosBuckets.seek(enderecoDoBucket);
-				
-				bucket.lerObjeto(arquivoDosBuckets);
+
+				SerializavelHelper.lerObjeto(bucket, arquivoDosBuckets);
 				
 				chave = pesquisarChavePeloDado(dado, bucket);
 			}
@@ -438,15 +438,15 @@ public class Buckets<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADO
 			try
 			{
 				arquivoDosBuckets.seek(enderecoDoBucket);
-				
-				bucket.lerObjeto(arquivoDosBuckets);
+
+				SerializavelHelper.lerObjeto(bucket, arquivoDosBuckets);
 				
 				resultado = excluir(chave, dado, bucket);
 				
 				if (resultado == true) // excluído com sucesso
 				{
 					arquivoDosBuckets.seek(enderecoDoBucket);
-					bucket.escreverObjeto(arquivoDosBuckets);
+					SerializavelHelper.escreverObjeto(bucket, arquivoDosBuckets);
 				}
 			}
 			
@@ -501,8 +501,8 @@ public class Buckets<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADO
 			try
 			{
 				arquivoDosBuckets.seek(enderecoDoBucket);
-				
-				bucket.lerObjeto(arquivoDosBuckets);
+
+				SerializavelHelper.lerObjeto(bucket, arquivoDosBuckets);
 				
 				resultado = true;
 			}
@@ -540,7 +540,7 @@ public class Buckets<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADO
 				try
 				{
 					arquivoDosBuckets.seek(enderecoDoBucket);
-					bucket.escreverObjeto(arquivoDosBuckets);
+					SerializavelHelper.escreverObjeto(bucket, arquivoDosBuckets);
 				}
 				
 				catch (IOException e)
@@ -572,7 +572,7 @@ public class Buckets<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADO
 			try
 			{
 				arquivoDosBuckets.seek(enderecoDoBucket);
-				bucket.escreverObjeto(arquivoDosBuckets);
+				SerializavelHelper.escreverObjeto(bucket, arquivoDosBuckets);
 				resultado = true;
 			}
 			
@@ -641,15 +641,15 @@ public class Buckets<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADO
 			try
 			{
 				arquivoDosBuckets.seek(enderecoDoBucket);
-				
-				bucket.lerObjeto(arquivoDosBuckets);
+
+				SerializavelHelper.lerObjeto(bucket, arquivoDosBuckets);
 				
 				resultado = inserir(chave, dado, bucket);
 				
 				if (resultado == -1) // inserido com sucesso
 				{
 					arquivoDosBuckets.seek(enderecoDoBucket);
-					bucket.escreverObjeto(arquivoDosBuckets);
+					SerializavelHelper.escreverObjeto(bucket, arquivoDosBuckets);
 				}
 				
 				else if (resultado > -1) // bucket cheio
@@ -657,7 +657,7 @@ public class Buckets<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADO
 					// aumenta a profundidade local
 					bucket.atribuirProfundidadeLocal( (byte) (resultado + 1) );
 					arquivoDosBuckets.seek(enderecoDoBucket);
-					bucket.escreverObjeto(arquivoDosBuckets);
+					SerializavelHelper.escreverObjeto(bucket, arquivoDosBuckets);
 				}
 			}
 			
@@ -703,7 +703,7 @@ public class Buckets<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADO
 				
 				while (condicao == 0 && deslocamento < tamanhoDoArquivoDosBuckets)
 				{
-					bucket.lerObjeto(arquivoDosBuckets);
+					SerializavelHelper.lerObjeto(bucket, arquivoDosBuckets);
 					
 					condicao = metodo.apply(bucket, deslocamento);
 					

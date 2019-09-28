@@ -7,7 +7,7 @@ import java.io.RandomAccessFile;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import hash.serializaveis.SerializavelAbstract;
+import hash.Serializavel;
 import hash.util.IO;
 
 /**
@@ -18,7 +18,7 @@ import hash.util.IO;
  * @param <TIPO_DAS_CHAVES> Classe da chave.
  */
 
-public class Diretorio<TIPO_DAS_CHAVES extends SerializavelAbstract>
+public class Diretorio<TIPO_DAS_CHAVES extends Serializavel>
 {
 	// bytes para a profundidade global
 	private static final int DESLOCAMENTO_CABECALHO = Byte.BYTES;

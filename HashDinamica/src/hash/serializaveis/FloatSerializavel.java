@@ -8,7 +8,9 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class FloatSerializavel extends SerializavelAbstract
+import hash.Serializavel;
+
+public class FloatSerializavel implements Serializavel
 {
 	public float valor;
 	

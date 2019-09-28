@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.function.BiFunction;
 
 import hash.RegistroDoIndice;
-import hash.serializaveis.SerializavelAbstract;
+import hash.serializaveis.SerializavelHelper;
 
 /**
  * Classe que gerencia um bucket específico.
@@ -22,7 +22,7 @@ import hash.serializaveis.SerializavelAbstract;
  * @param <TIPO_DOS_DADOS> Classe do dado.
  */
 
-public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS extends SerializavelAbstract> extends SerializavelAbstract
+public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends Serializavel> implements Serializavel
 {
 	// o cabeçalho do bucket é apenas a profundidade local até o momento
 	public static final int DESLOCAMENTO_CABECALHO = Byte.BYTES;
@@ -201,8 +201,8 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 	protected RegistroDoIndice<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 		obterRegistro(int indiceDoBucket)
 	{
-		registroDoIndice.lerBytes(bucket,
-			DESLOCAMENTO_CABECALHO + indiceDoBucket * registroDoIndice.obterTamanhoMaximoEmBytes());
+		SerializavelHelper.lerBytes(registroDoIndice, bucket,
+				DESLOCAMENTO_CABECALHO + indiceDoBucket * registroDoIndice.obterTamanhoMaximoEmBytes());
 		
 		return registroDoIndice;
 	}
@@ -235,7 +235,7 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 			
 			for (int i = 0; condicao == 0 && i < numeroDeRegistrosPorBucket; i++)
 			{
-				registroDoIndice.lerBytes(bucket, deslocamento);
+				SerializavelHelper.lerBytes(registroDoIndice, bucket, deslocamento);
 				
 				condicao = metodo.apply(registroDoIndice, deslocamento);
 				
@@ -352,7 +352,7 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 		
 		if (enderecoDoRegistro > 0)
 		{
-			registroDoIndice.lerBytes(bucket, enderecoDoRegistro);
+			SerializavelHelper.lerBytes(registroDoIndice, bucket, enderecoDoRegistro);
 			dado = registroDoIndice.dado;
 		}
 		
@@ -376,7 +376,7 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 		
 		if (enderecoDoRegistro > 0)
 		{
-			registroDoIndice.lerBytes(bucket, enderecoDoRegistro);
+			SerializavelHelper.lerBytes(registroDoIndice, bucket, enderecoDoRegistro);
 			chave = registroDoIndice.chave;
 		}
 		
@@ -480,8 +480,8 @@ public class Bucket<TIPO_DAS_CHAVES extends SerializavelAbstract, TIPO_DOS_DADOS
 						registro.lapide = RegistroDoIndice.REGISTRO_ATIVADO;
 						registro.chave = chave;
 						registro.dado = dado;
-						
-						registro.escreverObjeto(bucket, deslocamento);
+
+						SerializavelHelper.escreverObjeto(registroDoIndice, bucket, deslocamento);
 						status = -1; // término com êxito, registro inserido
 					}
 					
