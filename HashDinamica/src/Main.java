@@ -9,13 +9,13 @@ public class Main
 	
 	public static void hashStringInt()
 	{
-        Hash<String, Integer> hash = new Hash<>(
-            NOME_DO_ARQUIVO_DO_DIRETORIO,
-            NOME_DO_ARQUIVO_DOS_BUCKETS,
-            4, // número de registros por bucket
-            String.class,
-            Integer.class
-        );
+		Hash<String, Integer> hash = new Hash<>(
+			NOME_DO_ARQUIVO_DO_DIRETORIO,
+			NOME_DO_ARQUIVO_DOS_BUCKETS,
+			4, // número de registros por bucket
+			String.class,
+			Integer.class
+		);
 
 		hash.inserir("A", 2);
 		hash.inserir("A", 3);
