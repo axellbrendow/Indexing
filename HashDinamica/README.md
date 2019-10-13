@@ -108,7 +108,7 @@ Dessa forma, para cada tipo primitivo, float, int, long e para as strings, preci
 - LongSerializavel
 - StringSerializavel
 
-Analogamente, para usar a Hash com uma classe sua, é preciso que a sua classe implemente a interface hash.Serializavel e seus 4 métodos. Isso tornará sua classe serializável:
+Analogamente, para usar a Hash com uma classe sua, é preciso que a sua classe implemente a interface Serializavel e seus 4 métodos. Isso tornará sua classe serializável:
 
 - O primeiro deles, obterTamanhoMaximoEmBytes(), é um método onde você dirá qual é o tamanho máximo que a sua classe pode gastar em bytes juntando todos os campos internos que você for salvar em arquivo.
 - O segundo é o obterBytes() onde você deve gerar um byte[] com os bytes da sua entidade.
@@ -128,8 +128,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-
-import hash.Serializavel;
 
 public class Student implements Serializavel
 {
@@ -213,7 +211,6 @@ Arquivo principal TestPersonalizado.java
 ```Java
 import java.io.File;
 
-import hash.Hash;
 import hash.serializaveis.IntSerializavel;
 
 public class TestPersonalizado

@@ -1,7 +1,5 @@
 /* See the project's root for license information. */
 
-package hash;
-
 import java.io.IOException;
 import java.io.RandomAccessFile;
 

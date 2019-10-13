@@ -1,7 +1,5 @@
 /* See the project's root for license information. */
 
-package hash;
-
 /**
  * Interface para padronização da forma de serializar objetos.
  * 

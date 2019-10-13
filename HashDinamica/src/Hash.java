@@ -1,37 +1,132 @@
 /* See the project's root for license information. */
 
-package hash;
-
 import java.util.ArrayList;
 import java.util.function.Function;
-
-import hash.Serializavel;
-import hash.util.IO;
 
 /**
  * Estrutura de hashing dinâmico para indexamento de registros.
  * 
  * @author Axell Brendow ( https://github.com/axell-brendow )
  *
- * @param <TIPO_DAS_CHAVES> Classe da chave.
- * @param <TIPO_DOS_DADOS> Classe do dado.
+ * @param <TIPO_DAS_CHAVES> Classe da chave. Caso essa classe não seja de um
+ * tipo primitivo, ela deve ser filha da interface {@link Serializavel}.
+ * @param <TIPO_DOS_DADOS> Classe do dado. Caso essa classe não seja de um
+ * tipo primitivo, ela deve ser filha da interface {@link Serializavel}.
  */
 
-public class Hash<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends Serializavel>
+public class Hash<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 {
 	public static final int PADRAO_NUMERO_DE_REGISTROS_POR_BUCKET = 21;
-	
+
 	protected Diretorio<TIPO_DAS_CHAVES> diretorio;
 	protected Buckets<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> buckets;
-	
+
 	// auxilia no controle de recursividade infinita
 	// da função tratarBucketCheio() juntamente com a
 	// função inserir()
 	private boolean chamadaInterna = false;
 	private int numeroDeChamadas = 0;
+
+	/**
+	 * Gera automaticamente uma função hash caso a classe da chave seja de um
+	 * tipo primitivo.
+	 *
+	 * @param classeDaChave Classe da chave.
+	 * @param funcaoHash Função hash já existente ou {@code null}.
+	 *
+	 * @return caso a função hash recebida não seja nula, retorna ela própria.
+	 * Caso contrário, se a classe da chave não for de um tipo primitivo, retorna
+	 * {@code null}. Se for de um tipo primitivo diferente de VOID, retorna uma
+	 * função hash gerada automaticamente. <b>CUIDADO:</b> caso a classe da chave
+	 * seja do tipo Float ou Double, a função hash gerada irá criar valores
+	 * inteiros retirando as casas fracionárias dos valores Double ou Float. Ou
+	 * seja, as chaves 1.1 e 1.2 geraram o mesmo número hash.
+	 */
+	private Function<TIPO_DAS_CHAVES, Integer> obterFuncaoHash(
+		Class<TIPO_DAS_CHAVES> classeDaChave,
+		Function<TIPO_DAS_CHAVES, Integer> funcaoHash)
+	{
+		if (funcaoHash == null)
+		{
+			if (classeDaChave.equals(String.class))
+				funcaoHash = (chave) ->
+				{
+					int strValue = -1;
+
+					if (chave != null && chave != null)
+					{
+						String str = (String) chave;
+						int length = str.length();
+						strValue = 0;
+
+						// ideia extraída de:
+						// https://www.ime.usp.br/~pf/algoritmos/aulas/hash.html
+						for (int i = 0; i < length; i++)
+						{
+							strValue = strValue * 31 + str.charAt(i);
+						}
+
+						if (strValue < 0)
+						{
+							strValue += Integer.MAX_VALUE;
+						}
+					}
+
+					return strValue;
+				};
+
+			else if (Classes.isWrapper(classeDaChave))
+			{
+				if (classeDaChave.equals(Boolean.class))
+					funcaoHash = (chave) -> ((Boolean) chave) ? 1 : 0;
+
+				else if (classeDaChave.equals(Character.class))
+					funcaoHash = (chave) -> (int) ((Character) chave);
+
+				else if (classeDaChave.equals(Byte.class))
+					funcaoHash = (chave) -> ((Byte) chave).intValue();
+
+				else if (classeDaChave.equals(Short.class))
+					funcaoHash = (chave) -> ((Short) chave).intValue();
+
+				else if (classeDaChave.equals(Integer.class))
+					funcaoHash = (chave) -> ((Integer) chave);
+
+				else if (classeDaChave.equals(Long.class))
+					funcaoHash = (chave) -> ((Long) chave).intValue();
+
+				else if (classeDaChave.equals(Float.class))
+					funcaoHash = (chave) -> ((Float) chave).intValue();
+
+				else if (classeDaChave.equals(Double.class))
+					funcaoHash = (chave) -> ((Double) chave).intValue();
+
+				else if (classeDaChave.equals(Void.class))
+					IO.printlnerr("ERRO: a classe " + classeDaChave.getName() + " é do tipo VOID.");
+
+				else
+					IO.printlnerr("ERRO: a classe " + classeDaChave.getName() + " é inválida.");
+			}
+
+			// Checa se a classe é Serializavel
+			else if (Serializavel.class.isAssignableFrom(classeDaChave))
+			{
+				IO.printlnerr("ERRO: a classe " + classeDaChave.getName() +
+					" é serializável e a Hash não pode inferir como fazer o hash" +
+					" de objetos desse tipo. Você precisa passar uma função hash" +
+					" no construtor dessa classe que gere um número inteiro" +
+					" não negativo a partir do seu objeto serializável.");
+			}
+
+			else IO.printlnerr("ERRO: a classe " + classeDaChave.getName() +
+					" não é de tipo primitivo nem implementa a interface Serializavel.");
+		}
+
+		return funcaoHash;
+	}
 	
 	/**
-	 * Cria uma HashDinamica.
+	 * Cria uma Hash Extensível.
 	 * 
 	 * @param nomeDoArquivoDoDiretorio Nome do arquivo previamente usado para o diretório.
 	 * @param nomeDoArquivoDosBuckets Nome do arquivo previamente usado para os buckets.
@@ -55,6 +150,24 @@ public class Hash<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends S
 		Class<TIPO_DOS_DADOS> classeDoDado,
 		Function<TIPO_DAS_CHAVES, Integer> funcaoHash)
 	{
+		funcaoHash = obterFuncaoHash(classeDaChave, funcaoHash);
+
+		try
+		{
+			if (!classeDaChave.getMethod("toString")
+					.getDeclaringClass().equals(classeDaChave))
+			{
+				IO.printlnerr("ERRO: a classe " + classeDaChave.getName() +
+					" precisa implementar o método toString() para que a hash" +
+					" consiga saber se duas chaves são iguais.");
+			}
+		}
+
+		catch (NoSuchMethodException e)
+		{
+			e.printStackTrace();
+		}
+
 		diretorio = new Diretorio<>(nomeDoArquivoDoDiretorio, funcaoHash);
 		
 		buckets = new Buckets<>(
@@ -62,6 +175,36 @@ public class Hash<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends S
 			numeroDeRegistrosPorBucket,
 			classeDaChave,
 			classeDoDado);
+	}
+
+	/**
+	 * Cria uma Hash Extensível.
+	 *
+	 * @param nomeDoArquivoDoDiretorio Nome do arquivo previamente usado para o diretório.
+	 * @param nomeDoArquivoDosBuckets Nome do arquivo previamente usado para os buckets.
+	 * Caso o arquivo não tenha sido criado ainda, ele será criado com este nome.
+	 * @param numeroDeRegistrosPorBucket Numero de registros por bucket caso o arquivo
+	 * não tenha sido criado ainda.
+	 * @param classeDaChave Classe da chave. É necessário que a classe tenha um
+	 * construtor sem parâmetros.
+	 * @param classeDoDado Classe do dado. É necessário que a classe tenha um
+	 * construtor sem parâmetros.
+	 */
+
+	public Hash(
+		String nomeDoArquivoDoDiretorio,
+		String nomeDoArquivoDosBuckets,
+		int numeroDeRegistrosPorBucket,
+		Class<TIPO_DAS_CHAVES> classeDaChave,
+		Class<TIPO_DOS_DADOS> classeDoDado)
+	{
+		this(
+			nomeDoArquivoDoDiretorio,
+			nomeDoArquivoDosBuckets,
+			numeroDeRegistrosPorBucket,
+			classeDaChave,
+			classeDoDado,
+			null);
 	}
 	
 	/**
@@ -94,6 +237,32 @@ public class Hash<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends S
 			classeDoDado,
 			funcaoHash);
 	}
+
+	/**
+	 * Cria uma HashDinamica com capacidade de
+	 * {@link #PADRAO_NUMERO_DE_REGISTROS_POR_BUCKET} registros por bucket.
+	 *
+	 * @param nomeDoArquivoDoDiretorio Nome do arquivo previamente usado para o diretório.
+	 * @param nomeDoArquivoDosBuckets Nome do arquivo previamente usado para os buckets.
+	 * Caso o arquivo não tenha sido criado ainda, ele será criado com este nome.
+	 * @param classeDaChave Classe da chave. É necessário que a classe tenha um
+	 * construtor sem parâmetros.
+	 * @param classeDoDado Classe do dado. É necessário que a classe tenha um
+	 * construtor sem parâmetros.
+	 */
+
+	public Hash(
+		String nomeDoArquivoDoDiretorio,
+		String nomeDoArquivoDosBuckets,
+		Class<TIPO_DAS_CHAVES> classeDaChave,
+		Class<TIPO_DOS_DADOS> classeDoDado)
+	{
+		this(nomeDoArquivoDoDiretorio,
+			nomeDoArquivoDosBuckets,
+			classeDaChave,
+			classeDoDado,
+			null);
+	}
 	
 	/**
 	 * Obtem a quantidade máxima de bytes que as chaves podem gastar de acordo
@@ -104,7 +273,7 @@ public class Hash<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends S
 	
 	public short obterQuantidadeMaximaDeBytesParaAChave()
 	{
-		return (short) buckets.bucket.registroDoIndice.quantidadeMaximaDeBytesParaAChave;
+		return buckets.bucket.registroDoIndice.quantidadeMaximaDeBytesParaAChave;
 	}
 	
 	/**
@@ -116,7 +285,7 @@ public class Hash<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends S
 	
 	public short obterQuantidadeMaximaDeBytesParaODado()
 	{
-		return (short) buckets.bucket.registroDoIndice.quantidadeMaximaDeBytesParaODado;
+		return buckets.bucket.registroDoIndice.quantidadeMaximaDeBytesParaODado;
 	}
 	
 	/**
@@ -230,7 +399,7 @@ public class Hash<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends S
 	 * @param bucket Bucket com os registros a serem inseridos.
 	 */
 	
-	public void inserirElementosDe(Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> bucket)
+	private void inserirElementosDe(Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> bucket)
 	{
 		for (int i = 0; i < buckets.numeroDeRegistrosPorBucket; i++)
 		{
@@ -249,7 +418,7 @@ public class Hash<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends S
 	 * inserir um registro num bucket que está cheio.
 	 * @param enderecoDoBucket Endereço do bucket que está cheio.
 	 * @param resultado Resultado do método
-	 * {@link Buckets#inserir(Serializavel, Serializavel, long)}.
+	 * {@link Buckets#inserir(TIPO_DAS_CHAVES, TIPO_DOS_DADOS, long)}.
 	 * @param chave Chave do registro não inserido.
 	 * @param dado Dado do registro não inserido.
 	 */
@@ -309,7 +478,7 @@ public class Hash<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends S
 		
 		else
 		{
-			IO.println(
+			IO.printlnerr(
 				"Inclusão ignorada. A chave que deseja-se inserir, juntamente\n" +
 				"com outras existentes, gera duplicação infinita do diretório.\n" +
 				"Experimente aumentar a quantidade de registros por bucket.\n\n" +
@@ -350,7 +519,7 @@ public class Hash<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends S
 			
 			else if (resultado == -2) // O par (chave, dado já existe)
 			{
-				IO.println(
+				IO.printlnerr(
 					"Inclusão ignorada. O par (chave, dado) abaixo já existe na hash.\n\n" +
 					"Chave:\n" +
 					chave + "\n" +

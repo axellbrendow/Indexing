@@ -1,24 +1,20 @@
 /* See the project's root for license information. */
 
-package hash;
-
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.function.BiFunction;
 import java.util.function.Function;
-
-import hash.Serializavel;
-import hash.util.IO;
 
 /**
  * Classe para gerenciamento do diretório de uma hash dinâmica.
  * 
  * @author Axell Brendow ( https://github.com/axell-brendow )
  *
- * @param <TIPO_DAS_CHAVES> Classe da chave.
+ * @param <TIPO_DAS_CHAVES> Classe da chave. Caso essa classe não seja de um
+ * tipo primitivo, ela deve ser filha da interface {@link Serializavel}.
  */
 
-public class Diretorio<TIPO_DAS_CHAVES extends Serializavel>
+public class Diretorio<TIPO_DAS_CHAVES>
 {
 	// bytes para a profundidade global
 	private static final int DESLOCAMENTO_CABECALHO = Byte.BYTES;

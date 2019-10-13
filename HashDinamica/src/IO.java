@@ -1,7 +1,5 @@
 /* See the project's root for license information. */
 
-package hash.util;
-
 import java.io.FileNotFoundException;
 import java.io.RandomAccessFile;
 
@@ -13,14 +11,24 @@ import java.io.RandomAccessFile;
 
 public class IO
 {
+	public static final String LINE_SEPARATOR = System.lineSeparator();
 	public static void print(Object msg)
 	{
 		System.out.print(msg);
 	}
+	public static void printerr(Object msg)
+	{
+		System.err.print(msg);
+	}
 	
 	public static void println(Object msg)
 	{
-		print(msg + System.lineSeparator());
+		print(msg + LINE_SEPARATOR);
+	}
+
+	public static void printlnerr(Object msg)
+	{
+		printerr(msg + LINE_SEPARATOR);
 	}
 	
 	/**

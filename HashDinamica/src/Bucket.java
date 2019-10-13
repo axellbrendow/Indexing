@@ -1,14 +1,10 @@
 /* See the project's root for license information. */
 
-package hash;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.BiFunction;
-
-import hash.RegistroDoIndice;
 
 /**
  * Classe que gerencia um bucket específico.
@@ -17,11 +13,13 @@ import hash.RegistroDoIndice;
  * 
  * @author Axell Brendow ( https://github.com/axell-brendow )
  *
- * @param <TIPO_DAS_CHAVES> Classe da chave.
- * @param <TIPO_DOS_DADOS> Classe do dado.
+ * @param <TIPO_DAS_CHAVES> Classe da chave. Caso essa classe não seja de um
+ * tipo primitivo, ela deve ser filha da interface {@link Serializavel}.
+ * @param <TIPO_DOS_DADOS> Classe do dado. Caso essa classe não seja de um
+ * tipo primitivo, ela deve ser filha da interface {@link Serializavel}.
  */
 
-public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends Serializavel> implements Serializavel
+public class Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
 {
 	// o cabeçalho do bucket é apenas a profundidade local até o momento
 	public static final int DESLOCAMENTO_CABECALHO = Byte.BYTES;
@@ -533,7 +531,7 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 	
 	public Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> criarBucket(byte profundidadeLocal)
 	{
-		return new Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>(
+		return new Bucket<>(
 			profundidadeLocal,
 			numeroDeRegistrosPorBucket,
 			registroDoIndice.classeDaChave,
@@ -557,13 +555,13 @@ public class Bucket<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends
 	@Override
 	public Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> clone()
 	{
-		return new Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>(
-				Arrays.copyOf(bucket, bucket.length),
-				profundidadeLocal,
-				numeroDeRegistrosPorBucket,
-				registroDoIndice.classeDaChave,
-				registroDoIndice.classeDoDado
-			);
+		return new Bucket<>(
+			Arrays.copyOf(bucket, bucket.length),
+			profundidadeLocal,
+			numeroDeRegistrosPorBucket,
+			registroDoIndice.classeDaChave,
+			registroDoIndice.classeDoDado
+		);
 	}
 	
 	@Override

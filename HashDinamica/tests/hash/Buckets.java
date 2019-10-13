@@ -14,11 +14,13 @@ import hash.util.IO;
  * 
  * @author Axell Brendow ( https://github.com/axell-brendow )
  *
- * @param <TIPO_DAS_CHAVES> Classe da chave.
- * @param <TIPO_DOS_DADOS> Classe do dado.
+ * @param <TIPO_DAS_CHAVES> Classe da chave. Caso essa classe não seja de um
+ * tipo primitivo, ela deve ser filha da interface {@link Serializavel}.
+ * @param <TIPO_DOS_DADOS> Classe do dado. Caso essa classe não seja de um
+ * tipo primitivo, ela deve ser filha da interface {@link Serializavel}.
  */
 
-public class Buckets<TIPO_DAS_CHAVES extends Serializavel, TIPO_DOS_DADOS extends Serializavel>
+public class Buckets<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 {
 	/**
 	 * O cabeçalho do arquivo dos buckets é a quantidade de registros por bucket (int).
