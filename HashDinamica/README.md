@@ -123,7 +123,13 @@ Para usar a Hash com uma classe sua, é preciso que sua classe implemente a inte
 - O terceiro é o lerBytes(byte[]) onde você receberá um byte[] e você deve lê-lo decodificando-o e atribuindo os campos internos da sua entidade.
 - O quarto é o toString() onde você deve gerar um representação textual do seu objeto. Esse método é necessário para comparar se dois objetos da sua classe são iguais. Se dois objetos gerarem a mesma string, eles serão iguais.
 
-Por algumas limitações do Java e por necessidades da Hash, **a classe do seu objeto deve ter um construtor sem parâmetros e deve ser pública**. Isso obriga também que ela tenha um arquivo .java só para ela. Irei dar um exemplo com a classe Student abaixo:
+Outras exigências sobre a sua classe:
+
+- **Precisa ser pública (public class)**, pois a Hash estará num pacote diferente da sua classe. 
+
+- **Precisa ter um construtor de parâmetros**, pois a Hash precisa instânciar objetos da sua classe e ela usa um construtor padrão.
+
+Irei dar um exemplo com a classe Student abaixo:
 
 Código de teste:
 
