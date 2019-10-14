@@ -71,7 +71,7 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serial
 				IO.printlnerr("ERRO: a classe " + classe.getName() + " é inválida.");
 		}
 
-		else if (Serializavel.class.isAssignableFrom(classe)) // Checa se a classe é hash.Serializavel
+		else if (Serializavel.class.isAssignableFrom(classe)) // Checa se a classe é Serializavel
 		{
 			try
 			{ tamanho = ( (Serializavel) classe.newInstance() ).obterTamanhoMaximoEmBytes(); }
@@ -80,7 +80,7 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serial
 		}
 
 		else IO.printlnerr("ERRO: a classe " + classe.getName() +
-					" não é de tipo primitivo nem implementa a interface hash.Serializavel.");
+					" não é de tipo primitivo nem implementa a interface Serializavel.");
 
 		return (short) tamanho;
 	}
@@ -219,12 +219,12 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serial
 					IO.printlnerr("ERRO: a classe " + classe.getName() + " é inválida.");
 			}
 
-			// Checa se a classe é hash.Serializavel
+			// Checa se a classe é Serializavel
 			else if (Serializavel.class.isAssignableFrom(classe))
 				dataOutputStream.write( ((Serializavel) objeto).obterBytes() );
 
 			else IO.printlnerr("ERRO: a classe " + classe.getName() +
-					" não é de tipo primitivo nem implementa a interface hash.Serializavel.");
+					" não é de tipo primitivo nem implementa a interface Serializavel.");
 		}
 
 		catch (IOException e) { e.printStackTrace(); }
@@ -366,12 +366,12 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serial
 						" é inválida.");
 			}
 
-			// Checa se a classe é hash.Serializavel
+			// Checa se a classe é Serializavel
 			else if (Serializavel.class.isAssignableFrom(classe))
 				((Serializavel) field.get(this)).lerBytes(array);
 
 			else IO.printlnerr("ERRO: a classe " + classe.getName() +
-					" não é de tipo primitivo nem implementa a interface hash.Serializavel.");
+					" não é de tipo primitivo nem implementa a interface Serializavel.");
 
 			field.setAccessible(accessibility);
 		}
@@ -419,12 +419,12 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serial
 						" é inválida.");
 			}
 
-			// Checa se a classe é hash.Serializavel
+			// Checa se a classe é Serializavel
 			else if (Serializavel.class.isAssignableFrom(classe))
 				field.set(this, classe.newInstance());
 
 			else IO.printlnerr("ERRO: a classe " + classe.getName() +
-					" não é de tipo primitivo nem implementa a interface hash.Serializavel.");
+					" não é de tipo primitivo nem implementa a interface Serializavel.");
 
 			field.setAccessible(accessibility);
 		}
