@@ -1,19 +1,24 @@
 # HashDinamica
-Implementação da Hash Dinâmica, estrutura de dados para indexamento, em Java.
+Implementação da hash.Hash Dinâmica, estrutura de dados para indexamento, em Java.
 
 ## Como usar ?
 
 Encontre [aqui a documentação da hash](https://htmlpreview.github.io/?https://raw.githubusercontent.com/axell-brendow/Indexing/master/HashDinamica/doc/overview-summary.html).
 
-### Usando a Hash com tipos primitivos
+### Usando a hash.Hash com tipos primitivos
 
-Há algumas classes prontas para uso da hash com tipos primitivos:
+A hash suporta fazer o indexamento dos seguintes tipos primitivos:
 
-- hash.hashs.HashIntInt
-- hash.hashs.HashIntLong
-- hash.hashs.HashStringInt
+- Boolean
+- Character
+- Byte
+- Short
+- Integer
+- Float
+- Double
+- String (não é um tipo primitivo mas é permitido)
 
-Nos dois exemplos com tipos primitivos, usarei string como chave e inteiro como dado:
+Nos dois exemplos com tipos primitivos, usarei String como chave e Integer como dado:
 
 Arquivo Test.java
 ```Java
@@ -97,9 +102,9 @@ java -classpath "./lib/*;." Test  # Execute com o mesmo classpath
 ```
 
 
-### Usando a Hash com tipos personalizados
+### Usando a hash.Hash com tipos personalizados
 
-Antes de tudo, a Hash trabalha com chaves e dados [serializáveis](https://www.devmedia.com.br/serializacao-de-objetos-em-java/23413), ou seja, a chave e o dado dos registros devem ser capazes de gerar seus próprios bytes e de informar qual é a quantidade máxima de bytes que podem gastar.
+Antes de tudo, a hash.Hash trabalha com chaves e dados [serializáveis](https://www.devmedia.com.br/serializacao-de-objetos-em-java/23413), ou seja, a chave e o dado dos registros devem ser capazes de gerar seus próprios bytes e de informar qual é a quantidade máxima de bytes que podem gastar.
 
 Dessa forma, para cada tipo primitivo, float, int, long e para as strings, precisei criar uma classe que os tornam objetos serializáveis. Essas classes se encontram no pacote hash.serializável e são elas:
 
@@ -108,20 +113,20 @@ Dessa forma, para cada tipo primitivo, float, int, long e para as strings, preci
 - LongSerializavel
 - StringSerializavel
 
-Analogamente, para usar a Hash com uma classe sua, é preciso que a sua classe implemente a interface Serializavel e seus 4 métodos. Isso tornará sua classe serializável:
+Analogamente, para usar a hash.Hash com uma classe sua, é preciso que a sua classe implemente a interface hash.Serializavel e seus 4 métodos. Isso tornará sua classe serializável:
 
 - O primeiro deles, obterTamanhoMaximoEmBytes(), é um método onde você dirá qual é o tamanho máximo que a sua classe pode gastar em bytes juntando todos os campos internos que você for salvar em arquivo.
 - O segundo é o obterBytes() onde você deve gerar um byte[] com os bytes da sua entidade.
 - O terceiro é o lerBytes(byte[]) onde você receberá um byte[] e você deve lê-lo decodificando-o e atribuindo os campos internos da sua entidade.
 - O quarto é o toString() onde você deve gerar um representação textual do seu objeto. Esse método é necessário para comparar se dois objetos da sua classe são iguais. Se dois objetos gerarem a mesma string, eles serão iguais.
 
-Por algumas limitações do Java e por necessidades da Hash, **a classe do seu objeto deve ter um construtor sem parâmetros e deve ser pública**. Isso obriga também que ela tenha um arquivo .java só para ela. Irei dar um exemplo com a classe Student abaixo:
+Por algumas limitações do Java e por necessidades da hash.Hash, **a classe do seu objeto deve ter um construtor sem parâmetros e deve ser pública**. Isso obriga também que ela tenha um arquivo .java só para ela. Irei dar um exemplo com a classe Student abaixo:
 
 Código de teste:
 
 Arquivo Student.java
 ```Java
-import static hash.serializaveis.StringSerializavel.PADRAO_TAMANHO_MAXIMO_EM_BYTES;
+import hash.Serializavel;import static hash.serializaveis.StringSerializavel.PADRAO_TAMANHO_MAXIMO_EM_BYTES;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -211,7 +216,7 @@ Arquivo principal TestPersonalizado.java
 ```Java
 import java.io.File;
 
-import hash.serializaveis.IntSerializavel;
+import hash.Hash;import hash.serializaveis.IntSerializavel;
 
 public class TestPersonalizado
 {
@@ -220,7 +225,7 @@ public class TestPersonalizado
         new File("diretorio.dir").delete();
         new File("buckets.db").delete();
 
-        Hash<IntSerializavel, Student> hash = new Hash<>(
+        hash.Hash<IntSerializavel, Student> hash = new hash.Hash<>(
                 "diretorio.dir", "buckets.db",
                 2, // Número de registros por bucket
                 IntSerializavel.class, // Classe da chave dos registros

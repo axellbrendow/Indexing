@@ -58,15 +58,15 @@ var pathtoroot = "../";loadScripts(document, 'script');</script>
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../hash/Diretorio.html" title="class in hash"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../hash/RegistroDoIndice.html" title="class in hash"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../hash/hash.Diretorio.html" title="class in hash"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../hash/hash.RegistroDoIndice.html" title="class in hash"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../index.html?hash/HashDinamica.html" target="_top">Frames</a></li>
 <li><a href="HashDinamica.html" target="_top">No&nbsp;Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../allclasses-noframe.html">All&nbsp;hash.Classes</a></li>
 </ul>
 <ul class="navListSearch">
 <li><span>SEARCH:&nbsp;</span>
@@ -165,12 +165,12 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>protected <a href="../hash/Buckets.html" title="class in hash">Buckets</a>&lt;<a href="../hash/HashDinamica.html" title="type parameter in HashDinamica">TIPO_DAS_CHAVES</a>,<a href="../hash/HashDinamica.html" title="type parameter in HashDinamica">TIPO_DOS_DADOS</a>&gt;</code></td>
+<td class="colFirst"><code>protected <a href="../hash/hash.Buckets.html" title="class in hash">hash.Buckets</a>&lt;<a href="../hash/HashDinamica.html" title="type parameter in HashDinamica">TIPO_DAS_CHAVES</a>,<a href="../hash/HashDinamica.html" title="type parameter in HashDinamica">TIPO_DOS_DADOS</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../hash/HashDinamica.html#buckets">buckets</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>protected <a href="../hash/Diretorio.html" title="class in hash">Diretorio</a>&lt;<a href="../hash/HashDinamica.html" title="type parameter in HashDinamica">TIPO_DAS_CHAVES</a>&gt;</code></td>
+<td class="colFirst"><code>protected <a href="../hash/hash.Diretorio.html" title="class in hash">hash.Diretorio</a>&lt;<a href="../hash/HashDinamica.html" title="type parameter in HashDinamica">TIPO_DAS_CHAVES</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../hash/HashDinamica.html#diretorio">diretorio</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
@@ -262,7 +262,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../hash/HashDinamica.html#inserirElementosDe-Bucket-">inserirElementosDe</a></span>&#8203;(<a href="../hash/Bucket.html" title="class in hash">Bucket</a>&lt;<a href="../hash/HashDinamica.html" title="type parameter in HashDinamica">TIPO_DAS_CHAVES</a>,<a href="../hash/HashDinamica.html" title="type parameter in HashDinamica">TIPO_DOS_DADOS</a>&gt;&nbsp;bucket)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../hash/HashDinamica.html#inserirElementosDe-hash.Bucket-">inserirElementosDe</a></span>&#8203;(<a href="../hash/hash.Bucket.html" title="class in hash">hash.Bucket</a>&lt;<a href="../hash/HashDinamica.html" title="type parameter in HashDinamica">TIPO_DAS_CHAVES</a>,<a href="../hash/HashDinamica.html" title="type parameter in HashDinamica">TIPO_DOS_DADOS</a>&gt;&nbsp;bucket)</code></th>
 <td class="colLast">
 <div class="block">Insere todos os registros ativados de um bucket na
  hash dinâmica.</div>
@@ -374,7 +374,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>diretorio</h4>
-<pre>protected&nbsp;<a href="../hash/Diretorio.html" title="class in hash">Diretorio</a>&lt;<a href="../hash/HashDinamica.html" title="type parameter in HashDinamica">TIPO_DAS_CHAVES</a> extends <a href="../hash/serializaveis/SerializavelAbstract.html" title="class in hash.serializaveis">SerializavelAbstract</a>&gt; diretorio</pre>
+<pre>protected&nbsp;<a href="../hash/hash.Diretorio.html" title="class in hash">hash.Diretorio</a>&lt;<a href="../hash/HashDinamica.html" title="type parameter in HashDinamica">TIPO_DAS_CHAVES</a> extends <a href="../hash/serializaveis/SerializavelAbstract.html" title="class in hash.serializaveis">SerializavelAbstract</a>&gt; diretorio</pre>
 </li>
 </ul>
 <a name="buckets">
@@ -383,7 +383,7 @@ extends java.lang.Object</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>buckets</h4>
-<pre>protected&nbsp;<a href="../hash/Buckets.html" title="class in hash">Buckets</a>&lt;<a href="../hash/HashDinamica.html" title="type parameter in HashDinamica">TIPO_DAS_CHAVES</a> extends <a href="../hash/serializaveis/SerializavelAbstract.html" title="class in hash.serializaveis">SerializavelAbstract</a>,<a href="../hash/HashDinamica.html" title="type parameter in HashDinamica">TIPO_DOS_DADOS</a> extends <a href="../hash/serializaveis/SerializavelAbstract.html" title="class in hash.serializaveis">SerializavelAbstract</a>&gt; buckets</pre>
+<pre>protected&nbsp;<a href="../hash/hash.Buckets.html" title="class in hash">hash.Buckets</a>&lt;<a href="../hash/HashDinamica.html" title="type parameter in HashDinamica">TIPO_DAS_CHAVES</a> extends <a href="../hash/serializaveis/SerializavelAbstract.html" title="class in hash.serializaveis">SerializavelAbstract</a>,<a href="../hash/HashDinamica.html" title="type parameter in HashDinamica">TIPO_DOS_DADOS</a> extends <a href="../hash/serializaveis/SerializavelAbstract.html" title="class in hash.serializaveis">SerializavelAbstract</a>&gt; buckets</pre>
 </li>
 </ul>
 </li>
@@ -566,12 +566,12 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>inserirElementosDe</h4>
-<pre>public&nbsp;void&nbsp;inserirElementosDe&#8203;(<a href="../hash/Bucket.html" title="class in hash">Bucket</a>&lt;<a href="../hash/HashDinamica.html" title="type parameter in HashDinamica">TIPO_DAS_CHAVES</a>,<a href="../hash/HashDinamica.html" title="type parameter in HashDinamica">TIPO_DOS_DADOS</a>&gt;&nbsp;bucket)</pre>
+<pre>public&nbsp;void&nbsp;inserirElementosDe&#8203;(<a href="../hash/hash.Bucket.html" title="class in hash">hash.Bucket</a>&lt;<a href="../hash/HashDinamica.html" title="type parameter in HashDinamica">TIPO_DAS_CHAVES</a>,<a href="../hash/HashDinamica.html" title="type parameter in HashDinamica">TIPO_DOS_DADOS</a>&gt;&nbsp;bucket)</pre>
 <div class="block">Insere todos os registros ativados de um bucket na
  hash dinâmica.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>bucket</code> - Bucket com os registros a serem inseridos.</dd>
+<dd><code>bucket</code> - hash.Bucket com os registros a serem inseridos.</dd>
 </dl>
 </li>
 </ul>
@@ -725,15 +725,15 @@ extends java.lang.Object</pre>
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../hash/Diretorio.html" title="class in hash"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../hash/RegistroDoIndice.html" title="class in hash"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../hash/hash.Diretorio.html" title="class in hash"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../hash/hash.RegistroDoIndice.html" title="class in hash"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../index.html?hash/HashDinamica.html" target="_top">Frames</a></li>
 <li><a href="HashDinamica.html" target="_top">No&nbsp;Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="../allclasses-noframe.html">All&nbsp;hash.Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--

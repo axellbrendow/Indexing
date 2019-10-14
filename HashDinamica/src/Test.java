@@ -1,5 +1,6 @@
 import java.io.File;
-import hash.hashs.HashStringInt;
+
+import hash.Hash;
 
 public class Test
 {
@@ -8,7 +9,12 @@ public class Test
         new File("diretorio.dir").delete();
         new File("buckets.db").delete();
 
-        HashStringInt hash = new HashStringInt("diretorio.dir", "buckets.db", 2);
+        Hash<String, Integer> hash = new Hash<>(
+            "diretorio.dir",
+            "buckets.db",
+            2,
+            String.class,
+            Integer.class);
 
         hash.inserir("a", 1);
         hash.inserir("b", 2);

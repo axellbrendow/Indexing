@@ -1,4 +1,4 @@
-/* See the project's root for license information. */
+package hash;/* See the project's root for license information. */
 
 /**
  * Interface para padronização da forma de serializar objetos.

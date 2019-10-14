@@ -1,11 +1,10 @@
-import static hash.serializaveis.StringSerializavel.PADRAO_TAMANHO_MAXIMO_EM_BYTES;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
+import hash.RegistroDoIndice;
 import hash.Serializavel;
 
 public class Student implements Serializavel
@@ -19,22 +18,28 @@ public class Student implements Serializavel
         this.name = name;
     }
 
-    public Student() // É OBRIGATÓRIO QUE SUA CLASSE TENHA UM CONSTRUTOR SEM PARÂMETROS
+    /**
+     * <b>IMPORTANTE:</b> É OBRIGATÓRIO QUE SUA CLASSE TENHA UM CONSTRUTOR SEM
+     * PARÂMETROS.
+     */
+    public Student()
     {
         this(-1, "hello");
     }
 
+    /**
+     Essa função deve calcular o quanto o id e o name podem gastar em bytes.
+     Dentro da classe {@link RegistroDoIndice}, criei uma constante para
+     tamanho em bytes de uma string, pois em casos mais simples, a sua
+     string não gastará mais de 300 bytes. Se a sua string for gastar mais
+     de 300 bytes ou menos, fique a vontade para colocar o melhor valor para
+     você. A expressão Integer.BYTES retorna o tamanho em bytes de um inteiro
+     no Java que é o que o id vai gastar.
+     */
     @Override
     public int obterTamanhoMaximoEmBytes()
     {
-        // Essa função deve calcular o quanto o id e o name podem gastar em bytes.
-        // Dentro da classe StringSerializavel, criei uma constante com o valor 300,
-        // pois em casos mais simples, a sua string não gastará mais de 300 bytes.
-        // Se a sua string for gastar mais de 300 bytes ou menos, fique a vontade
-        // para colocar o melhor valor para você.
-        // A expressão Integer.BYTES retorna o tamanho em bytes de um inteiro no Java
-        // que é o que o id vai gastar.
-        return PADRAO_TAMANHO_MAXIMO_EM_BYTES + Integer.BYTES;
+        return RegistroDoIndice.TAMANHO_MAXIMO_EM_BYTES_STRINGS + Integer.BYTES;
     }
 
     @Override

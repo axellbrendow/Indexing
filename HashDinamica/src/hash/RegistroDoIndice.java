@@ -1,4 +1,4 @@
-/* See the project's root for license information. */
+package hash;/* See the project's root for license information. */
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -71,7 +71,7 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serial
 				IO.printlnerr("ERRO: a classe " + classe.getName() + " é inválida.");
 		}
 
-		else if (Serializavel.class.isAssignableFrom(classe)) // Checa se a classe é Serializavel
+		else if (Serializavel.class.isAssignableFrom(classe)) // Checa se a classe é hash.Serializavel
 		{
 			try
 			{ tamanho = ( (Serializavel) classe.newInstance() ).obterTamanhoMaximoEmBytes(); }
@@ -80,7 +80,7 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serial
 		}
 
 		else IO.printlnerr("ERRO: a classe " + classe.getName() +
-					" não é de tipo primitivo nem implementa a interface Serializavel.");
+					" não é de tipo primitivo nem implementa a interface hash.Serializavel.");
 
 		return (short) tamanho;
 	}
@@ -120,8 +120,8 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serial
 				classeDoDado.getConstructor( Classes.wrapperParaPrimitivo.get(classeDoDado) ) :
 				classeDoDado.getConstructor();
 
-			this.quantidadeMaximaDeBytesParaAChave = obterTamanhoMaximoEmBytes(classeDoDado);
-			this.quantidadeMaximaDeBytesParaODado = obterTamanhoMaximoEmBytes(classeDaChave);
+			this.quantidadeMaximaDeBytesParaAChave = obterTamanhoMaximoEmBytes(classeDaChave);
+			this.quantidadeMaximaDeBytesParaODado = obterTamanhoMaximoEmBytes(classeDoDado);
 		}
 
 		catch (NoSuchMethodException | SecurityException | IllegalArgumentException e)
@@ -219,12 +219,12 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serial
 					IO.printlnerr("ERRO: a classe " + classe.getName() + " é inválida.");
 			}
 
-			// Checa se a classe é Serializavel
+			// Checa se a classe é hash.Serializavel
 			else if (Serializavel.class.isAssignableFrom(classe))
 				dataOutputStream.write( ((Serializavel) classe.newInstance()).obterBytes() );
 
 			else IO.printlnerr("ERRO: a classe " + classe.getName() +
-					" não é de tipo primitivo nem implementa a interface Serializavel.");
+					" não é de tipo primitivo nem implementa a interface hash.Serializavel.");
 		}
 
 		catch (IOException | InstantiationException | IllegalAccessException e)
@@ -244,9 +244,12 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serial
 			dataOutputStream.writeByte(lapide);
 			
 			byte[] byteArrayChave = obterBytes(chave, classeDaChave);
+			int quantidadeDeBytes =
+				byteArrayChave.length <= quantidadeMaximaDeBytesParaAChave ?
+				byteArrayChave.length : quantidadeMaximaDeBytesParaAChave;
 			
-			dataOutputStream.write(byteArrayChave);
-			
+			dataOutputStream.write(byteArrayChave, 0, quantidadeDeBytes);
+
 			completarEspacoNaoUsado(
 				dataOutputStream,
 				byteArrayChave.length,
@@ -254,8 +257,11 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serial
 			);
 			
 			byte[] byteArrayDado = obterBytes(dado, classeDoDado);
-			
-			dataOutputStream.write(byteArrayDado);
+			quantidadeDeBytes =
+				byteArrayDado.length <= quantidadeMaximaDeBytesParaODado ?
+				byteArrayDado.length : quantidadeMaximaDeBytesParaODado;
+
+			dataOutputStream.write(byteArrayDado, 0, quantidadeDeBytes);
 			
 			completarEspacoNaoUsado(
 				dataOutputStream,
@@ -361,12 +367,12 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serial
 						" é inválida.");
 			}
 
-			// Checa se a classe é Serializavel
+			// Checa se a classe é hash.Serializavel
 			else if (Serializavel.class.isAssignableFrom(classe))
 				((Serializavel) field.get(this)).lerBytes(array);
 
 			else IO.printlnerr("ERRO: a classe " + classe.getName() +
-					" não é de tipo primitivo nem implementa a interface Serializavel.");
+					" não é de tipo primitivo nem implementa a interface hash.Serializavel.");
 
 			field.setAccessible(accessibility);
 		}
@@ -377,6 +383,12 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serial
 		}
 	}
 
+	/**
+	 * Cria uma nova instância do campo informado.
+	 *
+	 * @param nomeCampo Nome do campo nesta classe.
+	 * @param classe Classe do campo.
+	 */
 	private void newInstance(String nomeCampo, Class<?> classe)
 	{
 		Field field;
@@ -408,12 +420,12 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serial
 						" é inválida.");
 			}
 
-			// Checa se a classe é Serializavel
+			// Checa se a classe é hash.Serializavel
 			else if (Serializavel.class.isAssignableFrom(classe))
 				field.set(this, classe.newInstance());
 
 			else IO.printlnerr("ERRO: a classe " + classe.getName() +
-					" não é de tipo primitivo nem implementa a interface Serializavel.");
+					" não é de tipo primitivo nem implementa a interface hash.Serializavel.");
 
 			field.setAccessible(accessibility);
 		}
@@ -440,8 +452,6 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serial
 
 			newInstance("chave", classeDaChave);
 			newInstance("dado", classeDoDado);
-//			chave = construtorDaChave.newInstance();
-//			dado = construtorDoDado.newInstance();
 
 			lerBytes(byteArrayChave, "chave", classeDaChave);
 			lerBytes(byteArrayDado, "dado", classeDoDado);

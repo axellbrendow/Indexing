@@ -1,4 +1,4 @@
-/* See the project's root for license information. */
+package hash;/* See the project's root for license information. */
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -277,7 +277,7 @@ public class Buckets<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 	 * Procura um registro no bucket com a chave informada.
 	 * 
 	 * @param chave Chave a ser procurada.
-	 * @param bucket Bucket para procura.
+	 * @param bucket hash.Bucket para procura.
 	 * 
 	 * @return {@code null} se o registro não for encontrado;
 	 * o dado correspondente à chave caso contrário.
@@ -335,7 +335,7 @@ public class Buckets<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 	 * Procura um registro no bucket com o dado informado.
 	 * 
 	 * @param dado Dado que corresponde à chave.
-	 * @param bucket Bucket para procura.
+	 * @param bucket hash.Bucket para procura.
 	 * 
 	 * @return {@code null} se o registro não for encontrado;
 	 * a chave correspondente ao dado caso contrário.
@@ -394,7 +394,7 @@ public class Buckets<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 	 * 
 	 * @param chave Chave a ser excluída.
 	 * @param dado Dado que corresponde à chave.
-	 * @param bucket Bucket para exclusão.
+	 * @param bucket hash.Bucket para exclusão.
 	 * 
 	 * @return {@code true} se tudo der certo;
 	 * {@code false} caso contrário.
@@ -460,7 +460,7 @@ public class Buckets<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 	 * Tenta excluir o primeiro registro com a chave informada do bucket.
 	 * 
 	 * @param chave Chave a ser excluída.
-	 * @param bucket Bucket para exclusão.
+	 * @param bucket hash.Bucket para exclusão.
 	 * 
 	 * @return {@code true} se tudo der certo;
 	 * {@code false} caso contrário.
@@ -587,7 +587,7 @@ public class Buckets<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 	 * 
 	 * @param chave Chave a ser inserida.
 	 * @param dado Dado que corresponde à chave.
-	 * @param bucket Bucket para inserção.
+	 * @param bucket hash.Bucket para inserção.
 	 * 
 	 * @return a profundidade local do bucket se
 	 * ele estiver cheio;

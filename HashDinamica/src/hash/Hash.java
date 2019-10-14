@@ -1,4 +1,4 @@
-/* See the project's root for license information. */
+package hash;/* See the project's root for license information. */
 
 import java.util.ArrayList;
 import java.util.function.Function;
@@ -108,25 +108,25 @@ public class Hash<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 					IO.printlnerr("ERRO: a classe " + classeDaChave.getName() + " é inválida.");
 			}
 
-			// Checa se a classe é Serializavel
+			// Checa se a classe é hash.Serializavel
 			else if (Serializavel.class.isAssignableFrom(classeDaChave))
 			{
 				IO.printlnerr("ERRO: a classe " + classeDaChave.getName() +
-					" é serializável e a Hash não pode inferir como fazer o hash" +
+					" é serializável e a hash.Hash não pode inferir como fazer o hash" +
 					" de objetos desse tipo. Você precisa passar uma função hash" +
 					" no construtor dessa classe que gere um número inteiro" +
 					" não negativo a partir do seu objeto serializável.");
 			}
 
 			else IO.printlnerr("ERRO: a classe " + classeDaChave.getName() +
-					" não é de tipo primitivo nem implementa a interface Serializavel.");
+					" não é de tipo primitivo nem implementa a interface hash.Serializavel.");
 		}
 
 		return funcaoHash;
 	}
 	
 	/**
-	 * Cria uma Hash Extensível.
+	 * Cria uma hash.Hash Extensível.
 	 * 
 	 * @param nomeDoArquivoDoDiretorio Nome do arquivo previamente usado para o diretório.
 	 * @param nomeDoArquivoDosBuckets Nome do arquivo previamente usado para os buckets.
@@ -178,7 +178,7 @@ public class Hash<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 	}
 
 	/**
-	 * Cria uma Hash Extensível.
+	 * Cria uma hash.Hash Extensível.
 	 *
 	 * @param nomeDoArquivoDoDiretorio Nome do arquivo previamente usado para o diretório.
 	 * @param nomeDoArquivoDosBuckets Nome do arquivo previamente usado para os buckets.
@@ -396,7 +396,7 @@ public class Hash<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 	 * Insere todos os registros ativados de um bucket na
 	 * hash dinâmica.
 	 * 
-	 * @param bucket Bucket com os registros a serem inseridos.
+	 * @param bucket hash.Bucket com os registros a serem inseridos.
 	 */
 	
 	private void inserirElementosDe(Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> bucket)
@@ -504,7 +504,7 @@ public class Hash<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 	
 	public boolean inserir(TIPO_DAS_CHAVES chave, TIPO_DOS_DADOS dado)
 	{
-		boolean sucesso = false;
+ 		boolean sucesso = false;
 
 		long enderecoDoBucket = diretorio.obterEnderecoDoBucket(chave);
 		
@@ -583,13 +583,13 @@ public class Hash<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 		return
 			(
 				mostrarDiretorio ? (
-        			"Diretorio:\n" +
+        			"hash.Diretorio:\n" +
         			diretorio.toString(
         				delimitadorEntreOsPonteirosDoDiretorio) + "\n"
         		) : ""
 			) +
 			
-			"Buckets:\n" +
+			"hash.Buckets:\n" +
 			buckets.toString(
 				delimitadorEntreRegistros,
 				delimitadorEntreOsCamposDoRegistro,

@@ -1,3 +1,5 @@
+package hash;
+
 import java.io.File;
 
 public class Main
