@@ -56,16 +56,16 @@ Caso você use uma IDE, basta copiar a pasta Indexing/HashDinamica/src/hash para
 
 Caso contrário, os passos estão descritos na imagem abaixo:
 
-![Exemplo de código com compilação e execução do código fonte do repositório](https://i.imgur.com/2YaZVRo.jpg)
+![Exemplo de código com compilação e execução do código fonte do repositório](https://i.imgur.com/kecckcB.png)
 
 Todos os comandos usados:
 
 ```PowerShell
 ls  # Dentro da pasta Indexing/HashDinamica/src já existem os arquivos de teste
 
-javac Test.java -classpath .  # Compile passando como classpath o caminho para a pasta que contém a pasta hash. No meu caso, a pasta onde estou contém a pasta hash, por isso o ponto (.).
+javac -classpath . Test.java  # Compile passando como classpath o caminho para a pasta que contém a pasta hash. No meu caso, a pasta onde estou contém a pasta hash, por isso o ponto (.).
 
-java Test -classpath .  # Execute com o mesmo classpath
+java -classpath . Test  # Execute com o mesmo classpath
 
 ```
 
@@ -80,22 +80,22 @@ Caso você use uma IDE, pesquise sobre "Add external jar <SUA_IDE>" para incluir
 
 Caso contrário, os próximos passos estão descritos nas imagens a abaixo:
 
-![Exemplo de código com compilação e execução](https://i.imgur.com/07BIMQ3.jpg)
+![Exemplo de código com compilação e execução](https://i.imgur.com/odqlORg.png)
 
 Todos os comandos usados:
 
 ```PowerShell
 ls  # Dentro da pasta Indexing/HashDinamica/src já existem os arquivos de teste
 
-javac Test.java -classpath .  # Compile passando como classpath o caminho para a pasta que contém a pasta hash. No meu caso, a pasta onde estou contém a pasta hash, por isso o ponto (.).
+javac -classpath hash.jar Test.java  # Compile passando como classpath o caminho para o hash.jar.
 
-java Test -classpath .  # Execute com o mesmo classpath
+java -classpath hash.jar Test  # Execute com o mesmo classpath
 
 ```
 
 Caso você não queira deixar o hash.jar na mesma pasta que a sua classe java, você pode seguir estes passos:
 
-![Compilação e execução com o .jar na pasta lib](https://i.imgur.com/4dT4fqX.jpg)
+![Compilação e execução com o .jar na pasta lib](https://i.imgur.com/F840adZ.png)
 
 Todos os comandos usados:
 
@@ -103,9 +103,9 @@ Todos os comandos usados:
 ls  # Dentro da pasta Indexing/HashDinamica/src já existem os arquivos de teste
 ls lib  # Exemplo com o hash.jar dentro da pasta lib
 
-javac Test.java -classpath "./lib/*;."  # Compile passando como classpath o caminho para a pasta que contém a pasta hash. No meu caso, a pasta onde estou contém a pasta hash, por isso o ponto (.). Caso você esteja num sistema unix, troque o ; por : no classpath.
+javac -classpath lib/hash.jar Test.java  # Compile passando como classpath o caminho para o hash.jar.
 
-java Test -classpath "./lib/*;."  # Execute com o mesmo classpath
+java -classpath lib/hash.jar Test  # Execute com o mesmo classpath
 
 ```
 
@@ -256,15 +256,15 @@ public class TestPersonalizado
 
 Exemplo rodando:
 
-![Exemplo de código com compilação e execução com classe personalizada](https://i.imgur.com/em7HGhP.jpg)
+![Exemplo de código com compilação e execução com classe personalizada](https://i.imgur.com/7gaPqLU.png)
 
 Todos os comandos usados:
 
 ```PowerShell
 ls  # Dentro da pasta Indexing/HashDinamica/src já existem os arquivos de teste
 
-javac TestPersonalizado.java -classpath .  # Compile passando como classpath o caminho para a pasta que contém a pasta hash. No meu caso, a pasta onde estou contém a pasta hash, por isso o ponto (.).
+javac -classpath . TestPersonalizado.java  # Compile passando como classpath o caminho para a pasta que contém a pasta hash. No meu caso, a pasta onde estou contém a pasta hash, por isso o ponto (.).
 
-java TestPersonalizado -classpath .  # Execute com o mesmo classpath
+java -classpath . TestPersonalizado  # Execute com o mesmo classpath
 
 ```
