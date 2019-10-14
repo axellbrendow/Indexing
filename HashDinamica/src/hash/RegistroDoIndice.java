@@ -221,14 +221,13 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serial
 
 			// Checa se a classe é hash.Serializavel
 			else if (Serializavel.class.isAssignableFrom(classe))
-				dataOutputStream.write( ((Serializavel) classe.newInstance()).obterBytes() );
+				dataOutputStream.write( ((Serializavel) objeto).obterBytes() );
 
 			else IO.printlnerr("ERRO: a classe " + classe.getName() +
 					" não é de tipo primitivo nem implementa a interface hash.Serializavel.");
 		}
 
-		catch (IOException | InstantiationException | IllegalAccessException e)
-		{ e.printStackTrace(); }
+		catch (IOException e) { e.printStackTrace(); }
 
 		return byteArrayOutputStream.toByteArray();
 	}
