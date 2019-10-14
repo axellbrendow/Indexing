@@ -5,6 +5,8 @@ Implementação da Hash Extensível (Dinâmica), estrutura de dados para indexam
 
 Encontre [aqui a documentação da hash](https://htmlpreview.github.io/?https://raw.githubusercontent.com/axell-brendow/Indexing/master/HashDinamica/doc/overview-summary.html).
 
+O código fonte da Hash exige Java 8 no mínimo para compilar.
+
 ### Usando a Hash com tipos primitivos
 
 A hash suporta fazer o indexamento dos seguintes tipos primitivos:
@@ -74,7 +76,7 @@ java -classpath . Test  # Execute com o mesmo classpath
 
 Primeiro, [baixe o arquivo hash.jar](https://github.com/axell-brendow/Indexing/raw/master/HashDinamica/hash.jar).
 
-O código fonte da Hash exige Java 8 no mínimo para compilar. Porém o arquivo hash.jar pode ter sido compilado em versões mais novas do Java como 9, 10 ou 11.
+O arquivo hash.jar pode estar compilado em versões mais novas do Java como 9, 10 ou 11.
 
 Caso você use uma IDE, pesquise sobre "Add external jar <SUA_IDE>" para incluir a hash em seu projeto.
 
