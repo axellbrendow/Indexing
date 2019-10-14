@@ -127,7 +127,7 @@ Outras exigências sobre a sua classe:
 
 - **Precisa ser pública (public class)**, pois a Hash estará num pacote diferente da sua classe. 
 
-- **Precisa ter um construtor de parâmetros**, pois a Hash precisa instânciar objetos da sua classe e ela usa um construtor padrão.
+- **Precisa ter um construtor sem parâmetros**, pois a Hash precisa instânciar objetos da sua classe e ela usa um construtor padrão.
 
 Irei dar um exemplo com a classe Student abaixo:
 
