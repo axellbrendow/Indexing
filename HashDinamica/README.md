@@ -1,5 +1,5 @@
 # HashDinamica
-Implementação da hash.Hash Dinâmica, estrutura de dados para indexamento, em Java.
+Implementação da Hash Extensível (Dinâmica), estrutura de dados para indexamento, em Java.
 
 ## Como usar ?
 
