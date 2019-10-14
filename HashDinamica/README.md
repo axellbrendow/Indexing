@@ -54,9 +54,9 @@ public class Test
 
 #### 1ª forma de usar, compilar diretamente o código fonte:
 
-Caso você use uma IDE, basta copiar a pasta Indexing/HashDinamica/src/hash para dentro do pacote do seu projeto. (Geralmente Ctrl + C e Ctrl + V funciona :D). Pode ser necessário dar um clean ou rebuild em seu projeto.
+Caso você use uma IDE, basta copiar a pasta Indexing/HashDinamica/src/hash para dentro do pacote do seu projeto. Com a pasta copiada, seleciona o pacote na IDE e pressione CTRL + V. Pode ser necessário dar um clean ou rebuild em seu projeto.
 
-Caso contrário, os passos estão descritos na imagem abaixo:
+Caso não use IDE, os passos estão descritos na imagem abaixo:
 
 ![Exemplo de código com compilação e execução do código fonte do repositório](https://i.imgur.com/kecckcB.png)
 
@@ -114,7 +114,7 @@ java -classpath lib/hash.jar Test  # Execute com o mesmo classpath
 
 ### Usando a Hash com tipos personalizados
 
-Antes de tudo, a hash.Hash trabalha com chaves e dados [serializáveis](https://www.devmedia.com.br/serializacao-de-objetos-em-java/23413), ou seja, a chave e o dado dos registros devem ser capazes de gerar seus próprios bytes e de informar qual é a quantidade máxima de bytes que podem gastar.
+Antes de tudo, a Hash trabalha com chaves e dados [serializáveis](https://www.devmedia.com.br/serializacao-de-objetos-em-java/23413), ou seja, a chave e o dado dos registros devem ser capazes de gerar seus próprios bytes e de informar qual é a quantidade máxima de bytes que podem gastar.
 
 Para usar a Hash com uma classe sua, é preciso que sua classe implemente a interface hash.Serializavel e seus 4 métodos:
 
