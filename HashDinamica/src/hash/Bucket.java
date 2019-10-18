@@ -25,7 +25,7 @@ public class Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
 	public static final int DESLOCAMENTO_CABECALHO = Byte.BYTES;
 	
 	public static final byte PADRAO_PROFUNDIDADE_LOCAL = 0;
-	protected static final byte PADRAO_NUMERO_DE_REGISTROS_POR_BUCKET = 10;
+	public static final int PADRAO_NUMERO_DE_REGISTROS_POR_BUCKET = Short.MAX_VALUE;
 	
 	protected byte profundidadeLocal;
 	protected int numeroDeRegistrosPorBucket;
@@ -57,7 +57,7 @@ public class Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
 		this.profundidadeLocal =
 			( profundidadeLocal < 1 ? PADRAO_PROFUNDIDADE_LOCAL : profundidadeLocal );
 		this.numeroDeRegistrosPorBucket =
-			( numeroDeRegistrosPorBucket < 1 ?
+			( numeroDeRegistrosPorBucket < 1 || numeroDeRegistrosPorBucket > Short.MAX_VALUE ?
 				PADRAO_NUMERO_DE_REGISTROS_POR_BUCKET : numeroDeRegistrosPorBucket );
 		
 		this.registroDoIndice =
@@ -341,7 +341,7 @@ public class Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
 	 * o dado correspondente à chave caso contrário.
 	 */
 	
-	protected TIPO_DOS_DADOS pesquisarDadoPelaChave(TIPO_DAS_CHAVES chave)
+	protected TIPO_DOS_DADOS pesquisarDadoComAChave(TIPO_DAS_CHAVES chave)
 	{
 		TIPO_DOS_DADOS dado = null;
 		

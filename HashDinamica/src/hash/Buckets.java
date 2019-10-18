@@ -283,7 +283,7 @@ public class Buckets<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 	 * o dado correspondente à chave caso contrário.
 	 */
 	
-	protected TIPO_DOS_DADOS pesquisarDadoPelaChave(
+	protected TIPO_DOS_DADOS pesquisarDadoComAChave(
 		TIPO_DAS_CHAVES chave,
 		Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> bucket)
 	{
@@ -291,7 +291,7 @@ public class Buckets<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 		
 		if (bucket != null)
 		{
-			dado = bucket.pesquisarDadoPelaChave(chave);
+			dado = bucket.pesquisarDadoComAChave(chave);
 		}
 		
 		return dado;
@@ -307,7 +307,7 @@ public class Buckets<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 	 * o dado correspondente à chave caso contrário.
 	 */
 	
-	public TIPO_DOS_DADOS pesquisarDadoPelaChave(TIPO_DAS_CHAVES chave, long enderecoDoBucket)
+	public TIPO_DOS_DADOS pesquisarDadoComAChave(TIPO_DAS_CHAVES chave, long enderecoDoBucket)
 	{
 		TIPO_DOS_DADOS dado = null;
 		
@@ -319,7 +319,7 @@ public class Buckets<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 
 				SerializavelHelper.lerObjeto(bucket, arquivoDosBuckets);
 				
-				dado = pesquisarDadoPelaChave(chave, bucket);
+				dado = pesquisarDadoComAChave(chave, bucket);
 			}
 			
 			catch (IOException ioex)

@@ -16,8 +16,6 @@ import java.util.function.Function;
 
 public class Hash<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 {
-	public static final int PADRAO_NUMERO_DE_REGISTROS_POR_BUCKET = 21;
-
 	protected Diretorio<TIPO_DAS_CHAVES> diretorio;
 	protected Buckets<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> buckets;
 
@@ -53,7 +51,7 @@ public class Hash<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 				{
 					int strValue = -1;
 
-					if (chave != null && chave != null)
+					if (chave != null)
 					{
 						String str = (String) chave;
 						int length = str.length();
@@ -114,7 +112,7 @@ public class Hash<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 				IO.printlnerr("ERRO: a classe " + classeDaChave.getName() +
 					" é serializável e a Hash não pode inferir como fazer o hash" +
 					" de objetos desse tipo. Você precisa passar uma função hash" +
-					" no construtor dessa classe que gere um número inteiro" +
+					" no construtor desta classe que gere um número inteiro" +
 					" não negativo a partir do seu objeto serializável.");
 			}
 
@@ -208,8 +206,8 @@ public class Hash<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 	}
 	
 	/**
-	 * Cria uma HashDinamica com capacidade de
-	 * {@link #PADRAO_NUMERO_DE_REGISTROS_POR_BUCKET} registros por bucket.
+	 * Cria uma Hash com capacidade de
+	 * {@link Bucket#PADRAO_NUMERO_DE_REGISTROS_POR_BUCKET} registros por bucket.
 	 * 
 	 * @param nomeDoArquivoDoDiretorio Nome do arquivo previamente usado para o diretório.
 	 * @param nomeDoArquivoDosBuckets Nome do arquivo previamente usado para os buckets.
@@ -232,15 +230,15 @@ public class Hash<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 	{
 		this(nomeDoArquivoDoDiretorio,
 			nomeDoArquivoDosBuckets,
-			PADRAO_NUMERO_DE_REGISTROS_POR_BUCKET,
+			Bucket.PADRAO_NUMERO_DE_REGISTROS_POR_BUCKET,
 			classeDaChave,
 			classeDoDado,
 			funcaoHash);
 	}
 
 	/**
-	 * Cria uma HashDinamica com capacidade de
-	 * {@link #PADRAO_NUMERO_DE_REGISTROS_POR_BUCKET} registros por bucket.
+     * Cria uma Hash com capacidade de
+     * {@link Bucket#PADRAO_NUMERO_DE_REGISTROS_POR_BUCKET} registros por bucket.
 	 *
 	 * @param nomeDoArquivoDoDiretorio Nome do arquivo previamente usado para o diretório.
 	 * @param nomeDoArquivoDosBuckets Nome do arquivo previamente usado para os buckets.
@@ -311,7 +309,7 @@ public class Hash<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 	 * o dado correspondente à chave caso contrário.
 	 */
 	
-	public TIPO_DOS_DADOS pesquisarDadoPelaChave(TIPO_DAS_CHAVES chave)
+	public TIPO_DOS_DADOS pesquisarDadoComAChave(TIPO_DAS_CHAVES chave)
 	{
 		TIPO_DOS_DADOS dado = null;
 
@@ -319,7 +317,7 @@ public class Hash<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 		
 		if (enderecoDoBucket != -1)
 		{
-			dado = buckets.pesquisarDadoPelaChave(chave, enderecoDoBucket);
+			dado = buckets.pesquisarDadoComAChave(chave, enderecoDoBucket);
 		}
 		
 		return dado;
@@ -429,17 +427,15 @@ public class Hash<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 		TIPO_DAS_CHAVES chave,
 		TIPO_DOS_DADOS dado)
 	{
-		// conta quantas vezes esta função foi chamada por uma função
+		// Conta quantas vezes esta função foi chamada por uma função
 		// inserir() que tenha sido chamada por esta função.
 		// (desculpe-me pela recursividade, mas é isso mesmo)
 		numeroDeChamadas = ( chamadaInterna ? numeroDeChamadas + 1 : 0 );
 		
-		// esta função não chama a si própria diretamente, mas pode ser
-		// chamada pela função inserir()
-		// se o numero de chamadas for 2, ou seja, se esta função tiver
-		// sido chamada por "ela mesma" duas vezes, há uma grande
-		// probabilidade de o processo recursivo ser infinito, portanto,
-		// a função não roda mais.
+		// Esta função não chama a si própria diretamente, mas pode ser
+		// chamada pela função inserir(). Se o número de chamadas na pilha for 2,
+        // há uma grande probabilidade de o processo recursivo ser infinito,
+        // portanto, a função não roda mais.
 		if (numeroDeChamadas < 2)
 		{
 			// profundidade local do bucket igual à profundidade global do diretório
@@ -583,13 +579,13 @@ public class Hash<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 		return
 			(
 				mostrarDiretorio ? (
-        			"hash.Diretorio:\n" +
+        			"Diretorio:\n" +
         			diretorio.toString(
         				delimitadorEntreOsPonteirosDoDiretorio) + "\n"
         		) : ""
 			) +
 			
-			"hash.Buckets:\n" +
+			"Buckets:\n" +
 			buckets.toString(
 				delimitadorEntreRegistros,
 				delimitadorEntreOsCamposDoRegistro,
