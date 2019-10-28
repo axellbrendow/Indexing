@@ -349,7 +349,7 @@ public class Diretorio<TIPO_DAS_CHAVES>
 	 * 
 	 * @param metodo Método a ser aplicado em cada ponteiro.
 	 * 
-	 * @return -1 se o {@code metodo} sempre retornar 0. Caso contrário,
+	 * @return -1 se o {@code metodo} sempre retornar -1. Caso contrário,
 	 * retorna o que o {@code metodo} retornar.
 	 */
 	

@@ -434,8 +434,8 @@ public class Hash<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 		
 		// Esta função não chama a si própria diretamente, mas pode ser
 		// chamada pela função inserir(). Se o número de chamadas na pilha for 2,
-        // há uma grande probabilidade de o processo recursivo ser infinito,
-        // portanto, a função não roda mais.
+		// há uma grande probabilidade de o processo recursivo ser infinito,
+		// portanto, a função não roda mais.
 		if (numeroDeChamadas < 2)
 		{
 			// profundidade local do bucket igual à profundidade global do diretório
@@ -513,7 +513,7 @@ public class Hash<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 				sucesso = true;
 			}
 			
-			else if (resultado == -2) // O par (chave, dado já existe)
+			else if (resultado == -2) // O par (chave, dado) já existe
 			{
 				IO.printlnerr(
 					"Inclusão ignorada. O par (chave, dado) abaixo já existe na hash.\n\n" +
@@ -580,9 +580,8 @@ public class Hash<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 			(
 				mostrarDiretorio ? (
         			"Diretorio:\n" +
-        			diretorio.toString(
-        				delimitadorEntreOsPonteirosDoDiretorio) + "\n"
-        		) : ""
+        			diretorio.toString(delimitadorEntreOsPonteirosDoDiretorio) + "\n"
+				) : ""
 			) +
 			
 			"Buckets:\n" +
