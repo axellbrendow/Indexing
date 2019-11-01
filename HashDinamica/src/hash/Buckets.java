@@ -555,6 +555,9 @@ public class Buckets<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 	 * 
 	 * @param chave Chave a ser procurada.
 	 * @param enderecoDoBucket Endereço do bucket no arquivo dos buckets.
+	 * 
+	 * @return {@code true} caso o bucket com os registros excluídos seja escrito
+	 * no arquivo. Caso contrário, {@code false}.
 	 */
 	
 	public boolean excluirRegistrosComAChave(TIPO_DAS_CHAVES chave, long enderecoDoBucket)

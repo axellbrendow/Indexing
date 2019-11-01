@@ -1,5 +1,5 @@
 # Indexing
-Repositório criado com a intenção de trazer estruturas de indexamento eficientes para registros armazenados em disco. Esse repositório também é resultado da vontade que tive de implementar as estruturas de indexamento vistas na minha disciplina de Algoritmos e Estruturas de Dados III.
+Repositório criado com a intenção de trazer estruturas de indexamento eficientes para registros armazenados em disco(BTree, ExtendibleHash, etc). Esse repositório também é resultado da vontade que tive de implementar as estruturas de indexamento vistas na minha disciplina de Algoritmos e Estruturas de Dados III.
 
 Projetos no repositório:
 
