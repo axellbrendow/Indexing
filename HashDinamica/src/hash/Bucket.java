@@ -407,9 +407,6 @@ public class Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
 	 * Exclui todos os registros com a chave informada.
 	 * 
 	 * @param chave Chave a ser procurada.
-	 * 
-	 * @return {@code true} caso o bucket com os registros excluídos seja escrito
-	 * no arquivo. Caso contrário, {@code false}.
 	 */
 	
 	protected void excluirRegistrosComAChave(TIPO_DAS_CHAVES chave)

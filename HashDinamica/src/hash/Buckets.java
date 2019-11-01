@@ -182,6 +182,7 @@ public class Buckets<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 	 * Procura todos os registros com uma chave específica e gera
 	 * uma lista com os dados correspondentes a essas chaves.
 	 * 
+	 * @param chave Chave a ser procurada.
 	 * @param enderecoDoBucket Endereço do bucket a ser percorrido.
 	 * 
 	 * @return lista com os dados correspondentes às chaves.
