@@ -3,7 +3,7 @@ Implementação da Hash Extensível (Dinâmica), estrutura de dados para indexam
 
 ## Como usar ?
 
-Encontre [aqui a documentação da hash](https://htmlpreview.github.io/?https://raw.githubusercontent.com/axell-brendow/Indexing/master/HashDinamica/doc/overview-summary.html).
+Encontre [aqui a documentação da hash](https://htmlpreview.github.io/?https://raw.githubusercontent.com/axell-brendow/Indexing/master/HashDinamica/doc/index.html).
 
 O código fonte da Hash exige Java 8 no mínimo para compilar.
 
