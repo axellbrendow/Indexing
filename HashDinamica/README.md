@@ -54,7 +54,7 @@ public class Test
 
 #### 1ª forma de usar, compilar diretamente o código fonte:
 
-Caso você use uma IDE, basta copiar a pasta Indexing/HashDinamica/src/hash para dentro do pacote do seu projeto. Com a pasta copiada, seleciona o pacote na IDE e pressione CTRL + V. Pode ser necessário dar um clean ou rebuild em seu projeto.
+Caso você use uma IDE, basta copiar a pasta Indexing/HashDinamica/src/hash para dentro do pacote do seu projeto (Ctrl + C na pasta e Ctrl + V no pacote). Pode ser necessário dar um clean ou rebuild em seu projeto.
 
 Caso não use IDE, os passos estão descritos na imagem abaixo:
 
@@ -125,7 +125,7 @@ Para usar a Hash com uma classe sua, é preciso que sua classe implemente a inte
 
 Outras exigências sobre a sua classe:
 
-- **Precisa ser pública (public class)**, pois a Hash estará num pacote diferente da sua classe. 
+- **Precisa ser pública (public class)**, pois a Hash estará num pacote diferente da sua classe.
 
 - **Precisa ter um construtor sem parâmetros**, pois a Hash precisa instânciar objetos da sua classe e ela usa um construtor padrão.
 
