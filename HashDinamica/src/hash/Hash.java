@@ -64,7 +64,10 @@ public class Hash<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 							strValue = strValue * 31 + str.charAt(i);
 						}
 
-						if (strValue < 0)
+						// Evita código hash negativo em caso de overflow
+						if (strValue == Integer.MIN_VALUE) strValue = 0;
+
+						else if (strValue < 0)
 						{
 							strValue += Integer.MAX_VALUE;
 						}
