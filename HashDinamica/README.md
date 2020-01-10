@@ -38,7 +38,7 @@ public class Test
         Hash<String, Integer> hash = new Hash<>(
             "diretorio.dir",
             "buckets.db",
-            2,
+            2, // Número de registros por bucket
             String.class,
             Integer.class);
 
@@ -116,12 +116,12 @@ java -classpath lib/hash.jar Test  # Execute com o mesmo classpath
 
 Antes de tudo, a Hash trabalha com chaves e dados [serializáveis](https://www.devmedia.com.br/serializacao-de-objetos-em-java/23413), ou seja, a chave e o dado dos registros devem ser capazes de gerar seus próprios bytes e de informar qual é a quantidade máxima de bytes que podem gastar.
 
-Para usar a Hash com uma classe sua, é preciso que sua classe implemente a interface hash.Serializavel e seus 4 métodos:
+Para usar a Hash com uma classe sua, é preciso que sua classe implemente a interface **hash.Serializavel** e seus 4 métodos:
 
-- O primeiro deles, obterTamanhoMaximoEmBytes(), é um método onde você dirá qual é o tamanho máximo que a sua classe pode gastar em bytes juntando todos os campos internos que você for salvar em arquivo.
-- O segundo é o obterBytes() onde você deve gerar um byte[] com os bytes da sua entidade.
-- O terceiro é o lerBytes(byte[]) onde você receberá um byte[] e você deve lê-lo decodificando-o e atribuindo os campos internos da sua entidade.
-- O quarto é o toString() onde você deve gerar um representação textual do seu objeto. Esse método é necessário para comparar se dois objetos da sua classe são iguais. Se dois objetos gerarem a mesma string, eles serão iguais.
+- O primeiro deles, **obterTamanhoMaximoEmBytes()**, é um método onde você dirá qual é o tamanho máximo que a sua classe pode gastar em bytes juntando todos os campos internos que você for salvar em arquivo.
+- O segundo é o **obterBytes()** onde você deve gerar um byte[] com os bytes da sua entidade.
+- O terceiro é o **lerBytes(byte[])** onde você receberá um byte[] e você deve lê-lo decodificando-o e atribuindo os campos internos da sua entidade.
+- O quarto é o **toString()** onde você deve gerar um representação textual do seu objeto. Esse método é necessário para comparar se dois objetos da sua classe são iguais. Se dois objetos gerarem a mesma string, eles serão iguais.
 
 Outras exigências sobre a sua classe:
 
