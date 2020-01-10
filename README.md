@@ -9,6 +9,8 @@ Arvore B					| C++
 Arvore B+					| C++
 Hash Extensível (Dinâmica)	| Java
 
+**DICA**: Ao entrar nas pastas dos projetos, cheque o README de cada um.
+
 ### Deseja contribuir ?
 
 **Faça um fork deste repositório na sua conta** e execute os seguintes comandos:
