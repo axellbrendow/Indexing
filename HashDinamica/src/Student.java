@@ -3,14 +3,27 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.GregorianCalendar;
 
 import hash.RegistroDoIndice;
 import hash.Serializavel;
+import hash.Serialize;
 
 public class Student implements Serializavel
 {
+    @Serialize
     int id;
+
+    @Serialize(numMaxBytes = 3000)
     String name;
+
+    @Serialize(
+        numMaxBytes = 157,
+        metodoLerBytes = "lerBytesData",
+        metodoObterBytes = "obterBytesData",
+        metodoToString = "toStringData"
+    )
+    GregorianCalendar date;
 
     public Student(int id, String name)
     {
