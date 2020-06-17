@@ -76,7 +76,7 @@ public class SerializavelHelper
 	{
 		if (bytes != null)
 		{
-			int restante = bytes.length - deslocamento;
+			int restante = bytes.length - deslocamento - 1;
 			
 			if (restante > 0 && restante <= bytes.length)
 			{
