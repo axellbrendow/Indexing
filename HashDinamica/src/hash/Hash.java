@@ -456,17 +456,14 @@ public class Hash<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 			long enderecoDoNovoBucket =
 				buckets.criarBucket( (byte) (resultado + 1) );
 
-			// é importante notar que a antiga profundidade local do bucket
-			// é (resultado), e não 2 ^ (resultado), portanto, o nome dessa
-			// variável não está correto, mas não encontrei outro melhor.
-			int antigaProfundidadeLocal = (int) Math.pow(2, resultado);
+			int antigoTamanhoDoDiretorio = (int) Math.pow(2, resultado);
 			int tamanhoDoDiretorio = diretorio.obterTamanhoDoDiretorio();
 			int indiceDoPonteiroParaOBucket =
 				diretorio.pesquisarPeloPonteiro(enderecoDoBucket);
 			
 			// atualiza alguns ponteiros no diretório para o novo bucket
-			for (int i = indiceDoPonteiroParaOBucket + antigaProfundidadeLocal;
-					i < tamanhoDoDiretorio; i += antigaProfundidadeLocal)
+			for (int i = indiceDoPonteiroParaOBucket + antigoTamanhoDoDiretorio;
+					i < tamanhoDoDiretorio; i += antigoTamanhoDoDiretorio)
 			{
 				diretorio.atribuirPonteiroNoIndice(i, enderecoDoNovoBucket);
 			}

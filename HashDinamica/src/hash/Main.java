@@ -11,7 +11,7 @@ public class Main
 	
 	public static void hashStringInt()
 	{
-		Hash<String, Integer> hash = new Hash<>(
+		Hash<String, Integer> hash = new Hash<String, Integer>(
 			NOME_DO_ARQUIVO_DO_DIRETORIO,
 			NOME_DO_ARQUIVO_DOS_BUCKETS,
 			4, // número de registros por bucket
@@ -37,7 +37,7 @@ public class Main
 	
 	public static void hashIntInt()
 	{
-		Hash<Integer, Integer> hash = new Hash<>(
+		Hash<Integer, Integer> hash = new Hash<Integer, Integer>(
 			NOME_DO_ARQUIVO_DO_DIRETORIO,
 			NOME_DO_ARQUIVO_DOS_BUCKETS,
 			4, // número de registros por bucket

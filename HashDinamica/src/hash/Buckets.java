@@ -441,7 +441,7 @@ public class Buckets<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 				
 				resultado = excluir(chave, dado, bucket);
 				
-				if (resultado == true) // excluído com sucesso
+				if (resultado) // excluído com sucesso
 				{
 					arquivoDosBuckets.seek(enderecoDoBucket);
 					SerializavelHelper.escreverObjeto(bucket, arquivoDosBuckets);
@@ -533,7 +533,7 @@ public class Buckets<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 		{
 			resultado = excluir(chave, bucket);
 			
-			if (resultado == true) // excluído com sucesso
+			if (resultado) // excluído com sucesso
 			{
 				try
 				{

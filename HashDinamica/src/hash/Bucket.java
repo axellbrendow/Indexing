@@ -190,16 +190,16 @@ public class Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
 	 * Imaginando que os registros do bucket estão num arranjo,
 	 * retorna o registro no indice informado.
 	 * 
-	 * @param indiceDoBucket Indice do registro a ser obtido.
+	 * @param indiceDoRegistro Indice do registro a ser obtido.
 	 * 
 	 * @return o registro no indice informado.
 	 */
 	
 	protected RegistroDoIndice<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
-		obterRegistro(int indiceDoBucket)
+		obterRegistro(int indiceDoRegistro)
 	{
 		SerializavelHelper.lerBytes(registroDoIndice, bucket,
-				DESLOCAMENTO_CABECALHO + indiceDoBucket * registroDoIndice.obterTamanhoMaximoEmBytes());
+				DESLOCAMENTO_CABECALHO + indiceDoRegistro * registroDoIndice.obterTamanhoMaximoEmBytes());
 		
 		return registroDoIndice;
 	}
