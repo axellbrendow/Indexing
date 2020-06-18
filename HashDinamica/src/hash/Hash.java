@@ -274,7 +274,7 @@ public class Hash<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 	
 	public short obterQuantidadeMaximaDeBytesParaAChave()
 	{
-		return buckets.bucket.registroDoIndice.quantidadeMaximaDeBytesParaAChave;
+		return buckets.bucket.registro.quantidadeMaximaDeBytesParaAChave;
 	}
 	
 	/**
@@ -286,7 +286,7 @@ public class Hash<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 	
 	public short obterQuantidadeMaximaDeBytesParaODado()
 	{
-		return buckets.bucket.registroDoIndice.quantidadeMaximaDeBytesParaODado;
+		return buckets.bucket.registro.quantidadeMaximaDeBytesParaODado;
 	}
 	
 	/**
@@ -407,10 +407,10 @@ public class Hash<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 	{
 		for (int i = 0; i < buckets.numeroDeRegistrosPorBucket; i++)
 		{
-			RegistroDoIndice<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> registro =
+			Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> registro =
 				bucket.obterRegistro(i);
 			
-			if (registro.lapide == RegistroDoIndice.REGISTRO_ATIVADO)
+			if (registro.lapide == Registro.ATIVADO)
 			{
 				inserir(registro.chave, registro.dado);
 			}

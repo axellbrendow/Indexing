@@ -5,7 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.GregorianCalendar;
 
-import hash.RegistroDoIndice;
+import hash.Registro;
 import hash.Serializavel;
 import hash.Serialize;
 
@@ -42,7 +42,7 @@ public class Student implements Serializavel
 
     /**
      Essa função deve calcular o quanto o id e o name podem gastar em bytes.
-     Dentro da classe {@link RegistroDoIndice}, criei uma constante para
+     Dentro da classe {@link Registro}, criei uma constante para
      tamanho em bytes de uma string, pois em casos mais simples, a sua
      string não gastará mais de 300 bytes. Se a sua string for gastar mais
      de 300 bytes ou menos, fique a vontade para colocar o melhor valor para
@@ -52,7 +52,7 @@ public class Student implements Serializavel
     @Override
     public int obterTamanhoMaximoEmBytes()
     {
-        return RegistroDoIndice.TAMANHO_MAXIMO_EM_BYTES_STRINGS + Integer.BYTES;
+        return Registro.TAMANHO_MAXIMO_EM_BYTES_STRINGS + Integer.BYTES;
     }
 
     @Override

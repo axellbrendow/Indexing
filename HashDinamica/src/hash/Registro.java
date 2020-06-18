@@ -22,10 +22,10 @@ import java.util.Arrays;
  * tipo primitivo, ela deve ser filha da interface {@link Serializavel}.
  */
 
-public class RegistroDoIndice<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
+public class Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
 {
-	public static final char REGISTRO_ATIVADO = ' ';
-	public static final char REGISTRO_DESATIVADO = '*';
+	public static final char ATIVADO = ' ';
+	public static final char DESATIVADO = '*';
 	public static int TAMANHO_MAXIMO_EM_BYTES_STRINGS = 300;
 	
 	protected char lapide;
@@ -97,7 +97,7 @@ public class RegistroDoIndice<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serial
 	 * construtor sem parâmetros.
 	 */
 	
-	public RegistroDoIndice(
+	public Registro(
 		char lapide,
 		TIPO_DAS_CHAVES chave,
 		TIPO_DOS_DADOS dado,

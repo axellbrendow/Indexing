@@ -8,7 +8,7 @@ import java.util.function.BiFunction;
 
 /**
  * Classe que gerencia um bucket específico.
- * Um bucket é uma sequência de {@link RegistroDoIndice}:
+ * Um bucket é uma sequência de {@link Registro}:
  * [ { lapide, chave, dado }, { lapide, chave, dado }, ... ]
  * 
  * @author Axell Brendow ( https://github.com/axell-brendow )
@@ -29,7 +29,7 @@ public class Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
 	
 	protected byte profundidadeLocal;
 	protected int numeroDeRegistrosPorBucket;
-	protected RegistroDoIndice<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> registroDoIndice;
+	protected Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> registro;
 	byte[] bucket;
 	String toStr;
 	
@@ -60,9 +60,9 @@ public class Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
 			( numeroDeRegistrosPorBucket < 1 || numeroDeRegistrosPorBucket > Short.MAX_VALUE ?
 				PADRAO_NUMERO_DE_REGISTROS_POR_BUCKET : numeroDeRegistrosPorBucket );
 		
-		this.registroDoIndice =
-			new RegistroDoIndice<>(
-				RegistroDoIndice.REGISTRO_DESATIVADO, null, null,
+		this.registro =
+			new Registro<>(
+				Registro.DESATIVADO, null, null,
 				classeDaChave,
 				classeDoDado
 			);
@@ -150,7 +150,7 @@ public class Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
 	private int obterTamanhoDeUmBucket()
 	{
 		return DESLOCAMENTO_CABECALHO + // tamanho, em bytes, do cabeçalho (metadados)
-			numeroDeRegistrosPorBucket * registroDoIndice.obterTamanhoMaximoEmBytes();
+			numeroDeRegistrosPorBucket * registro.obterTamanhoMaximoEmBytes();
 	}
 
 	@Override
@@ -166,7 +166,7 @@ public class Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
 	 * 
 	 * <p>Ilustração da estrutura de um bucket:</p>
 	 * 
-	 * <b>[ profundidade local (byte), registros... ({@link RegistroDoIndice}) ]</b>
+	 * <b>[ profundidade local (byte), registros... ({@link Registro}) ]</b>
 	 */
 	
 	private void iniciarBucket()
@@ -174,13 +174,13 @@ public class Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
 		bucket = new byte[obterTamanhoDeUmBucket()];
 		bucket[0] = profundidadeLocal;
 		
-		int tamanhoDeUmRegistro = registroDoIndice.obterTamanhoMaximoEmBytes();
+		int tamanhoDeUmRegistro = registro.obterTamanhoMaximoEmBytes();
 		int deslocamento = DESLOCAMENTO_CABECALHO;
 		
 		// desativa todos os registros no bucket
 		for (int i = 0; i < numeroDeRegistrosPorBucket; i++)
 		{
-			bucket[deslocamento] = RegistroDoIndice.REGISTRO_DESATIVADO;
+			bucket[deslocamento] = Registro.DESATIVADO;
 			
 			deslocamento += tamanhoDeUmRegistro;
 		}
@@ -195,13 +195,13 @@ public class Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
 	 * @return o registro no indice informado.
 	 */
 	
-	protected RegistroDoIndice<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
+	protected Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>
 		obterRegistro(int indiceDoRegistro)
 	{
-		SerializavelHelper.lerBytes(registroDoIndice, bucket,
-				DESLOCAMENTO_CABECALHO + indiceDoRegistro * registroDoIndice.obterTamanhoMaximoEmBytes());
+		SerializavelHelper.lerBytes(registro, bucket,
+				DESLOCAMENTO_CABECALHO + indiceDoRegistro * registro.obterTamanhoMaximoEmBytes());
 		
-		return registroDoIndice;
+		return registro;
 	}
 	
 	/**
@@ -221,20 +221,20 @@ public class Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
 	 */
 	
 	public int percorrerRegistros(
-		BiFunction<RegistroDoIndice<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>, Integer, Integer> metodo)
+		BiFunction<Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS>, Integer, Integer> metodo)
 	{
 		int condicao = 0;
 		
 		if (metodo != null)
 		{
 			int deslocamento = DESLOCAMENTO_CABECALHO;
-			int tamanhoDeUmRegistro = registroDoIndice.obterTamanhoMaximoEmBytes();
+			int tamanhoDeUmRegistro = registro.obterTamanhoMaximoEmBytes();
 			
 			for (int i = 0; condicao == 0 && i < numeroDeRegistrosPorBucket; i++)
 			{
-				SerializavelHelper.lerBytes(registroDoIndice, bucket, deslocamento);
+				SerializavelHelper.lerBytes(registro, bucket, deslocamento);
 				
-				condicao = metodo.apply(registroDoIndice, deslocamento);
+				condicao = metodo.apply(registro, deslocamento);
 				
 				deslocamento += tamanhoDeUmRegistro;
 			}
@@ -262,7 +262,7 @@ public class Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
 			{
 				int status = 0; // indica que o processo deve continuar
 				
-				if (registro.lapide == RegistroDoIndice.REGISTRO_ATIVADO &&
+				if (registro.lapide == Registro.ATIVADO &&
 					registro.chave.toString().equals(chave.toString()) &&
 					registro.dado.toString().equals(dado.toString()))
 				{
@@ -292,7 +292,7 @@ public class Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
 			{
 				int status = 0; // indica que o processo deve continuar
 				
-				if (registro.lapide == RegistroDoIndice.REGISTRO_ATIVADO &&
+				if (registro.lapide == Registro.ATIVADO &&
 					registro.chave.toString().equals(chave.toString()))
 				{
 					status = deslocamento; // término com êxito, registro já existe
@@ -321,7 +321,7 @@ public class Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
 			{
 				int status = 0; // indica que o processo deve continuar
 				
-				if (registro.lapide == RegistroDoIndice.REGISTRO_ATIVADO &&
+				if (registro.lapide == Registro.ATIVADO &&
 					registro.dado.toString().equals(dado.toString()))
 				{
 					status = deslocamento; // término com êxito, registro já existe
@@ -349,8 +349,8 @@ public class Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
 		
 		if (enderecoDoRegistro > 0)
 		{
-			SerializavelHelper.lerBytes(registroDoIndice, bucket, enderecoDoRegistro);
-			dado = registroDoIndice.dado;
+			SerializavelHelper.lerBytes(registro, bucket, enderecoDoRegistro);
+			dado = registro.dado;
 		}
 		
 		return dado;
@@ -373,8 +373,8 @@ public class Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
 		
 		if (enderecoDoRegistro > 0)
 		{
-			SerializavelHelper.lerBytes(registroDoIndice, bucket, enderecoDoRegistro);
-			chave = registroDoIndice.chave;
+			SerializavelHelper.lerBytes(registro, bucket, enderecoDoRegistro);
+			chave = registro.chave;
 		}
 		
 		return chave;
@@ -397,7 +397,7 @@ public class Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
 		
 		if (enderecoDoRegistro > 0)
 		{
-			bucket[enderecoDoRegistro] = RegistroDoIndice.REGISTRO_DESATIVADO;
+			bucket[enderecoDoRegistro] = Registro.DESATIVADO;
 		}
 		
 		return enderecoDoRegistro > 0;
@@ -416,10 +416,10 @@ public class Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
 			{
 				int status = 0; // indica que o processo deve continuar
 				
-				if (registro.lapide == RegistroDoIndice.REGISTRO_ATIVADO &&
+				if (registro.lapide == Registro.ATIVADO &&
 					registro.chave.toString().equals(chave.toString()))
 				{
-					bucket[deslocamento] = RegistroDoIndice.REGISTRO_DESATIVADO;
+					bucket[deslocamento] = Registro.DESATIVADO;
 				}
 				
 				return status;
@@ -442,7 +442,7 @@ public class Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
 		
 		if (enderecoDoRegistro > 0)
 		{
-			bucket[enderecoDoRegistro] = RegistroDoIndice.REGISTRO_DESATIVADO;
+			bucket[enderecoDoRegistro] = Registro.DESATIVADO;
 		}
 		
 		return enderecoDoRegistro > 0;
@@ -472,13 +472,13 @@ public class Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
 				{
 					int status = 0; // indica que o processo deve continuar
 					
-					if (registro.lapide == RegistroDoIndice.REGISTRO_DESATIVADO)
+					if (registro.lapide == Registro.DESATIVADO)
 					{
-						registro.lapide = RegistroDoIndice.REGISTRO_ATIVADO;
+						registro.lapide = Registro.ATIVADO;
 						registro.chave = chave;
 						registro.dado = dado;
 
-						SerializavelHelper.escreverObjeto(registroDoIndice, bucket, deslocamento);
+						SerializavelHelper.escreverObjeto(registro, bucket, deslocamento);
 						status = -1; // término com êxito, registro inserido
 					}
 					
@@ -506,7 +506,7 @@ public class Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
 		percorrerRegistros(
 			(registro, deslocamento) ->
 			{
-				if (registro.lapide == RegistroDoIndice.REGISTRO_ATIVADO &&
+				if (registro.lapide == Registro.ATIVADO &&
 					registro.chave.toString().equals(chave.toString()))
 				{
 					lista.add(registro.dado);
@@ -534,8 +534,8 @@ public class Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
 		return new Bucket<>(
 			profundidadeLocal,
 			numeroDeRegistrosPorBucket,
-			registroDoIndice.classeDaChave,
-			registroDoIndice.classeDoDado
+			registro.classeDaChave,
+			registro.classeDoDado
 		);
 	}
 	
@@ -559,8 +559,8 @@ public class Bucket<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
 			Arrays.copyOf(bucket, bucket.length),
 			profundidadeLocal,
 			numeroDeRegistrosPorBucket,
-			registroDoIndice.classeDaChave,
-			registroDoIndice.classeDoDado
+			registro.classeDaChave,
+			registro.classeDoDado
 		);
 	}
 	
