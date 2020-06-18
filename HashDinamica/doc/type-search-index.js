@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"hash","l":"Bucket"},{"p":"hash","l":"Buckets"},{"p":"hash","l":"Classes"},{"p":"hash","l":"Diretorio"},{"p":"hash","l":"Hash"},{"p":"hash","l":"IO"},{"p":"hash","l":"Main"},{"p":"hash","l":"Registro"},{"p":"hash","l":"Serializavel"},{"p":"hash","l":"SerializavelHelper"},{"p":"hash","l":"Serialize"}]
