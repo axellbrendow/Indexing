@@ -68,6 +68,35 @@ public class Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
                 + "Serializavel, não contém anotações @Serialize e nem"
                 + "implementa a interface java.io.Serializable");
     }
+
+    public static int obterTamanhoDeUmSerializable(Class<?> classe)
+    {
+        int tamanho = -1;
+
+        if (Serializable.class.isAssignableFrom(classe))
+        {
+            try
+            {
+                ByteArrayOutputStream byteOutputStream = new ByteArrayOutputStream();
+                Object obj = classe.getDeclaredConstructor().newInstance();
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+                        byteOutputStream);
+
+                objectOutputStream.writeObject(obj);
+                objectOutputStream.flush();
+                objectOutputStream.close();
+                // Tenta estimar o tamanho por meio da serialização de um objeto
+                tamanho = byteOutputStream.toByteArray().length;
+            }
+
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+        return tamanho;
+    }
     /**
      * Dada uma classe, caso ela seja de um tipo primitivo, obtém a quantidade de
      * bytes que esse primitivo gasta no Java. Caso ela seja de um tipo
