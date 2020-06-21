@@ -97,6 +97,46 @@ public class Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
 
         return tamanho;
     }
+    private Object tentarInvokar(Method metodo, Class<?> classe)
+    {
+        Object resultado = null;
+
+        try
+        {
+            resultado = metodo.invoke(
+                    classe.getDeclaredConstructor().newInstance());
+        }
+
+        catch (IllegalAccessException | IllegalArgumentException
+                | InvocationTargetException | InstantiationException
+                | SecurityException | NoSuchMethodException e)
+        {
+            IO.printlnerr("ERRO: a classe " + classe.getName()
+                    + " não é instanciável via construtor padrão.");
+        }
+
+        return resultado;
+    }
+
+    private Object tentarObterEInvocar(String nomeMetodo, Class<?> classe)
+    {
+        Object resultado = null;
+
+        try
+        {
+            Method metodo = classe.getMethod(nomeMetodo);
+            resultado = tentarInvokar(metodo, classe);
+        }
+
+        catch (NoSuchMethodException e)
+        {
+            IO.printlnerr("ERRO: o método " + nomeMetodo + " não existe na classe "
+                    + classe.getName());
+        }
+
+        return resultado;
+    }
+
     /**
      * Dada uma classe, caso ela seja de um tipo primitivo, obtém a quantidade de
      * bytes que esse primitivo gasta no Java. Caso ela seja de um tipo
