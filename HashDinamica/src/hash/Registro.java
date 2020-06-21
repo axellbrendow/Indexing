@@ -140,6 +140,45 @@ public class Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
         return resultado;
     }
 
+    // private int obterTamanhoMaximoEmBytesComSerialize(Class<?> classe)
+    // {
+    //     int[] gambiarra = new int[1];
+    //     gambiarra[0] = obterTamanhoDeUmSerializable(classe);
+    //     if (gambiarra[0] != -1) return gambiarra[0];
+    //     else gambiarra[0] = 0; // Acumulará o tamanho em bytes ao percorrer os campos
+
+    //     percorrerAnotacoesSerialize(classe, (campo, anotacao) ->
+    //     {
+    //         int numBytes = anotacao.numMaxBytes();
+    //         if (numBytes != -1)
+    //         {
+    //             if (numBytes <= 0)
+    //                 IO.printlnerr("ERRO: o campo " + campo.getName()
+    //                         + " está com numMaxBytes não positivo.");
+
+    //             gambiarra[0] += numBytes;
+    //         }
+
+    //         else if (!anotacao.metodoNumMaxBytes().isEmpty())
+    //         {
+    //             numBytes = (int) tentarObterEInvocar(anotacao.metodoNumMaxBytes(),
+    //                     classe);
+
+    //             if (numBytes <= 0)
+    //                 IO.printlnerr("ERRO: o método " + anotacao.metodoNumMaxBytes()
+    //                         + " retornou um valor não positivo.");
+
+    //             gambiarra[0] += numBytes;
+    //         }
+
+    //         else gambiarra[0] += obterTamanhoMaximoEmBytes(campo.getType());
+    //     });
+
+    //     if (gambiarra[0] == 0) erroClasseInvalida(classe);
+
+    //     return gambiarra[0];
+    // }
+
     /**
      * Dada uma classe, caso ela seja de um tipo primitivo, obtém a quantidade de
      * bytes que esse primitivo gasta no Java. Caso ela seja de um tipo
