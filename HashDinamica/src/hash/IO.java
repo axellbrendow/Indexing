@@ -21,6 +21,7 @@ public class IO
     public static void printerr(Object msg)
     {
         System.err.print(msg);
+        System.exit(1);
     }
 
     public static void println(Object msg)
