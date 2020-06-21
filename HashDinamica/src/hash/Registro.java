@@ -78,18 +78,36 @@ public class Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
 
         if (classe.equals(String.class)) tamanho = TAMANHO_MAXIMO_EM_BYTES_STRINGS;
 
-        else if (Classes.isWrapper(classe))
+        else if (Classes.isWrapper(classe) || Classes.isPrimitive(classe))
         {
-            if (classe.equals(Boolean.class)) tamanho = 1;
-            else if (classe.equals(Character.class)) tamanho = Character.BYTES;
-            else if (classe.equals(Byte.class)) tamanho = Byte.BYTES;
-            else if (classe.equals(Short.class)) tamanho = Short.BYTES;
-            else if (classe.equals(Integer.class)) tamanho = Integer.BYTES;
-            else if (classe.equals(Long.class)) tamanho = Long.BYTES;
-            else if (classe.equals(Float.class)) tamanho = Float.BYTES;
-            else if (classe.equals(Double.class)) tamanho = Double.BYTES;
-            else if (classe.equals(Void.class)) IO.printlnerr(
-                    "ERRO: a classe " + classe.getName() + " é do tipo VOID.");
+            if (classe.equals(Boolean.class) || classe.equals(boolean.class))
+                tamanho = 1;
+
+            else if (classe.equals(Character.class) || classe.equals(char.class))
+                tamanho = Character.BYTES;
+
+            else if (classe.equals(Byte.class) || classe.equals(byte.class))
+                tamanho = Byte.BYTES;
+
+            else if (classe.equals(Short.class) || classe.equals(short.class))
+                tamanho = Short.BYTES;
+
+            else if (classe.equals(Integer.class) || classe.equals(int.class))
+                tamanho = Integer.BYTES;
+
+            else if (classe.equals(Long.class) || classe.equals(long.class))
+                tamanho = Long.BYTES;
+
+            else if (classe.equals(Float.class) || classe.equals(float.class))
+                tamanho = Float.BYTES;
+
+            else if (classe.equals(Double.class) || classe.equals(double.class))
+                tamanho = Double.BYTES;
+
+            else if (classe.equals(Void.class) || classe.equals(void.class))
+                IO.printlnerr(
+                        "ERRO: a classe " + classe.getName() + " é do tipo VOID.");
+
             else IO.printlnerr(
                     "ERRO: a classe " + classe.getName() + " é inválida.");
         }
@@ -237,34 +255,36 @@ public class Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
             if (classe.equals(String.class))
                 dataOutputStream.writeUTF((String) objeto);
 
-            else if (Classes.isWrapper(classe))
+            else if (Classes.isWrapper(classe) || Classes.isPrimitive(classe))
             {
-                if (classe.equals(Boolean.class))
+                if (classe.equals(Boolean.class) || classe.equals(boolean.class))
                     dataOutputStream.writeBoolean((Boolean) objeto);
 
-                else if (classe.equals(Character.class))
+                else if (classe.equals(Character.class) || classe.equals(char.class))
                     dataOutputStream.writeChar((Character) objeto);
 
-                else if (classe.equals(Byte.class))
+                else if (classe.equals(Byte.class) || classe.equals(byte.class))
                     dataOutputStream.writeByte((Byte) objeto);
 
-                else if (classe.equals(Short.class))
+                else if (classe.equals(Short.class) || classe.equals(short.class))
                     dataOutputStream.writeShort((Short) objeto);
 
-                else if (classe.equals(Integer.class))
+                else if (classe.equals(Integer.class) || classe.equals(int.class))
                     dataOutputStream.writeInt((Integer) objeto);
 
-                else if (classe.equals(Long.class))
+                else if (classe.equals(Long.class) || classe.equals(long.class))
                     dataOutputStream.writeLong((Long) objeto);
 
-                else if (classe.equals(Float.class))
+                else if (classe.equals(Float.class) || classe.equals(float.class))
                     dataOutputStream.writeFloat((Float) objeto);
 
-                else if (classe.equals(Double.class))
+                else if (classe.equals(Double.class) || classe.equals(double.class))
                     dataOutputStream.writeDouble((Double) objeto);
 
-                else if (classe.equals(Void.class)) IO.printlnerr(
-                        "ERRO: a classe " + classe.getName() + " é do tipo VOID.");
+                else if (classe.equals(Void.class) || classe.equals(void.class))
+                    IO.printlnerr(
+                            "ERRO: a classe " + classe.getName()
+                                    + " é do tipo VOID.");
 
                 else IO.printlnerr(
                         "ERRO: a classe " + classe.getName() + " é inválida.");
@@ -384,34 +404,36 @@ public class Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
             if (classe.equals(String.class))
                 field.set(this, dataInputStream.readUTF());
 
-            else if (Classes.isWrapper(classe))
+            else if (Classes.isWrapper(classe) || Classes.isPrimitive(classe))
             {
-                if (classe.equals(Boolean.class))
+                if (classe.equals(Boolean.class) || classe.equals(boolean.class))
                     field.set(this, dataInputStream.readBoolean());
 
-                else if (classe.equals(Character.class))
+                else if (classe.equals(Character.class) || classe.equals(char.class))
                     field.set(this, dataInputStream.readChar());
 
-                else if (classe.equals(Byte.class))
+                else if (classe.equals(Byte.class) || classe.equals(byte.class))
                     field.set(this, dataInputStream.readByte());
 
-                else if (classe.equals(Short.class))
+                else if (classe.equals(Short.class) || classe.equals(short.class))
                     field.set(this, dataInputStream.readShort());
 
-                else if (classe.equals(Integer.class))
+                else if (classe.equals(Integer.class) || classe.equals(int.class))
                     field.set(this, dataInputStream.readInt());
 
-                else if (classe.equals(Long.class))
+                else if (classe.equals(Long.class) || classe.equals(long.class))
                     field.set(this, dataInputStream.readLong());
 
-                else if (classe.equals(Float.class))
+                else if (classe.equals(Float.class) || classe.equals(float.class))
                     field.set(this, dataInputStream.readFloat());
 
-                else if (classe.equals(Double.class))
+                else if (classe.equals(Double.class) || classe.equals(double.class))
                     field.set(this, dataInputStream.readDouble());
 
-                else if (classe.equals(Void.class)) IO.printlnerr(
-                        "ERRO: a classe " + classe.getName() + " é do tipo VOID.");
+                else if (classe.equals(Void.class) || classe.equals(void.class))
+                    IO.printlnerr(
+                            "ERRO: a classe " + classe.getName()
+                                    + " é do tipo VOID.");
 
                 else IO.printlnerr(
                         "ERRO: a classe " + classe.getName() + " é inválida.");
@@ -455,18 +477,37 @@ public class Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
 
             if (classe.equals(String.class)) field.set(this, "");
 
-            else if (Classes.isWrapper(classe))
+            else if (Classes.isWrapper(classe) || Classes.isPrimitive(classe))
             {
-                if (classe.equals(Boolean.class)) field.set(this, false);
-                else if (classe.equals(Character.class)) field.set(this, 0);
-                else if (classe.equals(Byte.class)) field.set(this, 0);
-                else if (classe.equals(Short.class)) field.set(this, 0);
-                else if (classe.equals(Integer.class)) field.set(this, 0);
-                else if (classe.equals(Long.class)) field.set(this, 0);
-                else if (classe.equals(Float.class)) field.set(this, 0);
-                else if (classe.equals(Double.class)) field.set(this, 0);
-                else if (classe.equals(Void.class)) IO.printlnerr(
-                        "ERRO: a classe " + classe.getName() + " é do tipo VOID.");
+                if (classe.equals(Boolean.class) || classe.equals(boolean.class))
+                    field.set(this, false);
+
+                else if (classe.equals(Character.class) || classe.equals(char.class))
+                    field.set(this, 0);
+
+                else if (classe.equals(Byte.class) || classe.equals(byte.class))
+                    field.set(this, 0);
+
+                else if (classe.equals(Short.class) || classe.equals(short.class))
+                    field.set(this, 0);
+
+                else if (classe.equals(Integer.class) || classe.equals(int.class))
+                    field.set(this, 0);
+
+                else if (classe.equals(Long.class) || classe.equals(long.class))
+                    field.set(this, 0);
+
+                else if (classe.equals(Float.class) || classe.equals(float.class))
+                    field.set(this, 0);
+
+                else if (classe.equals(Double.class) || classe.equals(double.class))
+                    field.set(this, 0);
+
+                else if (classe.equals(Void.class) || classe.equals(void.class))
+                    IO.printlnerr(
+                            "ERRO: a classe " + classe.getName()
+                                    + " é do tipo VOID.");
+
                 else IO.printlnerr(
                         "ERRO: a classe " + classe.getName() + " é inválida.");
             }
