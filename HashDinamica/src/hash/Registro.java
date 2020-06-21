@@ -72,6 +72,19 @@ public class Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
                 + "implementa a interface java.io.Serializable");
     }
 
+    /**
+     * Dada uma classe que implemente a interface {@link java.io.Serializable},
+     * cria um objeto dessa classe usando o construtor sem parâmetros e o serializa
+     * para descobrir quantos bytes ele gasta.
+     * 
+     * @param classe Classe do objeto que deseja-se descobrir o gasto em bytes.
+     * 
+     * @return {@code -1} caso a classe não implemente a interface
+     * {@link java.io.Serializable} ou caso não seja possível criar um objeto da
+     * classe usando o construtor sem parâmetros ou caso não seja possível
+     * serializar o objeto para descobrir quantos bytes ele gasta. Caso contrário,
+     * retorna o número de bytes que o objeto gastou para ser serializado.
+     */
     public static int obterTamanhoDeUmSerializable(Class<?> classe)
     {
         int tamanho = -1;
@@ -100,6 +113,16 @@ public class Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
 
         return tamanho;
     }
+
+    /**
+     * Tenta invocar o método informado a partir da criação de um objeto da classe.
+     * 
+     * @param metodo Método a ser invocado.
+     * @param classe Classe onde o método se encontra.
+     * 
+     * @return {@code null} caso não seja possível criar um objeto da classe usando
+     * o construtor sem parâmetros ou caso não seja possível chamar o método.
+     */
     private Object tentarInvokar(Method metodo, Class<?> classe)
     {
         Object resultado = null;
@@ -115,12 +138,21 @@ public class Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
                 | SecurityException | NoSuchMethodException e)
         {
             IO.printlnerr("ERRO: a classe " + classe.getName()
-                    + " não é instanciável via construtor padrão.");
+                    + " não é instanciável via construtor sem parâmetros.");
         }
 
         return resultado;
     }
 
+    /**
+     * Tenta invocar o método informado a partir da criação de um objeto da classe.
+     * 
+     * @param nomeMetodo Nome do método a ser invocado.
+     * @param classe Classe onde o método se encontra.
+     * 
+     * @return {@code null} caso não seja possível criar um objeto da classe usando
+     * o construtor sem parâmetros ou caso não seja possível chamar o método.
+     */
     private Object tentarObterEInvocar(String nomeMetodo, Class<?> classe)
     {
         Object resultado = null;
