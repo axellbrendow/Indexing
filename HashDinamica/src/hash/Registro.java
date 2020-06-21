@@ -380,6 +380,25 @@ public class Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
         return byteArrayOutputStream.toByteArray();
     }
 
+    private void obterBytes(Object objCampo, String nomeCampo, Class<?> classeCampo,
+            int quantidadeMaximaDeBytes, DataOutputStream dataOutputStream)
+            throws IOException
+    {
+        byte[] byteArray = obterBytes(objCampo, classeCampo);
+
+        if (byteArray.length > quantidadeMaximaDeBytes)
+            IO.printlnerr("ERRO: " + nomeCampo + " " + objCampo
+                    + " gerou um arranjo de bytes de tamanho "
+                    + byteArray.length
+                    + ", que é maior do que o tamanho máximo especificado ("
+                    + quantidadeMaximaDeBytes + ").");
+
+        dataOutputStream.write(byteArray, 0, byteArray.length);
+
+        completarEspacoNaoUsado(dataOutputStream, byteArray.length,
+                quantidadeMaximaDeBytes);
+    }
+
     @Override
     public byte[] obterBytes()
     {
@@ -391,25 +410,11 @@ public class Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
         {
             dataOutputStream.writeByte(lapide);
 
-            byte[] byteArrayChave = obterBytes(chave, classeDaChave);
-            int quantidadeDeBytes = byteArrayChave.length <= quantidadeMaximaDeBytesParaAChave
-                    ? byteArrayChave.length
-                    : quantidadeMaximaDeBytesParaAChave;
+            obterBytes(chave, "a chave", classeDaChave,
+                    quantidadeMaximaDeBytesParaAChave, dataOutputStream);
 
-            dataOutputStream.write(byteArrayChave, 0, quantidadeDeBytes);
-
-            completarEspacoNaoUsado(dataOutputStream, byteArrayChave.length,
-                    quantidadeMaximaDeBytesParaAChave);
-
-            byte[] byteArrayDado = obterBytes(dado, classeDoDado);
-            quantidadeDeBytes = byteArrayDado.length <= quantidadeMaximaDeBytesParaODado
-                    ? byteArrayDado.length
-                    : quantidadeMaximaDeBytesParaODado;
-
-            dataOutputStream.write(byteArrayDado, 0, quantidadeDeBytes);
-
-            completarEspacoNaoUsado(dataOutputStream, byteArrayDado.length,
-                    quantidadeMaximaDeBytesParaODado);
+            obterBytes(dado, "o dado", classeDoDado,
+                    quantidadeMaximaDeBytesParaODado, dataOutputStream);
 
             dataOutputStream.close();
         }
