@@ -204,10 +204,7 @@ public class Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
             }
         }
 
-        // TODO: IMPLEMENTAR LEITURA DAS ANOTAÇÕES
-
-        else IO.printlnerr("ERRO: a classe " + classe.getName()
-                + " não é de tipo primitivo nem implementa a interface Serializavel.");
+        else tamanho = obterTamanhoMaximoEmBytesComSerialize(classe);
 
         return (short) tamanho;
     }
@@ -372,8 +369,7 @@ public class Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
 
             // TODO: IMPLEMENTAR LEITURA DAS ANOTAÇÕES
 
-            else IO.printlnerr("ERRO: a classe " + classe.getName()
-                    + " não é de tipo primitivo nem implementa a interface Serializavel.");
+            else erroClasseInvalida(classe);
         }
 
         catch (IOException e)
@@ -521,8 +517,7 @@ public class Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
 
             // TODO: IMPLEMENTAR LEITURA DAS ANOTAÇÕES E IR SETANDO OS CAMPOS
 
-            else IO.printlnerr("ERRO: a classe " + classe.getName()
-                    + " não é de tipo primitivo nem implementa a interface Serializavel.");
+            else erroClasseInvalida(classe);
 
             field.setAccessible(accessibility);
         }
@@ -592,8 +587,7 @@ public class Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
             else if (Serializavel.class.isAssignableFrom(classe))
                 field.set(this, classe.getDeclaredConstructor().newInstance());
 
-            else IO.printlnerr("ERRO: a classe " + classe.getName()
-                    + " não é de tipo primitivo nem implementa a interface Serializavel.");
+            else erroClasseInvalida(classe);
 
             field.setAccessible(accessibility);
         }
