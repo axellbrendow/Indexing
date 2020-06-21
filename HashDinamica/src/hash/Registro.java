@@ -61,6 +61,13 @@ public class Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
     protected Constructor<TIPO_DAS_CHAVES> construtorDaChave;
     protected Constructor<TIPO_DOS_DADOS> construtorDoDado;
 
+    public static void erroClasseInvalida(Class<?> classe)
+    {
+        IO.printlnerr("ERRO: a classe " + classe.getName()
+                + " não é de tipo primitivo, não implementa a interface "
+                + "Serializavel, não contém anotações @Serialize e nem"
+                + "implementa a interface java.io.Serializable");
+    }
     /**
      * Dada uma classe, caso ela seja de um tipo primitivo, obtém a quantidade de
      * bytes que esse primitivo gasta no Java. Caso ela seja de um tipo
