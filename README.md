@@ -5,9 +5,9 @@ Projetos no repositório:
 
 Estrutura de indexamento	| Linguagem do projeto
 ----------------------------|---------------------
-Arvore B					| C++
-Arvore B+					| C++
-Hash Extensível (Dinâmica)	| Java
+[Arvore B](https://github.com/axell-brendow/Indexing/tree/master/ArvoreB)					| C++
+[Arvore B+](https://github.com/axell-brendow/Indexing/tree/master/ArvoreBMais)					| C++
+[Hash Extensível (Dinâmica)](https://github.com/axell-brendow/Indexing/tree/master/HashDinamica)	| Java
 
 **DICA**: Ao entrar nas pastas dos projetos, cheque o README de cada um.
 
