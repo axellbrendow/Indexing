@@ -27,8 +27,6 @@ typedef long file_ptr_type;
 
 /**
  * @brief Em C++, usamos unsigned char para lidar com bytes. As vezes usa-se char também.
- * De qualquer forma, o intervalo de valores do tipo unsigned char é o mesmo do
- * intervalo de um byte, 0 a 255.
  */
 typedef unsigned char tipo_byte;
 
