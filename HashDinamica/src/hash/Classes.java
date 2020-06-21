@@ -61,4 +61,19 @@ public class Classes
     {
         return wrappers.contains(classe);
     }
+
+    /**
+     * Checa se uma classe é primitiva.
+     * <br>
+     * (boolean, char, byte, short, int, long, float, double, void).
+     *
+     * @param classe Classe a ser analisada.
+     *
+     * @return {@code true} caso a classe seja alguma das listadas acima.
+     * {@code false} caso contrário.
+     */
+    public static boolean isPrimitive(Class<?> classe)
+    {
+        return primitivos.contains(classe);
+    }
 }
