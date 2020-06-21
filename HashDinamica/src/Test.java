@@ -10,11 +10,11 @@ public class Test
         new File("buckets.db").delete();
 
         Hash<String, Integer> hash = new Hash<>(
-            "diretorio.dir",
-            "buckets.db",
-            2,
-            String.class,
-            Integer.class);
+                "diretorio.dir",
+                "buckets.db",
+                2,
+                String.class,
+                Integer.class);
 
         hash.inserir("a", 1);
         hash.inserir("b", 2);

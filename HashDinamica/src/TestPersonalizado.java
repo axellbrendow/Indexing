@@ -12,25 +12,26 @@ public class TestPersonalizado
         new File("buckets.db").delete();
 
         Hash<Integer, Student> hash = new Hash<>(
-            "diretorio.dir",
-            "buckets.db",
-            2, // Número de registros por bucket
-            Integer.class,
-            Student.class);
+                "diretorio.dir",
+                "buckets.db",
+                2, // Número de registros por bucket
+                Integer.class,
+                Student.class);
 
         Student s0 = new Student(0, "S0");
         Student s1 = new Student(1, "S1");
         Student s2 = new Student(2, "S2");
 
         System.out.println();
-        for (Field field : Student.class.getDeclaredFields()) {
+
+        for (Field field : Student.class.getDeclaredFields())
+        {
             var annotation = field.getAnnotation(Serialize.class);
             System.out.println(
-                "FIELD: " + field.getName()
-                + ", TYPE: " + field.getType()
-                + ", VALUE: " + annotation.numMaxBytes()
-                + "\n"
-            );
+                    "FIELD: " + field.getName()
+                            + ", TYPE: " + field.getType()
+                            + ", VALUE: " + annotation.numMaxBytes()
+                            + "\n");
         }
 
         hash.inserir(s0.id, s0);

@@ -17,12 +17,7 @@ public class Student implements Serializavel
     @Serialize(numMaxBytes = 3000)
     String name;
 
-    @Serialize(
-        numMaxBytes = 157,
-        metodoLerBytes = "lerBytesData",
-        metodoObterBytes = "obterBytesData",
-        metodoToString = "toStringData"
-    )
+    @Serialize(numMaxBytes = 157, metodoLerBytes = "lerBytesData", metodoObterBytes = "obterBytesData", metodoToString = "toStringData")
     GregorianCalendar date;
 
     public Student(int id, String name)
