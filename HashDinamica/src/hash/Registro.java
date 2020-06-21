@@ -517,7 +517,7 @@ public class Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
         {
             field = getClass().getDeclaredField(nomeCampo);
 
-            accessibility = field.canAccess(this);
+            accessibility = field.isAccessible();
             field.setAccessible(true);
 
             if (classe.equals(String.class))
@@ -550,9 +550,8 @@ public class Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
                     field.set(this, dataInputStream.readDouble());
 
                 else if (classe.equals(Void.class) || classe.equals(void.class))
-                    IO.printlnerr(
-                            "ERRO: a classe " + classe.getName()
-                                    + " é do tipo VOID.");
+                    IO.printlnerr("ERRO: a classe " + classe.getName()
+                            + " é do tipo VOID.");
 
                 else IO.printlnerr(
                         "ERRO: a classe " + classe.getName() + " é inválida.");
@@ -590,7 +589,7 @@ public class Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
         try
         {
             field = getClass().getDeclaredField(nomeCampo);
-            accessibility = field.canAccess(this);
+            accessibility = field.isAccessible();
             field.setAccessible(true);
 
             if (classe.equals(String.class)) field.set(this, "");
@@ -622,9 +621,8 @@ public class Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
                     field.set(this, 0);
 
                 else if (classe.equals(Void.class) || classe.equals(void.class))
-                    IO.printlnerr(
-                            "ERRO: a classe " + classe.getName()
-                                    + " é do tipo VOID.");
+                    IO.printlnerr("ERRO: a classe " + classe.getName()
+                            + " é do tipo VOID.");
 
                 else IO.printlnerr(
                         "ERRO: a classe " + classe.getName() + " é inválida.");
