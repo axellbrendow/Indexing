@@ -1,4 +1,5 @@
 # HashDinamica
+
 Implementação da Hash Extensível (Dinâmica), estrutura de dados para indexamento, em Java.
 
 ## Como usar ?
@@ -23,6 +24,7 @@ A hash suporta fazer o indexamento dos seguintes tipos primitivos:
 Nos dois exemplos com tipos primitivos, usarei String como chave e Integer como dado:
 
 Arquivo Test.java
+
 ```Java
 import java.io.File;
 
@@ -71,7 +73,6 @@ java -classpath . Test  # Execute com o mesmo classpath
 
 ```
 
-
 #### 2ª forma de usar, compilar usando o arquivo hash.jar:
 
 Primeiro, [baixe o arquivo hash.jar](https://github.com/axell-brendow/Indexing/raw/master/HashDinamica/hash.jar).
@@ -111,7 +112,6 @@ java -classpath lib/hash.jar Test  # Execute com o mesmo classpath
 
 ```
 
-
 ### Usando a Hash com tipos personalizados
 
 Antes de tudo, a Hash trabalha com chaves e dados [serializáveis](https://www.devmedia.com.br/serializacao-de-objetos-em-java/23413), ou seja, a chave e o dado dos registros devem ser capazes de gerar seus próprios bytes e de informar qual é a quantidade máxima de bytes que podem gastar.
@@ -125,15 +125,16 @@ Para usar a Hash com uma classe sua, é preciso que sua classe implemente a inte
 
 Outras exigências sobre a sua classe:
 
-- **Precisa ser pública (public class)**, pois a Hash estará num pacote diferente da sua classe.
+- **Precisa ser pública (public class)**, pois a Hash estará num pacote diferente da sua classe e ela precisa acessá-la.
 
-- **Precisa ter um construtor sem parâmetros**, pois a Hash precisa instânciar objetos da sua classe e ela usa um construtor padrão.
+- **Precisa ter um construtor sem parâmetros**, pois a Hash precisa criar objetos da sua classe e ela usa o construtor sem parâmetros para isso.
 
 Irei dar um exemplo com a classe Student abaixo:
 
 Código de teste:
 
 Arquivo Student.java
+
 ```Java
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -229,6 +230,7 @@ public class Student implements Serializavel
 ```
 
 Arquivo principal TestPersonalizado.java
+
 ```Java
 import java.io.File;
 
