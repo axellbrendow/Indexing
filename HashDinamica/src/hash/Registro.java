@@ -12,6 +12,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.function.BiConsumer;
 
 /*
 TODO: IMPLEMENTAR FUNÇÃO QUE PERCORRE OS CAMPOS SERIALIZE DE UMA CLASSE
@@ -112,6 +113,17 @@ public class Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
         }
 
         return tamanho;
+    }
+
+    private void percorrerAnotacoesSerialize(Class<?> classe,
+            BiConsumer<Field, Serialize> funcao)
+    {
+        for (Field campo : classe.getDeclaredFields())
+        {
+            Serialize anotacao = campo.getAnnotation(Serialize.class);
+
+            if (anotacao != null) funcao.accept(campo, anotacao);
+        }
     }
 
     /**

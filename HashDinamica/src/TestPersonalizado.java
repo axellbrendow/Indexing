@@ -1,11 +1,26 @@
 import java.io.File;
 import java.lang.reflect.Field;
+import java.util.function.BiConsumer;
 
 import hash.Hash;
 import hash.Serialize;
 
 public class TestPersonalizado
 {
+    private static void percorrerAnotacoesSerialize(Class<?> classe,
+            BiConsumer<Field, Serialize> funcao)
+    {
+        for (Field campo : classe.getDeclaredFields())
+        {
+            Serialize anotacao = campo.getAnnotation(Serialize.class);
+
+            if (anotacao != null)
+            {
+                funcao.accept(campo, anotacao);
+            }
+        }
+    }
+
     public static void main(String[] args)
     {
         new File("diretorio.dir").delete();
@@ -24,15 +39,14 @@ public class TestPersonalizado
 
         System.out.println();
 
-        for (Field field : Student.class.getDeclaredFields())
+        percorrerAnotacoesSerialize(Student.class, (campo, anotacao) ->
         {
-            var annotation = field.getAnnotation(Serialize.class);
             System.out.println(
-                    "FIELD: " + field.getName()
-                            + ", TYPE: " + field.getType()
-                            + ", VALUE: " + annotation.numMaxBytes()
+                    "FIELD: " + campo.getName()
+                            + ", TYPE: " + campo.getType()
+                            + ", VALUE: " + anotacao.numMaxBytes()
                             + "\n");
-        }
+        });
 
         hash.inserir(s0.id, s0);
         hash.inserir(s1.id, s1);
