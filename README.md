@@ -13,19 +13,16 @@ Estrutura de indexamento	| Linguagem do projeto
 
 ### Deseja contribuir ?
 
-**Faça um fork deste repositório na sua conta** e execute os seguintes comandos:
+- Faça um fork deste repositório na sua conta
+- Insira sua identificação
+  ```
+  git config user.name SEU_USUARIO_DO_GITHUB
+  git config user.email SEU_EMAIL_DO_GITHUB
+  ```
+- Realize as mudanças que achar interessante
+- Faça o commit com uma mensagem detalhada sobre sua mudança
 
-```
-git clone https://github.com/SEU_USUARIO/Indexing.git
-pushd Indexing
-git config user.name SEU_USUARIO_DO_GITHUB
-git config user.email SEU_EMAIL_DO_GITHUB
-git remote add upstream https://github.com/axell-brendow/Indexing.git
-```
-
-Realize as mudanças que achar interessante, faça o commit com uma mensagem detalhada sobre sua mudança e faça o push para o repositório da sua conta.
-
-Após isso, vá em seu repositório online, clique em "Pull Request" ou "Compare" e então em "Create Pull Request", depois em clique em "Create Pull Request" novamente.
+Após subir os commits, vá em seu repositório online, clique em "Pull Request" ou "Compare" e então em "Create Pull Request", depois em clique em "Create Pull Request" novamente.
 
 Aguarde até que sua contribuição seja avaliada.
 
