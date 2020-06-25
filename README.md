@@ -24,6 +24,6 @@ Estrutura de indexamento	| Linguagem do projeto
 
 Após subir os commits, vá em seu repositório online, clique em "Pull Request" ou "Compare" e então em "Create Pull Request", depois em clique em "Create Pull Request" novamente.
 
-Aguarde até que sua contribuição seja avaliada.
+Aguarde até que sua contribuição seja avaliada. (Caso seu Pull Request seja muito grande, quebre-o em partes menores e faça vários)
 
 Tutorial em vídeo: [Como criar um PULL REQUEST no Github?](https://www.youtube.com/watch?v=E8MPe6tCMo8)
