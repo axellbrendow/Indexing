@@ -311,7 +311,7 @@ public class Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
             }
         }
 
-        // else tamanho = obterTamanhoMaximoEmBytesComSerialize(classe);
+        else tamanho = obterTamanhoMaximoEmBytesComSerialize(classe);
 
         return (short) tamanho;
     }
