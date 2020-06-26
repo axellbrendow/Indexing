@@ -666,48 +666,47 @@ public class Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
     /**
      * Cria uma nova instância do campo informado.
      *
-     * @param nomeCampo Nome do campo nesta classe.
-     * @param classe Classe do campo.
+     * @param campo Campo a ser atribuído.
+     * @param objeto Objeto a ter seu campo atribuído.
+     * @param classe Classe do tipo do campo.
      */
     @SuppressWarnings("all")
-    private void newInstance(String nomeCampo, Class<?> classe)
+    private void newInstance(Field campo, Object objeto, Class<?> classe)
     {
-        Field field;
-        boolean accessibility;
+        boolean acessibilidade;
 
         try
         {
-            field = getClass().getDeclaredField(nomeCampo);
-            accessibility = field.isAccessible();
-            field.setAccessible(true);
+            acessibilidade = campo.isAccessible();
+            campo.setAccessible(true);
 
-            if (classe.equals(String.class)) field.set(this, "");
+            if (classe.equals(String.class)) campo.set(objeto, "");
 
             else if (Classes.isWrapper(classe) || Classes.isPrimitive(classe))
             {
                 if (classe.equals(Boolean.class) || classe.equals(boolean.class))
-                    field.set(this, false);
+                    campo.set(objeto, false);
 
                 else if (classe.equals(Character.class) || classe.equals(char.class))
-                    field.set(this, 0);
+                    campo.set(objeto, 0);
 
                 else if (classe.equals(Byte.class) || classe.equals(byte.class))
-                    field.set(this, 0);
+                    campo.set(objeto, 0);
 
                 else if (classe.equals(Short.class) || classe.equals(short.class))
-                    field.set(this, 0);
+                    campo.set(objeto, 0);
 
                 else if (classe.equals(Integer.class) || classe.equals(int.class))
-                    field.set(this, 0);
+                    campo.set(objeto, 0);
 
                 else if (classe.equals(Long.class) || classe.equals(long.class))
-                    field.set(this, 0);
+                    campo.set(objeto, 0);
 
                 else if (classe.equals(Float.class) || classe.equals(float.class))
-                    field.set(this, 0);
+                    campo.set(objeto, 0);
 
                 else if (classe.equals(Double.class) || classe.equals(double.class))
-                    field.set(this, 0);
+                    campo.set(objeto, 0);
 
                 else if (classe.equals(Void.class) || classe.equals(void.class))
                     IO.printlnerr("ERRO: a classe " + classe.getName()
@@ -719,16 +718,37 @@ public class Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
 
             // Checa se a classe é Serializavel
             else if (Serializavel.class.isAssignableFrom(classe))
-                field.set(this, classe.getDeclaredConstructor().newInstance());
+                campo.set(objeto, classe.getDeclaredConstructor().newInstance());
+
+            // TODO: IMPLEMENTAR LEITURA DAS ANOTAÇÕES E IR SETANDO OS CAMPOS
 
             else erroClasseInvalida(classe);
 
-            field.setAccessible(accessibility);
+            campo.setAccessible(acessibilidade);
         }
 
-        catch (NoSuchFieldException | IllegalAccessException | InstantiationException
+        catch (IllegalAccessException | InstantiationException
                 | IllegalArgumentException | InvocationTargetException
                 | NoSuchMethodException | SecurityException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Cria uma nova instância do campo informado.
+     *
+     * @param nomeCampo Nome do campo nesta classe.
+     * @param classe Classe do campo.
+     */
+    private void newInstance(String nomeCampo, Class<?> classe)
+    {
+        try
+        {
+            newInstance(getClass().getDeclaredField(nomeCampo), this, classe);
+        }
+
+        catch (NoSuchFieldException | SecurityException e)
         {
             e.printStackTrace();
         }
