@@ -195,6 +195,15 @@ public class Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
         return resultado;
     }
 
+    /**
+     * Percorre os campos da {@code classe} que estão com a anotação @Serialize
+     * e vai acumulando a quantidade máxima de bytes que cada um pode gastar.
+     *  
+     * @param classe Classe cujos campos devem ser percorridos.
+     * 
+     * @return a quantidade máxima em bytes que um objeto da {@code classe} pode
+     * gastar.
+     */
     private int obterTamanhoMaximoEmBytesComSerialize(Class<?> classe)
     {
         int[] gambiarra = new int[1];
