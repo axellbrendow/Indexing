@@ -115,6 +115,13 @@ public class Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
         return tamanho;
     }
 
+    /**
+     * Percorre os campos da {@code classe} que estão com a anotação @Serialize
+     * e chama a {@code funcao} passando o campo e a anotação dele como parâmetro.
+     * 
+     * @param classe Classe cujos campos devem ser percorridos.
+     * @param funcao Função que deve ser executado para cada campo com @Serialize.
+     */
     private void percorrerAnotacoesSerialize(Class<?> classe,
             BiConsumer<Field, Serialize> funcao)
     {
