@@ -564,55 +564,52 @@ public class Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
     //	}
 
     /**
-     * Faz com que o objeto leia o arranjo de bytes restaurando o seu estado.
+     * Lê o fluxo de bytes de um campo de um objeto e restaura esse campo.
      *
-     * @param array Arranjo com os bytes do objeto.
-     * @param nomeCampo Nome do campo desta classe que contém o objeto.
-     * @param classe Classe do objeto.
+     * @param dataInputStream Fluxo de entrada de bytes do campo.
+     * @param objeto Objeto a ter seu campo atribuído.
+     * @param campo Campo a ser atribuído.
+     * @param classe Classe do campo.
      */
     @SuppressWarnings("all")
-    private void lerBytes(byte[] array, String nomeCampo, Class<?> classe)
+    private void lerBytes(DataInputStream dataInputStream, Object objeto,
+            Field campo, Class<?> classe)
     {
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(array);
-        DataInputStream dataInputStream = new DataInputStream(byteArrayInputStream);
-        Field field;
-        boolean accessibility;
+        boolean acessibilidade;
 
         try
         {
-            field = getClass().getDeclaredField(nomeCampo);
-
-            accessibility = field.isAccessible();
-            field.setAccessible(true);
+            acessibilidade = campo.isAccessible();
+            campo.setAccessible(true);
 
             if (classe.equals(String.class))
-                field.set(this, dataInputStream.readUTF());
+                campo.set(objeto, dataInputStream.readUTF());
 
             else if (Classes.isWrapper(classe) || Classes.isPrimitive(classe))
             {
                 if (classe.equals(Boolean.class) || classe.equals(boolean.class))
-                    field.set(this, dataInputStream.readBoolean());
+                    campo.set(objeto, dataInputStream.readBoolean());
 
                 else if (classe.equals(Character.class) || classe.equals(char.class))
-                    field.set(this, dataInputStream.readChar());
+                    campo.set(objeto, dataInputStream.readChar());
 
                 else if (classe.equals(Byte.class) || classe.equals(byte.class))
-                    field.set(this, dataInputStream.readByte());
+                    campo.set(objeto, dataInputStream.readByte());
 
                 else if (classe.equals(Short.class) || classe.equals(short.class))
-                    field.set(this, dataInputStream.readShort());
+                    campo.set(objeto, dataInputStream.readShort());
 
                 else if (classe.equals(Integer.class) || classe.equals(int.class))
-                    field.set(this, dataInputStream.readInt());
+                    campo.set(objeto, dataInputStream.readInt());
 
                 else if (classe.equals(Long.class) || classe.equals(long.class))
-                    field.set(this, dataInputStream.readLong());
+                    campo.set(objeto, dataInputStream.readLong());
 
                 else if (classe.equals(Float.class) || classe.equals(float.class))
-                    field.set(this, dataInputStream.readFloat());
+                    campo.set(objeto, dataInputStream.readFloat());
 
                 else if (classe.equals(Double.class) || classe.equals(double.class))
-                    field.set(this, dataInputStream.readDouble());
+                    campo.set(objeto, dataInputStream.readDouble());
 
                 else if (classe.equals(Void.class) || classe.equals(void.class))
                     IO.printlnerr("ERRO: a classe " + classe.getName()
@@ -624,16 +621,43 @@ public class Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
 
             // Checa se a classe é Serializavel
             else if (Serializavel.class.isAssignableFrom(classe))
-                ((Serializavel) field.get(this)).lerBytes(array);
+            {
+                byte[] array = new byte[obterTamanhoMaximoEmBytes(classe)];
+                dataInputStream.read(array);
+                ((Serializavel) campo.get(objeto)).lerBytes(array);
+            }
 
             // TODO: IMPLEMENTAR LEITURA DAS ANOTAÇÕES E IR SETANDO OS CAMPOS
 
             else erroClasseInvalida(classe);
 
-            field.setAccessible(accessibility);
+            campo.setAccessible(acessibilidade);
         }
 
-        catch (NoSuchFieldException | IOException | IllegalAccessException e)
+        catch (IOException | IllegalAccessException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Lê os bytes de um campo interno desta classe e o restaura.
+     *
+     * @param array Bytes do campo.
+     * @param nomeCampo Nome do campo a ser restaurado.
+     * @param classe Classe do tipo do campo.
+     */
+    private void lerBytes(byte[] array, String nomeCampo, Class<?> classe)
+    {
+        try
+        {
+            DataInputStream stream = new DataInputStream(
+                    new ByteArrayInputStream(array));
+
+            lerBytes(stream, this, getClass().getDeclaredField(nomeCampo), classe);
+        }
+
+        catch (NoSuchFieldException | SecurityException e)
         {
             e.printStackTrace();
         }
