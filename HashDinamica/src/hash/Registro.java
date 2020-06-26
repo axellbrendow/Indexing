@@ -245,8 +245,11 @@ public class Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
      * Dada uma classe, caso ela seja de um tipo primitivo, obtém a quantidade de
      * bytes que esse primitivo gasta no Java. Caso ela seja de um tipo
      * {@link Serializavel}, obtém a quantidade máxima de bytes que esse
-     * {@link Serializavel} gasta. Caso contrário, imprime um erro indicando que
-     * a classe precisa ser de um tipo primitivo ou {@link Serializavel}.
+     * {@link Serializavel} gasta. Caso ela tenha campos com a anotação
+     * {@link Serialize} descobre quantos bytes cada campo gasta e retorna o
+     * acumulado. Caso contrário, imprime um erro indicando que
+     * a classe precisa ser de um tipo primitivo, {@link Serializavel} ou ter
+     * campos com a anotação {@link Serialize}.
      *
      * @param classe Classe do objeto que deseja-se obter a quantidade de bytes.
      *
