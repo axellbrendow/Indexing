@@ -118,7 +118,11 @@ public class Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
     private void percorrerAnotacoesSerialize(Class<?> classe,
             BiConsumer<Field, Serialize> funcao)
     {
-        for (Field campo : classe.getDeclaredFields())
+        Field[] campos = classe.getDeclaredFields();
+
+        if (campos.length == 0) erroClasseInvalida(classe);
+
+        for (Field campo : campos)
         {
             Serialize anotacao = campo.getAnnotation(Serialize.class);
 
