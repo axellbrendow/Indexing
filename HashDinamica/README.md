@@ -2,6 +2,11 @@
 
 Implementação da Hash Extensível (Dinâmica), estrutura de dados para indexamento, em Java.
 
+## Como executar o projeto ?
+
+Fique a vontade para modificar o código e fazer os seus testes. Adicionei scripts na raiz desta pasta que te ajudaram a compilar, executar e construir o projeto. São eles `compile.sh`, `run.sh` e `build.sh`.
+Caso esteja no Windows, a sintaxe desses scripts é perfeitamente compatível com o PowerShell, então basta usá-lo para executar os arquivos .sh. Lembre-se de ativar a execução de scripts com o comando `Set-ExecutionPolicy Bypass Process`.
+
 ## Como usar ?
 
 Encontre [aqui a documentação da hash](https://htmlpreview.github.io/?https://raw.githubusercontent.com/axell-brendow/Indexing/master/HashDinamica/doc/overview-summary.html).
