@@ -78,6 +78,7 @@ public class Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
      * cria um objeto dessa classe usando o construtor sem parâmetros e o serializa
      * para gerar o seu arranjo de bytes.
      * 
+     * @param objeto Objeto o qual deseja-se gerar os bytes.
      * @param classe Classe do objeto que deseja-se gerar o arranjo de bytes.
      * 
      * @return {@code null} caso a classe não implemente a interface
@@ -130,7 +131,7 @@ public class Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
     public static int obterTamanhoDeUmSerializable(Class<?> classe)
     {
         int tamanho = -1;
-        
+
         try
         {
             Object objeto = classe.getDeclaredConstructor().newInstance();
@@ -139,7 +140,7 @@ public class Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
 
             if (bytes != null) tamanho = bytes.length;
         }
-        
+
         catch (InstantiationException | IllegalAccessException
                 | IllegalArgumentException | InvocationTargetException
                 | NoSuchMethodException | SecurityException e1)
