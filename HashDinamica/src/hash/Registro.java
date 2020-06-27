@@ -76,15 +76,15 @@ public class Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
     /**
      * Dada uma classe que implemente a interface {@link java.io.Serializable},
      * cria um objeto dessa classe usando o construtor sem parâmetros e o serializa
-     * para descobrir quantos bytes ele gasta.
+     * para gerar o seu arranjo de bytes.
      * 
-     * @param classe Classe do objeto que deseja-se descobrir o gasto em bytes.
+     * @param classe Classe do objeto que deseja-se gerar o arranjo de bytes.
      * 
-     * @return {@code -1} caso a classe não implemente a interface
+     * @return {@code null} caso a classe não implemente a interface
      * {@link java.io.Serializable} ou caso não seja possível criar um objeto da
      * classe usando o construtor sem parâmetros ou caso não seja possível
-     * serializar o objeto para descobrir quantos bytes ele gasta. Caso contrário,
-     * retorna o número de bytes que o objeto gastou para ser serializado.
+     * serializar o objeto para gerar o seu arranjo de bytes. Caso contrário,
+     * retorna o arranjo de bytes que o objeto gerou ao ser serializado.
      */
     public static byte[] obterBytesDeUmSerializable(Object objeto, Class<?> classe)
     {
