@@ -86,30 +86,65 @@ public class Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
      * serializar o objeto para descobrir quantos bytes ele gasta. Caso contrário,
      * retorna o número de bytes que o objeto gastou para ser serializado.
      */
-    public static int obterTamanhoDeUmSerializable(Class<?> classe)
+    public static byte[] obterBytesDeUmSerializable(Object objeto, Class<?> classe)
     {
-        int tamanho = -1;
+        byte[] bytes = null;
 
         if (Serializable.class.isAssignableFrom(classe))
         {
             try
             {
                 ByteArrayOutputStream byteOutputStream = new ByteArrayOutputStream();
-                Object obj = classe.getDeclaredConstructor().newInstance();
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(
                         byteOutputStream);
 
-                objectOutputStream.writeObject(obj);
+                objectOutputStream.writeObject(objeto);
                 objectOutputStream.flush();
                 objectOutputStream.close();
                 // Tenta estimar o tamanho por meio da serialização de um objeto
-                tamanho = byteOutputStream.toByteArray().length;
+                bytes = byteOutputStream.toByteArray();
             }
 
             catch (Exception e)
             {
                 e.printStackTrace();
             }
+        }
+
+        return bytes;
+    }
+
+    /**
+     * Dada uma classe que implemente a interface {@link java.io.Serializable},
+     * cria um objeto dessa classe usando o construtor sem parâmetros e o serializa
+     * para descobrir quantos bytes ele gasta.
+     * 
+     * @param classe Classe do objeto que deseja-se descobrir o gasto em bytes.
+     * 
+     * @return {@code -1} caso a classe não implemente a interface
+     * {@link java.io.Serializable} ou caso não seja possível criar um objeto da
+     * classe usando o construtor sem parâmetros ou caso não seja possível
+     * serializar o objeto para descobrir quantos bytes ele gasta. Caso contrário,
+     * retorna o número de bytes que o objeto gastou para ser serializado.
+     */
+    public static int obterTamanhoDeUmSerializable(Class<?> classe)
+    {
+        int tamanho = -1;
+        
+        try
+        {
+            Object objeto = classe.getDeclaredConstructor().newInstance();
+
+            byte[] bytes = obterBytesDeUmSerializable(objeto, classe);
+
+            if (bytes != null) tamanho = bytes.length;
+        }
+        
+        catch (InstantiationException | IllegalAccessException
+                | IllegalArgumentException | InvocationTargetException
+                | NoSuchMethodException | SecurityException e1)
+        {
+            e1.printStackTrace();
         }
 
         return tamanho;
@@ -198,7 +233,7 @@ public class Registro<TIPO_DAS_CHAVES, TIPO_DOS_DADOS> implements Serializavel
     /**
      * Percorre os campos da {@code classe} que estão com a anotação @Serialize
      * e vai acumulando a quantidade máxima de bytes que cada um pode gastar.
-     *  
+     * 
      * @param classe Classe cujos campos devem ser percorridos.
      * 
      * @return a quantidade máxima em bytes que um objeto da {@code classe} pode
